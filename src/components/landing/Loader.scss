@@ -1,0 +1,228 @@
+@import "src/App";
+
+$spin-time: 1.5s;
+
+.circles-wrap {
+    height: 10em;
+    width: 10em;
+    position: absolute;
+    top: calc(50% - 5em);
+    left: calc(50% - 5em);
+
+    .circles {
+        height: 10.5em;
+        top: calc(50% - 5.25em);
+        position: relative;
+        font-size: 0.6em;
+
+        .circle {
+            opacity: 1;
+            transition-property: opacity;
+            transition-delay: calc($spin-time / 2 - 0.1s);
+            position: fixed;
+            box-sizing: border-box;
+        }
+
+        .barrier {
+            visibility: hidden;
+            background-color: $black;
+            width: 7em;
+            height: 12em;
+        }
+
+        .circle-1 {
+            left: calc(50% - 5em);
+            top: calc(50% - 5em);
+            width: 10em;
+            height: 5em;
+            border-radius: 10em 10em 0 0;
+            border-top: .4em solid $blue;
+            border-left: .4em solid $blue;
+            border-right: .4em solid $blue;
+            animation: $spin-time loader linear infinite;
+            transform-origin: 50% 100%;
+            filter: drop-shadow(0px 0px 0.5em $blue);
+        }
+
+        .circle-1-barrier {
+            border-radius: 0% 100% 100% 0%;
+            position: absolute;
+            left: 50%;
+            top: calc(50% - 6em);
+        }
+
+        .circle-2 {
+            left: calc(50% - 4em);
+            top: 50%;
+            width: 8em;
+            height: 4em;
+            border-radius: 0 0 8em 8em;
+            border-bottom: .3em solid $pink;
+            border-left: .3em solid $pink;
+            border-right: .3em solid $pink;
+            animation: $spin-time loader-reverse linear infinite;
+            transform-origin: 50% 0%;
+            filter: drop-shadow(0px 0px 0.5em $pink);
+        }
+
+        .circle-2-barrier {
+            border-radius: 0% 100% 100% 0%;
+            position: absolute;
+            left: 50%;
+            top: calc(50% - 6em);
+        }
+
+        .circle-3 {
+            left: calc(50% - 3em);
+            top: calc(50% + 4.4em);
+            width: 6em;
+            height: 3em;
+            margin: -4.45em auto;
+            border-radius: 0 0 8em 8em;
+            border-bottom: .3em solid $green;
+            border-left: .3em solid $green;
+            border-right: .3em solid $green;
+            animation: $spin-time loader linear infinite;
+            transform-origin: 50% 0%;
+            filter: drop-shadow(0px 0px 0.5em $green);
+        }
+
+        .circle-3-barrier {
+            border-radius: 100% 0% 0% 100%;
+            position: absolute;
+            left: calc(50% - 7em);
+            top: calc(50% - 6em);
+        }
+    }
+
+    .bullets {
+        .bullet {
+            font-size: .6em;
+            opacity: 1;
+            transition: width calc($spin-time / 2);
+            position: fixed;
+            box-sizing: border-box;
+        }
+
+        .bullet-1 {
+            left: 50%;
+            top: calc(50% - 5em);
+            width: 0;
+            height: .3em;
+            background-color: $blue;
+        }
+
+        .bullet-2 {
+            left: 50%;
+            top: calc(50% - -3.7em);
+            width: 0;
+            height: .3em;
+            background-color: $pink;
+        }
+
+        .bullet-3 {
+            right: 50%;
+            top: calc(50% - -2.7em);
+            width: 0;
+            height: .2em;
+            background-color: $green;
+        }
+    }
+}
+
+.shadow {
+    height: 1.5em;
+    width: 1.5em;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: calc(50% - .75em);
+    left: calc(50% - .75em);
+    box-shadow: 0px 0px 3em 5em $black;
+
+}
+
+.center-dot {
+    height: 1.5em;
+    width: 1.5em;
+    background-color: $white;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: calc(50% - .75em);
+    left: calc(50% - .75em);
+
+}
+
+.loader {
+    &.FIRING_FIRST, &.FIRING_SECOND, &.FIRING_THIRD {
+        .circle-1-barrier {
+            visibility: visible;
+        }
+
+        .circle-1 {
+            opacity: 0;
+        }
+
+        .bullet-1 {
+            width: 10em;
+            display: block;
+            animation: $spin-time calc($spin-time / 2 - 0.1s) bullet-right ease-out 1 forwards;
+            box-shadow: 0.2em 0 0.5em 0.1em $blue;
+        }
+    }
+
+    &.FIRING_SECOND, &.FIRING_THIRD {
+        .circle-2-barrier {
+            visibility: visible;
+        }
+
+        .circle-2 {
+            opacity: 0;
+        }
+
+        .bullet-2 {
+            width: 10em;
+            display: block;
+            animation: $spin-time calc($spin-time / 2 - 0.1s) bullet-right ease-out 1 forwards;
+            box-shadow: 0.2em 0 0.5em 0.1em $pink;
+        }
+    }
+
+    &.FIRING_THIRD {
+        .circle-3-barrier {
+            visibility: visible;
+        }
+
+        .circle-3 {
+            opacity: 0;
+        }
+
+        .bullet-3 {
+            width: 10em;
+            display: block;
+            animation: $spin-time calc($spin-time / 2 - 0.1s) bullet-left ease-out 1 forwards;
+            box-shadow: 0.2em 0 0.4em 0.1em $green;
+        }
+    }
+}
+
+@keyframes bullet-right {
+    from {left: 50%}
+    to {left: 80%}
+}
+
+@keyframes bullet-left {
+    from {right: 50%}
+    to {right: 80%}
+}
+
+@keyframes loader {
+    from {transform: rotate(-90deg)}
+    to {transform: rotate(270deg)}
+}
+
+@keyframes loader-reverse {
+    from {transform: rotate(270deg)}
+    to {transform: rotate(-90deg)}
+}

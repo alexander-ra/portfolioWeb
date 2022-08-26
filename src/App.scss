@@ -1,0 +1,24 @@
+$pink: #c6538c;
+$blue: #197df5;
+$green: #99e032;
+$white: #faecef;
+$black: #262325;
+
+p {
+  color: $white;
+  font-size: 2em;
+}
+
+body {
+  background: $black;
+  font-size: 1vmax;
+}
+
+.main-wrapper {
+  background-image: url("../public/subtle-prism.svg");
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}

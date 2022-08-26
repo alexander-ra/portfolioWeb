@@ -1,0 +1,7 @@
+export enum LoadingStage {
+    LOADING = "LOADING",
+    FIRING_FIRST = "FIRING_FIRST",
+    FIRING_SECOND = "FIRING_SECOND",
+    FIRING_THIRD = "FIRING_THIRD",
+    FINAL_BLOW = "FINAL_BLOW",
+}
