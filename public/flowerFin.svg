@@ -1,0 +1,52 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'>
+  <rect fill='#FFFFFF' width='2000' height='2000' />
+  <defs>
+    <g id='a'>
+      <path fill-opacity='0.1' d='M0 0c133-133 268-133 400 0C268 133 133 133 0 0z' transform=''>
+        <animateTransform attributeType="xml" attributeName="transform" type="translate" dur="10s" values="0, 100; 100, 0; 0, 100" repeatCount="indefinite" />
+      </path>
+    </g>
+  </defs>
+  <g transform='' style='transform-origin:center'>
+    <g transform=''>
+      <g transform='translate(1000 750)'>
+        <use href='#a' fill='#20073A' />
+        <use href='#a' fill='#390950' transform='rotate(10)' />
+        <use href='#a' fill='#590c65' transform='rotate(20)' />
+        <use href='#a' fill='#7b0e75' transform='rotate(30)' />
+        <use href='#a' fill='#901171' transform='rotate(40)' />
+        <use href='#a' fill='#a61366' transform='rotate(50)' />
+        <use href='#a' fill='#bc1554' transform='rotate(60)' />
+        <use href='#a' fill='#d2173a' transform='rotate(70)' />
+        <use href='#a' fill='#e61b1b' transform='rotate(80)' />
+        <use href='#a' fill='#e85331' transform='rotate(90)' />
+        <use href='#a' fill='#eb8446' transform='rotate(100)' />
+        <use href='#a' fill='#eeae5b' transform='rotate(110)' />
+        <use href='#a' fill='#F0D171' transform='rotate(120)' />
+        <use href='#a' fill='#edbb62' transform='rotate(130)' />
+        <use href='#a' fill='#eaa153' transform='rotate(140)' />
+        <use href='#a' fill='#e68544' transform='rotate(150)' />
+        <use href='#a' fill='#e26736' transform='rotate(160)' />
+        <use href='#a' fill='#de4628' transform='rotate(170)' />
+        <use href='#a' fill='#d12b22' transform='rotate(180)' />
+        <use href='#a' fill='#c0212c' transform='rotate(190)' />
+        <use href='#a' fill='#af203b' transform='rotate(200)' />
+        <use href='#a' fill='#9e1f45' transform='rotate(210)' />
+        <use href='#a' fill='#8d1d4c' transform='rotate(220)' />
+        <use href='#a' fill='#7d1b50' transform='rotate(230)' />
+        <use href='#a' fill='#6D1950' transform='rotate(240)' />
+        <use href='#a' fill='#691753' transform='rotate(250)' />
+        <use href='#a' fill='#651555' transform='rotate(260)' />
+        <use href='#a' fill='#611357' transform='rotate(270)' />
+        <use href='#a' fill='#5d1259' transform='rotate(280)' />
+        <use href='#a' fill='#581059' transform='rotate(290)' />
+        <use href='#a' fill='#4f0f55' transform='rotate(300)' />
+        <use href='#a' fill='#460d51' transform='rotate(310)' />
+        <use href='#a' fill='#3e0c4c' transform='rotate(320)' />
+        <use href='#a' fill='#360a48' transform='rotate(330)' />
+        <use href='#a' fill='#2e0943' transform='rotate(340)' />
+        <use href='#a' fill='#27083f' transform='rotate(350)' />
+      </g>
+    </g>
+  </g>
+</svg>

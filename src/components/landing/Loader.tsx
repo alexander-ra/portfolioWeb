@@ -11,7 +11,7 @@ interface LoaderState {
 
 class Loader extends React.Component<LoaderProps, LoaderState> {
     private DUMMY_LOAD_LAPS = 2;
-    private LAP_TIME_MS = 1500;
+    private LAP_TIME_MS = 1000;
     private STAGE_ONE_TIME_MS = 200;
 
     constructor(props: LoaderProps){
@@ -34,8 +34,8 @@ class Loader extends React.Component<LoaderProps, LoaderState> {
                     this.setState({
                         stage: LoadingStage.FIRING_THIRD
                     })
-                }, this.LAP_TIME_MS / 2);
-            }, this.LAP_TIME_MS / 2);
+                }, this.LAP_TIME_MS * 1.5);
+            }, this.LAP_TIME_MS * 1.5);
         }, this.DUMMY_LOAD_LAPS * this.LAP_TIME_MS);
     }
 
@@ -46,7 +46,7 @@ class Loader extends React.Component<LoaderProps, LoaderState> {
         }
         return (
             <div className={`loader ${className}`}>
-                <div className="circles-wrap">
+                <div className="loader-wrap">
                     <div className="shadow"></div>
                     <div className="circles">
                         <div className="circle-1 circle"></div>
