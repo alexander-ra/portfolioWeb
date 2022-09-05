@@ -1,5 +1,5 @@
 import React from 'react';
-import '../landing/Devices.scss';
+import './Header.scss';
 
 interface DevicesProps {
 }

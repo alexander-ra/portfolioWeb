@@ -7,6 +7,13 @@ $light-black: #2c282b;
 $screen-reflect: #d7e5f5;
 $screen: #b4c8de;
 
+$dark-purple: #20073a;
+$purple: #6D1950;
+$dark-orange: #CD4545;
+$orange: #D48849;
+$yellow: #F0D171;
+
+
 p {
   color: $white;
   font-size: 2em;
@@ -18,7 +25,7 @@ body {
 }
 
 .main-wrapper {
-  background-image: url("../public/flowerFin.svg");
+  background: url("../public/gradient-cubes.svg") center;
   position: fixed;
   top: 0;
   left: 0;

@@ -1,0 +1,31 @@
+@import "../../App";
+
+.header-wrapper {
+    background-color: rgba($dark-purple, 1);
+    height: 2.5em;
+    color: $white;
+    z-index: 3;
+    position: absolute;
+    width: 100%;
+
+    .navigation-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+
+        .navigation-item {
+            padding: 0 1em;
+            margin: 0 2em;
+            cursor: pointer;
+
+            &:hover {
+                //text-decoration: underline;
+                color: $orange;
+            }
+        }
+    }
+
+}

@@ -1,16 +1,15 @@
 import React from 'react';
 import './App.scss';
-import Loader from "./components/landing/Loader";
-import PreviewText from "./components/landing/PreviewText";
-import Devices from "./components/landing/Devices";
+import Header from "./components/layout/Header";
+import LandingCube from "./components/landing/LandingCube";
 
 function App() {
+
   return (
       <div className="main-wrapper">
-        <PreviewText />
-        <Loader/>
-        <Devices />
-    </div>
+          <Header></Header>
+          <LandingCube></LandingCube>
+      </div>
     );
 }
 

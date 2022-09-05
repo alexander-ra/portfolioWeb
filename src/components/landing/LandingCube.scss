@@ -1,0 +1,105 @@
+@import "../../App";
+
+
+.flower {
+    background: url("../../../public/flowerFin.svg") no-repeat center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    transform: rotate(0deg);
+    animation: spin 60s linear infinite;
+    z-index: 1;
+}
+
+.cube-wrapper {
+    position: absolute;
+    left: calc(50% - 7em);
+    TOP: calc(50% - 7em);
+    width: 14em;
+    height: 14em;
+    transform-style: preserve-3d;
+    transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg);
+    animation: rotate 20s infinite;
+    transition: transform 2s;
+    z-index: 2;
+
+    &:hover {
+        //transform: scale(1.2);
+        //animation: none;
+
+        .cube {
+            box-shadow: 0 0 2em .1em $orange;
+            border: 0.2em solid $dark-orange;
+        }
+    }
+
+    .cube {
+        transition-property: box-shadow, border;
+        transition-duration: 1s, 1s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        backface-visibility: inherit;
+        color: #fff;
+        box-sizing: border-box;
+        border: 0.2em solid $purple;
+        border-radius: 0.3em;
+        background: url("../../../public/quantum-gradient.svg") no-repeat center;
+        background-size: cover;
+        box-shadow: 0 0 1em $purple;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .cube-bottom {
+        transform: rotateX(-90deg) translateZ(6.9em) scaleX(-1);
+    }
+
+    .cube-left {
+        transform: translateZ(6.9em) scaleX(-1) scaleY(-1);
+    }
+
+    .cube-right {
+        transform: rotateY(90deg) translateZ(6.9em) scaleY(-1);
+    }
+}
+
+
+.enter-text {
+    font-size: 1.5em;
+    z-index: 3;
+    position: absolute;
+    left: calc(50% - 1em);
+    bottom: 2em;
+    filter: drop-shadow(0 0 .75em $yellow);
+    color: $dark-purple;
+    text-decoration: underline;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+@keyframes spin {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
+}
+
+@keyframes float {
+    0% {top: calc(50% - 0.25em);}
+    50% {top: calc(50% + 0.25em);}
+    100% {top: calc(50% - 0.25em);}
+}
+
+@keyframes rotate {
+    0% {transform: scale(1) rotateX(25deg) rotateY(-45deg) rotateZ(0deg);}
+    25% {transform: scale(1.1)  rotateX(35deg) rotateY(-43deg) rotateZ(0deg);}
+    50% {transform: scale(1)  rotateX(25deg) rotateY(-45deg) rotateZ(0deg);}
+    75% {transform: scale(1.1)  rotateX(35deg) rotateY(-47deg) rotateZ(0deg);}
+    100% {transform: scale(1)  rotateX(25deg) rotateY(-45deg) rotateZ(0deg);}
+}

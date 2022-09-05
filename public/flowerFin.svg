@@ -1,9 +1,9 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'>
-  <rect fill='#FFFFFF' width='2000' height='2000' />
+  <rect fill='rgba(0,0,0,0)' width='2000' height='2000' />
   <defs>
     <g id='a'>
-      <path fill-opacity='0.1' d='M0 0c133-133 268-133 400 0C268 133 133 133 0 0z' transform=''>
-        <animateTransform attributeType="xml" attributeName="transform" type="translate" dur="10s" values="0, 100; 100, 0; 0, 100" repeatCount="indefinite" />
+      <path fill-opacity='0.3' d='M0 0c133-133 268-133 400 0C268 133 133 133 0 0z' transform=''>
+        <animateTransform attributeType="xml" attributeName="transform" type="translate" dur="10s" values="0, 10; 100, 0; 0, 10" repeatCount="indefinite" />
       </path>
     </g>
   </defs>
