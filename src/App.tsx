@@ -6,10 +6,13 @@ import LandingCube from "./components/landing/LandingCube";
 function App() {
 
   return (
-      <div className="main-wrapper">
-          <Header></Header>
-          <LandingCube></LandingCube>
-      </div>
+      <>
+          <div className={"background"}></div>
+          <div className="main-wrapper">
+              <Header></Header>
+              <LandingCube></LandingCube>
+          </div>
+      </>
     );
 }
 

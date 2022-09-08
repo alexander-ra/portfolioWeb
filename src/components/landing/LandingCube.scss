@@ -1,9 +1,10 @@
 @import "../../App";
 
-
-.flower {
-    background: url("../../../public/flowerFin.svg") no-repeat center;
+.flower-wrapper {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     height: 100vh;
@@ -11,6 +12,21 @@
     transform: rotate(0deg);
     animation: spin 60s linear infinite;
     z-index: 1;
+    .flower {
+        height: 10%;
+        width: 100%;
+        transition-property: height;
+        transition-duration: 1s;
+        transition-delay: .8s;
+        background: url("../../../public/flowerFin.svg") no-repeat center;
+    }
+
+    &.opened {
+        .flower {
+            visibility: visible;
+            height: 100%;
+        }
+    }
 }
 
 .cube-wrapper {
@@ -22,22 +38,113 @@
     transform-style: preserve-3d;
     transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg);
     animation: rotate 20s infinite;
-    transition: transform 2s;
-    z-index: 2;
+    z-index: 3;
+
+    &.opened {
+        .cube-initial {
+            clip-path: polygon(100% 100%, 100% 0, 100% 100%, 0 100%);
+        }
+    }
 
     &:hover {
-        //transform: scale(1.2);
-        //animation: none;
-
         .cube {
             box-shadow: 0 0 2em .1em $orange;
-            border: 0.2em solid $dark-orange;
+            border: 0.2em solid $orange;
+
+            &.cube-bottom {
+                transform: rotateX(-90deg) translateZ(7.4em);
+            }
+
+            &.cube-left {
+                transform: translateZ(7.4em);
+            }
+
+            &.cube-right {
+                transform: rotateY(90deg) translateZ(7.4em);
+            }
+        }
+
+        .cube-initial {
+            box-shadow: 0 0 2em .1em $orange;
+            border: 0.2em solid $orange;
+
+            &.cube-bottom-initial {
+                transform: rotateX(-90deg) translateZ(7.4em) scaleX(-1);
+            }
+
+            &.cube-left-initial {
+                transform: translateZ(7.4em) scaleX(-1) scaleY(-1);
+            }
+
+            &.cube-right-initial {
+                transform: rotateY(90deg) translateZ(7.4em) scaleY(-1);
+            }
         }
     }
 
     .cube {
-        transition-property: box-shadow, border;
-        transition-duration: 1s, 1s;
+        transition-property: box-shadow, border, transform;
+        transition-duration: 1s, 1s, 1s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        backface-visibility: inherit;
+        color: #fff;
+        box-sizing: border-box;
+        border: 0.2em solid $purple;
+        border-radius: 0.3em;
+        box-shadow: 0 0 1em $purple;
+        z-index: 4;
+        background-size:     cover;                      /* <------ */
+        background-repeat:   no-repeat;
+        background-position: center center;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        .wall-icon {
+            width: 7em;
+            height: 7em;
+            background-size: cover;
+            background-position: center;
+        }
+    }
+
+    .cube-bottom {
+        transform: rotateX(-90deg) translateZ(6.9em);
+        background-image: url("../../../public/walls/castle.png");
+
+        .wall-icon {
+            background-image: url("../../../public/walls/castleIcon.svg");
+            transform: rotate(45deg);
+        }
+    }
+
+    .cube-left {
+        transform: translateZ(6.9em);
+        background-image: url("../../../public/walls/rome.png");
+
+        .wall-icon {
+            background-image: url("../../../public/walls/romeIcon.svg");
+        }
+    }
+
+    .cube-right {
+        transform: rotateY(90deg) translateZ(6.9em);
+        background-image: url("../../../public/walls/chess.png");
+
+        .wall-icon {
+            background-image: url("../../../public/walls/chessIcon.svg");
+        }
+    }
+
+    .cube-initial {
+        transition-property: box-shadow, border, transform, clip-path;
+        transition-duration: 1s, 1s, 1s, 2s;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -52,23 +159,38 @@
         background: url("../../../public/quantum-gradient.svg") no-repeat center;
         background-size: cover;
         box-shadow: 0 0 1em $purple;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        z-index: 5;
 
         &:hover {
             cursor: pointer;
         }
     }
 
-    .cube-bottom {
+    .cube-bottom-initial {
         transform: rotateX(-90deg) translateZ(6.9em) scaleX(-1);
     }
 
-    .cube-left {
+    .cube-left-initial {
         transform: translateZ(6.9em) scaleX(-1) scaleY(-1);
     }
 
-    .cube-right {
+    .cube-right-initial {
         transform: rotateY(90deg) translateZ(6.9em) scaleY(-1);
     }
+}
+
+.cube-core{
+    position: absolute;
+    left: calc(50% - 7em);
+    TOP: calc(50% - 7em);
+    width: 14em;
+    height: 14em;
+    border-radius: 50%;
+    box-shadow: 0 0 .25em 2em $yellow;
+    background-color: $yellow;
+    z-index: 2;
+    animation: scale 10s infinite;
 }
 
 
@@ -78,7 +200,6 @@
     position: absolute;
     left: calc(50% - 1em);
     bottom: 2em;
-    filter: drop-shadow(0 0 .75em $yellow);
     color: $dark-purple;
     text-decoration: underline;
     text-transform: capitalize;
@@ -102,4 +223,10 @@
     50% {transform: scale(1)  rotateX(25deg) rotateY(-45deg) rotateZ(0deg);}
     75% {transform: scale(1.1)  rotateX(35deg) rotateY(-47deg) rotateZ(0deg);}
     100% {transform: scale(1)  rotateX(25deg) rotateY(-45deg) rotateZ(0deg);}
+}
+
+@keyframes scale {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.1);}
+    100% {transform: scale(1);}
 }

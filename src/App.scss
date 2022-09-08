@@ -24,8 +24,16 @@ body {
   font-size: 1vmax;
 }
 
-.main-wrapper {
+.background {
   background: url("../public/gradient-cubes.svg") center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.main-wrapper {
   position: fixed;
   top: 0;
   left: 0;
