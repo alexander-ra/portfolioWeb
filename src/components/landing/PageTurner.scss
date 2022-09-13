@@ -1,0 +1,92 @@
+.page-flip { //holder element
+    position: absolute;
+    padding: 1em;
+    margin: auto;
+    margin-top: 10em;
+    padding-left: 20em;
+    padding-bottom: 20em;
+    border: 2px solid black;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+
+    .p1, .p2, .p3 {
+        div {
+            width: 250px;
+            height: 250px;
+            background-size: cover;
+        }
+    }
+
+    .r1 { //wrapper element for first page
+        background: linear-gradient(white 50%, black 50%);
+        position: absolute;
+        z-index: 2;
+        transform-origin: 1315px 500px;
+        transform: translate(-1030px, -500px) rotate(-45deg);
+        transition-property: transform, transform-origin;
+        transition-duration: 1s;
+
+        .p1 { //holder element for first page
+            width: 1285px;
+            height: 1285px;
+            overflow: hidden;
+
+            div { // first page
+                transform-origin: 285px 0;
+                transform: translate(1030px, 500px) rotate(45deg);
+                transition-property: transform, transform-origin;
+                transition-duration: 1s;
+                background-image: url("../../../public/walls/chess.png");
+            }
+        }
+    }
+
+    .p2 { //holder element for second page
+        div {  // second page
+            position: absolute;
+            z-index: 1;
+            background-image: url("../../../public/walls/castle.png") ;
+        }
+
+    }
+
+    .r3 { //wrapper element for third page
+        // background: linear-gradient(red 50%, blue 50%);
+        transform-origin: 1315px 500px;
+        transform: translate(-1030px, -500px) rotate(-45deg);
+        transition-property: transform, transform-origin;
+        transition-duration: 1s;
+        position: absolute;
+        z-index: 2;
+        .p3{ //holder element for third page
+            width: 1285px;
+            height: 1388px;
+            overflow: hidden;
+
+            div { //third page
+                transform-origin: 0 0;
+                transform: translate(1255px, 500px) rotate(-45deg);
+                transition-property: transform, transform-origin;
+                transition-duration: 1s;
+                background-image: url("../../../public/walls/rome.png");
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+.page-flip:hover
+{
+    .r1, r3 {
+        transform: translate(-1135px, -400px) rotate(-45deg);
+    }
+
+    .p1 > div {
+        transform: translate(1135px, 400px) rotate(45deg);
+    }
+
+    .p3 > div {
+        transform: translate(1035px, 500px) rotate(-45deg);
+    }
+}

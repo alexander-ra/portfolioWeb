@@ -13,6 +13,11 @@ $dark-orange: #CD4545;
 $orange: #D48849;
 $yellow: #F0D171;
 
+@font-face {
+  font-family: MAGIC;
+  src: url("../public/fonts/MAGIC.otf") format("opentype");
+}
+
 
 p {
   color: $white;

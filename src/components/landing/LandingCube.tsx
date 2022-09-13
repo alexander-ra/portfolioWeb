@@ -5,51 +5,113 @@ interface LandingCubeProps {
 }
 
 interface LandingCubeState {
-    openedFlower: boolean;
+    coveredCubeVisible?: boolean;
+    cubeOpened?: boolean;
 }
 
 class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
-
+    private CUBE_OPEN_TIME_MS = 5000;
     constructor(props: LandingCubeProps) {
         super(props);
 
-        this.setState({
-            openedFlower: false
-        })
+        this.state = {
+            cubeOpened: false,
+            coveredCubeVisible: true
+        };
     }
 
     openFlower(): void {
         this.setState({
-            openedFlower: (this.state && this.state.openedFlower === true) ? false : true
+            cubeOpened: true
         })
+        setTimeout(() =>
+            this.setState({
+                coveredCubeVisible: false
+            })
+            , this.CUBE_OPEN_TIME_MS);
     }
 
 
     render(){
-        return (
-        <>
-            <div className={`flower-wrapper ${this.state && this.state.openedFlower ? "opened" : ""}`}>
-                <div className={"flower"}></div>
-            </div>
-            <div className={"enter-text"}>
-                Enter
-            </div>
-            <div className={`cube-wrapper  ${this.state && this.state.openedFlower ? "opened" : ""}`} onClick={this.openFlower.bind(this)}>
-                <div className={"cube cube-bottom"}>
-                    <div className={"wall-icon"}></div>
+        return (<>
+            <div className="loading-element-wrapper">
+                    {/*<div className={`flower-wrapper ${this.state.cubeOpened ? "opened" : ""}`}>*/}
+                    {/*    <div className={"flower"}></div>*/}
+                    {/*</div>*/}
+                    {!this.state.cubeOpened && <div className={"title-text"}>
+                        ENTER
+                    </div>}
+                    <div className={"cube-core"}></div>
+                    <div className={`cube-wrapper  ${this.state.cubeOpened ? "opened" : ""}`} onClick={this.openFlower.bind(this)}>
+                        {this.state.coveredCubeVisible && <>
+                            <div  className={"wall-initial wall-bottom-initial"}>
+                                <div className={"wall-inside-wrapper"}>
+                                    <div className={"wall-inside"}>
+                                    </div>
+                                    <div className={"wall-inside-under-wrapper"}>
+                                        <div className={"wall-inside-under"}>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={"wall-initial wall-left-initial"}>
+                                <div className={"wall-inside-wrapper"}>
+                                    <div className={"wall-inside"}>
+                                    </div>
+                                    <div className={"wall-inside-under-wrapper"}>
+                                        <div className={"wall-inside-under"}>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={"wall-initial wall-right-initial"}>
+                                <div className={"wall-inside-wrapper"}>
+                                    <div className={"wall-inside"}>
+                                    </div>
+                                    <div className={"wall-inside-under-wrapper"}>
+                                        <div className={"wall-inside-under"}>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </>}
+                        <>
+                            <div className={"wall wall-bottom"}>
+                                <div className={"wall-icon"}></div>
+                            </div>
+                            <div className={"wall wall-left"}>
+                                <div className={"wall-icon"}></div>
+                            </div>
+                            <div className={"wall wall-right"}>
+                                <div className={"wall-icon"}></div>
+                            </div>
+                        </>
+                    </div>
                 </div>
-                <div className={"cube cube-left"}>
-                    <div className={"wall-icon"}></div>
-                </div>
-                <div className={"cube cube-right"}>
-                    <div className={"wall-icon"}></div>
-                </div>
-                <div className={"cube-initial cube-bottom-initial"}></div>
-                <div className={"cube-initial cube-left-initial"}></div>
-                <div className={"cube-initial cube-right-initial"}></div>
-            </div>
-            <div className={"cube-core"}>
-            </div>
+                {/*<div className={"page-turner"}>*/}
+                {/*    <div className="page-flip">*/}
+                {/*        <div className="r1">*/}
+                {/*            <div className="p1">*/}
+                {/*                <div>*/}
+                {/*                    1*/}
+                {/*                </div>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*        <div className="p2">*/}
+                {/*            <div>2</div>*/}
+                {/*        </div>*/}
+                {/*        <div className="r3">*/}
+                {/*            <div className="p3">*/}
+                {/*                <div>*/}
+                {/*                    3*/}
+                {/*                </div>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
         </>
         )
     }
