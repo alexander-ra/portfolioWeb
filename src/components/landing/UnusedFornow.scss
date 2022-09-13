@@ -1,0 +1,33 @@
+.flower-wrapper {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    transform: rotate(0deg);
+    animation: spin 60s linear infinite;
+    z-index: 1;
+    .flower {
+        display: none;
+        height: 10%;
+        width: 10%;
+        background: url("../../../public/flowerFin.svg") no-repeat center;
+        background-size: cover;
+    }
+
+    &.opened {
+        .flower {
+            display: block;
+            animation-name: cvetence;
+            animation-delay: .1s;
+            animation-duration: 3s;
+            animation-timing-function: ease-out;
+            animation-fill-mode: forwards;
+            visibility: visible;
+        }
+    }
+}
+

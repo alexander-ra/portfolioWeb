@@ -10,7 +10,7 @@ interface LandingCubeState {
 }
 
 class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
-    private CUBE_OPEN_TIME_MS = 5000;
+    private CUBE_OPEN_TIME_MS = 20000;
     constructor(props: LandingCubeProps) {
         super(props);
 
@@ -35,9 +35,9 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
     render(){
         return (<>
             <div className="loading-element-wrapper">
-                    {/*<div className={`flower-wrapper ${this.state.cubeOpened ? "opened" : ""}`}>*/}
-                    {/*    <div className={"flower"}></div>*/}
-                    {/*</div>*/}
+                    <div className={`flower-wrapper ${this.state.cubeOpened ? "opened" : ""}`}>
+                        <div className={"flower"}></div>
+                    </div>
                     {!this.state.cubeOpened && <div className={"title-text"}>
                         ENTER
                     </div>}
@@ -80,13 +80,28 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
                         </>}
                         <>
                             <div className={"wall wall-bottom"}>
-                                <div className={"wall-icon"}></div>
+                                <div className={"wall-content"}>
+                                    <div className={"wall-icon"}></div>
+                                </div>
+                                <div className={"wall-label"}>
+                                    Past Experience
+                                </div>
                             </div>
                             <div className={"wall wall-left"}>
-                                <div className={"wall-icon"}></div>
+                                <div className={"wall-content"}>
+                                    <div className={"wall-icon"}></div>
+                                </div>
+                                <div className={"wall-label"}>
+                                    Client Approach
+                                </div>
                             </div>
                             <div className={"wall wall-right"}>
-                                <div className={"wall-icon"}></div>
+                                <div className={"wall-content"}>
+                                    <div className={"wall-icon"}></div>
+                                </div>
+                                <div className={"wall-label"}>
+                                    Play Chess Demo
+                                </div>
                             </div>
                         </>
                     </div>

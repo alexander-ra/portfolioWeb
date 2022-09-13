@@ -1,36 +1,8 @@
 @import "../../App";
 @import "PageTurner";
+@import "UnusedFornow";
 
-.flower-wrapper {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    transform: rotate(0deg);
-    animation: spin 60s linear infinite;
-    z-index: 1;
-    .flower {
-        height: 20%;
-        width: 20%;
-        background: url("../../../public/flowerFin.svg") no-repeat center;
-        background-size: cover;
-    }
-
-    &.opened {
-        .flower {
-            animation-name: cvetence;
-            animation-delay: .5s;
-            animation-duration: 3s;
-            animation-timing-function: ease-out;
-            animation-fill-mode: forwards;
-            visibility: visible;
-        }
-    }
-}
+$otlepvaneTime: 1.5s;
 
 .cube-wrapper {
     cursor: pointer;
@@ -47,27 +19,28 @@
     &.opened {
         .wall-initial {
             box-shadow: none;
-            box-shadow: none;
-            animation: otlepvane 5s linear forwards;
+            animation: otlepvane $otlepvaneTime linear forwards;
 
             .wall-inside-wrapper {
-                transition-duration: 2.5s, 2.5s;
-                transition-delay: 2.5s, 2.5s;
+                transition-duration: calc($otlepvaneTime / 2), calc($otlepvaneTime / 2);
+                transition-delay: calc($otlepvaneTime / 2), calc($otlepvaneTime / 2);
                 transition-property: left, top;
                 top: -5em;
                 left: -5em;
 
                 .wall-inside {
+
+
                 }
                 .wall-inside-under-wrapper {
                     transition-property: top, left;
 
-                    transition-duration: 5s, 5s;
+                    transition-duration: $otlepvaneTime, $otlepvaneTime;
                     left: 103%;
 
                     .wall-inside-under {
                         transform: scaleX(1) rotateZ(45deg);
-                        background-color: $yellow;
+                        background-color: $dark-purple;
                     }
                 }
             }
@@ -75,13 +48,24 @@
 
         .wall {
             box-shadow: 0 0 1em $purple;
+
+            .wall-label {
+                top: -1.4em;
+            }
+
+            &.wall-bottom {
+                .wall-label {
+                    top: unset;
+                    bottom: -1.4em;
+                }
+            }
         }
     }
 
-    &:hover {
+    &:hover, &.opened {
         .wall {
             box-shadow: 0 0 2em .1em $orange;
-            border: 0.2em solid $orange;
+            border: 0.2em solid $yellow;
 
             &.wall-bottom {
                 transform: rotateX(-90deg) translateZ(7.4em);
@@ -129,47 +113,83 @@
         border: 0.2em solid $purple;
         border-radius: 0.3em;
         z-index: 4;
-        background-size:     cover;                      /* <------ */
-        background-repeat:   no-repeat;
-        background-position: center center;
 
         &:hover {
             cursor: pointer;
         }
 
-        .wall-icon {
-            width: 7em;
-            height: 7em;
+        .wall-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            background-size:     cover;                      /* <------ */
+            background-repeat:   no-repeat;
+            background-position: center center;
+
+            .wall-icon {
+                width: 7em;
+                height: 7em;
+                background-size: cover;
+                background-position: center;
+            }
+        }
+
+        .wall-label {
+            position: absolute;
+            top: 0;
+            width: 8em;
+            height: 1.4em;
+            text-align: center;
+            background-color: $yellow;
             background-size: cover;
             background-position: center;
+            font-size: 1.1em;
+            z-index: 1;
+            transition-property: top, bottom;
+            transition-delay: 3s, 3s;
+            transition-duration: 1s, 1s;
         }
     }
 
     .wall-bottom {
         transform: rotateX(-90deg) translateZ(6.9em);
-        background-image: url("../../../public/walls/castle.png");
 
-        .wall-icon {
-            background-image: url("../../../public/walls/castleIcon.svg");
-            transform: rotate(45deg);
+        .wall-content {
+            background-image: url("../../../public/walls/castle.png");
+            .wall-icon {
+                background-image: url("../../../public/walls/castleIcon.svg");
+                transform: rotate(45deg);
+            }
+        }
+
+        .wall-label {
+            top: unset;
+            bottom: 0em;
         }
     }
 
     .wall-left {
         transform: translateZ(6.9em);
-        background-image: url("../../../public/walls/rome.png");
 
-        .wall-icon {
-            background-image: url("../../../public/walls/romeIcon.svg");
+        .wall-content {
+            background-image: url("../../../public/walls/rome.png");
+            .wall-icon {
+                background-image: url("../../../public/walls/romeIcon.svg");
+            }
         }
     }
 
     .wall-right {
         transform: rotateY(90deg) translateZ(6.9em);
-        background-image: url("../../../public/walls/chess.png");
 
-        .wall-icon {
-            background-image: url("../../../public/walls/chessIcon.svg");
+        .wall-content {
+            background-image: url("../../../public/walls/chess.png");
+            .wall-icon {
+                background-image: url("../../../public/walls/chessIcon.svg");
+            }
         }
     }
 
@@ -233,7 +253,7 @@
 
                 .wall-inside-under {
                     transition-property: transofrm, background-color;
-                    transition-duration: 1s, 5s;
+                    transition-duration: 1s, $otlepvaneTime;
                     position: absolute;
                     margin-top: 2.9em;
                     margin-left: 2.9em;
@@ -298,11 +318,11 @@
 }
 
 @keyframes rotate {
-    0% {transform: scale(1) rotateX(25deg) rotateY(-45deg) rotateZ(0deg);}
+    0% {transform: scale(1) rotateX(30deg) rotateY(-45deg) rotateZ(0deg);}
     25% {transform: scale(1.1)  rotateX(35deg) rotateY(-43deg) rotateZ(0deg);}
-    50% {transform: scale(1)  rotateX(25deg) rotateY(-45deg) rotateZ(0deg);}
+    50% {transform: scale(1)  rotateX(30deg) rotateY(-45deg) rotateZ(0deg);}
     75% {transform: scale(1.1)  rotateX(35deg) rotateY(-47deg) rotateZ(0deg);}
-    100% {transform: scale(1)  rotateX(25deg) rotateY(-45deg) rotateZ(0deg);}
+    100% {transform: scale(1)  rotateX(30deg) rotateY(-45deg) rotateZ(0deg);}
 }
 
 @keyframes scaleAnim {
@@ -313,14 +333,15 @@
 
 @keyframes otlepvane {
     0% {clip-path: polygon(0% 0, 100% 0, 100% 100%, 0 100%, 0 0%, 0% 0%);}
-    50% {clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%, 0 100%, 60% 60%);}
-    66% {clip-path: polygon(200% 0, 250% 0, 175% 175%, 0 250%, 0 200%, 78% 78%); opacity: 1}
-    75% {clip-path: polygon(200% 0, 250% 0, 175% 175%, 0 250%, 0 200%, 96% 96%); opacity: 0}
-    100% {clip-path: polygon(200% 0, 250% 0, 175% 175%, 0 250%, 0 200%, 96% 96%); opacity: 0}
+    50% {clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%, 0 100%, 60% 60%); opacity: 1}
+    66% {clip-path: polygon(105% 66%, 105% 90%, 100% 100%, 90% 105%, 66% 105%, 90% 90%); opacity: .5}
+    70% {opacity: .2}
+    75% {clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%); opacity: 0}
+    100% {opacity: 0}
 }
 
 @keyframes cvetence {
     0% {height: 20%; width: 20%}
-    60% {height: 120%; width: 120%}
-    100% {height: 80%; width: 80%}
+    60% {height: 90%; width: 90%}
+    100% {height: 70%; width: 70%}
 }
