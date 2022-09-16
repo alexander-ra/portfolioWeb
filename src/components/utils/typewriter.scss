@@ -1,0 +1,28 @@
+@import "../../App";
+
+.typewriter-wrapper {
+  margin: 0 20em;
+}
+
+.line-1{
+  height: 1.5em;
+  position: relative;
+  top: 50%;
+  margin: 0;
+  color: $dark-purple;
+  text-align: center;
+  font-size: 1.25em;
+  transform: translateY(-50%);
+}
+
+/* Animation */
+.anim-typewriter{
+  margin-left: .2em;
+  font-size: 1.25em;
+  border-right: 2px solid $dark-purple;
+  animation: blinkTextCursor 800ms infinite ease-in;
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: $dark-purple;}
+  to{border-right-color: transparent;}
+}

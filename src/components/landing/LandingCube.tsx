@@ -1,5 +1,6 @@
 import React from 'react';
 import './LandingCube.scss';
+import Typewriter from "../utils/Typewriter";
 
 interface LandingCubeProps {
 }
@@ -38,8 +39,8 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
                     <div className={`flower-wrapper ${this.state.cubeOpened ? "opened" : ""}`}>
                         <div className={"flower"}></div>
                     </div>
-                    {!this.state.cubeOpened && <div className={"title-text"}>
-                        ENTER
+                    {<div className={"title-text"}>
+                        <Typewriter />
                     </div>}
                     <div className={"cube-core"}></div>
                     <div className={`cube-wrapper  ${this.state.cubeOpened ? "opened" : ""}`} onClick={this.openFlower.bind(this)}>
@@ -106,27 +107,6 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
                         </>
                     </div>
                 </div>
-                {/*<div className={"page-turner"}>*/}
-                {/*    <div className="page-flip">*/}
-                {/*        <div className="r1">*/}
-                {/*            <div className="p1">*/}
-                {/*                <div>*/}
-                {/*                    1*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*        <div className="p2">*/}
-                {/*            <div>2</div>*/}
-                {/*        </div>*/}
-                {/*        <div className="r3">*/}
-                {/*            <div className="p3">*/}
-                {/*                <div>*/}
-                {/*                    3*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
         </>
         )
     }

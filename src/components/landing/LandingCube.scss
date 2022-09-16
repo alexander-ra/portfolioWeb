@@ -292,23 +292,17 @@ $otlepvaneTime: 1.5s;
 }
 
 .title-text {
-    font-family: "MAGIC";
     width: 100%;
-    font-size: 2em;
-    line-height: 1em;
     z-index: 3;
     position: absolute;
     bottom: 3em;
     color: $purple;
     cursor: pointer;
-    text-align: center;
-    text-shadow:0 0 0.33em $orange;
-    animation: scaleAnim 10s infinite;
 }
 
 @keyframes spin {
-    from {transform: rotate(0deg)}
-    to {transform: rotate(360deg)}
+    from {transform: rotate(-35deg)}
+    to {transform: rotate(325deg)}
 }
 
 @keyframes float {
@@ -319,9 +313,9 @@ $otlepvaneTime: 1.5s;
 
 @keyframes rotate {
     0% {transform: scale(1) rotateX(30deg) rotateY(-45deg) rotateZ(0deg);}
-    25% {transform: scale(1.1)  rotateX(35deg) rotateY(-43deg) rotateZ(0deg);}
+    25% {transform: scale(1.1)  rotateX(35deg) rotateY(-40deg) rotateZ(0deg);}
     50% {transform: scale(1)  rotateX(30deg) rotateY(-45deg) rotateZ(0deg);}
-    75% {transform: scale(1.1)  rotateX(35deg) rotateY(-47deg) rotateZ(0deg);}
+    75% {transform: scale(1.1)  rotateX(35deg) rotateY(-50deg) rotateZ(0deg);}
     100% {transform: scale(1)  rotateX(30deg) rotateY(-45deg) rotateZ(0deg);}
 }
 
