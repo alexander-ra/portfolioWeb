@@ -1,7 +1,7 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'>
   <defs>
     <g id='a'>
-      <path fill-opacity='0.5' d='M0 0c133-133 268-133 400 0C268 133 133 133 0 0z' transform=''>
+      <path fill-opacity='0.5' d='M85 0c66-133 222-133 266 0C233 133 133 133 85 0z' transform=''>
         <animateTransform attributeType="xml" attributeName="transform" type="translate" dur="10s" values="0, 10; 50, 0; 0, 10" repeatCount="indefinite" />
       </path>
     </g>
