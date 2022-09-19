@@ -7,19 +7,25 @@
   height: 1.5em;
   position: relative;
   top: 50%;
-  margin: 0;
   color: $dark-purple;
   text-align: center;
   font-size: 1.25em;
   transform: translateY(-50%);
+  transition: width 10s, height 10s;
+
+  &.transparent {
+    color: transparent;
+  }
 }
 
 /* Animation */
 .anim-typewriter{
   margin-left: .2em;
+  margin-right: -.285em;
   font-size: 1.25em;
   border-right: 2px solid $dark-purple;
   animation: blinkTextCursor 800ms infinite ease-in;
+  word-break: break-all;
 }
 @keyframes blinkTextCursor{
   from{border-right-color: $dark-purple;}

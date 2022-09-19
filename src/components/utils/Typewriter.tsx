@@ -10,7 +10,7 @@ interface TypewriterState {
 
 class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
     private initialDelay = 3000;
-    private finalText = "Hi. My name is Alex. I am web developer with a decade of experience in the field. With a focus in the past in front-end banking ang web gaming solutions, I strive to deliver swift web apps with seamless interactiveness and impeccable security."
+    private finalText = "Hi. My name is Alex. I am web developer with a decade of experience in the field. With a focus in the past in front-end banking ang web gaming solutions, I strive to deliver swift web apps with seamless interactiveness and impeccable security. Rotate the cube and select a page for more info. All code of this website is available in git, accessible is via the footer."
     private letterDistance = 25;
     private wordDistance = 35;
     private sentenceDistance = 225;
@@ -51,6 +51,7 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
                 <div className="typewriter-wrapper">
                     <span className="line-1">{this.finalText.slice(0, this.state.currentLetterNum)}</span>
                     <span className="anim-typewriter"></span>
+                    <span className="line-1 transparent">{this.finalText.slice(this.state.currentLetterNum)}</span>
                 </div>
             </>
         )

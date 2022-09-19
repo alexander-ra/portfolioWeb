@@ -181,15 +181,23 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
 
     render(){
         return (<>
+            {this.state.cubeOpened &&
+                <div className={"text-bubble-wrapper"}>
+                    <div className={"text-bubble"}>
+                        <Typewriter />
+                        <div className={"avatar-wrapper"}>
+                            <div className={"avatar-icon"}></div>
+                            <div className={"avatar-name"}>Alex</div>
+                        </div>
+                    </div>
+                </div>
+            }
             <div className="loading-element-wrapper">
                     <div className={`flower-wrapper ${this.state.cubeOpened ? "opened" : ""}`}>
                         <div className={"flower"}></div>
                     </div>
-                    {this.state.cubeOpened && <div className={"title-text"}>
-                        <Typewriter />
-                    </div>}
                     <div className={"cube-core"}></div>
-                    <div draggable="true" className={`cube-wrapper  ${this.state.cubeOpened ? "opened" : "closed"} ${this.state.cubeDragClass} ${this.state.cubeRotationClass} ${this.state.rotationInitialState}`} onClick={this.openFlower.bind(this)}>
+                    <div draggable={this.state.cubeOpened} className={`cube-wrapper  ${this.state.cubeOpened ? "opened" : "closed"} ${this.state.cubeDragClass} ${this.state.cubeRotationClass} ${this.state.rotationInitialState}`} onClick={this.openFlower.bind(this)}>
                         {this.state.coveredCubeVisible && <>
                             <div  className={"wall-initial wall-bottom-initial"}>
                                 <div className={"wall-inside-wrapper"}>
@@ -226,7 +234,8 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
                             </div>
                         </>}
                         <>
-                            <div className={`wall wall-bottom ${this.state.cubeMenuState === CubeMenuStates.BOTTOM ? "selected" : ""}`}>
+                            <div className={`wall wall-bottom ${this.state.cubeMenuState === CubeMenuStates.BOTTOM ? "selected" : ""}`}
+                                 onClick={() => this.setState({rotationInitialState: CubeMenuStates.BOTTOM, cubeMenuState: CubeMenuStates.BOTTOM})}>
                                 <div className={"wall-content"}>
                                     <div className={"wall-icon"}></div>
                                 </div>
@@ -234,7 +243,8 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
                                     Past Experience
                                 </div>
                             </div>
-                            <div className={`wall wall-left ${this.state.cubeMenuState === CubeMenuStates.TOP_LEFT ? "selected" : ""}`}>
+                            <div className={`wall wall-left ${this.state.cubeMenuState === CubeMenuStates.TOP_LEFT ? "selected" : ""}`}
+                                 onClick={() => this.setState({rotationInitialState: CubeMenuStates.TOP_LEFT, cubeMenuState: CubeMenuStates.TOP_LEFT})}>
                                 <div className={"wall-content"}>
                                     <div className={"wall-icon"}></div>
                                 </div>
@@ -242,12 +252,13 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
                                     Client Approach
                                 </div>
                             </div>
-                            <div className={`wall wall-right ${this.state.cubeMenuState === CubeMenuStates.TOP_RIGHT ? "selected" : ""}`}>
+                            <div className={`wall wall-right ${this.state.cubeMenuState === CubeMenuStates.TOP_RIGHT ? "selected" : ""}`}
+                                 onClick={() => this.setState({rotationInitialState: CubeMenuStates.TOP_RIGHT, cubeMenuState: CubeMenuStates.TOP_RIGHT})}>
                                 <div className={"wall-content"}>
                                     <div className={"wall-icon"}></div>
                                 </div>
                                 <div className={"wall-label"}>
-                                    Play Chess Demo
+                                    Chess Demo
                                 </div>
                             </div>
                         </>
