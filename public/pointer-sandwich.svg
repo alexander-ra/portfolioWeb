@@ -1,0 +1,22 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'>
+    <defs>
+        <filter id='a' x='-200%' y='-200%' width='400%' height='400%'>
+            <feGaussianBlur in='SourceGraphic' stdDeviation='50'/>
+        </filter>
+    </defs>
+    <g  fill='#54114b' fill-opacity=".3">
+        <polygon points='-203 1800 -203 -900 397 450'/>
+        <polygon points='1803 -900 1803 1800 1203 450'/>
+    </g>
+    <g  fill='#6D1950' filter='url(#a)'>
+        <polygon points='-203 1581 -203 -681 300 450'/>
+        <polygon points='1803 -681 1803 1581 1300 450'/>
+    </g>
+    <g  fill='#3a0c43' fill-opacity=".4">
+        <polygon points='-203 1581 -203 -681 300 450'/>
+        <polygon points='1803 -681 1803 1581 1300 450'/>
+    </g><g  fill='#20073A' fill-opacity=".5">
+    <polygon points='-203 1356 -203 -456 200 450'/>
+    <polygon points='1803 -456 1803 1356 1400 450'/>
+</g>
+</svg>

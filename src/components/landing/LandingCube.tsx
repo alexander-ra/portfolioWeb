@@ -60,7 +60,9 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
             y: window.screenY
         }
 
-        this.setState({cubeRotationClass: RotationStates.LEFT_ZOOM});
+        setTimeout(() => {
+            this.setState({cubeRotationClass: RotationStates.LEFT_ZOOM});
+        }, 500);
 
         setInterval(() => {
             if (this.state.cubeRotationClass !== RotationStates.NORMAL) {
@@ -73,7 +75,7 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
             } else {
                 this.setState({cubeRotationClass: this.nextRotationClass});
             }
-        }, 5000);
+        }, 3000);
 
         window.addEventListener("dragstart", this.getCoordinates.bind(this));
         window.addEventListener("drag", this.dragRotate.bind(this));
@@ -181,17 +183,37 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
 
     render(){
         return (<>
-            {this.state.cubeOpened &&
-                <div className={"text-bubble-wrapper"}>
-                    <div className={"text-bubble"}>
-                        <Typewriter />
-                        <div className={"avatar-wrapper"}>
-                            <div className={"avatar-icon"}></div>
-                            <div className={"avatar-name"}>Alex</div>
-                        </div>
+            <div className={`text-bubble-wrapper bubble-wrapper ${this.state.cubeOpened ? "" : "disappear"}`}>
+                <div className={"text-bubble bubble"}>
+                    {this.state.cubeOpened &&
+                        <Typewriter
+                            textToType={"Hi. My name is Alex. I am web developer with a decade of experience in the field. With a focus in the past in front-end banking and web gaming solutions, I strive to deliver swift web apps with seamless interactiveness and impeccable security. Rotate the cube and select a page for more info. All code of this website is available in GIT, accessible is via the footer."}
+                        />
+                    }
+                    <div className={"avatar-wrapper"}>
+                        <div className={"avatar-icon"}></div>
+                        <div className={"avatar-name"}>Alex</div>
                     </div>
                 </div>
-            }
+            </div>
+            <div className={`menu-bubble-wrapper bubble-wrapper ${this.state.cubeMenuState === CubeMenuStates.NONE ? "disappear" : ""}`}>
+                    <div className={"menu-bubble bubble"}>
+                        <div className={"avatar-wrapper"}>
+                            <div className={`avatar-icon ${this.state.cubeMenuState}`}></div>
+                            <div className={"avatar-name"}>
+                                {this.state.cubeMenuState === CubeMenuStates.TOP_LEFT && <span>Client Approach</span>}
+                                {this.state.cubeMenuState === CubeMenuStates.TOP_RIGHT && <span>Chess Demo</span>}
+                                {this.state.cubeMenuState === CubeMenuStates.BOTTOM && <span>Past Experience</span>}
+                            </div>
+                        </div>
+                        <div className={"bubble-text"}>
+                            {this.state.cubeMenuState === CubeMenuStates.TOP_LEFT && <span>Client Approach is lorem ipsum, consectetur adipiscing elit. Ut tempus, purus vel accumsan interdum, metus leo tempor orci, eget gravida dolor lectus non velit. Vivamus cursus eros convallis, commodo felis consectetur, aliquet magna. Praesent tincidunt odio eu justo semper, vel porttitor ante convallis. Suspendisse luctus nisi id mollis auctor.</span>}
+                            {this.state.cubeMenuState === CubeMenuStates.TOP_RIGHT && <span>Chess demo is lorem ipsum, consectetur adipiscing elit. Donec vel semper purus, at maximus mauris. Donec pharetra a mi in venenatis. Vestibulum non quam vitae velit congue luctus. Nam vestibulum justo eget mauris lacinia pellentesque. Etiam magna orci, lacinia non placerat interdum, blandit et metus. Nulla molestie turpis iaculis mauris dictum.</span>}
+                            {this.state.cubeMenuState === CubeMenuStates.BOTTOM && <span>Past Experience is lorem ipsum. Aenean dapibus nisi id turpis fringilla, elementum egestas sem sagittis. Mauris congue, dui eu ultrices aliquet, ligula neque ultricies augue, eu mattis nisl turpis non risus. Sed sed magna posuere, ornare lorem sed, blandit sapien. Morbi efficitur est in eros faucibus aliquet, non sollicitudin orci venenatis sed. </span>}
+                            </div>
+                        <button className={"go-page"}>Launch Page</button>
+                    </div>
+            </div>
             <div className="loading-element-wrapper">
                     <div className={`flower-wrapper ${this.state.cubeOpened ? "opened" : ""}`}>
                         <div className={"flower"}></div>

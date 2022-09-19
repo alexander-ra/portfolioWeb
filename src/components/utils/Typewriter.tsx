@@ -2,34 +2,40 @@ import React from 'react';
 import "./typewriter.scss"
 
 interface TypewriterProps {
+    textToType: string;
 }
 
 interface TypewriterState {
     currentLetterNum: number;
+    textDone: boolean;
 }
 
 class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
     private initialDelay = 3000;
-    private finalText = "Hi. My name is Alex. I am web developer with a decade of experience in the field. With a focus in the past in front-end banking ang web gaming solutions, I strive to deliver swift web apps with seamless interactiveness and impeccable security. Rotate the cube and select a page for more info. All code of this website is available in git, accessible is via the footer."
-    private letterDistance = 25;
-    private wordDistance = 35;
-    private sentenceDistance = 225;
+    private textDoneDelay = 1000;
+   private letterDistance = 25;
+    private wordDistance = 25;
+    private sentenceDistance = 400;
 
     constructor(props: TypewriterProps) {
         super(props);
-        this.state = {currentLetterNum: 0};
+        this.state = {currentLetterNum: 0, textDone: false};
         setTimeout(this.typeLetter.bind(this), this.initialDelay);
     }
 
     typeLetter() {
         const curLength = this.state.currentLetterNum;
 
-        if (curLength <= this.finalText.length) {
-            const delay = this.getDelay(this.finalText[this.state.currentLetterNum]);
+        if (curLength <= this.props.textToType.length) {
+            const delay = this.getDelay(this.props.textToType[this.state.currentLetterNum]);
             setTimeout(() => {
                 this.typeLetter();
                 this.setState({currentLetterNum: this.state.currentLetterNum + 1});
             }, delay);
+        } else {
+            setTimeout(() => {
+                this.setState({textDone: true})
+            }, this.textDoneDelay);
         }
     }
 
@@ -49,9 +55,13 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
     render(){
         return (<>
                 <div className="typewriter-wrapper">
-                    <span className="line-1">{this.finalText.slice(0, this.state.currentLetterNum)}</span>
-                    <span className="anim-typewriter"></span>
-                    <span className="line-1 transparent">{this.finalText.slice(this.state.currentLetterNum)}</span>
+                    <span className="line-1">{this.props.textToType.slice(0, this.state.currentLetterNum)}</span>
+                    {
+                        !this.state.textDone && <>
+                            <span className="anim-typewriter"></span>
+                            <span className="line-1 transparent">{this.props.textToType.slice(this.state.currentLetterNum)}</span>
+                        </>
+                    }
                 </div>
             </>
         )
