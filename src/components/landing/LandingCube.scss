@@ -1,5 +1,4 @@
 @import "../../App";
-@import "PageTurner";
 @import "WorkInProgress";
 @import "mixins";
 
@@ -47,7 +46,7 @@ $otlepvaneTime: 1.5s;
 
         .wall-initial {
             box-shadow: none;
-            animation: otlepvane $otlepvaneTime linear forwards;
+            animation: otlepvane $otlepvaneTime ease-in forwards;
 
             .wall-inside-wrapper {
                 transition-duration: calc($otlepvaneTime / 2), calc($otlepvaneTime / 2);
@@ -75,14 +74,16 @@ $otlepvaneTime: 1.5s;
         }
 
         .wall {
-            box-shadow: 0 0 1em $purple;
 
             .wall-label {
+                border-radius: 0.5em 0.5em 0 0;
                 top: -1.4em;
+                z-index: 3;
             }
 
             &.wall-bottom {
                 .wall-label {
+                    border-radius:0 0 .5em .5em;
                     top: unset;
                     bottom: -1.4em;
                 }
@@ -92,8 +93,10 @@ $otlepvaneTime: 1.5s;
 
     &:hover, &.opened {
         .wall {
-            box-shadow: 0 0 2em .1em $orange;
-            border: 0.2em solid $yellow;
+            .wall-content {
+                box-shadow: 0 0 0 $yellow, inset 0 0 6.8em 5em rgba($pink, 0.25);
+                border: 0.2em solid $pink;
+            }
 
             &.wall-bottom {
                 transform: rotateX(-90deg) translateZ(7.4em);
@@ -110,26 +113,25 @@ $otlepvaneTime: 1.5s;
 
         .wall-initial {
             box-shadow: 0 0 2em .1em $orange;
-            border: 0.2em solid $orange;
 
             &.wall-bottom-initial {
-                transform: rotateX(-90deg) translateZ(7.4em) scaleX(-1);
+                transform: rotateX(-90deg) translateZ(8.2em) scaleX(-1);
 
             }
 
             &.wall-left-initial {
-                transform: translateZ(7.4em) scaleX(-1) scaleY(-1);
+                transform: translateZ(8.2em) scaleX(-1) scaleY(-1);
             }
 
             &.wall-right-initial {
-                transform: rotateY(90deg) translateZ(7.4em) scaleY(-1);
+                transform: rotateY(90deg) translateZ(8.2em) scaleY(-1);
             }
         }
     }
 
     .wall {
-        transition-property: box-shadow, border, transform;
-        transition-duration: 1s, 1s, 1s;
+        transition-property: transform;
+        transition-duration: 1s;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -137,12 +139,15 @@ $otlepvaneTime: 1.5s;
         height: 100%;
         position: absolute;
         backface-visibility: inherit;
-        box-sizing: border-box;
-        border: 0.2em solid $purple;
         border-radius: 0.3em;
         z-index: 4;
 
         .wall-content {
+            transition-property: box-shadow, border;
+            transition-duration: 1s, 1s;
+            box-sizing: border-box;
+            border: 0.2em solid $purple;
+            border-radius: 0.3em;
             width: 100%;
             height: 100%;
             display: flex;
@@ -152,13 +157,6 @@ $otlepvaneTime: 1.5s;
             background-size:     cover;                      /* <------ */
             background-repeat:   no-repeat;
             background-position: center center;
-
-            .wall-icon {
-                width: 7em;
-                height: 7em;
-                background-size: cover;
-                background-position: center;
-            }
         }
 
         .wall-label {
@@ -166,26 +164,23 @@ $otlepvaneTime: 1.5s;
             top: 0;
             width: 8em;
             height: 1.4em;
+            color: $dark-purple;
             text-align: center;
-            background-color: $yellow;
+            background-color: rgba($pink, 0.66);
             background-size: cover;
             background-position: center;
-            font-size: 1.1em;
+            font-size: 1.2em;
             z-index: 1;
-            transition-property: top, bottom, background-color;
-            transition-delay: 3s, 3s, 0s;
-            transition-duration: 1s, 1s, 1s;
+            transition-property: top, bottom, background-color, color, z-index;
+            transition-delay: 3s, 3s, 0s, 0s, 4s;
+            transition-duration: 1s, 1s, 1s, 1s, 0s;
         }
 
         &.wall-bottom {
             transform: rotateX(-90deg) translateZ(6.9em);
 
             .wall-content {
-                background-image: url("../../../public/walls/castle.png");
-                .wall-icon {
-                    background-image: url("../../../public/walls/castleIcon.svg");
-                    transform: rotate(45deg);
-                }
+                background-image: url("../../../public/walls/chessFinal.jpg");
             }
 
             .wall-label {
@@ -198,10 +193,7 @@ $otlepvaneTime: 1.5s;
             transform: translateZ(6.9em);
 
             .wall-content {
-                background-image: url("../../../public/walls/rome.png");
-                .wall-icon {
-                    background-image: url("../../../public/walls/romeIcon.svg");
-                }
+                background-image: url("../../../public/walls/clientFinal.jpg");
             }
         }
 
@@ -209,19 +201,18 @@ $otlepvaneTime: 1.5s;
             transform: rotateY(90deg) translateZ(6.9em);
 
             .wall-content {
-                background-image: url("../../../public/walls/chess.png");
-                .wall-icon {
-                    background-image: url("../../../public/walls/chessIcon.svg");
-                }
+                background-image: url("../../../public/walls/experienceFinal.jpg");
             }
         }
 
         &.selected {
-            border: 0.2em solid $dark-orange;
-            box-shadow: 0 0 1em 0.3em $dark-orange;
+            .wall-content {
+                box-shadow: 0 0 .25em white;
+                border: 0.2em solid white;
+            }
 
             .wall-label {
-                background-color: $dark-orange;
+                background-color: rgba(white, .75);
             }
         }
     }

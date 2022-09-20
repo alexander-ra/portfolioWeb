@@ -46,7 +46,7 @@
 
             .avatar-wrapper {
                 transition: width 0.5s;
-                width: 3rem;
+                width: 66%;
             }
         }
 
@@ -63,12 +63,12 @@
 
             .avatar-wrapper {
                 transition: width 1.5s;
-                width: calc(100% + 3rem);
+                width: 100%;
             }
         }
 
         .go-page {
-            transition: width 1s, left 1s, background-color .25s;
+            transition: width 1s, left 1s, background-color .25s, color .25s, box-shadow .25s, transform .5s;
             width: 12em;
             left: calc(50% - 6em);
         }
@@ -76,6 +76,21 @@
 
     &.text-bubble-wrapper {
         margin: 0 calc(20% - 10em);
+
+        &:not(.disappear) {
+            .bubble {
+                transition-delay: 1.5s;
+
+                .avatar-wrapper {
+                    transition-delay: 1.5s;
+                    width: calc(100% + 3rem);
+                }
+            }
+
+            .go-page {
+                transition-delay: 1.5s;
+            }
+        }
     }
 
     &.menu-bubble-wrapper {
@@ -87,7 +102,6 @@
         position: relative;
         background: rgba(white, .3);
         z-index: 3;
-        color: #6D1950;
         cursor: pointer;
         border-radius: 1.5em;
 
@@ -100,13 +114,10 @@
         .avatar-wrapper {
             color: $dark-purple;
             font-size: 1em;
-            height: 4rem;
             white-space: nowrap;
             overflow: hidden;
 
             .avatar-icon {
-                height: 4rem;
-                width: 4rem;
                 border-radius: 50%;
                 position: relative;
                 background-repeat: no-repeat;
@@ -118,7 +129,6 @@
                 font-size: 1.25em;
                 height: 3rem;
                 line-height: 3rem;
-                margin-top: -3.5rem;
                 z-index: 1;
             }
         }
@@ -128,6 +138,7 @@
             border: .2em solid rgba($dark-orange, 0.25);
             padding: 1em;
             .avatar-wrapper {
+                height: 4rem;
                 margin-left: auto;
                 margin-bottom: -5rem;
                 margin-right: -3rem;
@@ -135,6 +146,8 @@
             }
 
             .avatar-icon {
+                height: 4rem;
+                width: 4rem;
                 margin-left: auto;
                 background-image: url("../../../public/avatar-jpeg.jpg");
             }
@@ -143,6 +156,7 @@
                 padding-left: 1.2rem;
                 border-radius: 0.5rem 2rem 2rem 2rem;
                 background-color: rgba($dark-orange, 0.25);
+                margin-top: -3.5rem;
             }
         }
 
@@ -151,26 +165,28 @@
             border: .2em solid rgba($dark-orange, 0.25);
             padding: 1em 1em 3em 1em;
             .avatar-wrapper {
-                margin-top: -5rem;
-                margin-left: -3rem;
+                height: 3rem;
+                margin-top: -4.5rem;
+                margin-left: 0;
                 padding-bottom: 1em;
             }
 
             .avatar-icon {
+                height: 3rem;
+                width: 3rem;
                 background-size: 75% 75%;
                 background-position: center;
-                background-color: $pink;
 
                 &.TOP_LEFT {
                     background-image: url("../../../public/walls/romeIcon.svg");
                 }
 
                 &.TOP_RIGHT {
-                    background-image: url("../../../public/walls/chessIcon.svg");
+                    background-image: url("../../../public/walls/castleIcon.svg");
                 }
 
                 &.BOTTOM {
-                    background-image: url("../../../public/walls/castleIcon.svg");
+                    background-image: url("../../../public/walls/chessIcon.svg");
                 }
             }
 
@@ -179,6 +195,7 @@
                 padding-right: 1.2rem;
                 border-radius: 2rem 2rem 0.5rem 2rem;
                 background-color: rgba($dark-orange, 0.25);
+                margin-top: -3rem;
             }
         }
     }
@@ -204,8 +221,11 @@
     white-space: nowrap;
     overflow: hidden;
     cursor: pointer;
+    box-shadow: none;
 
     &:hover {
-        background-color: $orange;
+        background-color: $purple;
+        color: $light-yellow;
+        box-shadow: 0 0 1em $purple;
     }
 }

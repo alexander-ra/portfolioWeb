@@ -10,8 +10,9 @@ interface LandingCubeState {
     cubeOpened?: boolean;
     cubeDragClass?: string;
     cubeRotationClass?: RotationStates;
-    cubeMenuState?: CubeMenuStates;
+    selectedMenuState?: CubeMenuStates;
     rotationInitialState?: CubeMenuStates;
+    menuDescription?: CubeMenuDescriptions;
 }
 
 interface Position {
@@ -32,6 +33,12 @@ enum CubeMenuStates {
     BOTTOM = "BOTTOM"
 }
 
+enum CubeMenuDescriptions {
+    CLIENT_APPROACH = "Client Approach is lorem ipsum, consectetur adipiscing elit. Ut tempus, purus vel accumsan interdum, metus leo tempor orci, eget gravida dolor lectus non velit. Vivamus cursus eros convallis, commodo felis consectetur, aliquet magna. Praesent tincidunt odio eu justo semper, vel porttitor ante convallis. Suspendisse luctus nisi id mollis auctor.",
+    CHESS_DEMO = "Chess demo is lorem ipsum, consectetur adipiscing elit. Donec vel semper purus, at maximus mauris. Donec pharetra a mi in venenatis. Vestibulum non quam vitae velit congue luctus. Nam vestibulum justo eget mauris lacinia pellentesque. Etiam magna orci, lacinia non placerat interdum, blandit et metus. Nulla molestie turpis iaculis mauris dictum.",
+    PAST_EXPERIENCE = "Past Experience is lorem ipsum. Aenean dapibus nisi id turpis fringilla, elementum egestas sem sagittis. Mauris congue, dui eu ultrices aliquet, ligula neque ultricies augue, eu mattis nisl turpis non risus. Sed sed magna posuere, ornare lorem sed, blandit sapien. Morbi efficitur est in eros faucibus aliquet, non sollicitudin orci venenatis sed."
+}
+
 class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
     private CUBE_OPEN_TIME_MS = 1500;
     private horDegMax = 50;
@@ -46,7 +53,7 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
             cubeOpened: false,
             coveredCubeVisible: true,
             cubeRotationClass: RotationStates.NORMAL,
-            cubeMenuState: CubeMenuStates.NONE,
+            selectedMenuState: CubeMenuStates.NONE,
             rotationInitialState: CubeMenuStates.NONE
         };
 
@@ -80,6 +87,33 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
         window.addEventListener("dragstart", this.getCoordinates.bind(this));
         window.addEventListener("drag", this.dragRotate.bind(this));
         window.addEventListener("dragend", this.dragReleaseSelect.bind(this));
+    }
+
+    componentDidUpdate(prevProps: LandingCubeProps, prevState: LandingCubeState) {
+        // Typical usage (don't forget to compare props):
+        if (this.state.selectedMenuState !== prevState.selectedMenuState) {
+            if (prevState.selectedMenuState === CubeMenuStates.NONE) {
+                this.setDescription(this.state.selectedMenuState);
+            } else {
+                setTimeout(() => {
+                    this.setDescription(this.state.selectedMenuState);
+                }, 500)
+            }
+        }
+    }
+
+    setDescription(selectedMenu?: CubeMenuStates) {
+        switch (this.state.selectedMenuState) {
+            case CubeMenuStates.TOP_RIGHT:
+                this.setState({menuDescription: CubeMenuDescriptions.PAST_EXPERIENCE});
+                break;
+            case CubeMenuStates.TOP_LEFT:
+                this.setState({menuDescription: CubeMenuDescriptions.CLIENT_APPROACH});
+                break;
+            case CubeMenuStates.BOTTOM:
+                this.setState({menuDescription: CubeMenuDescriptions.CHESS_DEMO});
+                break;
+        }
     }
 
     getCoordinates(event: DragEvent): void {
@@ -151,7 +185,7 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
 
             this.setState({
                 cubeDragClass: `rotidx${verticalDeg}degy${horizontalDeg}deg`,
-                cubeMenuState: stateToSet
+                selectedMenuState: stateToSet
             })
         }
 
@@ -165,7 +199,7 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
     dragReleaseSelect(event: DragEvent): void {
         this.setState({
             cubeDragClass: "",
-            rotationInitialState: this.state.cubeMenuState
+            rotationInitialState: this.state.selectedMenuState
         })
     }
 
@@ -196,21 +230,19 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
                     </div>
                 </div>
             </div>
-            <div className={`menu-bubble-wrapper bubble-wrapper ${this.state.cubeMenuState === CubeMenuStates.NONE ? "disappear" : ""}`}>
+            <div className={`menu-bubble-wrapper bubble-wrapper ${this.state.selectedMenuState === CubeMenuStates.NONE ? "disappear" : ""}`}>
                     <div className={"menu-bubble bubble"}>
                         <div className={"avatar-wrapper"}>
-                            <div className={`avatar-icon ${this.state.cubeMenuState}`}></div>
+                            <div className={`avatar-icon ${this.state.selectedMenuState}`}></div>
                             <div className={"avatar-name"}>
-                                {this.state.cubeMenuState === CubeMenuStates.TOP_LEFT && <span>Client Approach</span>}
-                                {this.state.cubeMenuState === CubeMenuStates.TOP_RIGHT && <span>Chess Demo</span>}
-                                {this.state.cubeMenuState === CubeMenuStates.BOTTOM && <span>Past Experience</span>}
+                                {this.state.selectedMenuState === CubeMenuStates.TOP_LEFT && <span>Client Approach</span>}
+                                {this.state.selectedMenuState === CubeMenuStates.TOP_RIGHT && <span>Past Experience</span>}
+                                {this.state.selectedMenuState === CubeMenuStates.BOTTOM && <span>Chess Demo</span>}
                             </div>
                         </div>
                         <div className={"bubble-text"}>
-                            {this.state.cubeMenuState === CubeMenuStates.TOP_LEFT && <span>Client Approach is lorem ipsum, consectetur adipiscing elit. Ut tempus, purus vel accumsan interdum, metus leo tempor orci, eget gravida dolor lectus non velit. Vivamus cursus eros convallis, commodo felis consectetur, aliquet magna. Praesent tincidunt odio eu justo semper, vel porttitor ante convallis. Suspendisse luctus nisi id mollis auctor.</span>}
-                            {this.state.cubeMenuState === CubeMenuStates.TOP_RIGHT && <span>Chess demo is lorem ipsum, consectetur adipiscing elit. Donec vel semper purus, at maximus mauris. Donec pharetra a mi in venenatis. Vestibulum non quam vitae velit congue luctus. Nam vestibulum justo eget mauris lacinia pellentesque. Etiam magna orci, lacinia non placerat interdum, blandit et metus. Nulla molestie turpis iaculis mauris dictum.</span>}
-                            {this.state.cubeMenuState === CubeMenuStates.BOTTOM && <span>Past Experience is lorem ipsum. Aenean dapibus nisi id turpis fringilla, elementum egestas sem sagittis. Mauris congue, dui eu ultrices aliquet, ligula neque ultricies augue, eu mattis nisl turpis non risus. Sed sed magna posuere, ornare lorem sed, blandit sapien. Morbi efficitur est in eros faucibus aliquet, non sollicitudin orci venenatis sed. </span>}
-                            </div>
+                            {this.state.menuDescription}
+                        </div>
                         <button className={"go-page"}>Launch Page</button>
                     </div>
             </div>
@@ -256,31 +288,25 @@ class LandingCube extends React.Component<LandingCubeProps, LandingCubeState> {
                             </div>
                         </>}
                         <>
-                            <div className={`wall wall-bottom ${this.state.cubeMenuState === CubeMenuStates.BOTTOM ? "selected" : ""}`}
-                                 onClick={() => this.setState({rotationInitialState: CubeMenuStates.BOTTOM, cubeMenuState: CubeMenuStates.BOTTOM})}>
-                                <div className={"wall-content"}>
-                                    <div className={"wall-icon"}></div>
-                                </div>
+                            <div className={`wall wall-bottom ${this.state.selectedMenuState === CubeMenuStates.BOTTOM ? "selected" : ""}`}
+                                 onClick={() => this.setState({rotationInitialState: CubeMenuStates.BOTTOM, selectedMenuState: CubeMenuStates.BOTTOM})}>
+                                <div className={"wall-content"}></div>
                                 <div className={"wall-label"}>
-                                    Past Experience
+                                    Chess Demo
                                 </div>
                             </div>
-                            <div className={`wall wall-left ${this.state.cubeMenuState === CubeMenuStates.TOP_LEFT ? "selected" : ""}`}
-                                 onClick={() => this.setState({rotationInitialState: CubeMenuStates.TOP_LEFT, cubeMenuState: CubeMenuStates.TOP_LEFT})}>
-                                <div className={"wall-content"}>
-                                    <div className={"wall-icon"}></div>
-                                </div>
+                            <div className={`wall wall-left ${this.state.selectedMenuState === CubeMenuStates.TOP_LEFT ? "selected" : ""}`}
+                                 onClick={() => this.setState({rotationInitialState: CubeMenuStates.TOP_LEFT, selectedMenuState: CubeMenuStates.TOP_LEFT})}>
+                                <div className={"wall-content"}></div>
                                 <div className={"wall-label"}>
                                     Client Approach
                                 </div>
                             </div>
-                            <div className={`wall wall-right ${this.state.cubeMenuState === CubeMenuStates.TOP_RIGHT ? "selected" : ""}`}
-                                 onClick={() => this.setState({rotationInitialState: CubeMenuStates.TOP_RIGHT, cubeMenuState: CubeMenuStates.TOP_RIGHT})}>
-                                <div className={"wall-content"}>
-                                    <div className={"wall-icon"}></div>
-                                </div>
+                            <div className={`wall wall-right ${this.state.selectedMenuState === CubeMenuStates.TOP_RIGHT ? "selected" : ""}`}
+                                 onClick={() => this.setState({rotationInitialState: CubeMenuStates.TOP_RIGHT, selectedMenuState: CubeMenuStates.TOP_RIGHT})}>
+                                <div className={"wall-content"}></div>
                                 <div className={"wall-label"}>
-                                    Chess Demo
+                                    Past Experience
                                 </div>
                             </div>
                         </>
