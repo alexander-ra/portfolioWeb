@@ -2,7 +2,7 @@
 @mixin rotid-xy($horizontal, $vertical) {
   @for $i from -$vertical through $vertical {
     @for $j from -$horizontal through $horizontal {
-      .rotidx#{$i}y#{$j} {
+      .cube-rotate-x#{$i}-y#{$j} {
         animation: none !important;
         transform: scale(1) rotateX(calc(37deg - $i)) rotateY(calc(-45deg - $j)) rotateZ(0deg) !important;
       }

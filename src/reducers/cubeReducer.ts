@@ -1,7 +1,9 @@
-import {CLOSE_CUBE, OPEN_CUBE } from "../utils/ActionTypes";
+import {CLOSE_CUBE, OPEN_CUBE, SELECT_MENU} from "../utils/ActionTypes";
+import {CubeMenuStates} from "../models/landing/CubeMenuStates";
 
 const initialState = {
     cubeOpened: false,
+    selectedMenu: CubeMenuStates.NONE
 };
 
 export default function cubesReducer(state = initialState, action: any) {
@@ -11,6 +13,12 @@ export default function cubesReducer(state = initialState, action: any) {
             return {
                 ...state,
                 cubeOpened: true
+            }
+        }
+        case SELECT_MENU: {
+            return {
+                ...state,
+                selectedMenu: action.payload.selectedMenu
             }
         }
         case CLOSE_CUBE: {
