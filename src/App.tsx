@@ -1,18 +1,20 @@
 import React from 'react';
 import './App.scss';
 import Header from "./components/layout/Header";
-import LandingCube from "./components/landing/LandingCube";
+import LandingPage from "./components/landing/LandingPage";
+import store from "./store/store";
+import { Provider } from 'react-redux';
 
 function App() {
 
   return (
-      <>
+      <Provider store={store}>
           <div className={"background"}></div>
           <div className="main-wrapper">
               <Header></Header>
-              <LandingCube></LandingCube>
+              <LandingPage></LandingPage>
           </div>
-      </>
+      </Provider>
     );
 }
 

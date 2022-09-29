@@ -1,0 +1,5 @@
+export enum LandingDescriptions {
+    CLIENT_APPROACH = "Client Approach is lorem ipsum, consectetur adipiscing elit. Ut tempus, purus vel accumsan interdum, metus leo tempor orci, eget gravida dolor lectus non velit. Vivamus cursus eros convallis, commodo felis consectetur, aliquet magna. Praesent tincidunt odio eu justo semper, vel porttitor ante convallis. Suspendisse luctus nisi id mollis auctor.",
+    CHESS_DEMO = "Chess demo is lorem ipsum, consectetur adipiscing elit. Donec vel semper purus, at maximus mauris. Donec pharetra a mi in venenatis. Vestibulum non quam vitae velit congue luctus. Nam vestibulum justo eget mauris lacinia pellentesque. Etiam magna orci, lacinia non placerat interdum, blandit et metus. Nulla molestie turpis iaculis mauris dictum.",
+    PAST_EXPERIENCE = "Past Experience is lorem ipsum. Aenean dapibus nisi id turpis fringilla, elementum egestas sem sagittis. Mauris congue, dui eu ultrices aliquet, ligula neque ultricies augue, eu mattis nisl turpis non risus. Sed sed magna posuere, ornare lorem sed, blandit sapien. Morbi efficitur est in eros faucibus aliquet, non sollicitudin orci venenatis sed."
+}

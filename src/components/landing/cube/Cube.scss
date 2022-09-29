@@ -1,6 +1,6 @@
-@import "../../App";
-@import "WorkInProgress";
-@import "mixins";
+@import "../../../App";
+@import "../WorkInProgress";
+@import "../mixins";
 
 $otlepvaneTime: 1.5s;
 
@@ -46,7 +46,7 @@ $otlepvaneTime: 1.5s;
 
         .wall-initial {
             box-shadow: none;
-            animation: otlepvane $otlepvaneTime ease-in forwards;
+            animation: otlepvane $otlepvaneTime linear forwards;
 
             .wall-inside-wrapper {
                 transition-duration: calc($otlepvaneTime / 2), calc($otlepvaneTime / 2);
@@ -55,10 +55,6 @@ $otlepvaneTime: 1.5s;
                 top: -5em;
                 left: -5em;
 
-                .wall-inside {
-
-
-                }
                 .wall-inside-under-wrapper {
                     transition-property: top, left;
 
@@ -72,30 +68,14 @@ $otlepvaneTime: 1.5s;
                 }
             }
         }
-
-        .wall {
-
-            .wall-label {
-                border-radius: 0.5em 0.5em 0 0;
-                top: -1.4em;
-                z-index: 3;
-            }
-
-            &.wall-bottom {
-                .wall-label {
-                    border-radius:0 0 .5em .5em;
-                    top: unset;
-                    bottom: -1.4em;
-                }
-            }
-        }
     }
 
     &:hover, &.opened {
         .wall {
+
             .wall-content {
-                box-shadow: 0 0 0 $yellow, inset 0 0 6.8em 5em rgba($pink, 0.25);
-                border: 0.2em solid $pink;
+                box-shadow: 0 0 1em $orange, inset 0 0 1em $orange;
+                border: 0.2em solid $yellow;
             }
 
             &.wall-bottom {
@@ -157,35 +137,26 @@ $otlepvaneTime: 1.5s;
             background-size:     cover;                      /* <------ */
             background-repeat:   no-repeat;
             background-position: center center;
-        }
 
-        .wall-label {
-            position: absolute;
-            top: 0;
-            width: 8em;
-            height: 1.4em;
-            color: $dark-purple;
-            text-align: center;
-            background-color: rgba($pink, 0.66);
-            background-size: cover;
-            background-position: center;
-            font-size: 1.2em;
-            z-index: 1;
-            transition-property: top, bottom, background-color, color, z-index;
-            transition-delay: 3s, 3s, 0s, 0s, 4s;
-            transition-duration: 1s, 1s, 1s, 1s, 0s;
+            .wall-icon {
+                transition: opacity 1s;
+                opacity: 1;
+                width: 7em;
+                height: 7em;
+                background-size: cover;
+                background-position: center;
+            }
         }
 
         &.wall-bottom {
             transform: rotateX(-90deg) translateZ(6.9em);
 
             .wall-content {
-                background-image: url("../../../public/walls/chessFinal.jpg");
-            }
-
-            .wall-label {
-                top: unset;
-                bottom: 0em;
+                background-image: url("../../../../public/walls/chessFinal.jpg");
+                .wall-icon {
+                    background-image: url("../../../../public/walls/chessIcon.svg");
+                    transform: rotate(45deg);
+                }
             }
         }
 
@@ -193,7 +164,10 @@ $otlepvaneTime: 1.5s;
             transform: translateZ(6.9em);
 
             .wall-content {
-                background-image: url("../../../public/walls/clientFinal.jpg");
+                background-image: url("../../../../public/walls/clientFinal.jpg");
+                .wall-icon {
+                    background-image: url("../../../../public/walls/chessIcon.svg");
+                }
             }
         }
 
@@ -201,18 +175,22 @@ $otlepvaneTime: 1.5s;
             transform: rotateY(90deg) translateZ(6.9em);
 
             .wall-content {
-                background-image: url("../../../public/walls/experienceFinal.jpg");
+                background-image: url("../../../../public/walls/experienceFinal.jpg");
+                .wall-icon {
+                    background-image: url("../../../../public/walls/chessIcon.svg");
+                }
             }
         }
 
         &.selected {
             .wall-content {
-                box-shadow: 0 0 .25em white;
-                border: 0.2em solid white;
+                border: 0.2em solid $dark-orange;
+                box-shadow: 0 0 1em 0.3em $dark-orange;
             }
 
-            .wall-label {
-                background-color: rgba(white, .75);
+            .wall-icon {
+                opacity: 0;
+
             }
         }
     }
@@ -231,7 +209,7 @@ $otlepvaneTime: 1.5s;
         box-sizing: border-box;
         border: 0.2em solid $purple;
         border-radius: 0.3em;
-        background: url("../../../public/quantum-gradient.svg") no-repeat center;
+        background: url("../../../../public/quantum-gradient.svg") no-repeat center;
         background-size: cover;
         opacity: 1;
         z-index: 5;
@@ -258,7 +236,7 @@ $otlepvaneTime: 1.5s;
                 width: 14em;
                 height: 14em;
                 transform: rotateZ(-45deg);
-                background: url("../../../public/quantum-gradient.svg") no-repeat center;
+                background: url("../../../../public/quantum-gradient.svg") no-repeat center;
                 background-size: cover;
                 box-sizing: border-box;
                 border: 0.2em solid $purple;

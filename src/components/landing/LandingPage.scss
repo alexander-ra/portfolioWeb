@@ -1,0 +1,321 @@
+@import "../../App";
+@import "WorkInProgress";
+@import "mixins";
+
+$otlepvaneTime: 1.5s;
+
+
+@include rotid-xy(50deg, 50deg);
+
+.cube-wrapper {
+    cursor: pointer;
+    position: absolute;
+    left: calc(50% - 7em);
+    TOP: calc(50% - 7em);
+    width: 14em;
+    height: 14em;
+    transform-style: preserve-3d;
+    transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg);
+    transition: transform 4s;
+    z-index: 3;
+
+    &.LEFT_ZOOM {
+        transform: scale(1.1) rotateX(40deg) rotateY(-35deg) rotateZ(0deg);
+    }
+
+    &.RIGHT_ZOOM {
+        transform: scale(1.1) rotateX(20deg) rotateY(-55deg) rotateZ(0deg);
+    }
+
+    &.opened {
+        transition: transform 2s -.1s ease-out;
+        transform: rotateX(37deg) rotateY(-45deg) rotateZ(0deg);
+        cursor: grab;
+
+        &.BOTTOM {
+            transform: rotateX(80deg) rotateY(-45deg) rotateZ(0deg);
+        }
+
+        &.TOP_LEFT {
+            transform: rotateX(10deg) rotateY(-10deg) rotateZ(0deg);
+        }
+
+        &.TOP_RIGHT {
+            transform: rotateX(10deg) rotateY(-80deg) rotateZ(0deg);
+        }
+
+        .wall-initial {
+            box-shadow: none;
+            animation: otlepvane $otlepvaneTime linear forwards;
+
+            .wall-inside-wrapper {
+                transition-duration: calc($otlepvaneTime / 2), calc($otlepvaneTime / 2);
+                transition-delay: calc($otlepvaneTime / 2), calc($otlepvaneTime / 2);
+                transition-property: left, top;
+                top: -5em;
+                left: -5em;
+
+                .wall-inside-under-wrapper {
+                    transition-property: top, left;
+
+                    transition-duration: $otlepvaneTime, $otlepvaneTime;
+                    left: 103%;
+
+                    .wall-inside-under {
+                        transform: scaleX(1) rotateZ(45deg);
+                        background-color: $dark-purple;
+                    }
+                }
+            }
+        }
+    }
+
+    &:hover, &.opened {
+        .wall {
+
+            .wall-content {
+                box-shadow: 0 0 1em $orange, inset 0 0 1em $orange;
+                border: 0.2em solid $yellow;
+            }
+
+            &.wall-bottom {
+                transform: rotateX(-90deg) translateZ(7.4em);
+            }
+
+            &.wall-left {
+                transform: translateZ(7.4em);
+            }
+
+            &.wall-right {
+                transform: rotateY(90deg) translateZ(7.4em);
+            }
+        }
+
+        .wall-initial {
+            box-shadow: 0 0 2em .1em $orange;
+
+            &.wall-bottom-initial {
+                transform: rotateX(-90deg) translateZ(8.2em) scaleX(-1);
+
+            }
+
+            &.wall-left-initial {
+                transform: translateZ(8.2em) scaleX(-1) scaleY(-1);
+            }
+
+            &.wall-right-initial {
+                transform: rotateY(90deg) translateZ(8.2em) scaleY(-1);
+            }
+        }
+    }
+
+    .wall {
+        transition-property: transform;
+        transition-duration: 1s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        backface-visibility: inherit;
+        border-radius: 0.3em;
+        z-index: 4;
+
+        .wall-content {
+            transition-property: box-shadow, border;
+            transition-duration: 1s, 1s;
+            box-sizing: border-box;
+            border: 0.2em solid $purple;
+            border-radius: 0.3em;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            background-size:     cover;                      /* <------ */
+            background-repeat:   no-repeat;
+            background-position: center center;
+
+            .wall-icon {
+                transition: opacity 1s;
+                opacity: 1;
+                width: 7em;
+                height: 7em;
+                background-size: cover;
+                background-position: center;
+            }
+        }
+
+        &.wall-bottom {
+            transform: rotateX(-90deg) translateZ(6.9em);
+
+            .wall-content {
+                background-image: url("../../../public/walls/chessFinal.jpg");
+                .wall-icon {
+                    background-image: url("../../../public/walls/chessIcon.svg");
+                    transform: rotate(45deg);
+                }
+            }
+        }
+
+        &.wall-left {
+            transform: translateZ(6.9em);
+
+            .wall-content {
+                background-image: url("../../../public/walls/clientFinal.jpg");
+                .wall-icon {
+                    background-image: url("../../../public/walls/chessIcon.svg");
+                }
+            }
+        }
+
+        &.wall-right {
+            transform: rotateY(90deg) translateZ(6.9em);
+
+            .wall-content {
+                background-image: url("../../../public/walls/experienceFinal.jpg");
+                .wall-icon {
+                    background-image: url("../../../public/walls/chessIcon.svg");
+                }
+            }
+        }
+
+        &.selected {
+            .wall-content {
+                border: 0.2em solid $dark-orange;
+                box-shadow: 0 0 1em 0.3em $dark-orange;
+            }
+
+            .wall-icon {
+                opacity: 0;
+
+            }
+        }
+    }
+
+    .wall-initial {
+        transition-property: box-shadow, border, transform, opacity;
+        transition-duration: 1s, 1s, 1s, 2.5s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        backface-visibility: inherit;
+        color: #fff;
+        box-sizing: border-box;
+        border: 0.2em solid $purple;
+        border-radius: 0.3em;
+        background: url("../../../public/quantum-gradient.svg") no-repeat center;
+        background-size: cover;
+        opacity: 1;
+        z-index: 5;
+        cursor: pointer;
+    }
+
+    .wall-initial {
+        transform: rotateX(-90deg) translateZ(6.9em) scaleX(-1);
+        clip-path: polygon(0 0, 300% 0, 300% 300%, 0 300%, 0 0, 0 0);
+        background: none;
+        border: none;
+        box-shadow: none;
+        .wall-inside-wrapper {
+            position: absolute;
+            top: -2.9em;
+            left: -2.9em;
+            width: 19.7988em;
+            height: 19.7988em;
+            transform: rotateZ(45deg);
+            .wall-inside {
+                position: absolute;
+                top: 2.9em;
+                left: 2.9em;
+                width: 14em;
+                height: 14em;
+                transform: rotateZ(-45deg);
+                background: url("../../../public/quantum-gradient.svg") no-repeat center;
+                background-size: cover;
+                box-sizing: border-box;
+                border: 0.2em solid $purple;
+                box-shadow: 0 0 1em $purple;
+            }
+
+            .wall-inside-under-wrapper {
+                transition-timing-function: linear, linear;
+                position: absolute;
+                left: -100%;
+                width: 19.7988em;
+                height: 19.7988em;
+
+                .wall-inside-under {
+                    transition-property: transofrm, background-color;
+                    transition-duration: 1s, $otlepvaneTime;
+                    position: absolute;
+                    margin-top: 2.9em;
+                    margin-left: 2.9em;
+                    width: 14em;
+                    height: 14em;
+                    transform: rotateZ(45deg);
+                    background-color: $purple;
+                    background-size: cover;
+                    box-sizing: border-box;
+                }
+            }
+        }
+    }
+
+    .wall-left-initial {
+        transform: translateZ(6.9em) scaleX(-1) scaleY(-1);
+    }
+
+    .wall-right-initial {
+        transform: rotateY(90deg) translateZ(6.9em) scaleY(-1);
+    }
+}
+
+.cube-core{
+    position: absolute;
+    left: calc(50% - 7em);
+    TOP: calc(50% - 7em);
+    width: 14em;
+    height: 14em;
+    border-radius: 50%;
+    box-shadow: 0 0 .25em 2em $yellow;
+    background-color: $yellow;
+    z-index: 1;
+}
+
+@keyframes spin {
+    from {transform: rotate(325deg)}
+    to {transform: rotate(-35deg)}
+}
+
+@keyframes float {
+    0% {top: calc(50% - 0.25em);}
+    50% {top: calc(50% + 0.25em);}
+    100% {top: calc(50% - 0.25em);}
+}
+
+@keyframes scaleAnim {
+    0% {font-size: 1em;}
+    50% {font-size: 1.1em;}
+    100% {font-size: 1em;}
+}
+
+@keyframes otlepvane {
+    0% {clip-path: polygon(0% 0, 100% 0, 100% 100%, 0 100%, 0 0%, 0% 0%);}
+    50% {clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%, 0 100%, 60% 60%); opacity: 1}
+    66% {clip-path: polygon(105% 66%, 105% 90%, 100% 100%, 90% 105%, 66% 105%, 90% 90%); opacity: .5}
+    70% {opacity: .2}
+    75% {clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%); opacity: 0}
+    100% {opacity: 0}
+}
+
+@keyframes cvetence {
+    0% {height: 20%; width: 20%; opacity: 0}
+    60% {height: 90%; width: 90%; opacity: .8}
+    100% {height: 70%; width: 75%; opacity: 1}
+}
