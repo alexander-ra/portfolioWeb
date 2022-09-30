@@ -2,6 +2,7 @@ import React from 'react';
 import './CommonBubble.scss';
 import {LandingDescriptions} from '../../../labels/LandingLabels';
 import Typewriter from '../../common/Typewriter';
+import {CubeMenuStates} from "../../../models/landing/CubeMenuStates";
 
 interface TextBubbleProps {
     visible: boolean;

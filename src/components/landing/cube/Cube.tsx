@@ -9,6 +9,7 @@ import {CubeRotationUtils} from "../../../utils/CubeRotationUtils";
 import Flower from "./Flower/Flower";
 import CubeCover from "./CubeCover";
 import CubeWall from "./CubeWall";
+import { faSuitcase, faChessKnight, faHandshake } from '@fortawesome/free-solid-svg-icons';
 
 interface CubeProps {
     openCube?: any;
@@ -44,6 +45,12 @@ class Cube extends React.Component<CubeProps, CubeState> {
         this.addCubeRotationListeners();
     }
 
+    componentDidUpdate(prevProps: Readonly<CubeProps>, prevState: Readonly<CubeState>, snapshot?: any) {
+        if (prevState.selectedMenuState !== this.state.selectedMenuState) {
+            this.props.selectMenu(this.state.selectedMenuState);
+        }
+    }
+
     setInitialValues() {
         this.state = {
             cubeOpened: false,
@@ -76,8 +83,9 @@ class Cube extends React.Component<CubeProps, CubeState> {
         });
         window.addEventListener("drag", (event) => {
             const newState = CubeRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.rotationInitialState);
-            this.props.selectMenu(newState.selectedMenuState);
-            this.setState(newState)
+            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.cubeDragClass !== this.state.cubeDragClass) {
+                this.setState(newState);
+            }
         });
         window.addEventListener("dragend", () => {
             this.setState({
@@ -90,8 +98,9 @@ class Cube extends React.Component<CubeProps, CubeState> {
         });
         window.addEventListener("touchmove", (event) => {
             const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
-            this.props.selectMenu(newState.selectedMenuState);
-            this.setState(newState)
+            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.cubeDragClass !== this.state.cubeDragClass) {
+                this.setState(newState);
+            }
         });
         window.addEventListener("touchend", () => {
             this.setState({
@@ -131,13 +140,16 @@ class Cube extends React.Component<CubeProps, CubeState> {
                     <>
                         <CubeWall menu={CubeMenuStates.BOTTOM}
                                   selected={this.state.selectedMenuState === CubeMenuStates.BOTTOM}
-                                  onSelect={this.selectMenu.bind(this)} />
+                                  onSelect={this.selectMenu.bind(this)}
+                                  icon={faChessKnight}/>
                         <CubeWall menu={CubeMenuStates.TOP_LEFT}
                                   selected={this.state.selectedMenuState === CubeMenuStates.TOP_LEFT}
-                                  onSelect={this.selectMenu.bind(this)} />
+                                  onSelect={this.selectMenu.bind(this)}
+                                  icon={faHandshake}/>
                         <CubeWall menu={CubeMenuStates.TOP_RIGHT}
                                   selected={this.state.selectedMenuState === CubeMenuStates.TOP_RIGHT}
-                                  onSelect={this.selectMenu.bind(this)} />
+                                  onSelect={this.selectMenu.bind(this)}
+                                  icon={faSuitcase}/>
                     </>
                 </div>
             </div>

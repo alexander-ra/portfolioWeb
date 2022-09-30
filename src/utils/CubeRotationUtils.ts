@@ -75,12 +75,14 @@ export class CubeRotationUtils {
 
     static getActualRotationOffset(dragStartingPos: Position, dragCurrentPos: Position, offsectCorrectionFromSection: Position): Position {
         const smallerDimension = this.getSmallerDimension();
-        const horizontalDeg = this.validateMaxDegRotation(
+        let horizontalDeg = this.validateMaxDegRotation(
             Math.round((dragStartingPos.x - dragCurrentPos.x) / (smallerDimension / (2 * this.ROTATION_SENSITIVITY)) * 50) + offsectCorrectionFromSection.x);
 
-        const verticalDeg = this.validateMaxDegRotation(
+        let verticalDeg = this.validateMaxDegRotation(
             Math.round((dragCurrentPos.y - dragStartingPos.y) / (smallerDimension / (2 * this.ROTATION_SENSITIVITY)) * 50) + offsectCorrectionFromSection.y);
 
+        horizontalDeg = horizontalDeg - horizontalDeg % 2;
+        verticalDeg = verticalDeg - verticalDeg % 2;
         return {
             x: horizontalDeg, y: verticalDeg
         };

@@ -32,7 +32,8 @@ body {
 }
 
 .background {
-  background: url("../public/gradient-cubes.svg") center;
+  background: url("../public/spectrum-triangles.svg") center;
+  background-size: cover;
   position: fixed;
   top: 0;
   left: 0;

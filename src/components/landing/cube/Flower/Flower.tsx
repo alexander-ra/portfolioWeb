@@ -13,8 +13,8 @@ class Flower extends React.Component<FlowerProps> {
         <>
             <div className={`flower-wrapper ${this.props.flowerVisible ? "opened" : ""}`}>
                 <div className={"flower"}></div>
+                <div className={"flower-center"}></div>
             </div>
-            <div className={"flower-center"}></div>
         </>
         )
     }
