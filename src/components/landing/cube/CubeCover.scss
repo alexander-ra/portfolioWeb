@@ -7,7 +7,6 @@ $peelOffDuration: 2s;
     &.opened{
 
         .wall-initial {
-            box-shadow: none;
             animation: peelOff $peelOffDuration linear forwards;
 
             .wall-inside-wrapper {
@@ -35,7 +34,6 @@ $peelOffDuration: 2s;
     &:hover, &.opened {
 
         .wall-initial {
-            box-shadow: 0 0 2em .1em $orange;
 
             &.wall-bottom-initial {
                 transform: rotateX(-90deg) translateZ(8.2em) scaleX(-1);
@@ -52,7 +50,7 @@ $peelOffDuration: 2s;
     }
 
     .wall-initial {
-        transition-property: box-shadow, border, transform, opacity;
+        transition-property: border, transform, opacity;
         transition-duration: 1s, 1s, 1s, 2.5s;
         transform: rotateX(-90deg) translateZ(6.9em) scaleX(-1);
         clip-path: polygon(0 0, 300% 0, 300% 300%, 0 300%, 0 0, 0 0);
@@ -90,7 +88,7 @@ $peelOffDuration: 2s;
                 background-size: cover;
                 box-sizing: border-box;
                 border: 0.2em solid $purple;
-                box-shadow: 0 0 1em $purple;
+                border-radius: .3em;
             }
 
             .wall-inside-under-wrapper {

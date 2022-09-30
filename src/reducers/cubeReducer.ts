@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default function cubesReducer(state = initialState, action: any) {
-    console.log(action);
     switch (action.type) {
         case OPEN_CUBE: {
             return {

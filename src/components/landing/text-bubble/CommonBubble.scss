@@ -68,10 +68,11 @@
   .bubble {
     transition: opacity 2s;
     position: relative;
-    background: rgba(white, .3);
+    background: rgba(white, .66);
     z-index: 3;
     cursor: pointer;
     border-radius: 1.5em;
+    border: .2em solid $dark-orange;
 
     .bubble-text {
       color: $dark-purple;
@@ -94,6 +95,8 @@
       }
 
       .avatar-name {
+        color: $light-yellow;
+        background-color: $dark-orange;
         font-size: 1.25em;
         height: 3rem;
         line-height: 3rem;
@@ -103,7 +106,6 @@
 
     &.text-bubble {
       margin-bottom: 2rem;
-      border: .2em solid rgba($dark-orange, 0.25);
       padding: 1em;
       .avatar-wrapper {
         height: 4rem;
@@ -123,14 +125,12 @@
       .avatar-name {
         padding-left: 1.2rem;
         border-radius: 0.5rem 2rem 2rem 2rem;
-        background-color: rgba($dark-orange, 0.25);
         margin-top: -3.5rem;
       }
     }
 
     &.menu-bubble {
       margin-top: 2rem;
-      border: .2em solid rgba($dark-orange, 0.25);
       padding: 1em 1em 3em 1em;
       .avatar-wrapper {
         height: 3rem;
@@ -162,7 +162,6 @@
         text-align: right;
         padding-right: 1.2rem;
         border-radius: 2rem 2rem 0.5rem 2rem;
-        background-color: rgba($dark-orange, 0.25);
         margin-top: -3rem;
       }
     }
@@ -180,8 +179,8 @@
   text-align: center;
   drop-shadow: 0 0 1em $dark-purple;
   border: 10px solid red;
-  background-color: rgba($pink, 0.75);
-  color: $dark-purple;
+  background-color: $dark-orange;
+  color: $light-yellow;
   border: none;
   font-size: 1.25em;
   border-radius: 1em;
@@ -193,7 +192,6 @@
 
   &:hover {
     background-color: $purple;
-    color: $light-yellow;
     box-shadow: 0 0 1em $purple;
   }
 }

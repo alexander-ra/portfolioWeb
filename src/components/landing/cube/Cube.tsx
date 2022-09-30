@@ -44,6 +44,12 @@ class Cube extends React.Component<CubeProps, CubeState> {
         this.addCubeRotationListeners();
     }
 
+    componentDidUpdate(prevProps: Readonly<CubeProps>, prevState: Readonly<CubeState>, snapshot?: any) {
+        if (prevState.selectedMenuState !== this.state.selectedMenuState) {
+            this.props.selectMenu(this.state.selectedMenuState);
+        }
+    }
+
     setInitialValues() {
         this.state = {
             cubeOpened: false,
@@ -76,8 +82,9 @@ class Cube extends React.Component<CubeProps, CubeState> {
         });
         window.addEventListener("drag", (event) => {
             const newState = CubeRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.rotationInitialState);
-            this.props.selectMenu(newState.selectedMenuState);
-            this.setState(newState)
+            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.cubeDragClass !== this.state.cubeDragClass) {
+                this.setState(newState);
+            }
         });
         window.addEventListener("dragend", () => {
             this.setState({
@@ -90,8 +97,9 @@ class Cube extends React.Component<CubeProps, CubeState> {
         });
         window.addEventListener("touchmove", (event) => {
             const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
-            this.props.selectMenu(newState.selectedMenuState);
-            this.setState(newState)
+            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.cubeDragClass !== this.state.cubeDragClass) {
+                this.setState(newState);
+            }
         });
         window.addEventListener("touchend", () => {
             this.setState({

@@ -4,20 +4,19 @@
     &:hover, &.opened {
         .wall {
             .wall-content {
-                box-shadow: 0 0 1em $orange, inset 0 0 1em $orange;
-                border: 0.2em solid $yellow;
+                border: 0.25em solid $light-yellow;
             }
 
             &.wall-bottom {
-                transform: rotateX(-90deg) translateZ(7.4em);
+                transform: rotateX(-90deg) translateZ(7.2em);
             }
 
             &.wall-top-left {
-                transform: translateZ(7.4em);
+                transform: translateZ(7.2em);
             }
 
             &.wall-top-right {
-                transform: rotateY(90deg) translateZ(7.4em);
+                transform: rotateY(90deg) translateZ(7.2em);
             }
         }
     }
@@ -30,17 +29,20 @@
         justify-content: center;
         width: 100%;
         height: 100%;
+        padding: 0.15em;
+        box-sizing: border-box;
         position: absolute;
         backface-visibility: inherit;
         border-radius: 0.3em;
         z-index: 4;
 
         .wall-content {
+            padding: 1em;
             transition-property: box-shadow, border;
             transition-duration: 1s, 1s;
             box-sizing: border-box;
-            border: 0.2em solid $purple;
-            border-radius: 0.3em;
+            border-radius: 5%;
+            border: 0.25em solid $light-yellow;
             width: 100%;
             height: 100%;
             display: flex;
@@ -54,50 +56,45 @@
             .wall-icon {
                 transition: opacity 1s;
                 opacity: 1;
-                width: 7em;
-                height: 7em;
+                width: 5em;
+                height: 5em;
                 background-size: cover;
                 background-position: center;
+                color: $light-yellow;
+                filter: drop-Shadow(0 0 .5em black);
             }
         }
 
         &.wall-bottom {
-            transform: rotateX(-90deg) translateZ(6.9em);
+            transform: rotateX(-90deg) translateZ(6.7em);
 
             .wall-content {
                 background-image: url("../../../../public/walls/chessFinal.jpg");
                 .wall-icon {
-                    background-image: url("../../../../public/walls/chessIcon.svg");
                     transform: rotate(45deg);
                 }
             }
         }
 
         &.wall-top-left {
-            transform: translateZ(6.9em);
+            transform: translateZ(6.7em);
 
             .wall-content {
                 background-image: url("../../../../public/walls/clientFinal.jpg");
-                .wall-icon {
-                    background-image: url("../../../../public/walls/chessIcon.svg");
-                }
             }
         }
 
         &.wall-top-right {
-            transform: rotateY(90deg) translateZ(6.9em);
+            transform: rotateY(90deg) translateZ(6.7em);
 
             .wall-content {
                 background-image: url("../../../../public/walls/experienceFinal.jpg");
-                .wall-icon {
-                    background-image: url("../../../../public/walls/chessIcon.svg");
-                }
             }
         }
 
         &.selected {
             .wall-content {
-                border: 0.2em solid $dark-orange;
+                border: 0.25em solid $dark-orange;
                 box-shadow: 0 0 1em 0.3em $dark-orange;
             }
 
