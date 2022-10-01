@@ -139,22 +139,16 @@
         padding-bottom: 1em;
       }
 
-      .avatar-icon {
+      .avatar-icon-wrapper {
         height: 3rem;
         width: 3rem;
-        background-size: 75% 75%;
-        background-position: center;
+        margin-left: 1rem;
+        color: $light-yellow;
 
-        &.TOP_LEFT {
-          background-image: url("../../../../public/walls/romeIcon.svg");
-        }
-
-        &.TOP_RIGHT {
-          background-image: url("../../../../public/walls/castleIcon.svg");
-        }
-
-        &.BOTTOM {
-          background-image: url("../../../../public/walls/chessIcon.svg");
+        .avatar-icon {
+          margin-top: .5rem;
+          height: 2rem;
+          width: 2rem;
         }
       }
 

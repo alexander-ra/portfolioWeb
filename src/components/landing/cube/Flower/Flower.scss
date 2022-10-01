@@ -23,8 +23,8 @@
 
   .flower-center{
     transition-property: box-shadow, background-color;
-    transition-delay: 1s;
-    transition-duration: 1s;
+    transition-delay: .25s;
+    transition-duration: 1.5s;
     position: absolute;
     left: calc(50% - 7em);
     TOP: calc(50% - 7em);
@@ -50,7 +50,7 @@
 
 
     .flower-center{
-      box-shadow: 0 0 3em 3em $purple;
+      box-shadow: 0 0 2em 1.5em $purple;
       background-color: $purple;
     }
   }

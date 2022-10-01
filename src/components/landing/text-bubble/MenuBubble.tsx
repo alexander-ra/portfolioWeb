@@ -3,10 +3,13 @@ import './CommonBubble.scss';
 import {LandingDescriptions} from '../../../labels/LandingLabels';
 import Typewriter from '../../common/Typewriter';
 import {CubeMenuStates} from "../../../models/landing/CubeMenuStates";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface MenuBubbleProps {
     textBubbleType: CubeMenuStates;
     visible: boolean;
+    icon: IconProp;
 }
 
 interface MenuBubbleState {
@@ -56,7 +59,9 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
             <div className={`menu-bubble-wrapper bubble-wrapper ${this.props.visible ? "disappear" : ""}`}>
                     <div className={"menu-bubble bubble"}>
                         <div className={"avatar-wrapper"}>
-                            <div className={`avatar-icon ${this.props.textBubbleType}`}></div>
+                            <div className={`avatar-icon-wrapper`}>
+                                <FontAwesomeIcon className={"avatar-icon"} icon={this.props.icon}/>
+                            </div>
                             <div className={"avatar-name"}>
                                 {this.props.textBubbleType === CubeMenuStates.TOP_LEFT && <span>Client Approach</span>}
                                 {this.props.textBubbleType === CubeMenuStates.TOP_RIGHT && <span>Past Experience</span>}

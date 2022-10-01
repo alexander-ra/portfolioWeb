@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
 import cubesReducer from "./cubeReducer";
-import othersReducer from "./othersReducer";
+import stagesReducer from "./stagesReducer";
 
-export default combineReducers({ cubesReducer, othersReducer });
+export default combineReducers({ cubesReducer, stagesReducer });

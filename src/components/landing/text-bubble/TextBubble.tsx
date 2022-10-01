@@ -3,10 +3,13 @@ import './CommonBubble.scss';
 import {LandingDescriptions} from '../../../labels/LandingLabels';
 import Typewriter from '../../common/Typewriter';
 import {CubeMenuStates} from "../../../models/landing/CubeMenuStates";
+import {connect} from "react-redux";
+import {completeDevIntro} from "../../../utils/stagesAction";
 
 interface TextBubbleProps {
     visible: boolean;
     textToType: string;
+    completeDevIntro: any;
 }
 
 interface TextBubbleState {
@@ -24,6 +27,10 @@ class TextBubble extends React.Component<TextBubbleProps, TextBubbleState> {
                     {this.props.visible &&
                         <Typewriter
                             textToType={this.props.textToType}
+                            onCompleted={() => {
+                                this.props.completeDevIntro();
+                            }
+                            }
                         />
                     }
                     <div className={"avatar-wrapper"}>
@@ -39,5 +46,4 @@ class TextBubble extends React.Component<TextBubbleProps, TextBubbleState> {
     }
 }
 
-export default TextBubble;
-
+export default connect(null, { completeDevIntro })(TextBubble);

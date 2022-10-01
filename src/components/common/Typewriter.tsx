@@ -3,6 +3,7 @@ import "./typewriter.scss"
 
 interface TypewriterProps {
     textToType: string;
+    onCompleted: () => any;
 }
 
 interface TypewriterState {
@@ -38,6 +39,7 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
             }, delay);
         } else {
             setTimeout(() => {
+                this.props.onCompleted();
                 this.setState({textDone: true})
             }, this.textDoneDelay);
         }

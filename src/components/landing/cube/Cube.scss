@@ -41,3 +41,26 @@
         }
     }
 }
+
+.rotate-hint-icon {
+    width: 40em;
+    height: 40em;
+    position: absolute;
+    left: calc(50% - 20em);
+    top: calc(50% - 17em);
+    z-index: 10;
+    opacity: 0;
+    color: $light-yellow;
+    background-image: url("../../../../public/360rotate.svg");
+    background-size: cover;
+    background-position: top center;
+    pointer-events: none;
+    animation: blinkRotate 5s infinite;
+}
+
+@keyframes blinkRotate{
+    0%{opacity: .0;}
+    44%{opacity: .5;}
+    55%{opacity: .5;}
+    100%{opacity: .0;}
+}

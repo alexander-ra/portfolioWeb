@@ -1,0 +1,4 @@
+export enum Page {
+    LANDING = "LANDING",
+    CLIENT_EXPERIENCE = "CLIENT_EXPERIENCE"
+}

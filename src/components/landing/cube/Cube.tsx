@@ -10,10 +10,12 @@ import Flower from "./Flower/Flower";
 import CubeCover from "./CubeCover";
 import CubeWall from "./CubeWall";
 import { faSuitcase, faChessKnight, faHandshake } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface CubeProps {
     openCube?: any;
     selectMenu?: any;
+    devIntroCompleted?: boolean;
 }
 
 export interface CubeRotationState {
@@ -33,6 +35,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
     private readonly CLOSED_CUBE_AUTO_ROTATION_TIME_MS = 3000;
     private cubeRotationClass = CubeRotationStates.LEFT_ZOOM;
     private dragStartingPos: Position;
+    private dragInitiated: boolean = false;
 
     constructor(props: CubeProps) {
         super(props);
@@ -82,6 +85,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
             this.dragStartingPos = CubeRotationUtils.initializeDragCursor(event);
         });
         window.addEventListener("drag", (event) => {
+            this.dragInitiated = true;
             const newState = CubeRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.rotationInitialState);
             if (newState.selectedMenuState !== this.state.selectedMenuState || newState.cubeDragClass !== this.state.cubeDragClass) {
                 this.setState(newState);
@@ -97,6 +101,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
             this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
         });
         window.addEventListener("touchmove", (event) => {
+            this.dragInitiated = true;
             const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
             if (newState.selectedMenuState !== this.state.selectedMenuState || newState.cubeDragClass !== this.state.cubeDragClass) {
                 this.setState(newState);
@@ -132,6 +137,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
         return (
         <>
             <div className="loading-element-wrapper">
+                {!this.dragInitiated && this.props.devIntroCompleted && <div className={`rotate-hint-icon`}/>}
                 <Flower flowerVisible={this.state.cubeOpened} />
                 <div draggable={this.state.cubeOpened}
                      className={`cube-wrapper  ${this.state.cubeOpened ? "opened" : "closed"} ${this.state.cubeDragClass} ${this.state.cubeRotationClass} ${this.state.rotationInitialState}`}
@@ -158,4 +164,11 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 }
 
-export default connect(null, { openCube, selectMenu })(Cube);
+export default connect((state: any, ownProps) => {
+    const { devIntroCompleted } = state.stagesReducer;
+    return {
+        ...ownProps,
+        devIntroCompleted
+    }
+}, { openCube, selectMenu })(Cube);
+
