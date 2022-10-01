@@ -1,2 +1,12 @@
 @import "../../App";
 @import "mixins";
+
+.landing-page-wrapper {
+  background: url("../../../public/spectrum-triangles.svg") center;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}

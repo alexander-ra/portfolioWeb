@@ -12,6 +12,7 @@ import {faChessKnight, faHandshake, faSuitcase} from '@fortawesome/free-solid-sv
 interface LandingCubeProps {
     cubeOpened: boolean;
     selectedMenu: CubeMenuStates;
+    isClosing: boolean;
 }
 
 
@@ -38,14 +39,14 @@ class LandingPage extends React.Component<LandingCubeProps> {
     }
 
     render(){
-        return (<>
-            <TextBubble visible={this.props.cubeOpened}
+        return (<div className={"landing-page-wrapper"}>
+            <TextBubble visible={this.props.cubeOpened && !this.props.isClosing}
                         textToType={LandingDescriptions.DEVELOPER_INTRODUCTION} />
             <MenuBubble textBubbleType={this.props.selectedMenu}
-                        visible={this.props.selectedMenu === CubeMenuStates.NONE}
+                        visible={this.props.selectedMenu !== CubeMenuStates.NONE && !this.props.isClosing}
                         icon={this.getIcon()}/>
-            <LandingCube />
-        </>)
+            <LandingCube isCLosing={this.props.isClosing}/>
+        </div>)
     }
 }
 

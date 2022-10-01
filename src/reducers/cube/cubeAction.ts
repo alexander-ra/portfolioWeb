@@ -1,5 +1,5 @@
-import {CLOSE_CUBE, OPEN_CUBE, SELECT_MENU} from "./ActionTypes";
-import {CubeMenuStates} from "../models/landing/CubeMenuStates";
+import {CLOSE_CUBE, OPEN_CUBE, SELECT_MENU} from "../ActionTypes";
+import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 
 const openCube = () => ({
     type: OPEN_CUBE,

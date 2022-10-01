@@ -4,6 +4,7 @@ import Header from "./components/layout/Header";
 import LandingPage from "./components/landing/LandingPage";
 import store from "./store/store";
 import { Provider } from 'react-redux';
+import ContentManager from './components/core/ContentManager';
 
 function App() {
 
@@ -12,7 +13,7 @@ function App() {
           <div className={"background"}></div>
           <div className="main-wrapper">
               <Header></Header>
-              <LandingPage></LandingPage>
+              <ContentManager />
           </div>
       </Provider>
     );

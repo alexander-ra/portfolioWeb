@@ -40,8 +40,9 @@
     }
 
     .wall {
-        transition-property: transform;
-        transition-duration: 1s;
+        transition-property: transform, opacity;
+        transition-duration: 1s, 1s;
+        opacity: 1s;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -53,6 +54,10 @@
         backface-visibility: inherit;
         border-radius: 0.3em;
         z-index: 4;
+
+        &.closing {
+            opacity: 0;
+        }
 
         .wall-content {
             padding: 1em;

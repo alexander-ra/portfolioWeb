@@ -32,8 +32,7 @@ body {
 }
 
 .background {
-  background: url("../public/spectrum-triangles.svg") center;
-  background-size: cover;
+  background: linear-gradient($dark-orange, $purple);
   position: fixed;
   top: 0;
   left: 0;

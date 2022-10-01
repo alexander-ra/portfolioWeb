@@ -4,7 +4,7 @@ import {LandingDescriptions} from '../../../labels/LandingLabels';
 import Typewriter from '../../common/Typewriter';
 import {CubeMenuStates} from "../../../models/landing/CubeMenuStates";
 import {connect} from "react-redux";
-import {completeDevIntro} from "../../../utils/stagesAction";
+import {completeDevIntro} from "../../../reducers/stages/stagesAction";
 
 interface TextBubbleProps {
     visible: boolean;
@@ -14,17 +14,26 @@ interface TextBubbleProps {
 
 interface TextBubbleState {
     menuDescription: LandingDescriptions;
-
 }
 
 
 class TextBubble extends React.Component<TextBubbleProps, TextBubbleState> {
+    private startedTyping: boolean = false;
+
+    componentDidUpdate(prevProps: Readonly<TextBubbleProps>, prevState: Readonly<TextBubbleState>) {
+        if (prevProps.visible !== this.props.visible) {
+            this.setState({});
+        }
+    }
 
     render(){
-        return (<>
+        if (this.props.visible) {
+            this.startedTyping = true;
+        }
+        return (
             <div className={`text-bubble-wrapper bubble-wrapper ${this.props.visible ? "" : "disappear"}`}>
                 <div className={"text-bubble bubble"}>
-                    {this.props.visible &&
+                    {this.startedTyping &&
                         <Typewriter
                             textToType={this.props.textToType}
                             onCompleted={() => {
@@ -41,7 +50,6 @@ class TextBubble extends React.Component<TextBubbleProps, TextBubbleState> {
                     </div>
                 </div>
             </div>
-        </>
         )
     }
 }
