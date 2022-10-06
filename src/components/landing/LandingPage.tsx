@@ -13,6 +13,7 @@ interface LandingCubeProps {
     cubeOpened: boolean;
     selectedMenu: CubeMenuStates;
     isClosing: boolean;
+    landingPageLeft: boolean;
 }
 
 
@@ -39,9 +40,10 @@ class LandingPage extends React.Component<LandingCubeProps> {
     }
 
     render(){
-        return (<div className={"landing-page-wrapper"}>
+        return (<div className={`landing-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
             <TextBubble visible={this.props.cubeOpened && !this.props.isClosing}
-                        textToType={LandingDescriptions.DEVELOPER_INTRODUCTION} />
+                        textToType={LandingDescriptions.DEVELOPER_INTRODUCTION}
+                        skipTyping={this.props.landingPageLeft}/>
             <MenuBubble textBubbleType={this.props.selectedMenu}
                         visible={this.props.selectedMenu !== CubeMenuStates.NONE && !this.props.isClosing}
                         icon={this.getIcon()}/>
@@ -53,10 +55,12 @@ class LandingPage extends React.Component<LandingCubeProps> {
 export default connect(
     (state: any, ownProps) => {
         const { cubeOpened, selectedMenu } = state.cubesReducer;
+        const { landingPageLeft } = state.stagesReducer;
         return {
             ...ownProps,
             selectedMenu,
-            cubeOpened
+            cubeOpened,
+            landingPageLeft
         }
     }
 )(LandingPage);

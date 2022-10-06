@@ -1,0 +1,44 @@
+@import "../../App";
+
+.back-button {
+    position: absolute;
+    opacity: .6;
+    color: rgba($light-yellow, .5);
+    transition: opacity .5s, color .5s;
+    display: flex;
+    z-index: 3;
+    margin: calc(($header-height + $title-height) / 2 - 3em) 1em;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 1;
+        color: $light-yellow;
+    }
+    .back-cube {
+        width: 6em;
+        height: 6em;
+        background-image: url("../../../public/cubeBack.png");
+        background-image: url("../../../public/cubeBack.png"), radial-gradient($orange 0%, $orange 50%, transparent 66%);
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-left: -20em;
+        animation: cubeEnter 2s 1s 1 forwards;
+    }
+
+    .back-icon {
+        opacity: 0;
+        height: 6em;
+        animation: transparentAppear .5s 2.5s forwards;
+    }
+}
+
+@keyframes transparentAppear{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+@keyframes cubeEnter{
+    from{margin-left: -20em;}
+    to{margin-left: -1em;}
+}

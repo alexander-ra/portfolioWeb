@@ -7,13 +7,18 @@
     cursor: pointer;
     position: absolute;
     left: calc(50% - 7em);
-    TOP: calc(50% - 7em);
+    top: calc(50% - 7em);
     width: 14em;
     height: 14em;
     transform-style: preserve-3d;
     transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg);
     transition: transform 4s;
     z-index: 3;
+
+    &.closing {
+        transition: transform .5s ease-out !important;
+        animation: test 1s .5s ease-in forwards;
+    }
 
     &.LEFT_ZOOM {
         transform: scale(1.1) rotateX(40deg) rotateY(-35deg) rotateZ(0deg);
@@ -63,4 +68,9 @@
     44%{opacity: .5;}
     55%{opacity: .5;}
     100%{opacity: .0;}
+}
+
+@keyframes test{
+    0%{top: calc(50% - 7em)}
+    100%{top: calc(100% + 7em)}
 }

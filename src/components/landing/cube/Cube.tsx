@@ -9,14 +9,14 @@ import {CubeRotationUtils} from "../../../utils/CubeRotationUtils";
 import Flower from "./Flower/Flower";
 import CubeCover from "./CubeCover";
 import CubeWall from "./CubeWall";
-import { faSuitcase, faChessKnight, faHandshake } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faChessKnight, faHandshake, faSuitcase} from '@fortawesome/free-solid-svg-icons';
 
 interface CubeProps {
     openCube?: any;
     selectMenu?: any;
     devIntroCompleted?: boolean;
     isCLosing: boolean;
+    firstTimeLanding?: boolean;
 }
 
 export interface CubeRotationState {
@@ -52,13 +52,15 @@ class Cube extends React.Component<CubeProps, CubeState> {
     componentDidUpdate(prevProps: Readonly<CubeProps>, prevState: Readonly<CubeState>, snapshot?: any) {
         if (prevState.selectedMenuState !== this.state.selectedMenuState) {
             this.props.selectMenu(this.state.selectedMenuState);
+        } else if (prevProps.isCLosing !== this.props.isCLosing && this.props.isCLosing) {
+            this.setState({selectedMenuState: CubeMenuStates.NONE});
         }
     }
 
     setInitialValues() {
         this.state = {
-            cubeOpened: false,
-            cubeCoverVisible: true,
+            cubeOpened: !this.props.firstTimeLanding,
+            cubeCoverVisible: this.props.firstTimeLanding,
             cubeRotationClass: CubeRotationStates.NORMAL,
             selectedMenuState: CubeMenuStates.NONE,
             rotationInitialState: CubeMenuStates.NONE
@@ -133,29 +135,30 @@ class Cube extends React.Component<CubeProps, CubeState> {
         this.setState({rotationInitialState: menu, selectedMenuState: menu});
     }
 
+    shouldDisplayRotationHint(): boolean {
+        return Boolean(this.state.cubeOpened && !this.dragInitiated && this.props.firstTimeLanding &&
+            this.props.devIntroCompleted && this.state.selectedMenuState === CubeMenuStates.NONE);
+    }
 
     render(){
         return (
             <div className="loading-element-wrapper">
-                {!this.dragInitiated && this.props.devIntroCompleted && <div className={`rotate-hint-icon`}/>}
-                <Flower flowerVisible={this.state.cubeOpened} />
+                {this.shouldDisplayRotationHint() && <div className={`rotate-hint-icon`}/>}
+                <Flower isClosing={this.props.isCLosing} flowerVisible={this.state.cubeOpened} />
                 <div draggable={this.state.cubeOpened}
-                     className={`cube-wrapper  ${this.state.cubeOpened ? "opened" : this.props.isCLosing ? "closing" : "closed"} ${this.state.cubeDragClass} ${this.state.cubeRotationClass} ${this.props.isCLosing ? CubeMenuStates.NONE : this.state.rotationInitialState}`}
+                     className={`cube-wrapper  ${this.state.cubeOpened ? (this.props.isCLosing ? "closing" : "opened") : "closed"} ${this.state.cubeDragClass} ${this.state.cubeRotationClass} ${this.props.isCLosing ? CubeMenuStates.NONE : this.state.rotationInitialState}`}
                      onClick={this.openCube.bind(this)}>
                     {this.state.cubeCoverVisible && <CubeCover />}
                     <>
                         <CubeWall menu={CubeMenuStates.BOTTOM}
-                                  isClosing={this.props.isCLosing}
                                   selected={this.state.selectedMenuState === CubeMenuStates.BOTTOM}
                                   onSelect={this.selectMenu.bind(this)}
                                   icon={faChessKnight}/>
                         <CubeWall menu={CubeMenuStates.TOP_LEFT}
-                                  isClosing={this.props.isCLosing}
                                   selected={this.state.selectedMenuState === CubeMenuStates.TOP_LEFT}
                                   onSelect={this.selectMenu.bind(this)}
                                   icon={faHandshake}/>
                         <CubeWall menu={CubeMenuStates.TOP_RIGHT}
-                                  isClosing={this.props.isCLosing}
                                   selected={this.state.selectedMenuState === CubeMenuStates.TOP_RIGHT}
                                   onSelect={this.selectMenu.bind(this)}
                                   icon={faSuitcase}/>
@@ -167,10 +170,11 @@ class Cube extends React.Component<CubeProps, CubeState> {
 }
 
 export default connect((state: any, ownProps) => {
-    const { devIntroCompleted } = state.stagesReducer;
+    const { devIntroCompleted, landingPageLeft } = state.stagesReducer;
     return {
         ...ownProps,
-        devIntroCompleted
+        devIntroCompleted,
+        firstTimeLanding: !landingPageLeft
     }
 }, { openCube, selectMenu })(Cube);
 

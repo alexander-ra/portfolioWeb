@@ -15,6 +15,10 @@ $orange: #E8893F;
 $yellow: #F0D171;
 $light-yellow: #f6e8d5;
 
+$header-height: 1.75em;
+$title-height: 5em;
+$content-header: $header-height + $title-height;
+
 @font-face {
   font-family: MAGIC;
   src: url("../public/fonts/MAGIC.otf") format("opentype");
@@ -32,7 +36,9 @@ body {
 }
 
 .background {
-  background: linear-gradient($dark-orange, $purple);
+  background-image: url("../public/spectrum-triangles.svg");
+  background-size: cover;
+  background-position: center;
   position: fixed;
   top: 0;
   left: 0;

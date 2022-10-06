@@ -1,0 +1,72 @@
+.content-body-text {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  .section {
+    transition-property: width, height;
+    transition-duration: 2s, 2s;
+    height: calc(100vh - ($header-height + $title-height));
+    width: calc(8rem);
+    white-space: nowrap;
+    z-index: 2;
+    border-radius: 1em;
+
+    .section-title {
+      transition: transform 2s;
+      font-size: 1.5em;
+      font-weight: bold;
+      line-height: 1em;
+      transform: translateX(50%) translateY(0rem) rotate(90deg);
+      transform-origin: center left;
+
+      div {
+        transition: padding 2s;
+        padding: 0 2rem;
+      }
+    }
+
+    &.section-chosen {
+      transition-property: width, height;
+      transition-duration: 2s, 2s;
+      height: 8rem;
+      width: calc(100vw - 24rem);
+      justify-content: center;
+      background-color: unset !important;
+      z-index: 1;
+
+      .section-title {
+        transform: translateX(0%) translateX(0%) rotate(0deg);
+
+        div {
+          border-radius: 1rem;
+          transition: unset;
+          padding: calc(4rem - 0.5em) 2rem;
+        }
+      }
+    }
+    &.section-one {
+      &.section-chosen .section-title div {
+        background-color: #db6b45;
+      }
+      background-color: #db6b45;
+    }
+    &.section-two {
+      &.section-chosen .section-title div {
+        background-color: #c74f4c;
+      }
+      background-color: #c74f4c;
+    }
+    &.section-three {
+      &.section-chosen .section-title div {
+        background-color: #ad3850;
+      }
+      background-color: #ad3850;
+    }
+    &.section-four {
+      &.section-chosen .section-title div {
+        background-color: #db6b45;
+      }
+      background-color: #db6b45;
+    }
+  }
+}

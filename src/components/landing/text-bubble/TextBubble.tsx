@@ -10,6 +10,7 @@ interface TextBubbleProps {
     visible: boolean;
     textToType: string;
     completeDevIntro: any;
+    skipTyping: boolean;
 }
 
 interface TextBubbleState {
@@ -36,10 +37,8 @@ class TextBubble extends React.Component<TextBubbleProps, TextBubbleState> {
                     {this.startedTyping &&
                         <Typewriter
                             textToType={this.props.textToType}
-                            onCompleted={() => {
-                                this.props.completeDevIntro();
-                            }
-                            }
+                            onCompleted={() => {this.props.completeDevIntro();}}
+                            skipTyping={this.props.skipTyping}
                         />
                     }
                     <div className={"avatar-wrapper"}>

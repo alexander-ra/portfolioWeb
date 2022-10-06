@@ -4,6 +4,7 @@ import "./typewriter.scss"
 interface TypewriterProps {
     textToType: string;
     onCompleted: () => any;
+    skipTyping?: boolean;
 }
 
 interface TypewriterState {
@@ -31,7 +32,7 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
     typeLetter() {
         const curLength = this.state.currentLetterNum;
 
-        if (curLength <= this.props.textToType.length) {
+        if (curLength <= this.props.textToType.length && !this.props.skipTyping) {
             const delay = this.getDelay(this.props.textToType[this.state.currentLetterNum]);
             setTimeout(() => {
                 this.typeLetter();
@@ -82,10 +83,15 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
     }
 
     render(){
-        return (<div className="typewriter-wrapper" onClick={() => {this.isSpedUp = true;}}>
-                <span className="line-1">{this.props.textToType.slice(0, this.state.currentLetterNum)}</span>
+        return (
+            <div className="typewriter-wrapper" onClick={() => {this.isSpedUp = true;}}>
+                {this.props.skipTyping ?
+                    <span className="line-1">{this.props.textToType}</span>
+                    :
+                    <span className="line-1">{this.props.textToType.slice(0, this.state.currentLetterNum)}</span>
+                }
                 {
-                    !this.state.textDone && <>
+                    !this.state.textDone && !this.props.skipTyping && <>
                         <span className="anim-typewriter"></span>
                         <span className="line-1 transparent">{this.props.textToType.slice(this.state.currentLetterNum)}</span>
                     </>

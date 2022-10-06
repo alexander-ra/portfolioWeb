@@ -9,7 +9,6 @@ interface CubeWallProps {
     selected: boolean;
     onSelect: (menu: CubeMenuStates) => void;
     icon: IconProp;
-    isClosing: boolean;
 }
 
 export interface CubeWallState {
@@ -22,7 +21,7 @@ class CubeWall extends React.Component<CubeWallProps, CubeWallState> {
 
     render(){
         return (
-            <div className={`wall wall-${this.props.menu.toString().toLowerCase().replace("_", "-")} ${this.props.selected ? "selected" : ""} ${this.props.isClosing ? "closing" : ""}`}
+            <div className={`wall wall-${this.props.menu.toString().toLowerCase().replace("_", "-")} ${this.props.selected ? "selected" : ""}`}
                  onClick={() => {this.props.onSelect(this.props.menu)}}>
                 <div className={"wall-content"}>
                     <FontAwesomeIcon className={"wall-icon"} icon={this.props.icon} />

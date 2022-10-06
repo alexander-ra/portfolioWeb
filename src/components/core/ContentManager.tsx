@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Page} from '../../models/common/Page';
 import {openCube, selectMenu} from "../../reducers/cube/cubeAction";
 import LandingPage from "../landing/LandingPage";
+import ContentPage from "../contentPage/ContentPage";
 
 interface ContentManagerProps {
     pageToChange?: Page
@@ -15,11 +16,12 @@ interface ContentManagerState {
 
 
 class ContentManager extends React.Component<ContentManagerProps, ContentManagerState> {
-    private readonly PAGE_TRANSITION_TIME_MS = 2000;
+    private readonly PAGE_CLOSING_TIME_MS = 2000;
+    private readonly NEW_PAGE_DELAY_MS = 1000;
     constructor(props: ContentManagerProps) {
         super(props);
         this.state = {
-            actualPage: Page.LANDING,
+            actualPage: Page.PAST_EXPERIENCE,
         }
     }
 
@@ -27,14 +29,25 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
         if (prevProps.pageToChange !== this.props.pageToChange) {
             this.setState({closingPage: prevProps.pageToChange});
             setTimeout(() => {
+                this.setState({closingPage: undefined});
+            }, this.PAGE_CLOSING_TIME_MS);
+
+            setTimeout(() => {
                 this.setState({actualPage: this.props.pageToChange});
-            }, this.PAGE_TRANSITION_TIME_MS);
+            }, this.NEW_PAGE_DELAY_MS);
         }
+    }
+
+    displayPage(page: Page) : boolean {
+        return this.state.actualPage === page || this.state.closingPage === page;
     }
 
     render(){
         return (<>
-            {this.state.actualPage === Page.LANDING && <LandingPage isClosing={this.state.closingPage === Page.LANDING} />}
+            {this.displayPage(Page.LANDING) && <LandingPage isClosing={this.state.closingPage === Page.LANDING} />}
+            {this.displayPage(Page.CLIENT_APPROACH) && <ContentPage isClosing={this.state.closingPage === Page.CLIENT_APPROACH} />}
+            {this.displayPage(Page.PAST_EXPERIENCE) && <ContentPage isClosing={this.state.closingPage === Page.PAST_EXPERIENCE} />}
+            {this.displayPage(Page.CHESS_DEMO) && <LandingPage isClosing={this.state.closingPage === Page.CHESS_DEMO} />}
         </>)
     }
 }

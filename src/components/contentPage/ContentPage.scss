@@ -1,0 +1,72 @@
+@import "../../App";
+
+.content-page-wrapper {
+  margin-top: $header-height;
+  opacity: 1;
+  transition: opacity .5s 1.5s;
+  height: calc(100vh - $header-height);
+  display: flex;
+  flex-direction: column;
+
+  &.closing {
+    opacity: 0;
+  }
+
+  .content-header-wrapper {
+    flex-basis: $title-height;
+    background-color: $dark-purple;
+    animation: headerAppear 1s 1;
+    overflow: hidden;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .content-header {
+      opacity: 0;
+      font-size: 3em;
+      color: $light-yellow;
+      animation: titleAppear 1s .05s forwards;
+    }
+  }
+
+  .content-body {
+    width: 100%;
+    color: $dark-purple;
+    flex-basis: 0%;
+    opacity: 0;
+    background-color: rgba($light-yellow, 0.33);
+    animation: bodyAppear 1s 1 forwards;
+    z-index: 1;
+    padding: 0;
+
+    .circle {
+      background-color: rgba(red, 0.5);
+      border: 1em solid $purple;
+      box-sizing: border-box;
+      border-radius: 50%;
+      height: 20em;
+      width: 20em;
+      position: absolute;
+      left: calc(50% - 10em);
+      top: calc(50% - 10em);
+    }
+
+
+  }
+}
+
+@keyframes headerAppear{
+  from{flex-basis: 0em;}
+  to{flex-basis: 10em;}
+}
+
+@keyframes bodyAppear{
+  from{flex-basis: 0%; opacity: 0}
+  to{flex-basis: calc(100% - $title-height); opacity: 1}
+}
+
+@keyframes titleAppear{
+  from{opacity: 0;}
+  to{opacity: 1;}
+}

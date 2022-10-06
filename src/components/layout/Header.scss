@@ -1,9 +1,9 @@
 @import "../../App";
 
 .header-wrapper {
-    background-color: rgba(white, .5);
-    height: 1.75em;
-    color: $dark-purple;
+    background-color: $dark-purple;
+    height: $header-height;
+    color: $light-yellow;
     z-index: 3;
     position: absolute;
     width: 100%;

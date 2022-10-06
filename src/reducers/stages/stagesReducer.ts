@@ -4,11 +4,13 @@ import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 
 export interface StagesReduceModel {
     devIntroCompleted: boolean;
+    landingPageLeft: boolean;
     currentPage: Page;
 }
 
 export const initialState: StagesReduceModel = {
     devIntroCompleted: false,
+    landingPageLeft: false,
     currentPage: Page.LANDING
 }
 
@@ -24,6 +26,7 @@ export default function stagesReducer(state = initialState, action: any): Stages
             console.log(action);
             return {
                 ...state,
+                landingPageLeft: state.landingPageLeft || state.currentPage !== Page.LANDING || action.payload.currentPage === Page.LANDING,
                 currentPage: action.payload.currentPage
             }
         }
