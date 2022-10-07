@@ -28,7 +28,18 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                 <div className={"content-header"}>Past Experience</div>
             </div>
             <div className={"content-body"}>
-                <div className={"circle"}>asd</div>
+                <div className={"gems-notch"}>
+                </div>
+                <div className={"gems-holder"}>
+                    <div className={"gem orange"}></div>
+                    <div className={"gem red"}></div>
+                    <div className={"gem yellow"}></div>
+                </div>
+                <div className={"circle"}>
+                    <div className={"gem-socket"}>
+
+                    </div>
+                </div>
                 <div className={"content-body-text"}>
                     <div className={`section section-two ${this.state.chosenIndex === 1 ? "section-chosen" : ""}`}>
                         <div className={"section-title"}>

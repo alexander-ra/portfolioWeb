@@ -26,30 +26,113 @@
       opacity: 0;
       font-size: 3em;
       color: $light-yellow;
-      animation: titleAppear 1s .05s forwards;
+      animation: titleAppear 1s forwards;
     }
   }
 
   .content-body {
     width: 100%;
     color: $dark-purple;
+    // background-image: url("../../../public/angled-focus.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
     flex-basis: 0%;
     opacity: 0;
-    background-color: rgba($light-yellow, 0.33);
     animation: bodyAppear 1s 1 forwards;
     z-index: 1;
     padding: 0;
+    position: relative;
+
+    .gems-holder {
+      height: 10em;
+      width: 40em;
+      background-color: rgba($light-yellow, 0.5);
+      padding: .75em;
+
+      opacity: 1;
+      position: absolute;
+      border-radius: 2em;
+      top: 2em;
+      left: calc(50% - 20em);
+
+      display: flex;
+      align-items: center;
+
+      .gem {
+        height: 8em;
+        width: 8em;
+        background-image: url("../../../public/gemBlue.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        opacity: 1;
+
+        &.blue {
+          background-image: url("../../../public/gemBlue.svg");
+          filter: drop-shadow(0 0 1em #403fc5);
+        }
+
+        &.cyan {
+          background-image: url("../../../public/gemCyan.svg");
+          filter: drop-shadow(0 0 1em #41ac92);
+        }
+
+        &.green {
+          background-image: url("../../../public/gemGreen.svg");
+          filter: drop-shadow(0 0 1em #35d041);
+        }
+
+        &.orange {
+          background-image: url("../../../public/gemOrange.svg");
+          filter: drop-shadow(0 0 1em #fd802e);
+        }
+
+        &.pink {
+          background-image: url("../../../public/gemPink.svg");
+          filter: drop-shadow(0 0 1em #f6279a);
+        }
+
+        &.red {
+          background-image: url("../../../public/gemRed.svg");
+          filter: drop-shadow(0 0 1em #eb3c3c);
+        }
+
+        &.yellow {
+          background-image: url("../../../public/gemYellow.svg");
+          filter: drop-shadow(0 0 1em #fadd42);
+        }
+      }
+    }
 
     .circle {
-      background-color: rgba(red, 0.5);
-      border: 1em solid $purple;
+      filter: saturate(.5);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 250%;
+      border: 0.75em solid white;
+      box-shadow: inset 0 0 20em 1em white;
       box-sizing: border-box;
       border-radius: 50%;
       height: 20em;
       width: 20em;
-      position: absolute;
+      position: relative;
       left: calc(50% - 10em);
-      top: calc(50% - 10em);
+      top: calc(50% - 5em);
+      animation: saturateAnim 5s infinite;
+    }
+
+    .gem-socket {
+      height: 8em;
+      width: 8em;
+      background-image: url("../../../public/gemSocket.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100% 100%;
+      opacity: 1;
+      position: absolute;
+      top: calc(50% - 4em);
+      left: calc(50% - 4em);
     }
 
 
@@ -58,7 +141,7 @@
 
 @keyframes headerAppear{
   from{flex-basis: 0em;}
-  to{flex-basis: 10em;}
+  to{flex-basis: $title-height;}
 }
 
 @keyframes bodyAppear{
@@ -69,4 +152,10 @@
 @keyframes titleAppear{
   from{opacity: 0;}
   to{opacity: 1;}
+}
+
+@keyframes saturateAnim{
+  from{filter: saturate(.25);}
+  50%{filter: saturate(.75);}
+  to{filter: saturate(.25);}
 }
