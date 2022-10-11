@@ -4,8 +4,8 @@ import LandingCube from "./cube/Cube";
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 import {LandingDescriptions} from "../../labels/LandingLabels";
 import {connect} from 'react-redux';
-import TextBubble from "./text-bubble/TextBubble";
-import MenuBubble from "./text-bubble/MenuBubble";
+import TextBubble from "../common/text-bubble/TextBubble";
+import MenuBubble from "../common/text-bubble/MenuBubble";
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {faChessKnight, faHandshake, faSuitcase} from '@fortawesome/free-solid-svg-icons';
 

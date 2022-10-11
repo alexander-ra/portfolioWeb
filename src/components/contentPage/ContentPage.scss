@@ -1,141 +1,145 @@
 @import "../../App";
 
-.content-page-wrapper {
-  margin-top: $header-height;
-  opacity: 1;
-  transition: opacity .5s 1.5s;
-  height: calc(100vh - $header-height);
-  display: flex;
-  flex-direction: column;
+$circle-text-padding: 2em;
+$outer-radius: 32em;
+$outer-offset: $outer-radius / 2;
+$inner-radius: 26em;
+$border: calc($outer-radius - $inner-radius) / 2;
+$menu-radius: 5em;
 
-  &.closing {
-    opacity: 0;
-  }
 
-  .content-header-wrapper {
-    flex-basis: $title-height;
-    background-color: $dark-purple;
-    animation: headerAppear 1s 1;
-    overflow: hidden;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .content-header {
-      opacity: 0;
-      font-size: 3em;
-      color: $light-yellow;
-      animation: titleAppear 1s forwards;
+@mixin circleRot($degrees) {
+  @for $i from 0deg through $degrees {
+    .circle-rot#{$i} {
+      animation: none !important;
+      transform: rotate(calc($i + 0deg)) !important;
     }
   }
+}
 
-  .content-body {
-    width: 100%;
-    color: $dark-purple;
-    // background-image: url("../../../public/angled-focus.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 100%;
-    flex-basis: 0%;
-    opacity: 0;
-    animation: bodyAppear 1s 1 forwards;
-    z-index: 1;
-    padding: 0;
-    position: relative;
+@include circleRot(360deg);
 
-    .gems-holder {
-      height: 10em;
-      width: 40em;
-      background-color: rgba($light-yellow, 0.5);
-      padding: .75em;
+.content-page-wrapper {
 
-      opacity: 1;
-      position: absolute;
-      border-radius: 2em;
-      top: 2em;
-      left: calc(50% - 20em);
+  .longer-text {
+    height: 28em;
+    width: 90vw;
+    position: absolute;
+    top: calc(50% - 14em);
+    left: calc(50% - 45vw);
+    display: flex;
+    flex-direction: row;
 
+    .text-section {
+      background-color: rgba(white, .5);
+      border-radius: 5em;
       display: flex;
       align-items: center;
+      justify-content: center;
 
-      .gem {
-        height: 8em;
-        width: 8em;
-        background-image: url("../../../public/gemBlue.svg");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 100% 100%;
-        opacity: 1;
+      &.text-section-left {
+        margin-right: 14em;
+        border-radius: 5em 10em 10em 5em;
+      }
+      &.text-section-right {
+        margin-left: 14em;
+        border-radius: 10em 5em 5em 10em;
+      }
 
-        &.blue {
-          background-image: url("../../../public/gemBlue.svg");
-          filter: drop-shadow(0 0 1em #403fc5);
-        }
-
-        &.cyan {
-          background-image: url("../../../public/gemCyan.svg");
-          filter: drop-shadow(0 0 1em #41ac92);
-        }
-
-        &.green {
-          background-image: url("../../../public/gemGreen.svg");
-          filter: drop-shadow(0 0 1em #35d041);
-        }
-
-        &.orange {
-          background-image: url("../../../public/gemOrange.svg");
-          filter: drop-shadow(0 0 1em #fd802e);
-        }
-
-        &.pink {
-          background-image: url("../../../public/gemPink.svg");
-          filter: drop-shadow(0 0 1em #f6279a);
-        }
-
-        &.red {
-          background-image: url("../../../public/gemRed.svg");
-          filter: drop-shadow(0 0 1em #eb3c3c);
-        }
-
-        &.yellow {
-          background-image: url("../../../public/gemYellow.svg");
-          filter: drop-shadow(0 0 1em #fadd42);
-        }
+      .content {
+        text-align: center;
+        padding: 5em;
       }
     }
+  }
 
-    .circle {
-      filter: saturate(.5);
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 250%;
-      border: 0.75em solid white;
-      box-shadow: inset 0 0 20em 1em white;
-      box-sizing: border-box;
-      border-radius: 50%;
-      height: 20em;
-      width: 20em;
-      position: relative;
-      left: calc(50% - 10em);
-      top: calc(50% - 5em);
-      animation: saturateAnim 5s infinite;
-    }
+  .indicator {
+    z-index: 3;
+    width: 1em;
+    height: 10vh;
+    background-color: darkblue;
+    z-index: 100;
+    position: absolute;
+    top: calc(50% - ($inner-radius / 2 + ($outer-radius - $inner-radius) / 2));
+    left: calc(50% - .1em);
+  }
 
-    .gem-socket {
-      height: 8em;
-      width: 8em;
-      background-image: url("../../../public/gemSocket.svg");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 100% 100%;
-      opacity: 1;
+  .content-outer-circle {
+    cursor: grab;
+    height: $outer-radius;
+    width: $outer-radius;
+    position: absolute;
+    top: calc(50% - $outer-offset);
+    left: calc(50% - $outer-offset);
+    background-color: blue;
+    padding: -1em;
+    border-radius: 50%;
+    z-index: 1;
+
+    .section-edge{
+      height: 2em;
+      width: 0.2em;
+      background-color: black;
       position: absolute;
-      top: calc(50% - 4em);
-      left: calc(50% - 4em);
+      transform: rotate(44deg);
+      top: 6em;
+      left: 12.5em;
+      z-index: 1;
     }
 
+    .menu-section {
+      transform: rotate(0deg);
+      transform-origin: ($menu-radius / 2) (($outer-radius / 2) + ($menu-radius - $border) / 2 + 0.5em);
+      top: -1.5em;
+      left: calc($outer-offset - ($menu-radius / 2));
+      color: white;
+      background-color: gray;
+      position: absolute;
+      border-radius: 50% 50% 0% 0%;
+      box-sizing: border-box;
+      height: $menu-radius;
+      width: $menu-radius;
+      padding: 1em;
 
+      &.selected {
+        background-color: orange;
+      }
+
+      .menu-icon {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+  div.box {
+    box-shadow: inset 0 0 1em black;
+    cursor: initial;
+    position: absolute;
+    height: $inner-radius;
+    width: $inner-radius;
+    top: calc(50% - $outer-offset);
+    left: calc(50% - $outer-offset);
+    border-radius: 50%;
+    background: #333;
+    margin: $border;
+    color: red;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .box i,
+  .box::before {
+    pointer-events: none;
+    content: '';
+    float: left;
+    height:100%;
+    width: 50%;
+    shape-outside: radial-gradient(farthest-side at right, transparent calc(100% - $circle-text-padding), #fff 0);
+  }
+
+  .box i {
+    float: right;
+    shape-outside: radial-gradient(farthest-side at left,  transparent calc(100% - $circle-text-padding), #fff 0);
   }
 }
 

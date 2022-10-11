@@ -1,7 +1,7 @@
 import React from 'react';
 import './CommonBubble.scss';
 import {LandingDescriptions} from '../../../labels/LandingLabels';
-import Typewriter from '../../common/Typewriter';
+import Typewriter from '../Typewriter';
 import {CubeMenuStates} from "../../../models/landing/CubeMenuStates";
 import {connect} from "react-redux";
 import {completeDevIntro} from "../../../reducers/stages/stagesAction";

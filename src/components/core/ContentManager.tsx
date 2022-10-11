@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {Page} from '../../models/common/Page';
-import {openCube, selectMenu} from "../../reducers/cube/cubeAction";
 import LandingPage from "../landing/LandingPage";
-import ContentPage from "../contentPage/ContentPage";
+import ContentPage, {Section} from "../contentPage/ContentPage";
+import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
+import {faFileCode, faHome, faMoneyBillTrendUp, faUserTie } from '@fortawesome/free-solid-svg-icons';
 
 interface ContentManagerProps {
     pageToChange?: Page
@@ -21,7 +22,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     constructor(props: ContentManagerProps) {
         super(props);
         this.state = {
-            actualPage: Page.PAST_EXPERIENCE,
+            actualPage: Page.CLIENT_APPROACH,
         }
     }
 
@@ -38,16 +39,72 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
         }
     }
 
-    displayPage(page: Page) : boolean {
+    displayPage(page: Page): boolean {
         return this.state.actualPage === page || this.state.closingPage === page;
+    }
+
+    getClinetApproachSections(): Section[] {
+        return [
+            {
+                icon: faHome,
+                menu: CircleMenuStates.HOME
+            },
+            {
+                icon: faUserTie,
+                menu: CircleMenuStates.POSITION
+            },
+            {
+                icon: faMoneyBillTrendUp,
+                menu: CircleMenuStates.FIELD
+            },
+            {
+                icon: faFileCode,
+                menu: CircleMenuStates.FRAMEWORK
+            }
+        ];
+    }
+
+    getPastExperienceSections(): Section[] {
+        return [
+            {
+                icon: faHome,
+                menu: CircleMenuStates.HOME
+            },
+            {
+                icon: faUserTie,
+                menu: CircleMenuStates.POSITION
+            },
+            {
+                icon: faMoneyBillTrendUp,
+                menu: CircleMenuStates.FIELD
+            },
+            {
+                icon: faFileCode,
+                menu: CircleMenuStates.FRAMEWORK
+            }
+        ];
     }
 
     render(){
         return (<>
-            {this.displayPage(Page.LANDING) && <LandingPage isClosing={this.state.closingPage === Page.LANDING} />}
-            {this.displayPage(Page.CLIENT_APPROACH) && <ContentPage isClosing={this.state.closingPage === Page.CLIENT_APPROACH} />}
-            {this.displayPage(Page.PAST_EXPERIENCE) && <ContentPage isClosing={this.state.closingPage === Page.PAST_EXPERIENCE} />}
-            {this.displayPage(Page.CHESS_DEMO) && <LandingPage isClosing={this.state.closingPage === Page.CHESS_DEMO} />}
+            {
+                this.displayPage(Page.LANDING) &&
+                <LandingPage isClosing={this.state.closingPage === Page.LANDING} />
+            }
+            {
+                this.displayPage(Page.CLIENT_APPROACH) &&
+                <ContentPage sections={this.getClinetApproachSections()}
+                             isClosing={this.state.closingPage === Page.CLIENT_APPROACH} />
+            }
+            {
+                this.displayPage(Page.PAST_EXPERIENCE) &&
+                <ContentPage sections={this.getPastExperienceSections()}
+                             isClosing={this.state.closingPage === Page.PAST_EXPERIENCE} />
+            }
+            {
+                this.displayPage(Page.CHESS_DEMO) &&
+                <LandingPage isClosing={this.state.closingPage === Page.CHESS_DEMO} />
+            }
         </>)
     }
 }

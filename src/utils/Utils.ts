@@ -173,59 +173,6 @@ export default class Utils {
         return "";
     }
 
-    public static joinWindowParams(windowParams: string, defaultWindowParams: Map<string, string>): string {
-        let width = null;
-        let height = null;
-        let left = null;
-        let top = null;
-        const resultParams: string[] = [];
-        const requestedParams: string[] = Utils.isNotEmpty(windowParams) ? windowParams.split("&") : [];
-        if (Utils.isArrayNotEmpty(requestedParams)) {
-            for (let i = 0; i < requestedParams.length; i++) {
-                const result: string[] = requestedParams[i].split("=");
-                if (result[0] === "width") {
-                    width = result[1];
-                } else if (result[0] === "height") {
-                    height = result[1];
-                } else if (result[0] === "left") {
-                    left = result[1];
-                } else if (result[0] === "top") {
-                    top = result[1];
-                }
-                if (result[0] !== "target") {
-                    resultParams.push(requestedParams[i]);
-                }
-            }
-        }
-        if (Utils.isNull(width)) {
-            resultParams.push("width=" + (width = defaultWindowParams.get("width")));
-        }
-        if (Utils.isNull(height)) {
-            resultParams.push("height=" + (height = defaultWindowParams.get("height")));
-        }
-        if (Utils.isNull(left)) {
-            // @ts-ignore
-            resultParams.push(Utils.calculateLeft(parseInt(width, 10)));
-        }
-        if (Utils.isNull(top)) {
-            // @ts-ignore
-            resultParams.push(Utils.calculateTop(parseInt(height, 10)));
-        }
-        return resultParams.join(",");
-    }
-
-    private static calculateLeft(width: number): string {
-        const dualScreenLeft = Utils.isNotNull(window.screenLeft) ? window.screenLeft : (screen as any).left;
-        const wndWidth: number = window.innerWidth || document.documentElement.clientWidth || screen.width;
-        return "left=" + Math.round((wndWidth - width) / 2 + dualScreenLeft);
-    }
-
-    private static calculateTop(height: number): string {
-        const dualScreenTop: number = Utils.isNotNull(window.screenTop) ? window.screenTop : (screen as any).top;
-        const wndHeight: number = window.innerHeight || document.documentElement.clientHeight || screen.height;
-        return "top=" + Math.round((wndHeight - height) / 2 + dualScreenTop);
-    }
-
     public static getRandomInt(min: number, max: number): number {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
