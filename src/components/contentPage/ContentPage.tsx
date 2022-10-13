@@ -117,49 +117,83 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         }
     }
 
+    calculateSectionEdgeDegrees(sectionDegrees: number): number {
+        const { sections } = this.props;
+
+        const sectionsSizeDeg = 360 / sections.length;
+        return (sectionDegrees + (sectionsSizeDeg / 2)) % 360;
+    }
+
     renderSections(): JSX.Element[] {
         const sections: JSX.Element[] = [];
         this.props.sections.forEach((section: Section, index) => {
-           sections.push(<>
-                   <div className={`menu-section circle-rot${this.sectionDegrees[index]}deg ${this.state.selectedMenuIndex === index ? "selected": ""}`}>
-                       <FontAwesomeIcon className={`menu-icon circle-rot${this.sectionIconDegrees[index]}deg`} icon={section.icon}/>
-                       <div className={`section-edge`}></div>
-                   </div>
-           </>
+           sections.push(
+               <div className={`menu-section circle-rot${this.sectionDegrees[index]}deg ${this.state.selectedMenuIndex === index ? "selected": ""}`}>
+                   <FontAwesomeIcon className={`menu-icon circle-rot${this.sectionIconDegrees[index]}deg`} icon={section.icon}/>
+               </div>
            )
+        });
+        return sections;
+    }
+
+    renderSectionEdges(): JSX.Element[] {
+        const sections: JSX.Element[] = [];
+        this.props.sections.forEach((section: Section, index) => {
+            sections.push(<div className={`section-edge circle-rot${this.sectionDegrees[index]}deg`}></div>
+            )
         });
         return sections;
     }
 
     render(){
         this.calculateDegrees();
-        return (<div className={`content-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
-            <div className={"indicator"} />
-            <div draggable={true} className={`content-outer-circle circle-rot${this.state.actualCircleOffsetDegrees}deg`}>
+        return (<div draggable={true} className={`content-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
+            {/*<div className={"hl"} />*/}
+            {/*<div className={"vl"} />*/}
+            <div className={"indicator"}>
+                <div className={"indicator-arrow-point"} />
+            </div>
+            <div className={`content-outer-circle circle-rot${this.state.actualCircleOffsetDegrees}deg`}>
                 {this.renderSections()}
+            </div>
+            <div className={`content-outer-circle-sections circle-rot${this.calculateSectionEdgeDegrees(this.state.actualCircleOffsetDegrees)}deg`}>
+                {this.renderSectionEdges()}
             </div>
             <div className={"longer-text"}>
                 <div className={"text-section text-section-left"}>
+
+                    <div className="top-wing wing back-wing"></div>
                     <div className={"content"}>
-                        Initially started working on projects in the initial AngularJS and transitioning to Angular2+ after that. I have exellent understanding of all the inner modules of the framework (Component Livecycles, Angular Directives, RxJS, Angular Animations, Reactive forms, etc..) and have been a Team Lead for projects written in Angular2+. I love angular for the fact that many of the common problems for new project have already been solved in a meaningfull way, so team familiar with it can go straight into developing the business part of the project with relative ease.
+                        <FontAwesomeIcon className={`content-icon`} icon={['fab', 'angular']}/>
+                        <div className={"content-title"}>
+                            Angular JS
+                        </div>
+                        <div className={"content-body"}>
+                            Initially started working on projects in the initial AngularJS and transitioning to Angular2+ after that. I have exellent understanding of all the inner modules of the framework (Component Livecycles, Angular Directives, RxJS, Angular Animations, Reactive forms, etc..) and have been a Team Lead for projects written in Angular2+. I love angular for the fact that many of the common problems for new project have already been solved in a meaningfull way, so team familiar with it can go straight into developing the business part of the project with relative ease.
+                        </div>
                     </div>
+                    <div className="bottom-wing wing"></div>
                 </div>
                 <div className={"text-section text-section-right"}>
+                    <div className="top-wing wing back-wing"></div>
                     <div className={"content"}>
-                        Around the beggining of 2021 I have decided to move on and try something new by discovering the ReactJS library. Delivering software mostly for real-money handling gaming companies I have a great understanding of how best to handle a lot of dynamic elements for many types of devices using the Virtual DOM, optimising them with The useful React Hooks, while not compromising security of data. I love ReactJS for its ease of use, high responsibility for the user and freedom to really go out of the box and stand out in a unique way in every different project.
+                        <FontAwesomeIcon className={`content-icon`} icon={['fab', 'react']}/>
+                        <div className={"content-title"}>
+                            React JS
+                        </div>
+                        <div className={"content-body"}>
+                            Around the beginning of 2021 I have decided to move on and try something new by discovering the ReactJS library. Delivering software mostly for real-money handling gaming companies I have a great understanding of how best to handle a lot of dynamic elements for many types of devices using the Virtual DOM, optimising them with The useful React Hooks, while not compromising security of data. I love ReactJS for its ease of use, high responsibility for the user and freedom to really go out of the box and stand out in a unique way in every different project.
+                        </div>
                     </div>
+                    <div className="bottom-wing wing"></div>
                 </div>
             </div>
             <div className="box">
-                <i></i>
-                Lorem ipsum dolor sit amet, eget orci, tinci dunt place rat in sociis. Pel lentes que ultri
-                cies. Lorem ipsum dolor sit amet, eget orci, tinci dunt place rat in sociis. Pel lentes que
-                ultri cies. Lorem ipsum dolor sit amet, eget orci, tinci dunt place rat in sociis. Pel lentes
-                que ultri cies. Lorem ipsum dolor sit amet, eget orci, tinci dunt place rat in sociis. Lorem
-                ipsum Pel lentes que ultri cies.Lorem ipsum dolor sit amet, eget orci, tinci dunt place rat in sociis.
-                Pel lentes que ultri
-                cies. Lorem ipsum dolor sit amet, eget orci, tinci dunt place rat in sociis. Pel lentes que
-                ultri cies.
+                <div className="box-overlay"></div>
+                <div className={"section-title"}>
+                    <div className={"section-title-top"}>Experience</div>
+                    <div className={"section-title-bottom"}>By Title</div>
+                </div>
             </div>
         </div>)
     }

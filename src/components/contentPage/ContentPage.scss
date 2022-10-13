@@ -5,7 +5,7 @@ $outer-radius: 32em;
 $outer-offset: $outer-radius / 2;
 $inner-radius: 26em;
 $border: calc($outer-radius - $inner-radius) / 2;
-$menu-radius: 5em;
+$menu-radius: 6em;
 
 
 @mixin circleRot($degrees) {
@@ -22,46 +22,179 @@ $menu-radius: 5em;
 .content-page-wrapper {
 
   .longer-text {
-    height: 28em;
+    height: 32em;
     width: 90vw;
     position: absolute;
-    top: calc(50% - 14em);
+    top: calc(50% - 16em);
     left: calc(50% - 45vw);
     display: flex;
     flex-direction: row;
 
     .text-section {
-      background-color: rgba(white, .5);
-      border-radius: 5em;
+      border-radius: 8em;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex: 1 1 50%;
+      background: rgba($light-yellow, .5);
+
+      .wing {
+        height: 28em;
+        width: 20vw;
+        position: absolute;
+        background-image: url("../../../public/feder.svg");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &.back-wing {
+          background-image: url("../../../public/federZad.svg");
+        }
+
+        &.top-wing {
+          top: -12em;
+        }
+
+        &.bottom-wing {
+          top: 17em;
+        }
+      }
 
       &.text-section-left {
-        margin-right: 14em;
-        border-radius: 5em 10em 10em 5em;
+        margin-right: 10em;
+
+        .wing {
+          left: 10em;
+
+
+          &.top-wing {
+            transform: scaleX(-1.2) rotate(25deg);
+          }
+
+          &.bottom-wing {
+            transform: scaleY(-1) scaleX(-1.2) rotate(25deg);
+          }
+        }
+
+        .content {
+          padding: 0 9em 0 3em;
+          .content-icon {
+            right: calc(50% + 20em);
+          }
+        }
       }
       &.text-section-right {
-        margin-left: 14em;
-        border-radius: 10em 5em 5em 10em;
+        margin-left: 10em;
+
+        .wing {
+          right: 10em;
+
+          &.top-wing {
+            transform: scaleX(1.2) rotate(25deg);
+          }
+
+          &.bottom-wing {
+            transform: scaleX(1.2) scaleY(-1) rotate(25deg);
+          }
+        }
+
+        .content {
+          padding: 0 3em 0 9em;
+          .content-icon {
+            left: calc(50% + 20em);
+          }
+        }
       }
 
       .content {
         text-align: center;
-        padding: 5em;
+        padding: 3em;
+        color: $dark-purple;
+
+        .content-title {
+          position: relative;
+          font-size: 2em;
+          height: 1em;
+          width: 100%;
+          top: -1em;
+          margin-bottom: .5em;
+          color: $dark-blue;
+        }
+
+        .content-icon {
+          position: absolute;
+          height: 20em;
+          width: 20em;
+          opacity: 0.25;
+          color: $light-blue;
+          z-index: -1;
+        }
       }
     }
   }
 
   .indicator {
-    z-index: 3;
-    width: 1em;
-    height: 10vh;
+    z-index: 4;
+    width: 9em;
+    height: 9em;
+    border: 1em solid transparent;
+    box-sizing: border-box;
+    position: absolute;
+    top: calc(50% - 19.5em);
+    border-radius: 50% 50% 50% 0;
+    left: calc(50% - 4.5em);
+    transform: rotate(315deg);
+    .indicator-arrow-point {
+      background: linear-gradient(45deg, $light-yellow 0%, $dark-purple 100%);
+      box-shadow: 0 0 .25em $dark-purple;
+      box-sizing: border-box;
+      border-radius: 50% 100% 50% 0;
+      width: 3.2em;
+      height: 3.2em;
+      margin-left: -0.6em;
+      margin-top: 4.3em;
+      transform: rotate(180deg);
+      position: absolute;
+    }
+  }
+
+  .hl {
+    opacity: .2;
+    width: 100vw;
+    height: 1em;
     background-color: darkblue;
     z-index: 100;
     position: absolute;
-    top: calc(50% - ($inner-radius / 2 + ($outer-radius - $inner-radius) / 2));
-    left: calc(50% - .1em);
+    top: calc(50% - .5em);
+  }
+
+  .vl {
+    opacity: .2;
+    width: 1em;
+    height: 100vh;
+    background-color: darkblue;
+    z-index: 100;
+    position: absolute;
+    left: calc(50% - .5em);
+  }
+
+  .content-outer-circle-sections {
+    height: $outer-radius;
+    width: $outer-radius;
+    position: absolute;
+    top: calc(50% - $outer-offset);
+    left: calc(50% - $outer-offset);
+    z-index: 2;
+
+    .section-edge{
+      height: 2em;
+      width: 0.2em;
+      background-color: $light-yellow;
+      transform-origin: (0.2em / 2) ($outer-radius / 2 + 0.05em);
+      position: absolute;
+      top: -0.1em;
+      left: calc(16em - (0.2em / 2));
+    }
   }
 
   .content-outer-circle {
@@ -71,38 +204,30 @@ $menu-radius: 5em;
     position: absolute;
     top: calc(50% - $outer-offset);
     left: calc(50% - $outer-offset);
-    background-color: blue;
+    background-image: url("../../../public/wavey-gravy.svg");
+    background-size: 300%;
+    background-position: center;
     padding: -1em;
     border-radius: 50%;
     z-index: 1;
 
-    .section-edge{
-      height: 2em;
-      width: 0.2em;
-      background-color: black;
-      position: absolute;
-      transform: rotate(44deg);
-      top: 6em;
-      left: 12.5em;
-      z-index: 1;
-    }
-
     .menu-section {
       transform: rotate(0deg);
       transform-origin: ($menu-radius / 2) (($outer-radius / 2) + ($menu-radius - $border) / 2 + 0.5em);
-      top: -1.5em;
+      top: -2em;
       left: calc($outer-offset - ($menu-radius / 2));
-      color: white;
-      background-color: gray;
+      color: $dark-purple;
+      background-color: $light-yellow;
       position: absolute;
       border-radius: 50% 50% 0% 0%;
       box-sizing: border-box;
       height: $menu-radius;
       width: $menu-radius;
       padding: 1em;
+      border: 0.33em solid $dark-purple;
 
       &.selected {
-        background-color: orange;
+        background-color: $light-blue;
       }
 
       .menu-icon {
@@ -111,8 +236,9 @@ $menu-radius: 5em;
       }
     }
   }
-  div.box {
-    box-shadow: inset 0 0 1em black;
+  .box {
+    box-sizing: border-box;
+    border: .33em solid $light-yellow;
     cursor: initial;
     position: absolute;
     height: $inner-radius;
@@ -120,26 +246,42 @@ $menu-radius: 5em;
     top: calc(50% - $outer-offset);
     left: calc(50% - $outer-offset);
     border-radius: 50%;
-    background: #333;
     margin: $border;
-    color: red;
+    background-image: url("../../../public/walls/experienceFinal.jpg");
+    background-size: cover;
     text-align: center;
     z-index: 2;
-  }
 
-  .box i,
-  .box::before {
-    pointer-events: none;
-    content: '';
-    float: left;
-    height:100%;
-    width: 50%;
-    shape-outside: radial-gradient(farthest-side at right, transparent calc(100% - $circle-text-padding), #fff 0);
-  }
+    .box-overlay {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: 2;
+      background-image: url("../../../public/tabletop-spotlight.svg");
+      opacity: .75;
+      background-size: cover;
+      border-radius: 50%;
+    }
 
-  .box i {
-    float: right;
-    shape-outside: radial-gradient(farthest-side at left,  transparent calc(100% - $circle-text-padding), #fff 0);
+    .section-title {
+      font-size: 2em;
+      color: $light-yellow;
+      line-height: 1.5em;
+      position: absolute;
+      top: calc(50% - 1.5em);
+      width: 100%;
+      text-align: center;
+      z-index: 3;
+
+      .section-title-top {
+
+      }
+
+      .section-title-bottom {
+        font-weight: bold;
+        color: $light-blue;
+      }
+    }
   }
 }
 
