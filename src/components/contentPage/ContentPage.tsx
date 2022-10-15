@@ -23,14 +23,15 @@ export interface ContentPageState {
     initialCircleOffsetDegrees: number;
     actualCircleOffsetDegrees: number;
     selectedMenuIndex: number;
+    dragInitiated: boolean;
 }
 
 
 class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     private sectionDegrees: number[] = [];
     private sectionIconDegrees: number[] = [];
-    private dragInitiated: boolean = false;
     private dragStartingPos: Position;
+    private test = false;
 
     constructor(props: ContentPageProps) {
         super(props);
@@ -42,6 +43,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             actualCircleOffsetDegrees: 0,
             initialCircleOffsetDegrees: 0,
             selectedMenuIndex: 0,
+            dragInitiated: false
         };
         this.addCubeRotationListeners();
     }
@@ -58,13 +60,14 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 
     addCubeRotationListeners() {
         window.addEventListener("dragstart", (event) => {
+            this.test = false;
             this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
             this.setState({
-                initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees
+                initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees,
+                dragInitiated: true
             });
         });
         window.addEventListener("drag", (event) => {
-            this.dragInitiated = true;
             const newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
             if (Utils.isNotNull(newState) && newState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
                 this.setState({
@@ -74,17 +77,28 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             }
         });
         window.addEventListener("dragend", () => {
+            let offset = 360;
+            this.test = false;
+            if (this.state.actualCircleOffsetDegrees !== 0) {
+                if (Math.abs(this.sectionDegrees[this.state.selectedMenuIndex] - this.state.actualCircleOffsetDegrees) < 180) {
+                    offset = 0;
+                }
+                if (this.sectionIconDegrees[this.state.selectedMenuIndex] > 180) {
+                    this.test = true;
+                }
+            }
             this.setState({
-                actualCircleOffsetDegrees: 360 - this.sectionDegrees[this.state.selectedMenuIndex]
+                actualCircleOffsetDegrees: offset - this.sectionDegrees[this.state.selectedMenuIndex],
+                dragInitiated: false
             })
         });
         window.addEventListener("touchstart", (event) => {
             this.dragStartingPos = CircleRotationUtils.initializeDragTouch(event);
             this.setState({
+                dragInitiated: true
             });
         });
         window.addEventListener("touchmove", (event) => {
-            this.dragInitiated = true;
             const newState = CircleRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
             if (newState.initialCircleOffsetDegrees !== this.state.initialCircleOffsetDegrees) {
                 this.setState(newState);
@@ -92,6 +106,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         });
         window.addEventListener("touchend", () => {
             this.setState({
+                dragInitiated: false
             })
         });
     }
@@ -147,9 +162,10 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 
     render(){
         this.calculateDegrees();
-        return (<div draggable={true} className={`content-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
-            {/*<div className={"hl"} />*/}
-            {/*<div className={"vl"} />*/}
+        if (this.test) {
+            this.sectionIconDegrees[this.state.selectedMenuIndex] += 360;
+        }
+        return (<div draggable={true} className={`content-page-wrapper ${this.props.isClosing ? "closing" : ""} ${this.state.dragInitiated ? "dragging" : ""}`}>
             <div className={"indicator"}>
                 <div className={"indicator-arrow-point"} />
             </div>
@@ -172,6 +188,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                             Initially started working on projects in the initial AngularJS and transitioning to Angular2+ after that. I have exellent understanding of all the inner modules of the framework (Component Livecycles, Angular Directives, RxJS, Angular Animations, Reactive forms, etc..) and have been a Team Lead for projects written in Angular2+. I love angular for the fact that many of the common problems for new project have already been solved in a meaningfull way, so team familiar with it can go straight into developing the business part of the project with relative ease.
                         </div>
                     </div>
+                    <div className="middle-wing wing"></div>
                     <div className="bottom-wing wing"></div>
                 </div>
                 <div className={"text-section text-section-right"}>
@@ -185,6 +202,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                             Around the beginning of 2021 I have decided to move on and try something new by discovering the ReactJS library. Delivering software mostly for real-money handling gaming companies I have a great understanding of how best to handle a lot of dynamic elements for many types of devices using the Virtual DOM, optimising them with The useful React Hooks, while not compromising security of data. I love ReactJS for its ease of use, high responsibility for the user and freedom to really go out of the box and stand out in a unique way in every different project.
                         </div>
                     </div>
+                    <div className="middle-wing wing"></div>
                     <div className="bottom-wing wing"></div>
                 </div>
             </div>

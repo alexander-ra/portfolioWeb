@@ -9,8 +9,14 @@ $menu-radius: 6em;
 
 
 @mixin circleRot($degrees) {
-  @for $i from 0deg through $degrees {
+  @for $i from -$degrees through $degrees {
+    .dragging {
+      .circle-rot#{$i} {
+        transition: transform 0s;
+      }
+    }
     .circle-rot#{$i} {
+      transition: transform 1s;
       animation: none !important;
       transform: rotate(calc($i + 0deg)) !important;
     }
@@ -21,12 +27,25 @@ $menu-radius: 6em;
 
 .content-page-wrapper {
 
+  &.dragging {
+    .content-outer-circle-sections {
+      .section-edge {
+        opacity: 1;
+      }
+    }
+
+    .content-outer-circle {
+      .menu-section {
+        background-color: $light-yellow;
+      }
+    }
+  }
+
   .longer-text {
-    height: 32em;
-    width: 90vw;
+    height: 50em;
+    width: 100vw;
     position: absolute;
-    top: calc(50% - 16em);
-    left: calc(50% - 45vw);
+    top: calc(50% - 25em);
     display: flex;
     flex-direction: row;
 
@@ -36,7 +55,9 @@ $menu-radius: 6em;
       align-items: center;
       justify-content: center;
       flex: 1 1 50%;
-      background: rgba($light-yellow, .5);
+      background-size: cover;
+      background-image: url("../../../public/overlapping-blotches.svg");
+      // background: rgba($light-yellow, .75);
 
       .wing {
         height: 28em;
@@ -46,62 +67,80 @@ $menu-radius: 6em;
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
+        z-index: -1;
 
         &.back-wing {
           background-image: url("../../../public/federZad.svg");
         }
 
-        &.top-wing {
-          top: -12em;
+        &.middle-wing {
+          background-image: url("../../../public/federMid.svg");
+          z-index: 0;
         }
 
-        &.bottom-wing {
-          top: 17em;
+        &.top-wing {
+          top: -2em;
+        }
+
+        &.middle-wing, &.bottom-wing {
+          top: 28em;
         }
       }
 
       &.text-section-left {
-        margin-right: 10em;
 
         .wing {
-          left: 10em;
+          left: 14em;
 
 
           &.top-wing {
-            transform: scaleX(-1.2) rotate(25deg);
+            transform: scaleX(-1.3) rotate(15deg);
           }
 
-          &.bottom-wing {
-            transform: scaleY(-1) scaleX(-1.2) rotate(25deg);
+          &.middle-wing, &.bottom-wing {
+            transform: scaleY(-1) scaleX(-1.4) rotate(15deg);
           }
         }
 
         .content {
           padding: 0 9em 0 3em;
+          .content-title {
+            margin-left: -2.5em;
+            text-align: right;
+          }
+          .content-body {
+            padding: 0 9em 0 6em;
+          }
           .content-icon {
-            right: calc(50% + 20em);
+            right: calc(75% - 5.5em);
           }
         }
       }
       &.text-section-right {
-        margin-left: 10em;
 
         .wing {
-          right: 10em;
+          right: 14em;
 
           &.top-wing {
-            transform: scaleX(1.2) rotate(25deg);
+            transform: scaleX(1.3) rotate(15deg);
           }
 
-          &.bottom-wing {
-            transform: scaleX(1.2) scaleY(-1) rotate(25deg);
+          &.middle-wing, &.bottom-wing {
+            transform: scaleX(1.4) scaleY(-1) rotate(15deg);
           }
         }
 
         .content {
           padding: 0 3em 0 9em;
+          .content-title {
+            margin-left: 2.5em;
+            text-align: left;
+          }
+          .content-body {
+            padding: 0 6em 0 9em;
+          }
           .content-icon {
-            left: calc(50% + 20em);
+            left: calc(75% - 5.5em);
           }
         }
       }
@@ -113,20 +152,20 @@ $menu-radius: 6em;
 
         .content-title {
           position: relative;
-          font-size: 2em;
+          font-size: 3em;
           height: 1em;
           width: 100%;
-          top: -1em;
+          top: -.5em;
           margin-bottom: .5em;
           color: $dark-blue;
         }
 
         .content-icon {
+          top: calc(50% - 7.5em);
           position: absolute;
           height: 20em;
           width: 20em;
-          opacity: 0.25;
-          color: $light-blue;
+          opacity: 0.75;
           z-index: -1;
         }
       }
@@ -158,26 +197,6 @@ $menu-radius: 6em;
     }
   }
 
-  .hl {
-    opacity: .2;
-    width: 100vw;
-    height: 1em;
-    background-color: darkblue;
-    z-index: 100;
-    position: absolute;
-    top: calc(50% - .5em);
-  }
-
-  .vl {
-    opacity: .2;
-    width: 1em;
-    height: 100vh;
-    background-color: darkblue;
-    z-index: 100;
-    position: absolute;
-    left: calc(50% - .5em);
-  }
-
   .content-outer-circle-sections {
     height: $outer-radius;
     width: $outer-radius;
@@ -187,12 +206,14 @@ $menu-radius: 6em;
     z-index: 2;
 
     .section-edge{
+      transition: opacity .25s;
+      opacity: .25;
       height: 2em;
       width: 0.2em;
       background-color: $light-yellow;
-      transform-origin: (0.2em / 2) ($outer-radius / 2 + 0.05em);
+      transform-origin: 0.2em ($outer-radius / 2 - 1em - 0.05em);
       position: absolute;
-      top: -0.1em;
+      top: 1em;
       left: calc(16em - (0.2em / 2));
     }
   }
@@ -210,8 +231,10 @@ $menu-radius: 6em;
     padding: -1em;
     border-radius: 50%;
     z-index: 1;
+    box-shadow: 0 0 2em -0.5em $purple;
 
     .menu-section {
+      transition: background .25s;
       transform: rotate(0deg);
       transform-origin: ($menu-radius / 2) (($outer-radius / 2) + ($menu-radius - $border) / 2 + 0.5em);
       top: -2em;
@@ -223,11 +246,12 @@ $menu-radius: 6em;
       box-sizing: border-box;
       height: $menu-radius;
       width: $menu-radius;
-      padding: 1em;
-      border: 0.33em solid $dark-purple;
+      padding: 1em 1.33em 1.66em 1.33em;
+      box-shadow: inset 0 0 2em -.5em $dark-purple, 0 0 .25em black;
 
       &.selected {
         background-color: $light-blue;
+        border: 0 solid white;
       }
 
       .menu-icon {
@@ -238,7 +262,7 @@ $menu-radius: 6em;
   }
   .box {
     box-sizing: border-box;
-    border: .33em solid $light-yellow;
+    box-shadow: 0 0 .25em black;
     cursor: initial;
     position: absolute;
     height: $inner-radius;
