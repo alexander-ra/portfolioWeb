@@ -1,9 +1,9 @@
 @import "../../App";
 
 $circle-text-padding: 2em;
-$outer-radius: 32em;
+$outer-radius: 28em;
 $outer-offset: $outer-radius / 2;
-$inner-radius: 26em;
+$inner-radius: 22em;
 $border: calc($outer-radius - $inner-radius) / 2;
 $menu-radius: 6em;
 
@@ -41,135 +41,13 @@ $menu-radius: 6em;
     }
   }
 
-  .longer-text {
+  .text-sections-wrapper {
     height: 50em;
     width: 100vw;
     position: absolute;
     top: calc(50% - 25em);
     display: flex;
     flex-direction: row;
-
-    .text-section {
-      border-radius: 8em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex: 1 1 50%;
-      background-size: cover;
-      background-image: url("../../../public/overlapping-blotches.svg");
-      // background: rgba($light-yellow, .75);
-
-      .wing {
-        height: 28em;
-        width: 20vw;
-        position: absolute;
-        background-image: url("../../../public/feder.svg");
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        z-index: -1;
-
-        &.back-wing {
-          background-image: url("../../../public/federZad.svg");
-        }
-
-        &.middle-wing {
-          background-image: url("../../../public/federMid.svg");
-          z-index: 0;
-        }
-
-        &.top-wing {
-          top: -2em;
-        }
-
-        &.middle-wing, &.bottom-wing {
-          top: 28em;
-        }
-      }
-
-      &.text-section-left {
-
-        .wing {
-          left: 14em;
-
-
-          &.top-wing {
-            transform: scaleX(-1.3) rotate(15deg);
-          }
-
-          &.middle-wing, &.bottom-wing {
-            transform: scaleY(-1) scaleX(-1.4) rotate(15deg);
-          }
-        }
-
-        .content {
-          padding: 0 9em 0 3em;
-          .content-title {
-            margin-left: -2.5em;
-            text-align: right;
-          }
-          .content-body {
-            padding: 0 9em 0 6em;
-          }
-          .content-icon {
-            right: calc(75% - 5.5em);
-          }
-        }
-      }
-      &.text-section-right {
-
-        .wing {
-          right: 14em;
-
-          &.top-wing {
-            transform: scaleX(1.3) rotate(15deg);
-          }
-
-          &.middle-wing, &.bottom-wing {
-            transform: scaleX(1.4) scaleY(-1) rotate(15deg);
-          }
-        }
-
-        .content {
-          padding: 0 3em 0 9em;
-          .content-title {
-            margin-left: 2.5em;
-            text-align: left;
-          }
-          .content-body {
-            padding: 0 6em 0 9em;
-          }
-          .content-icon {
-            left: calc(75% - 5.5em);
-          }
-        }
-      }
-
-      .content {
-        text-align: center;
-        padding: 3em;
-        color: $dark-purple;
-
-        .content-title {
-          position: relative;
-          font-size: 3em;
-          height: 1em;
-          width: 100%;
-          top: -.5em;
-          margin-bottom: .5em;
-          color: $dark-blue;
-        }
-
-        .content-icon {
-          top: calc(50% - 7.5em);
-          position: absolute;
-          height: 20em;
-          width: 20em;
-          opacity: 0.75;
-          z-index: -1;
-        }
-      }
-    }
   }
 
   .indicator {
@@ -179,7 +57,7 @@ $menu-radius: 6em;
     border: 1em solid transparent;
     box-sizing: border-box;
     position: absolute;
-    top: calc(50% - 19.5em);
+    top: calc(50% - 17.5em);
     border-radius: 50% 50% 50% 0;
     left: calc(50% - 4.5em);
     transform: rotate(315deg);
@@ -214,7 +92,7 @@ $menu-radius: 6em;
       transform-origin: 0.2em ($outer-radius / 2 - 1em - 0.05em);
       position: absolute;
       top: 1em;
-      left: calc(16em - (0.2em / 2));
+      left: calc(($outer-radius / 2) - (0.2em / 2));
     }
   }
 
@@ -262,7 +140,7 @@ $menu-radius: 6em;
   }
   .box {
     box-sizing: border-box;
-    box-shadow: 0 0 .25em black;
+    border: 0.2em solid $light-yellow;
     cursor: initial;
     position: absolute;
     height: $inner-radius;
@@ -275,6 +153,30 @@ $menu-radius: 6em;
     background-size: cover;
     text-align: center;
     z-index: 2;
+    overflow: hidden;
+
+    .back-button {
+      text-align: center;
+      opacity: 1;
+      position: absolute;
+      bottom: -2.5em;
+      height: 7em;
+      width: 14em;
+      left: 4em;
+      background-color: $dark-orange;
+      color: $dark-purple;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3.5em;
+      z-index: 3;
+
+      span {
+        font-size: 1.5em;
+        margin-top: -1.5em;
+      }
+    }
 
     .box-overlay {
       position: absolute;

@@ -16,7 +16,7 @@ function App() {
           <div className={"background"}></div>
           <div className="main-wrapper">
               <Header></Header>
-              <BackButton />
+              {/*<BackButton />*/}
               <ContentManager />
           </div>
       </Provider>

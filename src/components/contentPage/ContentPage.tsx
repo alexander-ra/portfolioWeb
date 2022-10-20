@@ -2,16 +2,20 @@ import React from 'react';
 import './ContentPage.scss';
 import {connect} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFileCode, faHome, faMoneyBillTrendUp, faUserTie, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {Position} from "../../models/common/Position";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
 import {CircleRotationUtils} from "../../utils/CircleRotationUtils";
 import Utils from "../../utils/Utils";
-import Typewriter from "../common/Typewriter";
+import TextSection, {TextSectionPosition} from "./TextSection";
+import {ContentData, ContentLabels, MenuContent} from '../../labels/ContentLabels';
+import {Page} from "../../models/common/Page";
+import {changePage} from "../../reducers/stages/stagesAction";
 
 interface ContentPageProps {
     isClosing: boolean;
     sections: Section[];
+    changePage: any;
 }
 
 export interface Section {
@@ -24,6 +28,7 @@ export interface ContentPageState {
     actualCircleOffsetDegrees: number;
     selectedMenuIndex: number;
     dragInitiated: boolean;
+    menuContent: MenuContent
 }
 
 
@@ -43,7 +48,8 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             actualCircleOffsetDegrees: 0,
             initialCircleOffsetDegrees: 0,
             selectedMenuIndex: 0,
-            dragInitiated: false
+            dragInitiated: false,
+            menuContent: ContentData.getMenuContent(this.props.sections[0].menu)
         };
         this.addCubeRotationListeners();
     }
@@ -55,6 +61,11 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             } else if (this.state.actualCircleOffsetDegrees < 0) {
                 this.setState({actualCircleOffsetDegrees: (this.state.actualCircleOffsetDegrees % 360) + 360})
             }
+        }
+        if (prevState.selectedMenuIndex !== this.state.selectedMenuIndex) {
+            this.setState({
+                menuContent: ContentData.getMenuContent(this.props.sections[this.state.selectedMenuIndex].menu)
+            });
         }
     }
 
@@ -175,43 +186,21 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             <div className={`content-outer-circle-sections circle-rot${this.calculateSectionEdgeDegrees(this.state.actualCircleOffsetDegrees)}deg`}>
                 {this.renderSectionEdges()}
             </div>
-            <div className={"longer-text"}>
-                <div className={"text-section text-section-left"}>
-
-                    <div className="top-wing wing back-wing"></div>
-                    <div className={"content"}>
-                        <FontAwesomeIcon className={`content-icon`} icon={['fab', 'angular']}/>
-                        <div className={"content-title"}>
-                            Angular JS
-                        </div>
-                        <div className={"content-body"}>
-                            Initially started working on projects in the initial AngularJS and transitioning to Angular2+ after that. I have exellent understanding of all the inner modules of the framework (Component Livecycles, Angular Directives, RxJS, Angular Animations, Reactive forms, etc..) and have been a Team Lead for projects written in Angular2+. I love angular for the fact that many of the common problems for new project have already been solved in a meaningfull way, so team familiar with it can go straight into developing the business part of the project with relative ease.
-                        </div>
-                    </div>
-                    <div className="middle-wing wing"></div>
-                    <div className="bottom-wing wing"></div>
-                </div>
-                <div className={"text-section text-section-right"}>
-                    <div className="top-wing wing back-wing"></div>
-                    <div className={"content"}>
-                        <FontAwesomeIcon className={`content-icon`} icon={['fab', 'react']}/>
-                        <div className={"content-title"}>
-                            React JS
-                        </div>
-                        <div className={"content-body"}>
-                            Around the beginning of 2021 I have decided to move on and try something new by discovering the ReactJS library. Delivering software mostly for real-money handling gaming companies I have a great understanding of how best to handle a lot of dynamic elements for many types of devices using the Virtual DOM, optimising them with The useful React Hooks, while not compromising security of data. I love ReactJS for its ease of use, high responsibility for the user and freedom to really go out of the box and stand out in a unique way in every different project.
-                        </div>
-                    </div>
-                    <div className="middle-wing wing"></div>
-                    <div className="bottom-wing wing"></div>
-                </div>
-            </div>
             <div className="box">
                 <div className="box-overlay"></div>
                 <div className={"section-title"}>
                     <div className={"section-title-top"}>Experience</div>
-                    <div className={"section-title-bottom"}>By Title</div>
+                    <div className={"section-title-bottom"}>{this.state.menuContent.title}</div>
                 </div>
+                <div className="back-button" onClick={() => {this.props.changePage(Page.LANDING)}}>
+                    <span>Back to cube</span>
+                </div>
+            </div>
+            <div className={"text-sections-wrapper"}>
+                <TextSection data={this.state.menuContent.leftContent}
+                             sectionPosition={TextSectionPosition.LEFT}/>
+                <TextSection data={this.state.menuContent.rightContent}
+                             sectionPosition={TextSectionPosition.RIGHT}/>
             </div>
         </div>)
     }
@@ -226,5 +215,5 @@ export default connect(
             cubeOpened
         }
     }
-)(ContentPage);
+, { changePage })(ContentPage);
 

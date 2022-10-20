@@ -4,7 +4,16 @@ import {Page} from '../../models/common/Page';
 import LandingPage from "../landing/LandingPage";
 import ContentPage, {Section} from "../contentPage/ContentPage";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
-import {faFileCode, faHome, faMoneyBillTrendUp, faUserTie } from '@fortawesome/free-solid-svg-icons';
+import {
+    faBusinessTime,
+    faFileCode,
+    faGauge,
+    faHome,
+    faKey,
+    faMoneyBillTrendUp,
+    faUserTie
+} from '@fortawesome/free-solid-svg-icons';
+import {faAccessibleIcon} from "@fortawesome/free-brands-svg-icons";
 
 interface ContentManagerProps {
     pageToChange?: Page
@@ -22,7 +31,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     constructor(props: ContentManagerProps) {
         super(props);
         this.state = {
-            actualPage: Page.CLIENT_APPROACH,
+            actualPage: Page.LANDING,
         }
     }
 
@@ -47,19 +56,23 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
         return [
             {
                 icon: faHome,
-                menu: CircleMenuStates.HOME
+                menu: CircleMenuStates.APPROACH_HOME
             },
             {
-                icon: faUserTie,
-                menu: CircleMenuStates.POSITION
+                icon: faBusinessTime,
+                menu: CircleMenuStates.BUSINESS
             },
             {
-                icon: faMoneyBillTrendUp,
-                menu: CircleMenuStates.FIELD
+                icon: faKey,
+                menu: CircleMenuStates.SECURITY
             },
             {
-                icon: faFileCode,
-                menu: CircleMenuStates.FRAMEWORK
+                icon: faGauge,
+                menu: CircleMenuStates.SWIFTNESS
+            },
+            {
+                icon: faAccessibleIcon,
+                menu: CircleMenuStates.ACCESSIBILITY
             }
         ];
     }
@@ -68,7 +81,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
         return [
             {
                 icon: faHome,
-                menu: CircleMenuStates.HOME
+                menu: CircleMenuStates.EXPERIENCE_HOME
             },
             {
                 icon: faUserTie,

@@ -61,7 +61,7 @@ export class CircleRotationUtils {
     }
 
     static setSectionFromRotation(rotationOffset: Position): CircleMenuStates {
-        return CircleMenuStates.HOME;
+        return CircleMenuStates.EXPERIENCE_HOME;
     }
 
     static getActualRotationOffset(dragStartingPos: Position, dragCurrentPos: Position, circleOffsetDegrees: number): number {
