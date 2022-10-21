@@ -9,124 +9,86 @@ $menu-radius: 6em;
 
 
 .text-section {
-  border-radius: 8em;
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1 1 50%;
   background-size: cover;
-  background-image: url("../../../public/overlapping-blotches.svg");
+  background-color: rgba($light-yellow, 0.5);
+  animation: sectionAppear 2s;
 
-  .wing {
-    height: 28em;
-    width: 20vw;
-    position: absolute;
-    background-image: url("../../../public/feder.svg");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: -1;
-
-    &.back-wing {
-      background-image: url("../../../public/federZad.svg");
-    }
-
-    &.middle-wing {
-      background-image: url("../../../public/federMid.svg");
-      z-index: 0;
-    }
-
-    &.top-wing {
-      top: -2em;
-    }
-
-    &.middle-wing, &.bottom-wing {
-      top: 27em;
-    }
-  }
 
   &.text-section-left {
-
-    .wing {
-      left: 15em;
-
-
-      &.top-wing {
-        transform: scaleX(-1.3) rotate(15deg);
-      }
-
-      &.middle-wing, &.bottom-wing {
-        transform: scaleY(-1) scaleX(-1.4) rotate(10deg);
-      }
-    }
+    border-radius: 3em 10em 10em 3em;
+    margin: 12em 9em 12em 1em;
 
     .content {
-      padding: 0 7em 0 3em;
-      .content-title {
-        left: 4em;
-      }
-      .content-body {
-        padding: 0 9em 0 6em;
-      }
+      padding-right: 6em;
+
       .content-icon {
-        right: calc(75% - 7em);
+        right: -3em;
       }
     }
   }
   &.text-section-right {
-
-    .wing {
-      right: 15em;
-
-      &.top-wing {
-        transform: scaleX(1.3) rotate(15deg);
-      }
-
-      &.middle-wing, &.bottom-wing {
-        transform: scaleX(1.4) scaleY(-1) rotate(10deg);
-      }
-    }
+    border-radius: 10em 3em 3em 10em;
+    margin: 12em 1em 12em 9em;
 
     .content {
-      padding: 0 3em 0 7em;
-      .content-title {
-        right: 4em;
-      }
-      .content-body {
-        padding: 0 6em 0 9em;
-      }
+      padding-left: 6em;
+
       .content-icon {
-        left: calc(75% - 7em);
+        left: -3em;
       }
     }
   }
 
   .content {
+    height: 100%;
     text-align: center;
-    padding: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     color: $dark-purple;
+    opacity: 0;
+    animation: contentAppear 1s 2s forwards;
 
     .content-body {
-      max-height: 20em;
       overflow-y: auto;
+      font-size: 0.9em;
+      margin: 0 1.5em;
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
     }
 
     .content-title {
-      position: absolute;
-      font-size: 3em;
-      height: 1em;
-      width: 8em;
+      font-size: 2em;
+      font-weight: bold;
+      line-height: 2em;
       top: 3em;
       color: $dark-blue;
+      flex: 0 0 2em;
     }
 
     .content-icon {
+      color: $purple;
       top: calc(50% - 10em);
       position: absolute;
       height: 20em;
-      width: 20em;
-      opacity: 1;
+      width: calc(50vw - 10em);
+      opacity: .2;
       z-index: -1;
     }
   }
+}
+
+@keyframes contentAppear{
+  from{opacity: 0;}
+  to{opacity: 1;}
+}
+
+@keyframes sectionAppear{
+  from{background-color: rgba($light-yellow, 0);}
+  to{background-color: rgba($light-yellow, 0.5);}
 }

@@ -3,6 +3,7 @@ import './TextSection.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import {ContentData, ContentLabels} from "../../labels/ContentLabels";
+import Wings from "./Wings";
 
 export enum TextSectionPosition {
     LEFT = "LEFT",
@@ -25,14 +26,14 @@ class TextSection extends React.Component<ContentBubbleProps> {
         const { data } = this.props;
         return (
             <div className={`text-section text-section-${this.props.sectionPosition.toLowerCase()}`}>
-                <div className="top-wing wing back-wing"></div>
                 <div className={"content"}>
                     <FontAwesomeIcon className={`content-icon`} icon={data.icon}/>
                     <div className={"content-title"}>{data.title}</div>
-                    <div className={"content-body"}>{data.description}</div>
+                    <div className={"content-body"}>
+                        {data.description}
+                    </div>
                 </div>
-                <div className="middle-wing wing"></div>
-                <div className="bottom-wing wing"></div>
+                <Wings sectionPosition={this.props.sectionPosition} />
             </div>
         )
     }

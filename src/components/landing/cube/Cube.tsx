@@ -146,7 +146,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
                 {this.shouldDisplayRotationHint() && <div className={`rotate-hint-icon`}/>}
                 <Flower isClosing={this.props.isCLosing} flowerVisible={this.state.cubeOpened} />
                 <div draggable={this.state.cubeOpened}
-                     className={`cube-wrapper  ${this.state.cubeOpened ? (this.props.isCLosing ? "closing" : "opened") : "closed"} ${this.state.cubeDragClass} ${this.state.cubeRotationClass} ${this.props.isCLosing ? CubeMenuStates.NONE : this.state.rotationInitialState}`}
+                     className={`cube-wrapper  ${this.state.cubeOpened ? (this.props.isCLosing ? "closing" : "opened") : "closed"} ${this.state.cubeDragClass} ${this.state.cubeRotationClass} ${this.state.rotationInitialState}`}
                      onClick={this.openCube.bind(this)}>
                     {this.state.cubeCoverVisible && <CubeCover />}
                     <>

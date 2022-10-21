@@ -2,7 +2,7 @@ import React from 'react';
 import './ContentPage.scss';
 import {connect} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {faArrowsLeftRight, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {Position} from "../../models/common/Position";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
 import {CircleRotationUtils} from "../../utils/CircleRotationUtils";
@@ -154,7 +154,14 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         const sections: JSX.Element[] = [];
         this.props.sections.forEach((section: Section, index) => {
            sections.push(
-               <div className={`menu-section circle-rot${this.sectionDegrees[index]}deg ${this.state.selectedMenuIndex === index ? "selected": ""}`}>
+               <div className={`menu-section circle-rot${this.sectionDegrees[index]}deg ${this.state.selectedMenuIndex === index ? "selected": ""}`}
+                    onClick={() => {
+                        let test = this.sectionDegrees[index] + (this.state.actualCircleOffsetDegrees - 180);
+                        this.setState({
+                            selectedMenuIndex: index,
+                            actualCircleOffsetDegrees: 360 - this.sectionDegrees[index]
+                        })
+                    }}>
                    <FontAwesomeIcon className={`menu-icon circle-rot${this.sectionIconDegrees[index]}deg`} icon={section.icon}/>
                </div>
            )
@@ -165,7 +172,8 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     renderSectionEdges(): JSX.Element[] {
         const sections: JSX.Element[] = [];
         this.props.sections.forEach((section: Section, index) => {
-            sections.push(<div className={`section-edge circle-rot${this.sectionDegrees[index]}deg`}></div>
+            sections.push(<div className={`section-edge circle-rot${this.sectionDegrees[index]}deg`}>
+                </div>
             )
         });
         return sections;
@@ -192,9 +200,9 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                     <div className={"section-title-top"}>Experience</div>
                     <div className={"section-title-bottom"}>{this.state.menuContent.title}</div>
                 </div>
-                <div className="back-button" onClick={() => {this.props.changePage(Page.LANDING)}}>
-                    <span>Back to cube</span>
-                </div>
+                {/*<div className="back-button" onClick={() => {this.props.changePage(Page.LANDING)}}>*/}
+                {/*    <span>Back to cube</span>*/}
+                {/*</div>*/}
             </div>
             <div className={"text-sections-wrapper"}>
                 <TextSection data={this.state.menuContent.leftContent}

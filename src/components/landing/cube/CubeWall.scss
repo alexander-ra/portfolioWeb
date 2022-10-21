@@ -18,7 +18,58 @@
         }
     }
 
-    &:hover:not(.opened) {
+    &.closing {
+        .wall {
+            opacity: 0;
+            transition-property: transform, opacity;
+            transition-duration: 1s, 0.25s;
+            .wall-content {
+                transition-property: border-radius;
+                transition-duration: 1s;
+                transition-delay: 0s;
+                transition-timing-function: ease-out;
+                border-radius: 50%;
+                border: 0em solid $dark-orange;
+                box-shadow: 0 0 0 transparent;
+
+                .wall-content-overlay {
+                    transition-property: border-radius, opacity;
+                    transition-duration: .5s, 1.5s;
+                    transition-delay: .5s, 0s;
+                    opacity: 0.5;
+                    border-radius: 50%;
+                }
+            }
+            .wall-icon {
+                display: none;
+            }
+        }
+        &.BOTTOM {
+            .wall {
+                &.wall-bottom {
+                    opacity: 1;
+                }
+            }
+        }
+
+        &.TOP_LEFT {
+            .wall {
+                &.wall-top-left {
+                    opacity: 1;
+                }
+            }
+        }
+
+        &.TOP_RIGHT {
+            .wall {
+                &.wall-top-right {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    &:hover:not(.opened):not(.closing) {
         .wall {
 
             .wall-content {
@@ -71,6 +122,17 @@
             background-repeat:   no-repeat;
             background-position: center center;
 
+            .wall-content-overlay {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                z-index: 2;
+                background-image: url("../../../../public/tabletop-spotlight.svg");
+                opacity: 0;
+                background-size: cover;
+                border-radius: 100%;
+            }
+
             .wall-icon {
                 transition: opacity 1s;
                 opacity: 1;
@@ -118,7 +180,6 @@
 
             .wall-icon {
                 opacity: 0;
-
             }
         }
     }

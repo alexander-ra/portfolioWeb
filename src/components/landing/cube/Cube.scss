@@ -12,12 +12,34 @@
     height: 14em;
     transform-style: preserve-3d;
     transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg);
-    transition: transform 4s;
+    transition-property: transform;
+    transition-duration: 4s;
     z-index: 3;
 
     &.closing {
-        transition: transform .5s ease-out !important;
-        animation: test 1s .5s ease-in forwards;
+        transition-property: transform, width, height, left, top;
+        transition-duration: .5s, 1s, 1s, 1s, 1s;
+        transition-timing-function: linear, ease-out, ease-out, ease-out, ease-out;
+        left: calc(50% - 11.2em);
+        top: calc(50% - 11.2em);
+
+        &.BOTTOM, &.TOP_LEFT, &.TOP_RIGHT {
+            height: 22.4em;
+            width: 22.4em;
+            opacity: 1;
+        }
+
+        &.BOTTOM {
+            transform: rotateX(90deg) rotateY(-45deg) rotateZ(0deg);
+        }
+
+        &.TOP_LEFT {
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+        }
+
+        &.TOP_RIGHT {
+            transform: rotateX(0deg) rotateY(-90deg) rotateZ(0deg);
+        }
     }
 
     &.LEFT_ZOOM {
@@ -29,7 +51,10 @@
     }
 
     &.opened {
-        transition: transform 2s -.1s ease-out;
+        transition-property: transform;
+        transition-duration: 2s;
+        transition-delay: -.1s;
+        transition-timing-function: ease-out;
         transform: rotateX(37deg) rotateY(-45deg) rotateZ(0deg);
         cursor: all-scroll;
 
@@ -68,9 +93,4 @@
     44%{opacity: .5;}
     55%{opacity: .5;}
     100%{opacity: .0;}
-}
-
-@keyframes test{
-    0%{top: calc(50% - 7em)}
-    100%{top: calc(100% + 7em)}
 }

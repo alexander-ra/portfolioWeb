@@ -2,10 +2,8 @@
 @import "mixins";
 
 .landing-page-wrapper {
-  opacity: 1;
-  transition: opacity .5s 1.5s;
-
-  &.closing {
-    opacity: 0;
-  }
+  z-index: 1;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
 }
