@@ -18,6 +18,22 @@
     padding: 2em;
     border-radius: .5em;
 
+    &.black-player-view {
+      flex-direction: column;
+      .chess-letters {
+        &.chess-letters-right, &.chess-letters-left {
+          flex-direction: row-reverse;
+        }
+        &.chess-letters-right, &.chess-letters-left {
+          flex-direction: column-reverse;
+        }
+      }
+
+      .chess-row {
+        flex-direction: row-reverse;
+      }
+    }
+
     .chess-letters {
       position: absolute;
       display: flex;
@@ -81,11 +97,19 @@
 
         &.chess-square-black {
           background-color: $dark-orange;
+
+          &.clicked-square {
+            border: 0.2em solid $blue;
+          }
         }
 
         &.chess-square-white {
           background-color: rgba($dark-orange, .25);
           box-shadow: inset 0 0 1em 1em $light-yellow;
+
+          &.clicked-square {
+            border: 0.2em solid $blue;
+          }
         }
 
         .chess-piece {

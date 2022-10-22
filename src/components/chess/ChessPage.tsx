@@ -10,9 +10,18 @@ import {
     IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { Buffer } from 'buffer';
+import Utils from '../../utils/Utils';
 
 interface LandingCubeProps {
     isClosing: boolean;
+}
+
+interface LandingCubeState {
+    boardPieces: ChessPiece[];
+    playerSide: ChessSide;
+    squareFrom: ChessSquare | null;
+    squareTo: ChessSquare | null;
 }
 
 export enum ChessLetters {
@@ -33,20 +42,136 @@ export enum ChessPieceType {
     KING = "KING"
 }
 
-export interface ChessPiece {
-    side: ChessSide,
-    type: ChessPieceType,
+export interface ChessSquare {
     row: number;
     col: ChessLetters;
 }
 
-class ChessPage extends React.Component<LandingCubeProps> {
+export interface ChessPiece {
+    side: ChessSide,
+    type: ChessPieceType,
+    square: ChessSquare;
+}
+
+class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
     private boardPieces: ChessPiece[] = [];
+    private processedMoves: number = 0;
 
     constructor(props: LandingCubeProps) {
         super(props);
+        this.state = {
+            boardPieces: [],
+            playerSide: ChessSide.WHITE,
+            squareFrom: null,
+            squareTo: null
+        };
 
         this.initializeGame();
+        this.test();
+    }
+
+    async test(): Promise<any> {
+        const requestHeaders: HeadersInit = new Headers();
+        // requestHeaders.set('Content-Type', 'application/x-ndjson');
+        requestHeaders.set('Authorization', 'Bearer lip_ySt9nnwhXfyDdaO5InlE');
+
+        const response = await fetch("https://lichess.org/api/bot/game/stream/MBOBo3dd1UOu", {
+            method: 'GET',
+            headers: requestHeaders
+        }) as any;
+        const reader = response.body.getReader();
+
+        while (true) {
+            const {value, done} = await reader.read();
+            if (done) break;
+            const jsonString = Buffer.from(value).toString('utf8');
+
+            if (jsonString.trim().length > 0) {
+                let parsedData;
+                try {
+                    parsedData = JSON.parse(jsonString);
+                    if (parsedData?.state?.moves) {
+                        this.changeBoard(parsedData.state.moves);
+                    }
+                    if (parsedData?.moves) {
+                        this.changeBoard(parsedData.moves);
+                    }
+                    if (parsedData?.black?.id && parsedData.black.id == "portfoliobot") {
+                        this.setState({playerSide: ChessSide.BLACK});
+                    }
+                }
+                catch (e: any) { // <-- note `e` has explicit `unknown` type
+                    parsedData = "PROBLEM";
+                    console.log("the problem is ", jsonString)
+                }
+
+                console.log('Received', parsedData);
+            }
+        }
+    }
+
+    quickAdapter(col: ChessLetters | undefined): string {
+        switch (col) {
+            case ChessLetters.A: return "a"
+            case ChessLetters.B: return "b"
+            case ChessLetters.C: return "c"
+            case ChessLetters.D: return "d"
+            case ChessLetters.E: return "e"
+            case ChessLetters.F: return "f"
+            case ChessLetters.G: return "g"
+            case ChessLetters.H: return "h"
+        }
+        return "0";
+    }
+
+    quickAdapterRev(col: string): ChessLetters {
+        switch (col) {
+            case "a": return ChessLetters.A
+            case "b": return ChessLetters.B
+            case "c": return ChessLetters.C
+            case "d": return ChessLetters.D
+            case "e": return ChessLetters.E
+            case "f": return ChessLetters.F
+            case "g": return ChessLetters.G
+            case "h": return ChessLetters.H
+            default: throw (new Error());
+        }
+        return ChessLetters.H;
+    }
+
+    changeBoard(moveStr: string): void {
+        const moves = moveStr.split(" ");
+        if (Utils.isArrayNotEmpty(moves)) {
+            while (this.processedMoves < moves.length) {
+                let i = this.processedMoves;
+                const currentPos = {
+                    col: moves[i][0],
+                    row: moves[i][1]
+                };
+                const nextPos ={
+                    col: moves[i][2],
+                    row: moves[i][3]
+                };
+                const index = this.boardPieces.findIndex((move) => {
+                    return this.quickAdapter(move.square.col) === currentPos.col && move.square.row.toString() === currentPos.row;
+                })
+                const deadIndex = this.boardPieces.findIndex((move) => {
+                    return this.quickAdapter(move.square.col) === nextPos.col && move.square.row.toString() === nextPos.row;
+                })
+                if (deadIndex !== -1) {
+                    this.boardPieces[deadIndex].square.row = 200; //TODO delete dead piece
+                }
+                if (index !== -1) {
+                    this.boardPieces[index].square.row = Number.parseInt(nextPos.row);
+                    this.boardPieces[index].square.col = this.quickAdapterRev(nextPos.col);
+                    this.processedMoves++;
+                } else {
+                    //TODO: throw err;
+                }
+
+                this.setState({boardPieces: []} );
+            }
+        }
     }
 
     initializeGame(): void {
@@ -54,15 +179,19 @@ class ChessPage extends React.Component<LandingCubeProps> {
             this.boardPieces.push({
                 side: ChessSide.WHITE,
                 type: ChessPieceType.PAWN,
-                row: 2,
-                col: col
+                square: {
+                    row: 2,
+                    col: col
+                }
             });
 
             this.boardPieces.push({
                 side: ChessSide.BLACK,
                 type: ChessPieceType.PAWN,
-                row: 7,
-                col: col
+                square: {
+                    row: 7,
+                    col: col
+                }
             });
         }
 
@@ -70,57 +199,80 @@ class ChessPage extends React.Component<LandingCubeProps> {
         this.boardPieces.push({
             side: ChessSide.WHITE,
             type: ChessPieceType.ROOK,
-            row: 1,
-            col: 1
+            square: {
+                row: 1,
+                col: 1
+            }
         });
 
         this.boardPieces.push({
             side: ChessSide.WHITE,
             type: ChessPieceType.ROOK,
-            row: 1,
-            col: 8
+            square: {
+                row: 1,
+                col: 8
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.WHITE,
             type: ChessPieceType.KNIGHT,
-            row: 1,
-            col: 2
+            square: {
+                row: 1,
+                col: 2
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.WHITE,
             type: ChessPieceType.KNIGHT,
-            row: 1,
-            col: 7
+            square: {
+                row: 1,
+                col: 7
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.WHITE,
             type: ChessPieceType.BISHOP,
-            row: 1,
-            col: 3
+            square: {
+                row: 1,
+                col: 3
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.WHITE,
             type: ChessPieceType.BISHOP,
-            row: 1,
-            col: 6
+            square: {
+                row: 1,
+                col: 6
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.WHITE,
             type: ChessPieceType.QUEEN,
-            row: 1,
-            col: 4
+            square: {
+                row: 1,
+                col: 4
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.WHITE,
             type: ChessPieceType.KING,
-            row: 1,
-            col: 5
+            square: {
+                row: 1,
+                col: 5
+            }
+
         });
         
         // BLACK PIECES \/
@@ -128,57 +280,81 @@ class ChessPage extends React.Component<LandingCubeProps> {
         this.boardPieces.push({
             side: ChessSide.BLACK,
             type: ChessPieceType.ROOK,
-            row: 8,
-            col: 1
+            square: {
+                row: 8,
+                col: 1
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.BLACK,
             type: ChessPieceType.ROOK,
-            row: 8,
-            col: 8
+            square: {
+                row: 8,
+                col: 8
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.BLACK,
             type: ChessPieceType.KNIGHT,
-            row: 8,
-            col: 2
+            square: {
+                row: 8,
+                col: 2
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.BLACK,
             type: ChessPieceType.KNIGHT,
-            row: 8,
-            col: 7
+            square: {
+                row: 8,
+                col: 7
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.BLACK,
             type: ChessPieceType.BISHOP,
-            row: 8,
-            col: 3
+            square: {
+                row: 8,
+                col: 3
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.BLACK,
             type: ChessPieceType.BISHOP,
-            row: 8,
-            col: 6
+            square: {
+                row: 8,
+                col: 6
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.BLACK,
             type: ChessPieceType.QUEEN,
-            row: 8,
-            col: 4
+            square: {
+                row: 8,
+                col: 4
+            }
+
         });
 
         this.boardPieces.push({
             side: ChessSide.BLACK,
             type: ChessPieceType.KING,
-            row: 8,
-            col: 5
+            square: {
+                row: 8,
+                col: 5
+            }
+
         });
     }
 
@@ -201,15 +377,38 @@ class ChessPage extends React.Component<LandingCubeProps> {
         return faDotCircle;
     }
 
+    clickSquare(square: ChessSquare): void {
+        if (Utils.isNotNull(this.state.squareFrom)) {
+            if (this.state.squareFrom?.row === square.row && this.state.squareFrom?.col === square.col) {
+                this.setState({squareFrom: null});
+            } else {
+                const requestHeaders: HeadersInit = new Headers();
+                // requestHeaders.set('Content-Type', 'application/x-ndjson');
+                requestHeaders.set('Authorization', 'Bearer lip_ySt9nnwhXfyDdaO5InlE');
+                const move = this.quickAdapter(this.state.squareFrom?.col) + this.state.squareFrom?.row + this.quickAdapter(square.col) + square.row;
+                this.setState({squareFrom: null});
+                fetch(`https://lichess.org/api/bot/game/MBOBo3dd1UOu/move/${move}`, {
+                    method: 'POST',
+                    headers: requestHeaders
+                })
+                .then((data) => console.log(data));
+            }
+        } else {
+            this.setState({squareFrom: square})
+        }
+    }
+
     rednderChessBoard(): JSX.Element[] {
         const chessRows: JSX.Element[] = [];
         for (let row = 1; row <= 8; row++) {
             let chessRow: JSX.Element[] = [];
             for (let col = 1; col <= 8; col++) {
                 const pieceIndex = this.boardPieces.findIndex((piece: ChessPiece) => {
-                    return piece.col === col && piece.row === row;
+                    return piece.square.col === col && piece.square.row === row;
                 })
-                chessRow.push(<div className={`chess-square chess-square-${(row + col) % 2 === 0 ? "black" : "white"}`}>
+                chessRow.push(<div className={`chess-square chess-square-${(row + col) % 2 === 0 ? "black" : "white"} 
+                ${this.state.squareFrom?.row === row && this.state.squareFrom?.col === col ? "clicked-square" : ""}`}
+                                   onClick={() => {this.clickSquare({col,row})}}>
                     { pieceIndex !== -1 && <div className={`chess-piece chess-piece-${this.boardPieces[pieceIndex].side.toLowerCase()}`}>
                         <FontAwesomeIcon className={"back-icon"} icon={this.getPieceIcon(this.boardPieces[pieceIndex].type)} />
                     </div>
@@ -245,7 +444,7 @@ class ChessPage extends React.Component<LandingCubeProps> {
 
     render(){
         return (<div className={`chess-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
-            <div className={`chess-board-wrapper`}>
+            <div className={`chess-board-wrapper ${this.state.playerSide.toLowerCase()}-player-view`}>
                 {this.rednderChessBoard()}
                 {this.rednderBoardLetters()}
             </div>
