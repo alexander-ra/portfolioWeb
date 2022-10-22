@@ -1,0 +1,111 @@
+@import "../../App";
+
+.chess-page-wrapper {
+  z-index: 1;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+
+  .chess-board-wrapper {
+    height: 32em;
+    width: 32em;
+    position: absolute;
+    top: calc(50% - 18em);
+    left: calc(50% - 18em);
+    display: flex;
+    flex-direction: column-reverse;
+    background-color: rgba($light-yellow, .5);
+    padding: 2em;
+    border-radius: .5em;
+
+    .chess-letters {
+      position: absolute;
+      display: flex;
+      font-weight: bold;
+      color: $dark-purple;
+
+      &.chess-letters-top {
+        top: 0;
+
+      }
+
+      &.chess-letters-right {
+        right: 0;
+      }
+
+      &.chess-letters-bottom {
+        bottom: 0;
+      }
+
+      &.chess-letters-left {
+        left: 0;
+
+      }
+
+      &.chess-letters-top, &.chess-letters-bottom {
+        flex-direction: row;
+
+        .chess-letter {
+          width: 4em;
+          height: 2em;
+          line-height: 2em;
+          text-align: center;
+        }
+      }
+
+      &.chess-letters-right, &.chess-letters-left {
+        flex-direction: column;
+
+        .chess-letter {
+          width: 2em;
+          height: 4em;
+          line-height: 4em;
+          text-align: center;
+        }
+      }
+    }
+
+    .chess-row {
+      display: flex;
+      flex-direction: row;
+
+
+      .chess-square {
+        height: 4em;
+        width: 4em;
+        box-sizing: border-box;
+        border-radius: .2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.chess-square-black {
+          background-color: $dark-orange;
+        }
+
+        &.chess-square-white {
+          background-color: rgba($dark-orange, .25);
+          box-shadow: inset 0 0 1em 1em $light-yellow;
+        }
+
+        .chess-piece {
+          font-size: 2.5em;
+          text-align: center;
+          &.chess-piece-white {
+            color: $light-yellow;
+
+            path {
+              stroke: $dark-purple;
+              stroke-width: .2em;
+            }
+          }
+
+          &.chess-piece-black {
+            color: $dark-purple;
+          }
+        }
+      }
+
+    }
+  }
+}

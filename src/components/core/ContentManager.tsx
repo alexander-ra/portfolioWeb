@@ -14,6 +14,7 @@ import {
     faUserTie
 } from '@fortawesome/free-solid-svg-icons';
 import {faAccessibleIcon} from "@fortawesome/free-brands-svg-icons";
+import ChessPage from '../chess/ChessPage';
 
 interface ContentManagerProps {
     pageToChange?: Page
@@ -26,7 +27,7 @@ interface ContentManagerState {
 
 
 class ContentManager extends React.Component<ContentManagerProps, ContentManagerState> {
-    private readonly PAGE_CLOSING_TIME_MS = 2000;
+    private readonly PAGE_CLOSING_TIME_MS = 1500;
     private readonly NEW_PAGE_DELAY_MS = 1000;
     constructor(props: ContentManagerProps) {
         super(props);
@@ -116,7 +117,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
             }
             {
                 this.displayPage(Page.CHESS_DEMO) &&
-                <LandingPage isClosing={this.state.closingPage === Page.CHESS_DEMO} />
+                <ChessPage isClosing={this.state.closingPage === Page.CHESS_DEMO} />
             }
         </>)
     }
