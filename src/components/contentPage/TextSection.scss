@@ -15,10 +15,10 @@ $menu-radius: 6em;
   flex: 1 1 50%;
   background-size: cover;
   background-color: rgba($light-yellow, 0.5);
-  animation: sectionAppear 2s;
 
 
   &.text-section-left {
+    animation: sectionAppearLeft 2s;
     border-radius: 3em 10em 10em 3em;
     margin: 12em 9em 12em 1em;
 
@@ -26,11 +26,12 @@ $menu-radius: 6em;
       padding-right: 6em;
 
       .content-icon {
-        right: -3em;
+        left: 0;
       }
     }
   }
   &.text-section-right {
+    animation: sectionAppearRight 2s;
     border-radius: 10em 3em 3em 10em;
     margin: 12em 1em 12em 9em;
 
@@ -38,7 +39,7 @@ $menu-radius: 6em;
       padding-left: 6em;
 
       .content-icon {
-        left: -3em;
+        right: 0;
       }
     }
   }
@@ -73,9 +74,9 @@ $menu-radius: 6em;
 
     .content-icon {
       color: $purple;
-      top: calc(50% - 10em);
+      top: calc(50% - 6em);
       position: absolute;
-      height: 20em;
+      height: 12em;
       width: calc(50vw - 10em);
       opacity: .2;
       z-index: -1;
@@ -88,7 +89,12 @@ $menu-radius: 6em;
   to{opacity: 1;}
 }
 
-@keyframes sectionAppear{
-  from{background-color: rgba($light-yellow, 0);}
-  to{background-color: rgba($light-yellow, 0.5);}
+@keyframes sectionAppearLeft{
+  from{background-color: rgba($light-yellow, 0); margin: 12em 9em 12em 12em;}
+  to{background-color: rgba($light-yellow, 0.5); margin: 12em 9em 12em 1em;}
+}
+
+@keyframes sectionAppearRight{
+  from{background-color: rgba($light-yellow, 0); margin: 12em 12em 12em 9em;}
+  to{background-color: rgba($light-yellow, 0.5); margin: 12em 1em 12em 9em;}
 }

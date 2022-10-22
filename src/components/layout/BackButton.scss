@@ -7,7 +7,7 @@
     transition: opacity .5s, color .5s;
     display: flex;
     z-index: 3;
-    margin: calc(($header-height + $title-height) / 2 - 3em) 1em;
+    margin: 2em 1em;
     cursor: pointer;
 
     &:hover {

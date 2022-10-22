@@ -124,6 +124,11 @@ $menu-radius: 6em;
     z-index: 1;
     box-shadow: 0 0 2em -0.5em $purple;
 
+
+    &:hover {
+      font-size: .97em;
+    }
+
     .menu-section {
       transition: background .25s;
       transform-origin: ($menu-radius / 2) (($outer-radius / 2) + ($menu-radius - $border) / 2 + 0.5em);
@@ -170,6 +175,8 @@ $menu-radius: 6em;
     text-align: center;
     z-index: 2;
     overflow: hidden;
+
+    pointer-events: none;
 
     .back-button {
       text-align: center;
