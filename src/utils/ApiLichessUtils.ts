@@ -1,9 +1,8 @@
 import Utils from "./Utils";
-import {ChessAiDifficulty, ChessMove, ChessSide, ChessSquare, ChessUtils} from "./ChessUtils";
+import {ChessAiDifficulty, ChessMove, ChessPieceType, ChessSide, ChessSquare, ChessUtils} from "./ChessUtils";
 import {ChessReduceModel} from "../reducers/chess/chessReducer";
 import store from "../store/store";
-import {SET_CHESS_GAME} from "../reducers/chess/ChessActionTypes";
-import {makeMove, setChessGame, syncMoves} from "../reducers/chess/chessAction";
+import {endGame, makeMove, setChessGame, syncMoves} from "../reducers/chess/chessAction";
 import {Buffer} from "buffer";
 
 export class ApiLichessUtils {
@@ -85,11 +84,19 @@ export class ApiLichessUtils {
                 try {
                     parsedData = JSON.parse(jsonString);
                     const moves = [];
-                    if (parsedData?.state?.moves) {
-                        store.dispatch(syncMoves(this.getChessMovesFromString(parsedData.state.moves)))
+                    let state: any = {};
+                    if (parsedData?.type === "gameFull") {
+                        state = parsedData?.state;
+                    } else if (parsedData?.type === "gameState") {
+                        state = parsedData;
                     }
-                    if (parsedData?.moves) {
-                        store.dispatch(syncMoves(this.getChessMovesFromString(parsedData.moves)))
+
+                    if (state.moves) {
+                        store.dispatch(syncMoves(this.getChessMovesFromString(state.moves)));
+                    }
+
+                    if (Utils.isNotNull(state.status) && state.status !== "started") {
+                        store.dispatch(endGame());
                     }
                     //TODO remove if no problems without it
                     // if (parsedData?.black?.id && parsedData.black.id == "portfoliobot") {
@@ -115,12 +122,37 @@ export class ApiLichessUtils {
                 col: ChessUtils.charToChessLetter(stringMove[2]),
                 row: Number.parseInt(stringMove[3])
             };
-            result.push({
-                from,
-                to
-            });
+            if (Utils.isNotNull(stringMove[4])) {
+                result.push({
+                    from,
+                    to,
+                    promoteTo: this.chessTypeFromLetter(stringMove[4])
+                });
+            } else {
+                result.push({
+                    from,
+                    to,
+                });
+            }
         });
         return result;
+    }
+
+    private static chessTypeFromLetter(letter: string): ChessPieceType {
+        switch (letter) {
+            case "q":
+                return ChessPieceType.QUEEN;
+            case "r":
+                return ChessPieceType.ROOK;
+            case "b":
+                return ChessPieceType.QUEEN;
+            case "k":
+                return ChessPieceType.KNIGHT;
+            case "p":
+                return ChessPieceType.PAWN;
+            default:
+                throw new Error(`Unknown chess piece type from string: ${letter}`);
+        }
     }
 
     private static chessMoveToString(chessMove: ChessMove): string {
@@ -128,14 +160,15 @@ export class ApiLichessUtils {
         ChessUtils.chessLetterToString(chessMove.to.col) + chessMove.to.row;
     }
 
-    private static lichessResponseToModel(response: any, aiLevel: ChessAiDifficulty): ChessReduceModel {
+    private static lichessResponseToModel(response: any, aiLevel: ChessAiDifficulty): any {
         const playerSide = response.player === "white" ? ChessSide.WHITE : ChessSide.BLACK;
         const moves: ChessMove[] = Utils.isArrayNotEmpty(response.moves) ? response.moves : []; //todo fix formating
         return {
             gameId: response.id,
             chessMoves: moves,
             opponentLevel: aiLevel,
-            playerSide
+            playerSide,
+            gameEnded: false
         };
     }
 }

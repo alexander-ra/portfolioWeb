@@ -43,6 +43,7 @@ export interface ChessSquare {
 export interface ChessMove {
     from: ChessSquare;
     to: ChessSquare;
+    promoteTo?: ChessPieceType;
 }
 
 export interface ChessPiece {

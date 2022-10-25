@@ -20,6 +20,7 @@ interface LandingCubeProps {
     chessGameId: number;
     playerSide: ChessSide;
     chessMoves: ChessMove[];
+    gameEnded: boolean;
 }
 
 interface LandingCubeState {
@@ -59,6 +60,11 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
     }
 
     crateNewGame(): void {
+        if (this.props.gameEnded) {
+            this.processedMoves = 0;
+            this.boardPieces = ChessUtils.getInitialBoardPieces();
+        }
+
         ApiLichessUtils.getNewGame(ChessAiDifficulty.EASY, ChessSide.WHITE);
     }
 
@@ -72,17 +78,26 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
 
     processMove(move: ChessMove): void {
         let i = this.processedMoves;
-        const movingPieceIndex = this.boardPieces.findIndex((pieceToMove) => {
-            return ChessUtils.chessSquaresEqual(move.from, pieceToMove.square);
-        })
+
+        // Process dead piece
         const deadPieceIndex = this.boardPieces.findIndex((pieceToRemove) => {
             return ChessUtils.chessSquaresEqual(move.to, pieceToRemove.square);
         })
         if (deadPieceIndex !== -1) {
             this.boardPieces[deadPieceIndex].square.row = 200; //TODO delete dead piece
         }
+
+        // Move chosen piece
+        const movingPieceIndex = this.boardPieces.findIndex((pieceToMove) => {
+            return ChessUtils.chessSquaresEqual(move.from, pieceToMove.square);
+        })
         if (movingPieceIndex !== -1) {
             this.boardPieces[movingPieceIndex].square = move.to;
+
+            if (Utils.isNotNull(move.promoteTo)) {
+                this.boardPieces[movingPieceIndex].type = move.promoteTo ? move.promoteTo : this.boardPieces[movingPieceIndex].type;
+            }
+
             this.processedMoves++;
         } else {
             //TODO: throw err;
@@ -155,7 +170,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
     render(){
         return (<div className={`chess-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
             <div className={`chess-board-wrapper ${this.props.playerSide.toLowerCase()}-player-view`}>
-                {!this.props.chessGameId && <button onClick={this.crateNewGame}>
+                {(!this.props.chessGameId || this.props.gameEnded) && <button onClick={this.crateNewGame.bind(this)}>
                     Play chess
                 </button>}
                 {this.props.chessGameId && <>
@@ -169,13 +184,14 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
 
 export default connect(
     (state: any, ownProps) => {
-        const { gameId, opponentLevel, playerSide, chessMoves } = state.chessReducer;
+        const { gameId, opponentLevel, playerSide, chessMoves, gameEnded } = state.chessReducer;
         return {
             ...ownProps,
             chessGameId: gameId,
             opponentLevel,
             playerSide,
-            chessMoves
+            chessMoves,
+            gameEnded
         }
     })(ChessPage);
 

@@ -1,5 +1,5 @@
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
-import {MAKE_MOVE, SYNC_MOVES, SET_CHESS_GAME} from "./ChessActionTypes";
+import {MAKE_MOVE, SYNC_MOVES, SET_CHESS_GAME, END_GAME} from "./ChessActionTypes";
 import {CubeReduceModel} from "../cube/cubeReducer";
 import {ChessReduceModel} from "./chessReducer";
 import {ChessMove} from "../../utils/ChessUtils";
@@ -11,6 +11,7 @@ const setChessGame = (chessGame: ChessReduceModel) => ({
         opponentLevel: chessGame.opponentLevel,
         playerSide: chessGame.playerSide,
         chessMoves: chessGame.chessMoves,
+        gameEnded: chessGame.gameEnded
     } as ChessReduceModel
 });
 
@@ -28,4 +29,8 @@ const syncMoves = (moves: ChessMove[]) => ({
     }
 });
 
-export { setChessGame, makeMove, syncMoves };
+const endGame = () => ({
+    type: END_GAME,
+});
+
+export { setChessGame, makeMove, syncMoves, endGame };

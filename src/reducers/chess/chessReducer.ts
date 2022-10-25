@@ -1,5 +1,5 @@
 import {ChessAiDifficulty, ChessMove, ChessSide} from "../../utils/ChessUtils";
-import {MAKE_MOVE, SET_CHESS_GAME, SYNC_MOVES} from "./ChessActionTypes";
+import {END_GAME, MAKE_MOVE, SET_CHESS_GAME, SYNC_MOVES} from "./ChessActionTypes";
 import AppStorage, {StorageKey} from "../../utils/AppStorage";
 
 export interface ChessReduceModel {
@@ -7,6 +7,7 @@ export interface ChessReduceModel {
     opponentLevel?: ChessAiDifficulty;
     playerSide: ChessSide;
     chessMoves: ChessMove[];
+    gameEnded: boolean;
 }
 
 const test = AppStorage.getStorage(StorageKey.CHESS_GAME_ID);
@@ -15,7 +16,8 @@ const initialState: ChessReduceModel = {
     gameId: test,
     opponentLevel: undefined,
     playerSide: ChessSide.WHITE,
-    chessMoves: []
+    chessMoves: [],
+    gameEnded: false
 };
 
 export default function chessReducer(state = initialState, action: any): ChessReduceModel {
@@ -27,7 +29,8 @@ export default function chessReducer(state = initialState, action: any): ChessRe
                 gameId: action.payload.gameId,
                 opponentLevel: action.payload.opponentLevel,
                 playerSide: action.payload.playerSide,
-                chessMoves: action.payload.chessMoves
+                chessMoves: action.payload.chessMoves,
+                gameEnded: action.payload.gameEnded
             }
         }
         case MAKE_MOVE: {
@@ -41,6 +44,12 @@ export default function chessReducer(state = initialState, action: any): ChessRe
             return {
                 ...state,
                 chessMoves: action.payload.moves
+            }
+        }
+        case END_GAME: {
+            return {
+                ...state,
+                gameEnded: true
             }
         }
         default:
