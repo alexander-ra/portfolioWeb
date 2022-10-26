@@ -101,10 +101,28 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
             return ChessUtils.chessSquaresEqual(move.from, pieceToMove.square);
         })
         if (movingPieceIndex !== -1) {
-            this.boardPieces[movingPieceIndex].square = move.to;
+            const pieceToMove = this.boardPieces[movingPieceIndex];
+            if (pieceToMove.type === ChessPieceType.KING) {
+                const colDiff = move.to.col - pieceToMove.square.col;
+                if (colDiff > 1) {
+                    console.log("performing castle for", pieceToMove);
+                    this.getPieceFromSquare({row: pieceToMove.square.row, col: 8}).square = {
+                        row: pieceToMove.square.row,
+                        col: move.to.col - 1
+                    };
+                } else if (colDiff < -1) {
+                    console.log("performing castle for", pieceToMove);
+                    this.getPieceFromSquare({row: pieceToMove.square.row, col: 1}).square = {
+                        row: pieceToMove.square.row,
+                        col: move.to.col + 1
+                    };
+                }
+            }
+
+            pieceToMove.square = move.to;
 
             if (Utils.isNotNull(move.promoteTo)) {
-                this.boardPieces[movingPieceIndex].type = move.promoteTo ? move.promoteTo : this.boardPieces[movingPieceIndex].type;
+                pieceToMove.type = move.promoteTo ? move.promoteTo : pieceToMove.type;
             }
 
             this.processedMoves++;
@@ -168,24 +186,31 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
 
     getPawnPossibleMoves(square: ChessSquare): ChessSquare[] {
         const uncheckedMoves: ChessSquare[] = [];
-        const forwardMove = this.props.playerSide === ChessSide.WHITE ? 1 : -1;
+        const step = this.props.playerSide === ChessSide.WHITE ? 1 : -1;
         const attackingSquares: ChessSquare[] = [
             {
-                row: square.row + forwardMove,
+                row: square.row + step,
                 col: square.col + 1
             },
             {
-                row: square.row + forwardMove,
+                row: square.row + step,
                 col: square.col - 1
             }
         ];
-        uncheckedMoves.push({
-            row: square.row + forwardMove,
+        const forwardMove = {
+            row: square.row + step,
             col: square.col
-        })
-        if (square.row == 2) {
+        };
+        if (Utils.isNull(this.getPieceFromSquare(forwardMove))) {
+            uncheckedMoves.push(forwardMove)
+        }
+        const doubleForwardMove = {
+            row: square.row + (step * 2),
+            col: square.col
+        };
+        if (square.row == 2 && Utils.isNull(this.getPieceFromSquare(doubleForwardMove))) {
             uncheckedMoves.push({
-                row: square.row + (forwardMove * 2),
+                row: square.row + (step * 2),
                 col: square.col
             })
         }
@@ -204,9 +229,12 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         colMoves.filter((unfilteredCol) => unfilteredCol >= 1 && unfilteredCol <= 8).forEach(colMove => {
             rowMoves.filter((unfilteredRow) => unfilteredRow >= 1 && unfilteredRow <= 8).forEach(rowMove => {
                 if (Math.abs(colMove - square.col) !== Math.abs(rowMove - square.row)) {
-                    uncheckedMoves.push({
+                    const potentialMove = {
                         col: colMove, row: rowMove
-                    });
+                    };
+                    if (!this.squareOnSidePiece(potentialMove, this.props.playerSide)) {
+                        uncheckedMoves.push(potentialMove);
+                    }
                 } else {
                     return;
                 }
@@ -273,6 +301,12 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
                 });
                 potentialSquare.row += rowStep;
             }
+            if (this.squareOnSidePiece(potentialSquare, this.props.opponentSide)) {
+                uncheckedMoves.push({
+                    row: potentialSquare.row,
+                    col: potentialSquare.col
+                })
+            }
         })
         return uncheckedMoves;
     }
@@ -328,7 +362,6 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
                 const isPossibleMove = this.possibleMoves.findIndex((square: ChessSquare) => {
                     return square.col === col && square.row === row;
                 }) !== -1;
-                console.log(this.possibleMoves);
                 chessRow.push(<div className={`chess-square chess-square-${(row + col) % 2 === 0 ? "black" : "white"} 
                 ${this.state.selectedSquare?.row === row && this.state.selectedSquare?.col === col ? "clicked-square" : ""}`}
                                    onMouseDown={() => {this.clickSquare({col,row})}}>
@@ -337,7 +370,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
                     </div>
                     }
                     {
-                        isPossibleMove && <div className={"possible-move"}></div>
+                        isPossibleMove && <div className={`${pieceIndex !== -1 ? "possible-move-with-piece" : "possible-move"}`}></div>
                     }
                 </div>);
             }
