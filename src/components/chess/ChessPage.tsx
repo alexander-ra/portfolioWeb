@@ -33,6 +33,12 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
     private boardPieces: ChessPiece[] = [];
     private possibleMoves: ChessSquare[] = [];
     private processedMoves: number = 0;
+    private castleInfo = {
+        castleHappened: false,
+        leftRookMoved: false,
+        rightRookMoved: false,
+        kingMoved: false
+    };
 
     constructor(props: LandingCubeProps) {
         super(props);
@@ -60,7 +66,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         }
         if (prevState.selectedSquare !== this.state.selectedSquare) {
             if (Utils.isNotNull(this.state.selectedSquare)) {
-                this.calculatePossibleMoves(this.state.selectedSquare)
+                this.possibleMoves = ChessUtils.calculatePossibleMoves(this.state.selectedSquare, this.boardPieces, this.props.playerSide, false, this.castleInfo);
             } else {
                 this.possibleMoves = [];
             }
@@ -93,7 +99,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
             return ChessUtils.chessSquaresEqual(move.to, pieceToRemove.square);
         })
         if (deadPieceIndex !== -1) {
-            this.boardPieces[deadPieceIndex].square.row = 200; //TODO delete dead piece
+            this.boardPieces.splice(deadPieceIndex, 1);
         }
 
         // Move chosen piece
@@ -103,19 +109,35 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         if (movingPieceIndex !== -1) {
             const pieceToMove = this.boardPieces[movingPieceIndex];
             if (pieceToMove.type === ChessPieceType.KING) {
+                if (!this.castleInfo.kingMoved && pieceToMove.side === this.props.playerSide) {
+                    this.castleInfo.kingMoved = true;
+                }
                 const colDiff = move.to.col - pieceToMove.square.col;
                 if (colDiff > 1) {
                     console.log("performing castle for", pieceToMove);
-                    this.getPieceFromSquare({row: pieceToMove.square.row, col: 8}).square = {
+                    ChessUtils.getPieceFromSquare({row: pieceToMove.square.row, col: 8}, this.boardPieces).square = {
                         row: pieceToMove.square.row,
                         col: move.to.col - 1
                     };
+                    if (pieceToMove.side === this.props.playerSide) {
+                        this.castleInfo.castleHappened = true;
+                    }
                 } else if (colDiff < -1) {
                     console.log("performing castle for", pieceToMove);
-                    this.getPieceFromSquare({row: pieceToMove.square.row, col: 1}).square = {
+                    ChessUtils.getPieceFromSquare({row: pieceToMove.square.row, col: 1}, this.boardPieces).square = {
                         row: pieceToMove.square.row,
                         col: move.to.col + 1
                     };
+                    if (pieceToMove.side === this.props.playerSide) {
+                        this.castleInfo.castleHappened = true;
+                    }
+                }
+            } else if (pieceToMove.type === ChessPieceType.ROOK && pieceToMove.side === this.props.playerSide) {
+                if (!this.castleInfo.leftRookMoved && pieceToMove.square.col === 1) {
+                    this.castleInfo.leftRookMoved = true;
+                }
+                if (!this.castleInfo.leftRookMoved && pieceToMove.square.col === 1) {
+                    this.castleInfo.rightRookMoved = true;
                 }
             }
 
@@ -137,218 +159,19 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         if (Utils.isNotNull(this.state.selectedSquare)) {
             if (ChessUtils.chessSquaresEqual(this.state.selectedSquare, square)) {
                 this.setState({selectedSquare: null});
-            } else if (this.squareOnSidePiece(square, this.props.playerSide)) {
+            } else if (ChessUtils.squareOnSidePiece(square, this.boardPieces, this.props.playerSide)) {
                 this.setState({selectedSquare: square})
-            } else {
-                this.setState({selectedSquare: null});
+            } else if (Utils.isNotNull(this.possibleMoves.find(possibleMove => ChessUtils.chessSquaresEqual(possibleMove, square)))) {
                 const move = {
-                    from: this.state.selectedSquare ? this.state.selectedSquare : {row: 1, col: ChessLetters.A}, //TODO fix this ugly
+                    from: this.state.selectedSquare,
                     to: square
                 };
-
                 ApiLichessUtils.makeMove(move);
+                this.setState({selectedSquare: null});
             }
-        } else if (this.squareOnSidePiece(square, this.props.playerSide)) {
+        } else if (ChessUtils.squareOnSidePiece(square, this.boardPieces, this.props.playerSide)) {
             this.setState({selectedSquare: square})
         }
-    }
-
-    calculatePossibleMoves(square: ChessSquare): void {
-        this.possibleMoves = [];
-        if (this.squareOnSidePiece(square, this.props.playerSide)){
-            const playerPiece = this.getPieceFromSquare(square);
-            switch (playerPiece.type) {
-                case ChessPieceType.PAWN:
-                    this.possibleMoves = this.getPawnPossibleMoves(square);
-                    break;
-                case ChessPieceType.KNIGHT:
-                    this.possibleMoves = this.getKnightPossibleMoves(square);
-                    break;
-                case ChessPieceType.BISHOP:
-                    this.possibleMoves = this.getBishopPossibleMoves(square);
-                    break;
-                case ChessPieceType.ROOK:
-                    this.possibleMoves = this.getRookPossibleMoves(square);
-                    break;
-                case ChessPieceType.QUEEN:
-                    this.possibleMoves = this.getQueenPossibleMoves(square);
-                    break;
-                case ChessPieceType.KING:
-                    this.possibleMoves = this.getKingPossibleMoves(square);
-                    break;
-                default:
-                    return;
-            }
-        } else {
-            throw new Error("Cannot calc possible for enemy");
-        }
-    }
-
-    getPawnPossibleMoves(square: ChessSquare): ChessSquare[] {
-        const uncheckedMoves: ChessSquare[] = [];
-        const step = this.props.playerSide === ChessSide.WHITE ? 1 : -1;
-        const attackingSquares: ChessSquare[] = [
-            {
-                row: square.row + step,
-                col: square.col + 1
-            },
-            {
-                row: square.row + step,
-                col: square.col - 1
-            }
-        ];
-        const forwardMove = {
-            row: square.row + step,
-            col: square.col
-        };
-        if (Utils.isNull(this.getPieceFromSquare(forwardMove))) {
-            uncheckedMoves.push(forwardMove)
-        }
-        const doubleForwardMove = {
-            row: square.row + (step * 2),
-            col: square.col
-        };
-        if (square.row == 2 && Utils.isNull(this.getPieceFromSquare(doubleForwardMove))) {
-            uncheckedMoves.push({
-                row: square.row + (step * 2),
-                col: square.col
-            })
-        }
-        attackingSquares.forEach(attackSquare => {
-            if (this.squareOnSidePiece(attackSquare, this.props.opponentSide)) {
-                uncheckedMoves.push(attackSquare);
-            }
-        })
-        return uncheckedMoves;
-    }
-
-    getKnightPossibleMoves(square: ChessSquare): ChessSquare[] {
-        const uncheckedMoves: ChessSquare[] = [];
-        const colMoves = [square.col -2,square.col -1,square.col + 1,square.col + 2];
-        const rowMoves = [square.row -2,square.row -1,square.row + 1,square.row + 2];
-        colMoves.filter((unfilteredCol) => unfilteredCol >= 1 && unfilteredCol <= 8).forEach(colMove => {
-            rowMoves.filter((unfilteredRow) => unfilteredRow >= 1 && unfilteredRow <= 8).forEach(rowMove => {
-                if (Math.abs(colMove - square.col) !== Math.abs(rowMove - square.row)) {
-                    const potentialMove = {
-                        col: colMove, row: rowMove
-                    };
-                    if (!this.squareOnSidePiece(potentialMove, this.props.playerSide)) {
-                        uncheckedMoves.push(potentialMove);
-                    }
-                } else {
-                    return;
-                }
-            });
-        });
-        return uncheckedMoves;
-    }
-
-    getBishopPossibleMoves(square: ChessSquare): ChessSquare[] {
-        const uncheckedMoves: ChessSquare[] = [];
-        const colSteps = [-1, 1];
-        const rowSteps = [-1, 1];
-        colSteps.forEach((colStep) => {
-            rowSteps.forEach((rowStep) => {
-                const potentialSquare: ChessSquare = { row: square.row + rowStep, col: square.col + colStep};
-                while (this.isLegalSquare(potentialSquare) && Utils.isNull(this.getPieceFromSquare(potentialSquare))
-                    ) {
-                    uncheckedMoves.push({
-                        row: potentialSquare.row,
-                        col: potentialSquare.col
-                    });
-                    potentialSquare.col += colStep;
-                    potentialSquare.row += rowStep;
-                }
-                if (this.squareOnSidePiece(potentialSquare, this.props.opponentSide)) {
-                    uncheckedMoves.push({
-                        row: potentialSquare.row,
-                        col: potentialSquare.col
-                    })
-                }
-            })
-        })
-        return uncheckedMoves;
-    }
-
-    getRookPossibleMoves(square: ChessSquare): ChessSquare[] {
-        const uncheckedMoves: ChessSquare[] = [];
-        const colSteps = [-1, 1];
-        const rowSteps = [-1, 1];
-        colSteps.forEach((colStep) => {
-            const potentialSquare: ChessSquare = { row: square.row, col: square.col + colStep};
-            while (this.isLegalSquare(potentialSquare) && Utils.isNull(this.getPieceFromSquare(potentialSquare))
-                ) {
-                uncheckedMoves.push({
-                    row: potentialSquare.row,
-                    col: potentialSquare.col
-                });
-                potentialSquare.col += colStep;
-            }
-            if (this.squareOnSidePiece(potentialSquare, this.props.opponentSide)) {
-                uncheckedMoves.push({
-                    row: potentialSquare.row,
-                    col: potentialSquare.col
-                })
-            }
-        })
-        rowSteps.forEach((rowStep) => {
-            const potentialSquare: ChessSquare = { row: square.row + rowStep, col: square.col};
-            while (this.isLegalSquare(potentialSquare) && Utils.isNull(this.getPieceFromSquare(potentialSquare))
-                ) {
-                uncheckedMoves.push({
-                    row: potentialSquare.row,
-                    col: potentialSquare.col
-                });
-                potentialSquare.row += rowStep;
-            }
-            if (this.squareOnSidePiece(potentialSquare, this.props.opponentSide)) {
-                uncheckedMoves.push({
-                    row: potentialSquare.row,
-                    col: potentialSquare.col
-                })
-            }
-        })
-        return uncheckedMoves;
-    }
-
-    getQueenPossibleMoves(square: ChessSquare): ChessSquare[] {
-        const uncheckedMoves: ChessSquare[] = this.getRookPossibleMoves(square);
-        return uncheckedMoves.concat(this.getBishopPossibleMoves(square));
-    }
-
-    getKingPossibleMoves(square: ChessSquare): ChessSquare[] {
-        const uncheckedMoves: ChessSquare[] = [];
-        const colSteps = [-1, 0, 1];
-        const rowSteps = [-1, 0, 1];
-        colSteps.forEach((colStep) => {
-            rowSteps.forEach((rowStep) => {
-                const potentialSquare: ChessSquare = { row: square.row + rowStep, col: square.col + colStep};
-                if (this.isLegalSquare(potentialSquare) && !this.squareOnSidePiece(potentialSquare, this.props.playerSide)) {
-                    uncheckedMoves.push({
-                        row: potentialSquare.row,
-                        col: potentialSquare.col
-                    })
-                }
-            })
-        })
-        return uncheckedMoves;
-    }
-
-    isLegalSquare(square: ChessSquare): boolean {
-        return square.row >= 1 && square.row <= 8 && square.col >= 1 && square.col <= 8;
-    }
-
-
-    getPieceFromSquare(square: ChessSquare): ChessPiece {
-        const playerPiece = this.boardPieces.find(piece => {
-            return ChessUtils.chessSquaresEqual(piece.square, square);
-        });
-        return playerPiece;
-    }
-
-    squareOnSidePiece(square: ChessSquare, side: ChessSide): boolean {
-        const piece = this.getPieceFromSquare(square);
-        return Utils.isNotNull(piece) && piece.side === side;
     }
 
     rednderChessBoard(): JSX.Element[] {
