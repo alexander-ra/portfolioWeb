@@ -34,7 +34,7 @@ export default function chessReducer(state = initialState, action: any): ChessRe
             }
         }
         case MAKE_MOVE: {
-            const newMoves = [...state.chessMoves, ...action.payload.move];
+            const newMoves = [...state.chessMoves, action.payload.move];
             return {
                 ...state,
                 chessMoves: newMoves

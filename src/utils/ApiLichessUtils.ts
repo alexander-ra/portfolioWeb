@@ -20,15 +20,13 @@ export class ApiLichessUtils {
 
     public static makeMove(move: ChessMove): void {
         const gameId = store.getState().chessReducer.gameId;
+        store.dispatch(makeMove(move));
         const moveString = this.chessMoveToString(move);
         fetch(`https://lichess.org/api/bot/game/${gameId}/move/${moveString}`, {
             method: 'POST',
             headers: this.getRequestHeaders()
         })
-        .then((data) => {
-            store.dispatch(makeMove(move));
-        })
-        .catch(() => {});
+        .catch(() => {}); // TODO: add reverse move if something went wrong
     }
 
     public static getNewGame(aiLevel: ChessAiDifficulty, playerSide: ChessSide): void {

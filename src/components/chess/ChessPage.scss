@@ -95,6 +95,14 @@
         align-items: center;
         justify-content: center;
 
+        .possible-move {
+          position: absolute;
+          width: 1.5em;
+          height: 1.5em;
+          background-color: rgba($purple, .75);
+          border-radius: 50%;
+        }
+
         &.chess-square-black {
           background-color: $dark-orange;
 

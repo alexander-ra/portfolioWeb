@@ -245,7 +245,7 @@ export class ChessUtils {
         return boardPieces;
     }
 
-    public static chessLetterToString(letter: ChessLetters | undefined): string {
+    public static chessLetterToString(letter: ChessLetters): string {
         switch (letter) {
             case ChessLetters.A: return "a"
             case ChessLetters.B: return "b"
