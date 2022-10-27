@@ -1,6 +1,5 @@
 import Utils from "./Utils";
 import {ChessAiDifficulty, ChessMove, ChessPieceType, ChessSide, ChessSquare, ChessUtils} from "./ChessUtils";
-import {ChessReduceModel} from "../reducers/chess/chessReducer";
 import store from "../store/store";
 import {endGame, makeMove, setChessGame, syncMoves} from "../reducers/chess/chessAction";
 import {Buffer} from "buffer";
@@ -143,8 +142,8 @@ export class ApiLichessUtils {
             case "r":
                 return ChessPieceType.ROOK;
             case "b":
-                return ChessPieceType.QUEEN;
-            case "k":
+                return ChessPieceType.BISHOP;
+            case "n":
                 return ChessPieceType.KNIGHT;
             case "p":
                 return ChessPieceType.PAWN;
@@ -154,8 +153,25 @@ export class ApiLichessUtils {
     }
 
     private static chessMoveToString(chessMove: ChessMove): string {
-        return ChessUtils.chessLetterToString(chessMove.from.col) + chessMove.from.row +
+        const moveStr = ChessUtils.chessLetterToString(chessMove.from.col) + chessMove.from.row +
         ChessUtils.chessLetterToString(chessMove.to.col) + chessMove.to.row;
+        if (Utils.isNotNull(chessMove.promoteTo)) {
+            switch (chessMove.promoteTo) {
+                case ChessPieceType.QUEEN:
+                    return moveStr + 'q';
+                case ChessPieceType.ROOK:
+                    return moveStr + 'r';
+                case ChessPieceType.BISHOP:
+                    return moveStr + 'b';
+                case ChessPieceType.KNIGHT:
+                    return moveStr + 'n';
+                case ChessPieceType.PAWN:
+                    return moveStr + 'p';
+                default:
+                    return moveStr;
+            }
+        }
+        return moveStr;
     }
 
     private static lichessResponseToModel(response: any, aiLevel: ChessAiDifficulty): any {

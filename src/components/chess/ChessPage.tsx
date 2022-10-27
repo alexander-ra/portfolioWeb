@@ -33,6 +33,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
     private boardPieces: ChessPiece[] = [];
     private possibleMoves: ChessSquare[] = [];
     private processedMoves: number = 0;
+    private promotionMove: ChessSquare;
     private castleInfo = {
         castleHappened: false,
         leftRookMoved: false,
@@ -65,6 +66,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
             this.changeBoard(this.props.chessMoves);
         }
         if (prevState.selectedSquare !== this.state.selectedSquare) {
+            this.promotionMove = null;
             if (Utils.isNotNull(this.state.selectedSquare)) {
                 this.possibleMoves = ChessUtils.calculatePossibleMoves(this.state.selectedSquare, this.boardPieces, this.props.playerSide, false, this.castleInfo);
             } else {
@@ -79,6 +81,9 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
             this.processedMoves = 0;
             this.boardPieces = ChessUtils.getInitialBoardPieces();
         }
+        this.castleInfo = {
+            castleHappened: false, leftRookMoved: false, rightRookMoved: false, kingMoved: false
+        };
 
         ApiLichessUtils.getNewGame(ChessAiDifficulty.EASY, ChessSide.WHITE);
     }
@@ -155,6 +160,17 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         this.setState({} );
     }
 
+    clickPromotion(promotion: ChessPieceType): void {
+        const move = {
+            from: this.state.selectedSquare,
+            to: this.promotionMove,
+            promoteTo: promotion
+        };
+        ApiLichessUtils.makeMove(move);
+        this.promotionMove = null;
+        this.setState({selectedSquare: null});
+    }
+
     clickSquare(square: ChessSquare): void {
         if (Utils.isNotNull(this.state.selectedSquare)) {
             if (ChessUtils.chessSquaresEqual(this.state.selectedSquare, square)) {
@@ -166,8 +182,15 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
                     from: this.state.selectedSquare,
                     to: square
                 };
-                ApiLichessUtils.makeMove(move);
-                this.setState({selectedSquare: null});
+                if (ChessUtils.getPieceFromSquare(this.state.selectedSquare, this.boardPieces).type === ChessPieceType.PAWN &&
+                    (this.props.playerSide === ChessSide.WHITE && square.row === 8 ||
+                    this.props.playerSide === ChessSide.BLACK && square.row === 1)) {
+                    this.promotionMove = square;
+                    this.setState({});
+                } else {
+                    ApiLichessUtils.makeMove(move);
+                    this.setState({selectedSquare: null});
+                }
             }
         } else if (ChessUtils.squareOnSidePiece(square, this.boardPieces, this.props.playerSide)) {
             this.setState({selectedSquare: square})
@@ -225,6 +248,24 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
 
     render(){
         return (<div className={`chess-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
+            {Utils.isNotNull(this.promotionMove) && <div className={`promotion-window`}>
+                <div className={`chess-piece chess-piece-${this.props.playerSide.toLowerCase()}`}
+                     onClick={() =>this.clickPromotion(ChessPieceType.KNIGHT)}>
+                    <FontAwesomeIcon className={"back-icon"} icon={ChessUtils.getPieceIcon(ChessPieceType.KNIGHT)} />
+                </div>
+                <div className={`chess-piece chess-piece-${this.props.playerSide.toLowerCase()}`}
+                     onClick={() =>this.clickPromotion(ChessPieceType.BISHOP)}>
+                    <FontAwesomeIcon className={"back-icon"} icon={ChessUtils.getPieceIcon(ChessPieceType.BISHOP)} />
+                </div>
+                <div className={`chess-piece chess-piece-${this.props.playerSide.toLowerCase()}`}
+                     onClick={() =>this.clickPromotion(ChessPieceType.ROOK)}>
+                    <FontAwesomeIcon className={"back-icon"} icon={ChessUtils.getPieceIcon(ChessPieceType.ROOK)} />
+                </div>
+                <div className={`chess-piece chess-piece-${this.props.playerSide.toLowerCase()}`}
+                     onClick={() =>this.clickPromotion(ChessPieceType.QUEEN)}>
+                    <FontAwesomeIcon className={"back-icon"} icon={ChessUtils.getPieceIcon(ChessPieceType.QUEEN)} />
+                </div>
+            </div>}
             <div className={`chess-board-wrapper ${this.props.playerSide.toLowerCase()}-player-view`}>
                 {(!this.props.chessGameId || this.props.gameEnded) && <button onClick={this.crateNewGame.bind(this)}>
                     Play chess
