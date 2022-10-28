@@ -138,25 +138,38 @@
           box-shadow: inset 0 0 .5em .5em rgba($purple, .75);
         }
 
+        .king-piece-thread {
+          position: absolute;
+          width: 3.75em;
+          height: 3.75em;
+          border-radius: 50%;
+          box-shadow: inset 0 0 .5em .5em rgba($dark-purple, .75);
+        }
+
+        &.clicked-square {
+          border: 0.25em solid rgba($purple, .75);
+        }
+
         &.chess-square-black {
           background-color: $dark-orange;
 
-          &.clicked-square {
-            border: 0.2em solid $blue;
+          &.last-move-from, &.last-move-to {
+            box-shadow: inset 0 0 .5em .1em rgba($purple, .75);
           }
         }
 
         &.chess-square-white {
           background-color: $light-yellow;
 
-          &.clicked-square {
-            border: 0.2em solid $blue;
+          &.last-move-from, &.last-move-to {
+            box-shadow: inset 0 0 .5em .1em rgba($dark-purple, .75);
           }
         }
 
         .chess-piece {
           font-size: 2.5em;
           text-align: center;
+          z-index: 2;
           &.chess-piece-white {
             color: white;
 

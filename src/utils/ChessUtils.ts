@@ -368,17 +368,18 @@ export class ChessUtils {
             col: square.col
         };
         if (Utils.isNull(this.getPieceFromSquare(forwardMove, chessBoard))) {
-            uncheckedMoves.push(forwardMove)
-        }
-        const doubleForwardMove = {
-            row: square.row + (step * 2),
-            col: square.col
-        };
-        if (square.row == 2 && Utils.isNull(this.getPieceFromSquare(doubleForwardMove, chessBoard))) {
-            uncheckedMoves.push({
+            uncheckedMoves.push(forwardMove);
+
+            const doubleForwardMove = {
                 row: square.row + (step * 2),
                 col: square.col
-            })
+            };
+            if (square.row == 2 && Utils.isNull(this.getPieceFromSquare(doubleForwardMove, chessBoard))) {
+                uncheckedMoves.push({
+                    row: square.row + (step * 2),
+                    col: square.col
+                })
+            }
         }
         attackingSquares.forEach(attackSquare => {
             if (this.squareOnSidePiece(attackSquare, chessBoard, this.getOppositeSide(playerSide) )) {
@@ -548,7 +549,7 @@ export class ChessUtils {
         return Utils.isNotNull(piece) && piece.side === side;
     }
 
-    private static getOppositeSide(side: ChessSide): ChessSide {
+    public static getOppositeSide(side: ChessSide): ChessSide {
         return side === ChessSide.WHITE ? ChessSide.BLACK : ChessSide.WHITE;
     }
 

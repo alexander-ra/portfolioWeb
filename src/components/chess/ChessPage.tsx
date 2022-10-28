@@ -34,6 +34,10 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
     private possibleMoves: ChessSquare[] = [];
     private processedMoves: number = 0;
     private promotionMove: ChessSquare;
+    private enPassantSquare: ChessSquare;
+    private isInCheck?: ChessSide;
+    private sideInTurn: ChessSide;
+    private sideWaiting: ChessSide;
     private castleInfo = {
         castleHappened: false,
         leftRookMoved: false,
@@ -77,13 +81,15 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
     }
 
     crateNewGame(): void {
-        if (this.props.gameEnded) {
-            this.processedMoves = 0;
-            this.boardPieces = ChessUtils.getInitialBoardPieces();
-        }
+        this.processedMoves = 0;
+        this.boardPieces = ChessUtils.getInitialBoardPieces();
         this.castleInfo = {
             castleHappened: false, leftRookMoved: false, rightRookMoved: false, kingMoved: false
         };
+        this.sideInTurn = null;
+        this.sideWaiting = null;
+        this.isInCheck = null;
+
 
         ApiLichessUtils.getNewGame(ChessAiDifficulty.EASY, ChessSide.WHITE);
     }
@@ -93,6 +99,22 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
             while (this.processedMoves < moves.length) {
                 this.processMove(moves[this.processedMoves]);
             }
+        }
+        this.isInCheck = null;
+        if (this.processedMoves > 0) {
+            const playerKing = this.boardPieces.find(piece => piece.type === ChessPieceType.KING && piece.side === this.sideInTurn);
+            this.boardPieces.filter(piece => {
+                return piece.side === this.sideWaiting;
+            }).forEach(enemyPiece => {
+                if (Utils.isNull(this.isInCheck)) {
+                    ChessUtils.calculatePossibleMoves(enemyPiece.square, this.boardPieces, enemyPiece.side, true).forEach(move => {
+                        if(ChessUtils.chessSquaresEqual(move, playerKing.square) && !this.isInCheck) {
+                            this.isInCheck = this.sideInTurn;
+                            return;
+                        }
+                    });
+                }
+            })
         }
     }
 
@@ -141,12 +163,43 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
                 if (!this.castleInfo.leftRookMoved && pieceToMove.square.col === 1) {
                     this.castleInfo.leftRookMoved = true;
                 }
-                if (!this.castleInfo.leftRookMoved && pieceToMove.square.col === 1) {
+                if (!this.castleInfo.rightRookMoved && pieceToMove.square.col === 8) {
                     this.castleInfo.rightRookMoved = true;
+                }
+            } else if (pieceToMove.type === ChessPieceType.PAWN) {
+                if (Utils.isNotNull(this.enPassantSquare) && ChessUtils.chessSquaresEqual(move.to, this.enPassantSquare)) {
+                    if (this.enPassantSquare.row === 3) {
+                        const pawnToRemoveIndex = this.boardPieces.findIndex(piece => {
+                            return piece.type === ChessPieceType.PAWN && ChessUtils.chessSquaresEqual(piece.square, {row: 4, col: this.enPassantSquare.col});
+                        })
+                        if (pawnToRemoveIndex !== -1) {
+                            this.boardPieces.splice(pawnToRemoveIndex, 1);
+                        }
+                    }
+
+                    if (this.enPassantSquare.row === 6) {
+                        const pawnToRemoveIndex = this.boardPieces.findIndex(piece => {
+                            return piece.type === ChessPieceType.PAWN && ChessUtils.chessSquaresEqual(piece.square, {row: 5, col: this.enPassantSquare.col});
+                        })
+                        if (pawnToRemoveIndex !== -1) {
+                            this.boardPieces.splice(pawnToRemoveIndex, 1);
+                        }
+                    }
+                }
+
+
+                if (pieceToMove.side === ChessSide.WHITE && move.from.row === 2 && move.to.row === 4) {
+                    this.enPassantSquare = {row: 3, col: move.to.col};
+                } else if (pieceToMove.side === ChessSide.BLACK && move.from.row === 7 && move.to.row === 5) {
+                    this.enPassantSquare = {row: 6, col: move.to.col};
+                } else {
+                    this.enPassantSquare = null;
                 }
             }
 
             pieceToMove.square = move.to;
+            this.sideWaiting = pieceToMove.side;
+            this.sideInTurn = ChessUtils.getOppositeSide(pieceToMove.side)
 
             if (Utils.isNotNull(move.promoteTo)) {
                 pieceToMove.type = move.promoteTo ? move.promoteTo : pieceToMove.type;
@@ -202,21 +255,39 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         for (let row = 1; row <= 8; row++) {
             let chessRow: JSX.Element[] = [];
             for (let col = 1; col <= 8; col++) {
+                const square: ChessSquare = {row, col};
+                let isThread = false;
                 const pieceIndex = this.boardPieces.findIndex((piece: ChessPiece) => {
-                    return piece.square.col === col && piece.square.row === row;
+                    return ChessUtils.chessSquaresEqual(square, piece.square);
                 })
-                const isPossibleMove = this.possibleMoves.findIndex((square: ChessSquare) => {
-                    return square.col === col && square.row === row;
+                const isPossibleMove = this.possibleMoves.findIndex((possibleMove: ChessSquare) => {
+                    return ChessUtils.chessSquaresEqual(square, possibleMove);
                 }) !== -1;
-                chessRow.push(<div className={`chess-square chess-square-${(row + col) % 2 === 0 ? "black" : "white"} 
-                ${this.state.selectedSquare?.row === row && this.state.selectedSquare?.col === col ? "clicked-square" : ""}`}
-                                   onMouseDown={() => {this.clickSquare({col,row})}}>
+                const lastMove = this.props.chessMoves[this.props.chessMoves.length - 1];
+                let isLastMoveFrom = false;
+                let isLastMoveTo = false;
+                if (Utils.isNotNull(lastMove)) {
+                    isLastMoveFrom = ChessUtils.chessSquaresEqual(square, lastMove.from);
+                    isLastMoveTo = ChessUtils.chessSquaresEqual(square, lastMove.to);
+                }
+                if (Utils.isNotNull(this.isInCheck) && pieceIndex !== -1 && this.boardPieces[pieceIndex].type === ChessPieceType.KING &&
+                    this.boardPieces[pieceIndex].side === this.isInCheck) {
+                    isThread = true
+                }
+                chessRow.push(
+                <div className={`chess-square chess-square-${(row + col) % 2 === 0 ? "black" : "white"} 
+                    ${this.state.selectedSquare?.row === row && this.state.selectedSquare?.col === col ? "clicked-square" : ""}
+                    ${isLastMoveFrom ? "last-move-from" : isLastMoveTo ? "last-move-to" : ""}`}
+                    onMouseDown={() => {this.clickSquare({col,row})}}>
                     { pieceIndex !== -1 && <div className={`chess-piece chess-piece-${this.boardPieces[pieceIndex].side.toLowerCase()}`}>
                         <FontAwesomeIcon className={"back-icon"} icon={ChessUtils.getPieceIcon(this.boardPieces[pieceIndex].type)} />
                     </div>
                     }
                     {
                         isPossibleMove && <div className={`${pieceIndex !== -1 ? "possible-move-with-piece" : "possible-move"}`}></div>
+                    }
+                    {
+                        isThread && <div className={"king-piece-thread"}></div>
                     }
                 </div>);
             }
