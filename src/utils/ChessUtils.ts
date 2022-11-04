@@ -26,6 +26,12 @@ export enum ChessSide {
     BLACK = "BLACK",
 }
 
+export enum ChessStartingSide {
+    WHITE = "WHITE",
+    RANDOM = "RANDOM",
+    BLACK = "BLACK",
+}
+
 export enum ChessPieceType {
     PAWN = "PAWN",
     KNIGHT = "KNIGHT",
@@ -353,6 +359,7 @@ export class ChessUtils {
     private static getPawnPossibleMoves(square: ChessSquare, chessBoard: ChessPiece[], playerSide: ChessSide): ChessSquare[] {
         const uncheckedMoves: ChessSquare[] = [];
         const step = playerSide === ChessSide.WHITE ? 1 : -1;
+        const doubleStepRow = playerSide === ChessSide.WHITE ? 2 : 7;
         const attackingSquares: ChessSquare[] = [
             {
                 row: square.row + step,
@@ -374,7 +381,7 @@ export class ChessUtils {
                 row: square.row + (step * 2),
                 col: square.col
             };
-            if (square.row == 2 && Utils.isNull(this.getPieceFromSquare(doubleForwardMove, chessBoard))) {
+            if (square.row == doubleStepRow && Utils.isNull(this.getPieceFromSquare(doubleForwardMove, chessBoard))) {
                 uncheckedMoves.push({
                     row: square.row + (step * 2),
                     col: square.col

@@ -1,8 +1,8 @@
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
-import {MAKE_MOVE, SYNC_MOVES, SET_CHESS_GAME, END_GAME} from "./ChessActionTypes";
+import {MAKE_MOVE, SYNC_MOVES, SET_CHESS_GAME, END_GAME, SET_PLAYER_SIDE, SET_OPPONENT_LEVEL} from "./ChessActionTypes";
 import {CubeReduceModel} from "../cube/cubeReducer";
 import {ChessReduceModel} from "./chessReducer";
-import {ChessMove} from "../../utils/ChessUtils";
+import {ChessAiDifficulty, ChessMove, ChessSide} from "../../utils/ChessUtils";
 
 const setChessGame = (chessGame: ChessReduceModel) => ({
     type: SET_CHESS_GAME,
@@ -10,8 +10,23 @@ const setChessGame = (chessGame: ChessReduceModel) => ({
         gameId: chessGame.gameId,
         opponentLevel: chessGame.opponentLevel,
         playerSide: chessGame.playerSide,
+        playerAvatar: chessGame.playerAvatar,
         chessMoves: chessGame.chessMoves,
         gameEnded: chessGame.gameEnded
+    } as ChessReduceModel
+});
+
+const setPlayerSide = (playerSide: ChessSide) => ({
+    type: SET_PLAYER_SIDE,
+    payload: {
+        playerSide: playerSide
+    } as ChessReduceModel
+});
+
+const setOpponentLevel = (opponentLevel: ChessAiDifficulty) => ({
+    type: SET_OPPONENT_LEVEL,
+    payload: {
+        opponentLevel
     } as ChessReduceModel
 });
 
@@ -33,4 +48,4 @@ const endGame = () => ({
     type: END_GAME,
 });
 
-export { setChessGame, makeMove, syncMoves, endGame };
+export { setChessGame, setPlayerSide, setOpponentLevel, makeMove, syncMoves, endGame };

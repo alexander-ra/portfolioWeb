@@ -15,7 +15,8 @@ export default class AppStorage {
 
 export enum StorageKey {
     THEME = "THEME",
-    CHESS_GAME_ID = "CHESS_GAME_ID"
+    CHESS_GAME_ID = "CHESS_GAME_ID",
+    PLAYER_AVATAR = "PLAYER_AVATAR",
 }
 
 export { AppStorage };

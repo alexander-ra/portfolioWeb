@@ -10,26 +10,30 @@ import {
     ChessPiece,
     ChessPieceType,
     ChessSide,
-    ChessSquare,
+    ChessSquare, ChessStartingSide,
     ChessUtils
 } from "../../utils/ChessUtils";
 import {ApiLichessUtils} from "../../utils/ApiLichessUtils";
 import AppStorage, {StorageKey} from "../../utils/AppStorage";
+import ChessGameConfigurator from "./ChessGameConfigurator";
+import {faSquareXmark, faXmark, faXmarkSquare} from '@fortawesome/free-solid-svg-icons';
 
-interface LandingCubeProps {
+interface ChessPageProps {
     isClosing: boolean;
     chessGameId: number;
     playerSide: ChessSide;
     opponentSide: ChessSide;
     chessMoves: ChessMove[];
     gameEnded: boolean;
+    opponentLevel: ChessAiDifficulty;
+    playerAvatar: ChessStartingSide;
 }
 
-interface LandingCubeState {
+interface ChessPageState {
     selectedSquare: ChessSquare;
 }
 
-class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
+class ChessPage extends React.Component<ChessPageProps, ChessPageState> {
     private boardPieces: ChessPiece[] = [];
     private possibleMoves: ChessSquare[] = [];
     private processedMoves: number = 0;
@@ -45,7 +49,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         kingMoved: false
     };
 
-    constructor(props: LandingCubeProps) {
+    constructor(props: ChessPageProps) {
         super(props);
         this.state = {
             selectedSquare: null,
@@ -65,7 +69,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<LandingCubeProps>, prevState: Readonly<LandingCubeState>, snapshot?: any) {
+    componentDidUpdate(prevProps: Readonly<ChessPageProps>, prevState: Readonly<ChessPageState>, snapshot?: any) {
         if (prevProps.chessMoves.length !== this.props.chessMoves.length) {
             this.changeBoard(this.props.chessMoves);
         }
@@ -80,7 +84,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         }
     }
 
-    crateNewGame(): void {
+    crateNewGame(difficulty: ChessAiDifficulty, side: ChessStartingSide): void {
         this.processedMoves = 0;
         this.boardPieces = ChessUtils.getInitialBoardPieces();
         this.castleInfo = {
@@ -91,7 +95,7 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
         this.isInCheck = null;
 
 
-        ApiLichessUtils.getNewGame(ChessAiDifficulty.EASY, ChessSide.WHITE);
+        ApiLichessUtils.getNewGame(difficulty, side);
     }
 
     changeBoard(moves: ChessMove[]): void {
@@ -278,7 +282,8 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
                 <div className={`chess-square chess-square-${(row + col) % 2 === 0 ? "black" : "white"} 
                     ${this.state.selectedSquare?.row === row && this.state.selectedSquare?.col === col ? "clicked-square" : ""}
                     ${isLastMoveFrom ? "last-move-from" : isLastMoveTo ? "last-move-to" : ""}`}
-                    onMouseDown={() => {this.clickSquare({col,row})}}>
+                    onMouseDown={() => {this.clickSquare({col,row})}}
+                    key={`${row}-${col}`}>
                     { pieceIndex !== -1 && <div className={`chess-piece chess-piece-${this.boardPieces[pieceIndex].side.toLowerCase()}`}>
                         <FontAwesomeIcon className={"back-icon"} icon={ChessUtils.getPieceIcon(this.boardPieces[pieceIndex].type)} />
                     </div>
@@ -338,12 +343,26 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
                 </div>
             </div>}
             <div className={`chess-board-wrapper ${this.props.playerSide.toLowerCase()}-player-view`}>
-                {(!this.props.chessGameId || this.props.gameEnded) && <button onClick={this.crateNewGame.bind(this)}>
-                    Play chess
-                </button>}
-                {this.props.chessGameId && <>
+                {(!this.props.chessGameId || this.props.gameEnded) &&
+                    <ChessGameConfigurator crateNewGame={(difficulty, side) => this.crateNewGame(difficulty, side)} />}
+
+                {this.props.chessGameId && !this.props.gameEnded && <>
+                    <div className={`player-window-wrapper player ${this.props.playerSide === this.sideInTurn ? "active" : ""}`}>
+                        <div className={`avatar avatar-${this.props.playerAvatar?.toLowerCase()}`}>
+                            <div className={`avatar-label`}>{`Player${this.props.playerSide === this.sideInTurn ? "'s turn" : " waiting"}`}</div>
+                        </div>
+                    </div>
+                    <div className={`player-window-wrapper opponent ${this.props.opponentSide === this.sideInTurn ? "active" : ""}`}>
+                        <div className={`avatar avatar-${this.props.opponentLevel?.toLowerCase()}`}>
+                            <div className={`avatar-label`}>{`Opponent${this.props.opponentSide === this.sideInTurn ? "'s turn" : " waiting"}`}</div>
+                        </div>
+                    </div>
                     {this.rednderChessBoard()}
                     {this.rednderBoardLetters()}
+                    <button className={`game-end`} onClick={() => {ApiLichessUtils.resignGame()}}>
+                        <span>End game </span>
+                        <FontAwesomeIcon icon={faXmark} />
+                    </button>
                 </>}
             </div>
         </div>)
@@ -352,13 +371,14 @@ class ChessPage extends React.Component<LandingCubeProps, LandingCubeState> {
 
 export default connect(
     (state: any, ownProps) => {
-        const { gameId, opponentLevel, playerSide, chessMoves, gameEnded } = state.chessReducer;
+        const { gameId, opponentLevel, playerSide, chessMoves, gameEnded, playerAvatar } = state.chessReducer;
         return {
             ...ownProps,
             chessGameId: gameId,
             opponentLevel,
             playerSide,
             opponentSide: playerSide === ChessSide.WHITE ? ChessSide.BLACK : ChessSide.WHITE,
+            playerAvatar,
             chessMoves,
             gameEnded
         }
