@@ -4,9 +4,9 @@ import './ChessGameConfigurator.scss';
 import {connect} from 'react-redux';
 import Utils from '../../utils/Utils';
 import ConfigurationSection from "./ConfiguratorSection";
+import {ApiLichessUtils} from "../../utils/ApiLichessUtils";
 
 interface ChessGameConfiguratorProps {
-    crateNewGame: (difficulty: ChessAiDifficulty, side: ChessStartingSide) => void;
 }
 
 interface ChessGameConfiguratorState {
@@ -46,7 +46,7 @@ class ChessGameConfigurator extends React.Component<ChessGameConfiguratorProps, 
             <button disabled={this.startButtonDisabled()}
                     className={"play-button"}
                     onClick={() => {
-                        this.props.crateNewGame(Object.values(ChessAiDifficulty)[this.state.selectedOpponentIndex], Object.values(ChessStartingSide)[this.state.startingPositionIndex]);
+                        ApiLichessUtils.createNewGame(Object.values(ChessAiDifficulty)[this.state.selectedOpponentIndex], Object.values(ChessStartingSide)[this.state.startingPositionIndex]);
                     }}>
                 Play chess
             </button>

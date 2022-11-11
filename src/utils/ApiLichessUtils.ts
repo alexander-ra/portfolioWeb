@@ -18,6 +18,7 @@ import {
     syncMoves
 } from "../reducers/chess/chessAction";
 import {Buffer} from "buffer";
+import { resetBoardState } from "../reducers/chessBoard/chessBoardAction";
 
 export class ApiLichessUtils {
     private static readonly AUTH_KEY = "Bearer lip_ySt9nnwhXfyDdaO5InlE";
@@ -52,7 +53,8 @@ export class ApiLichessUtils {
             .catch(() => {}); // TODO: handle resign
     }
 
-    public static getNewGame(aiLevel: ChessAiDifficulty, playerSide: ChessStartingSide): void {
+    public static createNewGame(aiLevel: ChessAiDifficulty, playerSide: ChessStartingSide): void {
+        store.dispatch(resetBoardState());
         let level: number;
         let color = playerSide.toLowerCase();
         switch (aiLevel) {

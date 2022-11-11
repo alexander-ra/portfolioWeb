@@ -10,6 +10,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {inspect} from "util";
 import Utils from "./Utils";
+import store from "../store/store";
+import {SET_CHESS_BOARD_PIECES} from "../reducers/chessBoard/ChessBoardActionTypes";
+import {
+    setCastleInfo,
+    setChessBoardPieces, setEnPassantSquare, setSideInCheck, updateProcessedBoard
+} from "../reducers/chessBoard/chessBoardAction";
 
 export enum ChessAiDifficulty {
     EASY = "EASY",
@@ -56,6 +62,13 @@ export interface ChessPiece {
     side: ChessSide,
     type: ChessPieceType,
     square: ChessSquare;
+}
+
+export interface ChessCastleInfo {
+    castleHappened: boolean;
+    leftRookMoved: boolean;
+    rightRookMoved: boolean;
+    kingMoved: boolean;
 }
 
 export interface CastleInfo {
@@ -254,8 +267,181 @@ export class ChessUtils {
             }
 
         });
-
         return boardPieces;
+    }
+
+    public static processMoves(moves: ChessMove[]): void {
+        console.log("processingmoves");
+        const chessBoardReducer = store.getState().chessBoardReducer;
+        let processedPieces = this.returnCopyOfBoard(chessBoardReducer.chessPieces);
+        let oldSideInTurn = chessBoardReducer.sideInTurn;
+        if (!Utils.isArrayNotEmpty(processedPieces)) {
+            processedPieces = ChessUtils.getInitialBoardPieces();
+        }
+        let processedMoves = chessBoardReducer.processedMoves;
+        if (Utils.isArrayNotEmpty(moves)) {
+            while (processedMoves < moves.length) {
+                processedPieces = this.getBoardAfterMove(processedPieces, moves[processedMoves]);
+                processedMoves++;
+            }
+        }
+        const newSideInTurn = (processedMoves - chessBoardReducer.processedMoves) % 2 === 0 ?
+            oldSideInTurn : ChessUtils.getOppositeSide(oldSideInTurn);
+        store.dispatch(updateProcessedBoard(processedPieces, processedMoves, newSideInTurn));
+        this.doCheckDetection(newSideInTurn);
+    }
+
+    public static doCheckDetection(side: ChessSide) {
+        const { chessPieces, processedMoves, sideInCheck } = store.getState().chessBoardReducer;
+        let newSideInCheck = null;
+        if (processedMoves > 0) {
+            const playerKing = chessPieces.find(piece => piece.type === ChessPieceType.KING && piece.side === side);
+            chessPieces.filter(piece => {
+                return piece.side === ChessUtils.getOppositeSide(side);
+            }).forEach(enemyPiece => {
+                if (Utils.isNull(newSideInCheck)) {
+                    ChessUtils.calculatePossibleMoves(enemyPiece.square, chessPieces, enemyPiece.side, true).forEach(move => {
+                        if(ChessUtils.chessSquaresEqual(move, playerKing.square) && Utils.isNull(newSideInCheck)) {
+                            newSideInCheck = side;
+                            return;
+                        }
+                    });
+                } else {
+                    return;
+                }
+            })
+        }
+        if (sideInCheck !== newSideInCheck) {
+            store.dispatch(setSideInCheck(newSideInCheck));
+        } else {
+            console.log("realistic case", sideInCheck, newSideInCheck);
+        }
+    }
+
+    public static processEnPassantMove(chessBoard: ChessPiece[], side: ChessSide, move: ChessMove): ChessPiece[] {
+        const { enPassantSquare } = store.getState().chessBoardReducer;
+        let processedChessBoard = this.returnCopyOfBoard(chessBoard);
+
+        if (Utils.isNotNull(enPassantSquare) && ChessUtils.chessSquaresEqual(move.to, enPassantSquare)) {
+            if (enPassantSquare.row === 3) {
+                const pawnToRemoveIndex = chessBoard.findIndex(piece => {
+                    return piece.side === ChessUtils.getOppositeSide(side) && piece.type === ChessPieceType.PAWN && ChessUtils.chessSquaresEqual(piece.square, {row: 4, col: enPassantSquare.col});
+                })
+                if (pawnToRemoveIndex !== -1) {
+                    processedChessBoard.splice(pawnToRemoveIndex, 1);
+                }
+            }
+
+            if (enPassantSquare.row === 6) {
+                const pawnToRemoveIndex = chessBoard.findIndex(piece => {
+                    return piece.side === ChessUtils.getOppositeSide(side) && piece.type === ChessPieceType.PAWN && ChessUtils.chessSquaresEqual(piece.square, {row: 5, col: enPassantSquare.col});
+                })
+                if (pawnToRemoveIndex !== -1) {
+                    processedChessBoard.splice(pawnToRemoveIndex, 1);
+                }
+            }
+        }
+
+        if (side === ChessSide.WHITE && move.from.row === 2 && move.to.row === 4) {
+            store.dispatch(setEnPassantSquare({row: 3, col: move.to.col}));
+        } else if (side === ChessSide.BLACK && move.from.row === 7 && move.to.row === 5) {
+            store.dispatch(setEnPassantSquare({row: 6, col: move.to.col}));
+        } else if (Utils.isNotNull(enPassantSquare)) {
+            store.dispatch(setEnPassantSquare(null));
+        }
+
+        return processedChessBoard;
+    }
+
+    public static processCastleMove(chessBoard: ChessPiece[], pieceToMove: ChessPiece, move: ChessMove): ChessPiece[] {
+        const { enPassantSquare, castleInfo } = store.getState().chessBoardReducer;
+        const { playerSide } = store.getState().chessReducer;
+        let processedChessBoard = this.returnCopyOfBoard(chessBoard);
+        const processedCastleInfo = { ...castleInfo };
+
+        if (pieceToMove.type === ChessPieceType.KING) {
+            if (!castleInfo.kingMoved && pieceToMove.side === playerSide) {
+            processedCastleInfo.kingMoved = true;
+        }
+        const colDiff = move.to.col - pieceToMove.square.col;
+        if (colDiff > 1) {
+            console.log("performing castle for", pieceToMove);
+            ChessUtils.getPieceFromSquare({row: pieceToMove.square.row, col: 8}, processedChessBoard).square = {
+                row: pieceToMove.square.row,
+                col: move.to.col - 1
+            };
+            if (pieceToMove.side === playerSide) {
+                processedCastleInfo.castleHappened = true;
+            }
+        } else if (colDiff < -1) {
+            console.log("performing castle for", pieceToMove);
+            ChessUtils.getPieceFromSquare({row: pieceToMove.square.row, col: 1}, processedChessBoard).square = {
+                row: pieceToMove.square.row,
+                col: move.to.col + 1
+            };
+            if (pieceToMove.side === playerSide) {
+                processedCastleInfo.castleHappened = true;
+            }
+        }
+        } else if (pieceToMove.type === ChessPieceType.ROOK && pieceToMove.side === playerSide) {
+            if (!processedCastleInfo.leftRookMoved && pieceToMove.square.col === 1) {
+                processedCastleInfo.leftRookMoved = true;
+            }
+            if (!processedCastleInfo.rightRookMoved && pieceToMove.square.col === 8) {
+                processedCastleInfo.rightRookMoved = true;
+            }
+        }
+
+        store.dispatch(setCastleInfo(processedCastleInfo));
+        return processedChessBoard;
+    }
+
+    public static getBoardAfterMove(chessPieces:ChessPiece[], move: ChessMove): ChessPiece[] {
+        const { castleInfo } = store.getState().chessBoardReducer;
+        const { playerSide } = store.getState().chessReducer;
+        let processedPieces = this.returnCopyOfBoard(chessPieces);
+        processedPieces = this.removePieceFromBoard(processedPieces, move.to);
+
+        const movingPieceIndex = processedPieces.findIndex((pieceToMove) => {
+            return ChessUtils.chessSquaresEqual(move.from, pieceToMove.square);
+        })
+        if (movingPieceIndex !== -1) {
+            if (processedPieces[movingPieceIndex].type === ChessPieceType.KING || processedPieces[movingPieceIndex].type === ChessPieceType.ROOK) {
+                processedPieces = this.processCastleMove(processedPieces, processedPieces[movingPieceIndex], move);
+            }
+
+            if (processedPieces[movingPieceIndex].type === ChessPieceType.PAWN) {
+                processedPieces = this.processEnPassantMove(processedPieces, processedPieces[movingPieceIndex].side, move);
+            }
+
+            processedPieces[movingPieceIndex].square = move.to;
+
+            if (Utils.isNotNull(move.promoteTo)) {
+                processedPieces[movingPieceIndex].type = move.promoteTo ? move.promoteTo : processedPieces[movingPieceIndex].type;
+            }
+        } else {
+            //TODO: throw err;
+        }
+        return processedPieces;
+    }
+
+    private static returnCopyOfBoard(chessBoard: ChessPiece[]): ChessPiece[] {
+        const clonedBoard = [];
+        if (Utils.isArrayNotEmpty(chessBoard)) {
+            chessBoard.forEach(val => clonedBoard.push(Object.assign({}, val)));
+        }
+        return clonedBoard;
+    }
+
+    public static removePieceFromBoard(boardPieces: ChessPiece[], square: ChessSquare) {
+        const deadPieceIndex = boardPieces.findIndex((pieceToRemove) => {
+            return ChessUtils.chessSquaresEqual(square, pieceToRemove.square);
+        })
+        if (deadPieceIndex !== -1) {
+            boardPieces.splice(deadPieceIndex, 1);
+        }
+        return boardPieces;
+        //TODO: handle missing piece
     }
 
 
