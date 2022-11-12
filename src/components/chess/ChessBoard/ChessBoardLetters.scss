@@ -1,0 +1,63 @@
+@import "../../../App";
+
+.chess-board-wrapper {
+
+  &.black-player-view {
+    flex-direction: column;
+    .chess-letters {
+      &.chess-letters-right, &.chess-letters-left {
+        flex-direction: column;
+      }
+      &.chess-letters-top, &.chess-letters-bottom {
+        flex-direction: row-reverse;
+      }
+    }
+
+  }
+
+  .chess-letters {
+    position: absolute;
+    display: flex;
+    font-weight: bold;
+    color: $dark-purple;
+
+    &.chess-letters-top {
+      top: 0;
+
+    }
+
+    &.chess-letters-right {
+      right: 0;
+    }
+
+    &.chess-letters-bottom {
+      bottom: 0;
+    }
+
+    &.chess-letters-left {
+      left: 0;
+    }
+
+    &.chess-letters-top, &.chess-letters-bottom {
+      flex-direction: row;
+
+      .chess-letter {
+        width: 4em;
+        height: 2em;
+        line-height: 2em;
+        text-align: center;
+      }
+    }
+
+    &.chess-letters-right, &.chess-letters-left {
+      flex-direction: column-reverse;
+
+      .chess-letter {
+        width: 2em;
+        height: 4em;
+        line-height: 4em;
+        text-align: center;
+      }
+    }
+  }
+}

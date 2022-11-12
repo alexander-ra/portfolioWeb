@@ -1,5 +1,5 @@
 import React from 'react';
-import {ChessAiDifficulty, ChessSide, ChessStartingSide} from '../../utils/ChessUtils';
+import {ChessAiDifficulty, ChessSide, ChessStartingSide} from '../../../../utils/ChessUtils';
 import './ChessGameConfigurator.scss';
 import {connect} from 'react-redux';
 

@@ -81,7 +81,11 @@ export interface CastleInfo {
 export class ChessUtils {
 
     public static chessSquaresEqual(a: ChessSquare, b: ChessSquare): boolean {
-        return a.col === b.col && a.row === b.row;
+        if (Utils.isNull(a) || Utils.isNull(b)) {
+            return false;
+        } else {
+            return a.col === b.col && a.row === b.row;
+        }
     }
 
     public static getInitialBoardPieces(): ChessPiece[] {

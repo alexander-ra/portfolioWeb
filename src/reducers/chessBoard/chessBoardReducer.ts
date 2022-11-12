@@ -6,14 +6,6 @@ import {
     SET_SIDE_IN_CHECK, SET_CASTLE_INFO, UPDATE_PROCESSED_BOARD,
 } from "./ChessBoardActionTypes";
 
-// this.processedMoves = 0;
-// this.boardPieces = ChessUtils.getInitialBoardPieces();
-// this.castleInfo = {
-//     castleHappened: false, leftRookMoved: false, rightRookMoved: false, kingMoved: false
-// };
-// this.sideInTurn = null;
-// this.sideWaiting = null;
-// this.isInCheck = null;
 
 export interface ChessBoardModel {
     chessPieces: ChessPiece[];
@@ -71,7 +63,8 @@ export default function chessBoardReducer(state = initialState, action: any): Ch
             return {
                 ...state,
                 chessPieces: action.payload.processedBoard,
-                processedMoves: action.payload.processedMoves
+                processedMoves: action.payload.processedMoves,
+                sideInTurn: action.payload.sideInTurn
             }
         }
         default:

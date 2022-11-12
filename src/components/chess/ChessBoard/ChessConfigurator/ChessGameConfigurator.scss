@@ -1,0 +1,48 @@
+@import "../../../../App";
+
+.chess-configurator-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.play-button {
+  flex: 1 1 8%;
+  width: 50%;
+  transition: filter .2s, background-color .25s, color .25s, box-shadow .25s;
+  filter: saturate(1);
+  background-image: url("../../../../../public/pointer-sandwich.svg");
+  background-position: center;
+  background-size: 120% 600%;
+  drop-shadow: 0 0 1em $dark-purple;
+  background-color: $dark-orange;
+  color: $light-yellow;
+  border: none;
+  font-size: 1.25em;
+  border-radius: 1em;
+  z-index: 3;
+  white-space: nowrap;
+  overflow: hidden;
+  box-shadow: none;
+
+  &:not(:disabled) {
+    &:hover {
+      background-color: $purple;
+      box-shadow: 0 0 1em $purple;
+      cursor: pointer;
+    }
+  }
+
+  &:disabled {
+    filter: saturate(0);
+  }
+}
+
+.setting-title {
+  flex: 1 1 1.25rem;
+  line-height: 2em;
+  text-align: center;
+  font-size: 1.25em;
+}

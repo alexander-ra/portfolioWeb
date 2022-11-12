@@ -1,0 +1,62 @@
+@import "../../../App";
+
+.player-window-wrapper {
+  width: 8em;
+  position: absolute;
+
+  &.active {
+    .avatar {
+      border-color: $dark-orange;
+    }
+  }
+
+  .avatar {
+    transition: border-color .25s;
+    border-style: solid;
+    border-color: $light-yellow;
+    border-width: .3em .3em 1.66em .3em;
+    border-radius: .5em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 8em;
+    height: 8em;
+    display: flex;
+    align-items: end;
+
+    .avatar-label {
+      font-size: .8em;
+      text-align: center;
+      width: 100%;
+      margin-bottom: -1.33rem;
+      line-height: 1em;
+    }
+
+    &.avatar-easy {
+      background-image: url("../../../../public/chessAvatars/easy.jpg");
+    }
+    &.avatar-medium {
+      background-image: url("../../../../public/chessAvatars/medium.jpg");
+    }
+    &.avatar-hard {
+      background-image: url("../../../../public/chessAvatars/hard.jpg");
+    }
+    &.avatar-white {
+      background-image: url("../../../../public/chessAvatars/white.jpg");
+    }
+    &.avatar-random {
+      background-image: url("../../../../public/chessAvatars/color.jpg");
+    }
+    &.avatar-black {
+      background-image: url("../../../../public/chessAvatars/black.jpg");
+    }
+  }
+
+  &.player {
+    bottom: calc(50% - 18em);
+    left: calc(50% - 27.5em);
+  }
+  &.opponent {
+    top: calc(50% - 18em);
+    right: calc(50% - 27em);
+  }
+}
