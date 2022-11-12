@@ -1,0 +1,27 @@
+@import "../../../App";
+
+.chess-board-wrapper {
+  height: 32em;
+  width: 32em;
+  position: absolute;
+  top: calc(50% - 18em);
+  left: calc(50% - 18em);
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: rgba($light-yellow, .5);
+  padding: 2em;
+  border-radius: .5em;
+
+  &.black-player-view {
+    flex-direction: column;
+
+    .chess-row {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .chess-row {
+    display: flex;
+    flex-direction: row;
+  }
+}
