@@ -1,6 +1,6 @@
 import React from 'react';
 import {ChessAiDifficulty, ChessSide, ChessStartingSide} from '../../../../utils/ChessUtils';
-import './ChessGameConfigurator.scss';
+import './ConfiguratorSection.scss';
 import {connect} from 'react-redux';
 
 interface ConfigurationSectionProps {

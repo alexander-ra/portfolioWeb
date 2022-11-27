@@ -20,7 +20,6 @@ class TextSection extends React.Component<ContentBubbleProps> {
         return (
             <>
                 <div className={`wing top-wing ${this.props.sectionPosition.toLowerCase()}-wing`}></div>
-                <div className={`wing middle-wing ${this.props.sectionPosition.toLowerCase()}-wing`}></div>
                 <div className={`wing bottom-wing ${this.props.sectionPosition.toLowerCase()}-wing`}></div>
             </>
         )

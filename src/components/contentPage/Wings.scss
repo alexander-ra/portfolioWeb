@@ -24,11 +24,6 @@ $menu-radius: 6em;
       transform: scaleX(-1) rotate(15deg);
       animation: top-left-wing-appear 2s;
     }
-
-    &.middle-wing {
-      transform: scaleY(-1) scaleX(-1) rotate(10deg);
-      animation: mid-left-wing-appear 2s;
-    }
     &.bottom-wing {
       transform: scaleY(-1) scaleX(-1) rotate(10deg);
       animation: bot-left-wing-appear 2s;
@@ -43,21 +38,10 @@ $menu-radius: 6em;
       animation: top-right-wing-appear 2s;
     }
 
-    &.middle-wing{
-      transform: scaleY(-1) rotate(10deg);
-      animation: mid-right-wing-appear 2s;
-    }
-
     &.bottom-wing {
       transform: scaleY(-1) rotate(10deg);
       animation: bot-right-wing-appear 2s;
     }
-  }
-
-  &.middle-wing {
-    background-image: url("../../../public/federMid.svg");
-    filter: saturate(.5);
-    z-index: 0;
   }
 
   &.top-wing {
@@ -65,7 +49,7 @@ $menu-radius: 6em;
     top: 0em;
   }
 
-  &.middle-wing, &.bottom-wing {
+  &.bottom-wing {
     top: 25em;
   }
 }

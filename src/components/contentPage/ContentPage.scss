@@ -43,7 +43,8 @@ $menu-radius: 6em;
     .content-outer-circle {
       font-size: .97em;
       .menu-section {
-        background-color: $light-yellow;
+        background-color: rgba($light-yellow, .75);
+        color: rgba($dark-purple, 1);
       }
     }
   }
@@ -130,29 +131,31 @@ $menu-radius: 6em;
     }
 
     .menu-section {
-      transition: background .25s;
+      transition: background .25s, box-shadow .25s;
       transform-origin: ($menu-radius / 2) (($outer-radius / 2) + ($menu-radius - $border) / 2 + 0.5em);
       top: -2em;
       left: calc($outer-offset - ($menu-radius / 2));
-      color: $dark-purple;
+      color: rgba($dark-purple, .75);
       background-color: rgba($light-yellow, .5);
       position: absolute;
       border-radius: 50% 50% 0% 0%;
       box-sizing: border-box;
       height: $menu-radius;
       width: $menu-radius;
-      padding: 1em 1.33em 1.66em 1.33em;
+      padding: 1em 1.66em 2.33em 1.66em;
       box-shadow: inset 0 0 1em -.5em $dark-purple, 0 0 .25em -0.1em black;
 
       &:hover {
-        background-color: rgba($light-yellow, 1);
+        background-color: $light-yellow;
+        color: $dark-purple;
         cursor: pointer;
       }
 
       &.selected {
-        background-color: $light-blue;
-        border: 0 solid white;
+        background-color: $light-yellow;
+        color: $dark-purple;
         cursor: grab;
+        box-shadow: inset 0 0 1em 0 $dark-orange, 0 0 .25em -0.1em black;
       }
 
       .menu-icon {
@@ -228,7 +231,7 @@ $menu-radius: 6em;
 
       .section-title-bottom {
         font-weight: bold;
-        color: $light-blue;
+        color: $dark-orange;
       }
     }
   }
