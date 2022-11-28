@@ -11,6 +11,7 @@ import TextSection, {TextSectionPosition} from "./TextSection";
 import {ContentData, ContentLabels, MenuContent} from '../../labels/ContentLabels';
 import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
+import Flower from "../landing/cube/Flower/Flower";
 
 interface ContentPageProps {
     isClosing: boolean;

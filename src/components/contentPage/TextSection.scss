@@ -14,14 +14,14 @@ $menu-radius: 6em;
   justify-content: center;
   flex: 1 1 50%;
   background-size: cover;
-  background-color: rgba(white, 0.66);
+  background-color: rgba($light-yellow, 0.75);
   // border: 0.2em solid $dark-orange;
 
 
   &.text-section-left {
     animation: sectionAppearLeft 2s;
     border-radius: 3em 10em 10em 3em;
-    margin: 12em 9em 12em 1em;
+    margin: 12em 8.25em 12em 1em;
 
     .content {
       padding-right: 6em;
@@ -34,7 +34,7 @@ $menu-radius: 6em;
   &.text-section-right {
     animation: sectionAppearRight 2s;
     border-radius: 10em 3em 3em 10em;
-    margin: 12em 1em 12em 9em;
+    margin: 12em 1em 12em 8.25em;
 
     .content {
       padding-left: 6em;
@@ -69,7 +69,7 @@ $menu-radius: 6em;
       font-weight: bold;
       line-height: 2em;
       top: 3em;
-      color: $purple;
+      color: $dark-purple;
       flex: 0 0 2em;
     }
 

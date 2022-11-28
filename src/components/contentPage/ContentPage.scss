@@ -1,7 +1,7 @@
 @import "../../App";
 
 $circle-text-padding: 2em;
-$outer-radius: 28em;
+$outer-radius: 24em;
 $outer-offset: $outer-radius / 2;
 $inner-radius: 22em;
 $border: calc($outer-radius - $inner-radius) / 2;
@@ -32,9 +32,13 @@ $menu-radius: 6em;
   opacity: 0;
   animation: bodyAppear 1s forwards;
 
+  .flower-wrapper {
+    z-index: 0;
+  }
+
   &.dragging {
     .content-outer-circle-sections {
-      font-size: 1em;
+      font-size: .97em;
       .section-edge {
         opacity: 1;
       }
@@ -43,7 +47,6 @@ $menu-radius: 6em;
     .content-outer-circle {
       font-size: .97em;
       .menu-section {
-        background-color: rgba($light-yellow, .75);
         color: rgba($dark-purple, 1);
       }
     }
@@ -56,6 +59,7 @@ $menu-radius: 6em;
     top: calc(50% - 25em);
     display: flex;
     flex-direction: row;
+    z-index: 0;
   }
 
   .indicator {
@@ -65,7 +69,7 @@ $menu-radius: 6em;
     border: 1em solid transparent;
     box-sizing: border-box;
     position: absolute;
-    top: calc(50% - 17.5em);
+    top: calc(50% - 17em);
     border-radius: 50% 50% 50% 0;
     left: calc(50% - 4.5em);
     transform: rotate(315deg);
@@ -85,7 +89,7 @@ $menu-radius: 6em;
   }
 
   .content-outer-circle-sections {
-    font-size: .95em;
+    font-size: .9em;
     animation: outerCircleAppear 2s;
     height: $outer-radius;
     width: $outer-radius;
@@ -97,19 +101,20 @@ $menu-radius: 6em;
 
     .section-edge{
       transition: opacity .25s;
-      opacity: .1;
-      height: 2em;
+      opacity: .75;
+      height: 1.8em;
       width: 0.2em;
       background-color: $light-yellow;
-      transform-origin: 0.2em ($outer-radius / 2 - 1em - 0.05em);
+      border-radius: .5em;
+      transform-origin: 0em 12em;
       position: absolute;
-      top: 1em;
-      left: calc(($outer-radius / 2) - (0.2em / 2));
+      top: 0;
+      left: 12em;
     }
   }
 
   .content-outer-circle {
-    font-size: .95em;
+    font-size: .97em;
     animation: outerCircleAppear 1s;
     cursor: grab;
     height: $outer-radius;
@@ -117,33 +122,36 @@ $menu-radius: 6em;
     position: absolute;
     top: calc(50% - $outer-offset);
     left: calc(50% - $outer-offset);
-    background-image: url("../../../public/wavey-gravy.svg");
+    background-color: rgba($dark-purple, 1);
     background-size: 300%;
     background-position: center;
     padding: -1em;
     border-radius: 50%;
     z-index: 1;
-    box-shadow: 0 0 2em -0.5em $purple;
 
 
     &:hover {
-      font-size: .97em;
+      font-size: 1.025em;
+
+      .menu-section {
+        box-shadow: 0 0 0 0.2em $dark-purple;
+        color: rgba($dark-purple, .75);
+      }
     }
 
     .menu-section {
-      transition: background .25s, box-shadow .25s;
-      transform-origin: ($menu-radius / 2) (($outer-radius / 2) + ($menu-radius - $border) / 2 + 0.5em);
-      top: -2em;
+      transition: background .25s, box-shadow .125s;
+      transform-origin: ($menu-radius / 2) 15em;
+      top: -3em;
       left: calc($outer-offset - ($menu-radius / 2));
-      color: rgba($dark-purple, .75);
-      background-color: rgba($light-yellow, .5);
+      color: rgba($dark-purple, .5);
+      background-color: $light-yellow;
       position: absolute;
       border-radius: 50% 50% 0% 0%;
       box-sizing: border-box;
       height: $menu-radius;
       width: $menu-radius;
       padding: 1em 1.66em 2.33em 1.66em;
-      box-shadow: inset 0 0 1em -.5em $dark-purple, 0 0 .25em -0.1em black;
 
       &:hover {
         background-color: $light-yellow;
@@ -155,7 +163,6 @@ $menu-radius: 6em;
         background-color: $light-yellow;
         color: $dark-purple;
         cursor: grab;
-        box-shadow: inset 0 0 1em 0 $dark-orange, 0 0 .25em -0.1em black;
       }
 
       .menu-icon {
@@ -240,7 +247,7 @@ $menu-radius: 6em;
 @keyframes outerCircleAppear{
   0%{font-size: 0.5em}
   30%{font-size: 0.5em}
-  100%{font-size: .95em}
+  100%{font-size: .97em}
 }
 
 @keyframes bodyAppear{

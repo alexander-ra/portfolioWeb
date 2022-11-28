@@ -27,8 +27,9 @@ class TextSection extends React.Component<ContentBubbleProps> {
         return (
             <div className={`text-section text-section-${this.props.sectionPosition.toLowerCase()}`}>
                 <div className={"content"}>
-                    <FontAwesomeIcon className={`content-icon`} icon={data.icon}/>
-                    <div className={"content-title"}>{data.title}</div>
+                    <div className={"content-title"}>
+                        {data.title}
+                    </div>
                     <div className={"content-body"}>
                         {data.description}
                     </div>
