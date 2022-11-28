@@ -32,10 +32,6 @@ $menu-radius: 6em;
   opacity: 0;
   animation: bodyAppear 1s forwards;
 
-  .flower-wrapper {
-    z-index: 0;
-  }
-
   &.dragging {
     .content-outer-circle-sections {
       font-size: .97em;
@@ -47,7 +43,7 @@ $menu-radius: 6em;
     .content-outer-circle {
       font-size: .97em;
       .menu-section {
-        color: rgba($dark-purple, 1);
+        background-color: $dark-purple;
       }
     }
   }
@@ -59,7 +55,6 @@ $menu-radius: 6em;
     top: calc(50% - 25em);
     display: flex;
     flex-direction: row;
-    z-index: 0;
   }
 
   .indicator {
@@ -163,6 +158,7 @@ $menu-radius: 6em;
         background-color: $light-yellow;
         color: $dark-purple;
         cursor: grab;
+        box-shadow: inset 0 0 1em 0 $dark-orange, 0 0 .25em -0.1em black;
       }
 
       .menu-icon {
