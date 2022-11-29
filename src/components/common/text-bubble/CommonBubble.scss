@@ -2,7 +2,8 @@
 
 .bubble-wrapper {
   position: absolute;
-  width: 20em;
+  width: 27%;
+  // max-width: 30em;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -43,7 +44,7 @@
   }
 
   &.text-bubble-wrapper {
-    margin: 0 calc(20% - 10em);
+    margin: 0 3%;
 
     &:not(.disappear) {
       .bubble {

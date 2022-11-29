@@ -44,10 +44,10 @@ class LandingPage extends React.Component<LandingCubeProps> {
             <TextBubble visible={this.props.cubeOpened && !this.props.isClosing}
                         textToType={LandingDescriptions.DEVELOPER_INTRODUCTION}
                         skipTyping={this.props.landingPageLeft}/>
+            <LandingCube isCLosing={this.props.isClosing}/>
             <MenuBubble textBubbleType={this.props.selectedMenu}
                         visible={this.props.selectedMenu !== CubeMenuStates.NONE && !this.props.isClosing}
                         icon={this.getIcon()}/>
-            <LandingCube isCLosing={this.props.isClosing}/>
         </div>)
     }
 }

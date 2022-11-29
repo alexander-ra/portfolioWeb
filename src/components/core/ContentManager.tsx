@@ -15,6 +15,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {faAccessibleIcon} from "@fortawesome/free-brands-svg-icons";
 import ChessPage from '../chess/ChessPage';
+import BrowserUtils from '../../utils/BrowserUtils';
+import { UIOrientation } from './UIOrientation';
 
 interface ContentManagerProps {
     pageToChange?: Page
@@ -29,11 +31,24 @@ interface ContentManagerState {
 class ContentManager extends React.Component<ContentManagerProps, ContentManagerState> {
     private readonly PAGE_CLOSING_TIME_MS = 1500;
     private readonly NEW_PAGE_DELAY_MS = 1000;
+    private readonly resizeListener = (event) => {
+        this.updateWindowClasses(event.target);
+    };
+
     constructor(props: ContentManagerProps) {
         super(props);
         this.state = {
             actualPage: Page.LANDING,
         }
+    }
+
+    componentDidMount() {
+        this.updateWindowClasses(window);
+        window.addEventListener('resize', this.resizeListener);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.resizeListener);
     }
 
     componentDidUpdate(prevProps: Readonly<ContentManagerProps>) {
@@ -46,6 +61,51 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
             setTimeout(() => {
                 this.setState({actualPage: this.props.pageToChange});
             }, this.NEW_PAGE_DELAY_MS);
+        }
+    }
+
+    updateWindowClasses(element: Window): void {
+        const addToClassList = (classToAdd: string) => document.body.classList.add(classToAdd);
+        const removeFromClassList = (classToRemove: string) => document.body.classList.remove(classToRemove);
+        const uiOrientation = BrowserUtils.getOrientation();
+
+        if (uiOrientation === UIOrientation.LANDSCAPE) {
+            addToClassList("pt-landscape");
+            removeFromClassList("pt-portrait");
+        } else {
+            addToClassList("pt-portrait");
+            removeFromClassList("pt-landscape");
+
+        }
+        if (BrowserUtils.isBigScreen()) {
+            addToClassList("pt-big-screen");
+        } else {
+            removeFromClassList("pt-big-screen");
+        }
+
+        if (!BrowserUtils.isTouchable()) {
+            addToClassList("pt-no-touch");
+        }
+
+        if (BrowserUtils.isIE()) {
+            addToClassList("pt-ie");
+        }
+        if (BrowserUtils.isIPhone5()) {
+            addToClassList("iphone5");
+        }
+        if (BrowserUtils.isIOS()) {
+            addToClassList("pt-ios");
+        }
+        if (BrowserUtils.isMobile()) {
+            addToClassList("pt-mobile");
+            document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
+        }
+        if (BrowserUtils.isIPhone6_8()) {
+            addToClassList("iphone6-8");
+        }
+
+        if (BrowserUtils.isIPhoneX()) {
+            addToClassList("iphoneX");
         }
     }
 

@@ -19,20 +19,82 @@ $header-height: 1.75em;
 $title-height: 5em;
 $content-header: $header-height + $title-height;
 
+$img-root: "Test";
+
+@function img($key) {
+  @return $img-root + $key;
+}
+@function css-function( $function, $values... ) {
+  @return
+          $function
+		+ unquote( '(' )
+		+ $values
+		+ unquote( ')' )
+;
+}
+
+@function css-min( $values... ) {
+  @return css-function( min, $values );
+}
+
+@function css-max( $values... ) {
+  @return css-function( max, $values );
+}
+
+@function css-clamp( $values... ) {
+  @return css-function( clamp, $values );
+}
+
 @font-face {
   font-family: MAGIC;
   src: url("../public/fonts/MAGIC.otf") format("opentype");
 }
 
 
-p {
-  color: $white;
-  font-size: 2em;
+html {
+  font-size: css-min(1vmax, 3px);
 }
 
 body {
-  background: $black;
-  font-size: 1vmax;
+  margin: auto;
+  width:100%;
+  height: 100%;
+  font-size: css-min(calc(1.1rem + 0.61vmin), 16px);
+
+}
+
+@media screen and (min-aspect-ratio: 11/10){
+  html {
+    font-size: css-min(1vw, 11px);
+  }
+}
+// Targets desktop
+@media screen and (min-aspect-ratio: 16/9) and (pointer:fine) {
+  html {
+    font-size: css-min(1.77vmin, 11px);
+  }
+}
+@media screen and (max-aspect-ratio: 9/16) {
+  html {
+    font-size: css-min(1.77vmin, 11px);
+  }
+}
+
+// Targets mobile only. IOS 15 is calculating vmin/vh with tabs bar included that is causing some UI issues
+// This code relays on the vh calculated with JS that is more accurate than the CSS calculation
+@media screen and (min-aspect-ratio: 16/9) and (pointer:coarse) {
+  html {
+    font-size: calc(var(--vh) * 1.7);
+  }
+}
+
+img{
+  width: 100%;
+  height: 100%;
+}
+
+.text-center{
+  text-align: center;
 }
 
 .background {

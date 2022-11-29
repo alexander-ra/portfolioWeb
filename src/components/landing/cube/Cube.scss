@@ -51,8 +51,9 @@
     }
 
     &.opened {
+        // REFACTOR to be smoother
         transition-property: transform;
-        transition-duration: 2s;
+        transition-duration: 1s;
         transition-delay: -.1s;
         transition-timing-function: ease-out;
         transform: rotateX(37deg) rotateY(-45deg) rotateZ(0deg);

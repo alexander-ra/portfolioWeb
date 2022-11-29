@@ -3,6 +3,8 @@
 .cube-wrapper {
     &.opened {
         .wall {
+            transition-property: transform;
+            transition-duration: 0s;
 
             &.wall-bottom {
                 transform: rotateX(-90deg) translateZ(7.2em);
