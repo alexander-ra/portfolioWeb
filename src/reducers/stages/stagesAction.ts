@@ -1,7 +1,8 @@
-import {CHANGE_PAGE, COMPLETE_DEV_INTRO, SET_UI_ORIENTATION} from "../ActionTypes";
+import {CHANGE_PAGE, COMPLETE_DEV_INTRO, SET_LAYOUT_TYPE, SET_UI_ORIENTATION} from "../ActionTypes";
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 import {Page} from "../../models/common/Page";
 import {UIOrientation} from "../../components/core/UIOrientation";
+import { LayoutType } from "../../components/core/LayoutType";
 
 const completeDevIntro = () => ({
     type: COMPLETE_DEV_INTRO,
@@ -23,4 +24,12 @@ const setUiOrientation = (uiOrientation: UIOrientation) => ({
         uiOrientation,
     }
 });
-export { completeDevIntro, changePage, setUiOrientation };
+
+const setLayoutType = (layoutType: LayoutType) => ({
+    type: SET_LAYOUT_TYPE,
+    payload: {
+        layoutType,
+    }
+});
+
+export { completeDevIntro, changePage, setUiOrientation, setLayoutType };

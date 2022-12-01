@@ -77,22 +77,22 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
     render(){
         return (
             <div className={`menu-bubble-wrapper bubble-wrapper ${!this.props.visible ? "disappear" : ""}`}>
-                <div className={"menu-bubble bubble"}>
-                    <div className={"avatar-wrapper"}>
-                        <div className={`avatar-icon-wrapper`}>
-                            <FontAwesomeIcon className={"avatar-icon"} icon={this.props.icon}/>
-                        </div>
-                        <div className={"avatar-name"}>
-                            {this.props.textBubbleType === CubeMenuStates.TOP_LEFT && <span>Client Approach</span>}
-                            {this.props.textBubbleType === CubeMenuStates.TOP_RIGHT && <span>Past Experience</span>}
-                            {this.props.textBubbleType === CubeMenuStates.BOTTOM && <span>Chess Demo</span>}
-                        </div>
+                <div className={"avatar-wrapper"}>
+                    <div className={`avatar-icon-wrapper`}>
+                        <FontAwesomeIcon className={"avatar-icon"} icon={this.props.icon}/>
                     </div>
+                    <div className={"avatar-name"}>
+                        {this.props.textBubbleType === CubeMenuStates.TOP_LEFT && <span>Client Approach</span>}
+                        {this.props.textBubbleType === CubeMenuStates.TOP_RIGHT && <span>Past Experience</span>}
+                        {this.props.textBubbleType === CubeMenuStates.BOTTOM && <span>Chess Demo</span>}
+                    </div>
+                </div>
+                <div className={"menu-bubble bubble"}>
                     <div className={"bubble-text"}>
                         {this.state.menuDescription}
                     </div>
-                    <button className={"go-page"} onClick={this.changePage.bind(this)}>Launch Page</button>
                 </div>
+                <button className={"go-page"} onClick={this.changePage.bind(this)}>Launch Page</button>
             </div>
         )
     }

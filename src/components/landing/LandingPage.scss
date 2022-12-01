@@ -3,7 +3,14 @@
 
 .landing-page-wrapper {
   z-index: 1;
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+    .vw-portrait & {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
 }

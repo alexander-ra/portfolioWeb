@@ -1,22 +1,33 @@
 @import "../../../App";
 
+
+
 .bubble-wrapper {
-  position: absolute;
-  width: 27%;
-  // max-width: 30em;
-  height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 .75em;
+  z-index: 2;
+
+  .vw-landscape & {
+    height: 100%;
+    max-width: 20em;
+    flex: 0 0 calc(30% - 1.5em);
+  }
+
+  .vw-portrait & {
+    max-width: 35em;
+  }
+
 
   &.disappear {
-    .bubble {
-      transition: opacity 0.5s;
-      opacity: 0;
+    transition: opacity 0.5s;
+    opacity: 0;
 
-      .avatar-wrapper {
-        transition: width 0.5s;
-        width: 66%;
-      }
+    .avatar-wrapper {
+      transition: width 0.5s;
+      width: 10em;
     }
 
     .go-page {
@@ -26,14 +37,12 @@
     }
   }
   &:not(.disappear) {
-    .bubble {
-      transition: opacity 1.5s;
-      opacity: 1;
+    transition: opacity 1.5s;
+    opacity: 1;
 
-      .avatar-wrapper {
-        transition: width 1.5s;
-        width: 100%;
-      }
+    .avatar-wrapper {
+      transition: width 1.5s;
+      width: 15em;
     }
 
     .go-page {
@@ -43,17 +52,85 @@
     }
   }
 
-  &.text-bubble-wrapper {
-    margin: 0 3%;
+  .avatar-wrapper {
+    color: $dark-purple;
+    white-space: nowrap;
+    z-index: 3;
 
+    .avatar-icon {
+      border-radius: 50%;
+      position: relative;
+      background-repeat: no-repeat;
+      background-size: contain;
+      z-index: 2;
+    }
+
+    .avatar-name {
+      color: $light-yellow;
+      background-color: $dark-orange;
+      font-size: 1.25em;
+      height: 2em;
+      line-height: 2em;
+      z-index: 1;
+    }
+  }
+
+  .bubble {
+    transition: opacity 2s;
+    position: relative;
+    background: rgba(white, .66);
+    z-index: 3;
+    border-radius: 1.5em;
+    border: .2em solid $dark-orange;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .bubble-text {
+      color: $dark-purple;
+      font-size: 1.25em;
+    }
+
+    &.text-bubble {
+      padding: 1em;
+    }
+
+    &.menu-bubble {
+      margin-top: .2em;
+      padding: 1em 1em 3em 1em;
+
+      .vw-portrait & {
+        border-radius: .4em 1.5em 1.5em 1.5em;
+      }
+    }
+  }
+
+  &.text-bubble-wrapper {
+    .vw-portrait & {
+      margin: 1em .75em;
+      height: calc(30% - 2em);
+      align-items: end;
+    }
+
+    .avatar-wrapper {
+      height: 4em;
+
+      .avatar-icon {
+        margin-top: -0.6em;
+        height: 4em;
+        width: 4em;
+        margin-left: auto;
+        background-image: url("../../../../public/avatar-jpeg.jpg");
+      }
+
+      .avatar-name {
+        padding-left: 1.2em;
+        border-radius: 0.2em 1em 1em 1em;
+        margin-top: -2.5em;
+      }
+    }
     &:not(.disappear) {
       .bubble {
         transition-delay: 1.5s;
-
-        .avatar-wrapper {
-          transition-delay: 1.5s;
-          width: calc(100% + 3rem);
-        }
       }
 
       .go-page {
@@ -63,101 +140,38 @@
   }
 
   &.menu-bubble-wrapper {
-    margin: 0 calc(80% - 10em);
-  }
-
-  .bubble {
-    transition: opacity 2s;
-    position: relative;
-    background: rgba(white, .66);
-    z-index: 3;
-    cursor: pointer;
-    border-radius: 1.5em;
-    border: .2em solid $dark-orange;
-
-    .bubble-text {
-      color: $dark-purple;
-      font-size: 1.25em;
+    .vw-portrait & {
+      margin: 1em .75em 2em .75em;
+      height: calc(36% - 3em);
+      align-items: start;
+      position: relative;
     }
-
 
     .avatar-wrapper {
-      color: $dark-purple;
-      font-size: 1em;
-      white-space: nowrap;
-      overflow: hidden;
-
-      .avatar-icon {
-        border-radius: 50%;
-        position: relative;
-        background-repeat: no-repeat;
-        background-size: contain;
-        z-index: 2;
-      }
-
-      .avatar-name {
-        color: $light-yellow;
-        background-color: $dark-orange;
-        font-size: 1.25em;
-        height: 3rem;
-        line-height: 3rem;
-        z-index: 1;
-      }
-    }
-
-    &.text-bubble {
-      margin-bottom: 2rem;
-      padding: 1em;
-      .avatar-wrapper {
-        height: 4rem;
-        margin-left: auto;
-        margin-bottom: -5rem;
-        margin-right: -3rem;
-        padding-top: 1em;
-      }
-
-      .avatar-icon {
-        height: 4rem;
-        width: 4rem;
-        margin-left: auto;
-        background-image: url("../../../../public/avatar-jpeg.jpg");
-      }
-
-      .avatar-name {
-        padding-left: 1.2rem;
-        border-radius: 0.5rem 2rem 2rem 2rem;
-        margin-top: -3.5rem;
-      }
-    }
-
-    &.menu-bubble {
-      margin-top: 2rem;
-      padding: 1em 1em 3em 1em;
-      .avatar-wrapper {
-        height: 3rem;
-        margin-top: -4.5rem;
-        margin-left: 0;
-        padding-bottom: 1em;
-      }
+      height: 3em;
 
       .avatar-icon-wrapper {
-        height: 3rem;
-        width: 3rem;
-        margin-left: 1rem;
+        height: 3em;
+        width: 3em;
+        margin-left: 1em;
         color: $light-yellow;
 
         .avatar-icon {
-          margin-top: .5rem;
-          height: 2rem;
-          width: 2rem;
+          margin-top: .7em;
+          height: 2em;
+          width: 2em;
         }
       }
 
       .avatar-name {
         text-align: right;
-        padding-right: 1.2rem;
-        border-radius: 2rem 2rem 0.5rem 2rem;
-        margin-top: -3rem;
+        padding-right: 1.2em;
+        border-radius: 1em 1em 0.2em 1em;
+        margin-top: -2em;
+
+        .vw-portrait & {
+          border-radius: 1em 1em 0.2em 0.2em;
+        }
       }
     }
   }
@@ -167,23 +181,26 @@
   background-image: url("../../../../public/pointer-sandwich.svg");
   background-position: center;
   background-size: 120% 600%;
-  position: absolute;
   height: 2em;
-  bottom: -1em;
-  line-height: 2em;
   text-align: center;
   drop-shadow: 0 0 1em $dark-purple;
-  border: 10px solid red;
   background-color: $dark-orange;
   color: $light-yellow;
   border: none;
   font-size: 1.25em;
   border-radius: 1em;
   z-index: 3;
-  white-space: nowrap;
-  overflow: hidden;
   cursor: pointer;
-  box-shadow: none;
+
+  .vw-landscape & {
+    margin-top: -1em;
+    line-height: 2em;
+  }
+
+  .vw-portrait & {
+    margin: -1em auto 0em auto;
+    line-height: 1em;
+  }
 
   &:hover {
     background-color: $purple;

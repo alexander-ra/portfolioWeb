@@ -17,6 +17,7 @@ import {faAccessibleIcon} from "@fortawesome/free-brands-svg-icons";
 import ChessPage from '../chess/ChessPage';
 import BrowserUtils from '../../utils/BrowserUtils';
 import { UIOrientation } from './UIOrientation';
+import "./ContentManager.scss";
 
 interface ContentManagerProps {
     pageToChange?: Page
@@ -70,42 +71,46 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
         const uiOrientation = BrowserUtils.getOrientation();
 
         if (uiOrientation === UIOrientation.LANDSCAPE) {
-            addToClassList("pt-landscape");
-            removeFromClassList("pt-portrait");
+            addToClassList("vw-landscape");
+            removeFromClassList("vw-portrait");
         } else {
-            addToClassList("pt-portrait");
-            removeFromClassList("pt-landscape");
+            addToClassList("vw-portrait");
+            removeFromClassList("vw-landscape");
 
         }
         if (BrowserUtils.isBigScreen()) {
-            addToClassList("pt-big-screen");
+            addToClassList("vw-big-screen");
         } else {
-            removeFromClassList("pt-big-screen");
+            removeFromClassList("vw-big-screen");
         }
 
         if (!BrowserUtils.isTouchable()) {
-            addToClassList("pt-no-touch");
+            addToClassList("vw-no-touch");
         }
 
         if (BrowserUtils.isIE()) {
-            addToClassList("pt-ie");
+            addToClassList("vw-ie");
         }
-        if (BrowserUtils.isIPhone5()) {
-            addToClassList("iphone5");
-        }
-        if (BrowserUtils.isIOS()) {
-            addToClassList("pt-ios");
-        }
+
         if (BrowserUtils.isMobile()) {
-            addToClassList("pt-mobile");
+            addToClassList("vw-mobile");
             document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
         }
+
+
+        if (BrowserUtils.isIPhone5()) {
+            addToClassList("dev-iphone5");
+        }
+        if (BrowserUtils.isIOS()) {
+            addToClassList("dev-ios");
+        }
+
         if (BrowserUtils.isIPhone6_8()) {
-            addToClassList("iphone6-8");
+            addToClassList("dev-iphone6-8");
         }
 
         if (BrowserUtils.isIPhoneX()) {
-            addToClassList("iphoneX");
+            addToClassList("dev-iphoneX");
         }
     }
 
@@ -160,7 +165,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     }
 
     render(){
-        return (<>
+        return (<div className={"main-content-wrapper"}>
             {
                 this.displayPage(Page.LANDING) &&
                 <LandingPage isClosing={this.state.closingPage === Page.LANDING} />
@@ -179,7 +184,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
                 this.displayPage(Page.CHESS_DEMO) &&
                 <ChessPage isClosing={this.state.closingPage === Page.CHESS_DEMO} />
             }
-        </>)
+        </div>)
     }
 }
 

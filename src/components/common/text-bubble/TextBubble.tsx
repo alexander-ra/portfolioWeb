@@ -41,11 +41,11 @@ class TextBubble extends React.Component<TextBubbleProps, TextBubbleState> {
                             skipTyping={this.props.skipTyping}
                         />
                     }
-                    <div className={"avatar-wrapper"}>
-                        <div className={"avatar-icon"}></div>
-                        <div className={"avatar-name"}>
-                            Alex
-                        </div>
+                </div>
+                <div className={"avatar-wrapper"}>
+                    <div className={"avatar-icon"}></div>
+                    <div className={"avatar-name"}>
+                        Alex
                     </div>
                 </div>
             </div>

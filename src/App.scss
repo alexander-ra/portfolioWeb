@@ -1,12 +1,3 @@
-$pink: #c6538c;
-//$blue: #1059b0;
-$green: #99e032;
-$white: #faecef;
-$black: #262325;
-$gray: #999999;
-$screen-reflect: #d7e5f5;
-$screen: #b4c8de;
-
 $dark-purple: #20073a;
 $purple: #6D1950;
 $pink: #e48686;
@@ -53,14 +44,18 @@ $img-root: "Test";
 
 html {
   font-size: css-min(1vmax, 3px);
+  overflow: hidden;
 }
 
 body {
   margin: auto;
   width:100%;
   height: 100%;
-  font-size: css-min(calc(1.1rem + 0.61vmin), 16px);
+  font-size: css-max(1vmin, css-min(calc(1.25rem + 0.61vmin), 16px));
 
+  &.vw-portrait {
+    font-size: css-max(1vmin, css-min(calc(1.25rem + 1.22vmin), 12px));
+  }
 }
 
 @media screen and (min-aspect-ratio: 11/10){
@@ -108,10 +103,30 @@ img{
   width: 100vw;
 }
 
-.main-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
+
+::-webkit-scrollbar-track-piece {
+  margin: 0.6em;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 1em;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border: .3em solid $light-yellow;
+  background-clip: padding-box;
+  border-radius: 1em;
+  background: $dark-orange;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $orange;
 }

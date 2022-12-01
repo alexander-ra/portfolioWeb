@@ -1,5 +1,5 @@
 import React from 'react';
-import "./typewriter.scss"
+import "./Typewriter.scss"
 
 interface TypewriterProps {
     textToType: string;
@@ -84,7 +84,7 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
 
     render(){
         return (
-            <div className="typewriter-wrapper" onClick={() => {this.isSpedUp = true;}}>
+            <div className={`typewriter-wrapper ${this.isSpedUp ? "sped-up" : ""}`} onClick={() => {this.isSpedUp = true;}}>
                 {this.props.skipTyping ?
                     <span className="line-1">{this.props.textToType}</span>
                     :

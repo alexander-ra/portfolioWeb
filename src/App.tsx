@@ -14,7 +14,7 @@ function App() {
   return (
       <Provider store={store}>
           <div className={"background"}></div>
-          <div className="main-wrapper">
+          <div>
               <Header></Header>
               <BackButton />
               <ContentManager />
