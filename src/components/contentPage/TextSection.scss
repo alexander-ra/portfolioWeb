@@ -9,21 +9,60 @@ $menu-radius: 6em;
 
 
 .text-section {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex: 1 1 50%;
   background-size: cover;
   background-color: rgba($light-yellow, 0.75);
 
+  .vw-landscape & {
+    max-width: 45em;
+    height: 20em;
+  }
+
+  .vw-portrait & {
+    max-height: 45em;
+    width: 30em;
+    border-radius: 25%;
+  }
+
 
   &.text-section-left {
     animation: sectionAppearLeft 2s;
-    border-radius: 3em 10em 10em 3em;
-    margin: 12em 8.25em 12em 1em;
+    margin: 0 3em 0 1em;
+    clip-path: polygon(9em 0%, 100% 0%, 100% 100%, 9em 100%, 0% 50%);
+
+    .vw-portrait & {
+      margin: 1em 0 3em 0;
+      clip-path: polygon(0 9em, 50% 0, 100% 9em, 100% 100%, 0 100%);
+    }
 
     .content {
-      padding-right: 6em;
+      text-align: right;
+
+      .content-title {
+        text-align: right;
+        right: 7em;
+      }
+
+      .mask {
+        float: left;
+        shape-outside: polygon(100% 0, 0 0, 0 100%, 100% 100%, 33% 50%);
+        clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%, 33% 50%);
+        background-position: 48em center;
+        transform: translateX(-1em);
+
+        .vw-portrait & {
+          clip-path: polygon(100% 100%, 50% 33%, 0 100%, 0 0, 100% 0);
+          shape-outside: polygon(100% 100%, 50% 33%, 0 100%, 0 0, 100% 0);
+        }
+      }
+
+      .mask-dve {
+        float: right;
+        shape-outside: circle(70% at 100% 50%);
+        clip-path: circle(70% at 100% 50%);
+      }
 
       .content-icon {
         left: 0;
@@ -32,11 +71,33 @@ $menu-radius: 6em;
   }
   &.text-section-right {
     animation: sectionAppearRight 2s;
-    border-radius: 10em 3em 3em 10em;
-    margin: 12em 1em 12em 8.25em;
+    margin: 0 1em 0 3em;
+    clip-path: polygon(0% 0%, calc(100% - 9em) 0%, 100% 50%, calc(100% - 9em) 100%, 0% 100%);
+
+    .vw-portrait & {
+      margin: 3em 0 1em 0;
+      clip-path: polygon(0 0, 100% 0%, 100% calc(100% - 9em), 50% 100%, 0 calc(100% - 9em));
+    }
+
+    .mask {
+      float: right;
+      shape-outside: polygon(0 0, 100% 0, 100% 100%, 0 100%, 66% 50%);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 66% 50%);
+      background-position: -36em center;
+      transform: translateX(1em);
+    }
+
+    .mask-dve {
+      float: left;
+      shape-outside: circle(70% at 0 50%);
+      clip-path: circle(70% at 0 50%);
+    }
 
     .content {
-      padding-left: 6em;
+      .content-title {
+        text-align: left;
+        left: 7em;
+      }
 
       .content-icon {
         right: 0;
@@ -45,31 +106,68 @@ $menu-radius: 6em;
   }
 
   .content {
+    min-width: calc(50vw - 4em);
     height: 100%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     color: $dark-purple;
     opacity: 0;
     animation: contentAppear 1s 2s forwards;
 
+    .vw-large & {
+      box-shadow: inset 0 0 3em -2em $dark-purple;
+    }
+
+    .content-text {
+      padding-top: 1em;
+      font-size: 1rem;
+      text-align: justify;
+      //width: 50em;
+    }
+
+
+    .mask {
+      //background-color: rgba($dark-purple, .25);
+      background-image: url("../../../public/portalicus.svg");
+      background-size: 500%;
+
+      &:hover {
+        background-image: url("../../../public/portalicus-selected.svg");
+      }
+
+      .vw-landscape & {
+        width: 10em;
+        height: 100%;
+      }
+
+      .vw-portrait & {
+        width: 100%;
+        height: 10em;
+        // display: none; // TODO: remove from controller
+      }
+    }
+
+    .mask-dve {
+      width: 13em;
+      height: 100%;
+
+      .vw-portrait & {
+        display: none; // TODO: remove from controller
+      }
+    }
+
     .content-body {
       overflow-y: auto;
-      font-size: 0.9em;
-      margin: 0 1.5em;
       flex: 1 1 auto;
       display: flex;
       align-items: center;
+      font-size: .8em;
     }
 
     .content-title {
-      font-size: 2em;
+      top: 1em;
+      position: absolute;
+      font-size: 1.25em;
       font-weight: bold;
-      line-height: 2em;
-      top: 3em;
       color: $dark-purple;
-      flex: 0 0 2em;
     }
 
     .content-icon {

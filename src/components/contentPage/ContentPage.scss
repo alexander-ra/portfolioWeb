@@ -25,12 +25,17 @@ $menu-radius: 6em;
 @include circleRot(360deg);
 
 .content-page-wrapper {
+  position: relative;
   z-index: 2;
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width:  100%;
+  height: 100%;
   opacity: 0;
   animation: bodyAppear 1s forwards;
+  font-size: css-min(1.25em, 1.5vw, 3vh);
+
+  .vw-portrait & {
+    font-size: css-min(1.25em, 1.5vh, 3vw);
+  }
 
   &.dragging {
     .content-outer-circle-sections {
@@ -41,17 +46,25 @@ $menu-radius: 6em;
     }
 
     .content-outer-circle {
-      font-size: .97em;
+      font-size: 1.025em;
+
+      .menu-section {
+        color: rgba($dark-purple, .75);
+      }
     }
   }
 
   .text-sections-wrapper {
-    height: 50em;
-    width: 100vw;
-    position: absolute;
-    top: calc(50% - 25em);
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .vw-portrait & {
+      flex-direction: column;
+    }
   }
 
   .indicator {
@@ -114,8 +127,9 @@ $menu-radius: 6em;
     position: absolute;
     top: calc(50% - $outer-offset);
     left: calc(50% - $outer-offset);
-    background-color: rgba($dark-purple, 1);
-    background-size: 300%;
+    // background-color: rgba($dark-purple, 1);
+    background-image: url("../../../public/portalicus.svg");
+    background-size: 125%;
     background-position: center;
     padding: -1em;
     border-radius: 50%;
@@ -126,7 +140,7 @@ $menu-radius: 6em;
       font-size: 1.025em;
 
       .menu-section {
-        box-shadow: 0 0 0 0.2em $dark-purple;
+        box-shadow: 0 0 0 0.2em rgba($dark-purple, .75);
         color: rgba($dark-purple, .75);
       }
     }
@@ -172,8 +186,9 @@ $menu-radius: 6em;
     top: calc(50% - $inner-radius / 2);
     left: calc(50% - $inner-radius / 2);
     border-radius: 50%;
-    background-image: url("../../../public/walls/experienceFinal.jpg");
+    background-image: url("../../../public/walls/clientFinal.jpg");
     background-size: cover;
+    border: 0.2em solid $light-yellow;
     text-align: center;
     z-index: 2;
     overflow: hidden;

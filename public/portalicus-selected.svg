@@ -4,7 +4,7 @@
         <g transform="translate(1000 750)">
             <g transform="">
                 <g id="a">
-                    <rect transform="translate(0 -156.8)" style="transform-origin:center" fill="#20073a" fill-opacity="0.25" x="-3000" y="500" width="6000" height="2000"/>
+                    <rect transform="translate(0 -156.8)" style="transform-origin:center" fill="#CD4545" fill-opacity="0.15" x="-3000" y="500" width="6000" height="2000"/>
                 </g>
                 <use href="#a" transform="rotate(15)"/>
                 <use href="#a" transform="rotate(30)"/>
