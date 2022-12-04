@@ -6,7 +6,7 @@
       <stop offset='1' stop-color='#20073A' />
     </linearGradient>
     <linearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='396' x2='400' y2='12'>
-      <stop offset='0' stop-color='#FFFFFF' stop-opacity='0.5' />
+      <stop offset='0' stop-color='#FFFFFF' stop-opacity='0.75' />
       <stop offset='1' stop-color='#FFFFFF' stop-opacity='0' />
     </linearGradient>
     <radialGradient id='c' cx='400' cy='400' r='390' gradientUnits='userSpaceOnUse'>
