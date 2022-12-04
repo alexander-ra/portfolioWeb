@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1600">
-    <rect fill="#6D1950" width="2000" height="1600"/>
+    <rect fill="#efc899" width="2000" height="1600"/>
     <defs>
         <rect id="a" x="-2000" width="6000" height="220">
-            <animate attributeName="height" dur="4s" values="0; 300; 220" keyTimes="0; 0.45; 1" repeatCount="1" />
+            <animate attributeName="height" dur="4s" values="200; 300; 220" keyTimes="0; 0.45; 1" repeatCount="1" />
         </rect>
         <g id="b">
             <use href="#a" fill="#E8893F" y="-1400"/>

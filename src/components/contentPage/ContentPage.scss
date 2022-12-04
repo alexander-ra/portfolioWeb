@@ -34,7 +34,7 @@ $menu-radius: 6em;
   font-size: css-min(1.25em, 1.5vw, 3vh);
 
   .vw-portrait & {
-    font-size: css-min(1.25em, 1.5vh, 3vw);
+    font-size: css-min(1.33em, 1.75vh, 3vw);
   }
 
   &.dragging {
@@ -178,6 +178,7 @@ $menu-radius: 6em;
     }
   }
   .box {
+    font-family: BANDAR;
     cursor: grab;
     box-sizing: border-box;
     position: absolute;
@@ -245,6 +246,7 @@ $menu-radius: 6em;
 
       .section-title-bottom {
         font-weight: bold;
+        // text-shadow: -2px 0 $light-yellow, 0 2px $light-yellow, 2px 0 $light-yellow, 0 -2px $light-yellow;
         color: $dark-orange;
       }
     }
