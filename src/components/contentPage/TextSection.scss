@@ -21,28 +21,42 @@ $menu-radius: 6em;
   }
 
   .vw-portrait & {
+    height: calc(50% - 6em);
     max-height: 45em;
-    width: 30em;
-    border-radius: 25%;
+    width: 22em;
+    border-radius: 1em;
+    overflow: hidden;
   }
 
 
   &.text-section-left {
     animation: sectionAppearLeft 2s;
     margin: 0 3em 0 1em;
-    clip-path: polygon(9em 0%, 100% 0%, 100% 100%, 9em 100%, 0% 50%);
+
+    .vw-landscape & {
+      clip-path: polygon(9em 0%, 100% 0%, 100% 100%, 9em 100%, 0% 50%);
+    }
 
     .vw-portrait & {
       margin: 1em 0 3em 0;
-      clip-path: polygon(0 9em, 50% 0, 100% 9em, 100% 100%, 0 100%);
     }
 
     .content {
       text-align: right;
 
+      .content-text {
+        .vw-portrait & {
+          position: absolute;
+          top: 0;
+          margin: 4em 0 0 0 !important; // TODO: Remove calculation on portrait from controller
+        }
+      }
+
       .content-title {
-        text-align: right;
-        right: 7em;
+        .vw-landscape & {
+          text-align: right;
+          right: 7em;
+        }
       }
 
       .mask {
@@ -59,9 +73,16 @@ $menu-radius: 6em;
       }
 
       .mask-dve {
-        float: right;
-        shape-outside: circle(70% at 100% 50%);
-        clip-path: circle(70% at 100% 50%);
+        .vw-landscape & {
+          float: right;
+          background-position: -55% 0;
+          shape-outside: circle(70% at 100% 50%);
+          clip-path: circle(100% at 160% 50%);
+        }
+        .vw-portrait & {
+          bottom: 0;
+          clip-path: circle(100% at 50% 165%);
+        }
       }
 
       .content-icon {
@@ -72,11 +93,13 @@ $menu-radius: 6em;
   &.text-section-right {
     animation: sectionAppearRight 2s;
     margin: 0 1em 0 3em;
-    clip-path: polygon(0% 0%, calc(100% - 9em) 0%, 100% 50%, calc(100% - 9em) 100%, 0% 100%);
+
+    .vw-landscape & {
+      clip-path: polygon(0% 0%, calc(100% - 9em) 0%, 100% 50%, calc(100% - 9em) 100%, 0% 100%);
+    }
 
     .vw-portrait & {
       margin: 3em 0 1em 0;
-      clip-path: polygon(0 0, 100% 0%, 100% calc(100% - 9em), 50% 100%, 0 calc(100% - 9em));
     }
 
     .mask {
@@ -88,15 +111,37 @@ $menu-radius: 6em;
     }
 
     .mask-dve {
-      float: left;
-      shape-outside: circle(70% at 0 50%);
-      clip-path: circle(70% at 0 50%);
+      .vw-landscape & {
+        float: left;
+        background-position: 155% 0;
+        shape-outside: circle(70% at 0 50%);
+        clip-path: circle(100% at -60% 50%);
+      }
+
+      .vw-portrait & {
+        clip-path: circle(100% at 50% -65%)
+      }
     }
 
     .content {
       .content-title {
-        text-align: left;
-        left: 7em;
+
+        .vw-portrait & {
+          bottom: 0;
+        }
+
+        .vw-landscape & {
+          text-align: left;
+          left: 7em;
+        }
+      }
+
+      .content-text {
+        .vw-portrait & {
+          position: absolute;
+          bottom: 0;
+          margin: 0 0 4em 0 !important; // TODO: Remove calculation on portrait from controller
+        }
       }
 
       .content-icon {
@@ -106,21 +151,34 @@ $menu-radius: 6em;
   }
 
   .content {
-    min-width: calc(50vw - 4em);
     height: 100%;
     color: $dark-purple;
     opacity: 0;
     animation: contentAppear 1s 2s forwards;
+    box-shadow: inset 0 0 3em -2em $dark-purple;
 
-    .vw-large & {
-      box-shadow: inset 0 0 3em -2em $dark-purple;
+    .vw-landscape & {
+      width: calc(50vw - 4em);
+      max-width: 45em;
+    }
+
+    .vw-portrait & {
+      width: 100%;
     }
 
     .content-text {
-      padding-top: 1em;
-      font-size: 1rem;
       text-align: justify;
       //width: 50em;
+
+      .vw-landscape & {
+        font-size: 1.5rem;
+        padding-top: .5em;
+      }
+
+      .vw-portrait & {
+        text-align: center;
+        font-size: 2rem;
+      }
     }
 
 
@@ -128,6 +186,7 @@ $menu-radius: 6em;
       //background-color: rgba($dark-purple, .25);
       background-image: url("../../../public/portalicus.svg");
       background-size: 500%;
+      cursor: pointer;
 
       &:hover {
         background-image: url("../../../public/portalicus-selected.svg");
@@ -141,16 +200,26 @@ $menu-radius: 6em;
       .vw-portrait & {
         width: 100%;
         height: 10em;
-        // display: none; // TODO: remove from controller
+        display: none; // TODO: remove from controller
       }
     }
 
     .mask-dve {
-      width: 13em;
-      height: 100%;
+      background-image: url("../../../public/walls/clientFinal.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 0.66;
+      filter: sepia(0.33);
+
+      .vw-landscape & {
+        width: 13em;
+        height: 100%;
+      }
 
       .vw-portrait & {
-        display: none; // TODO: remove from controller
+        position: absolute;
+        width: 100%;
+        height: 13em;
       }
     }
 
@@ -163,11 +232,24 @@ $menu-radius: 6em;
     }
 
     .content-title {
-      top: 1em;
       position: absolute;
-      font-size: 1.25em;
+      font-size: 1em;
       font-weight: bold;
       color: $dark-purple;
+
+      .vw-landscape & {
+        font-size: 1.25em;
+        top: 1em;
+      }
+
+      .vw-portrait & {
+        background-image: url("../../../public/portalicus.svg");
+        background-size: cover;
+        color: $light-yellow;
+        text-align: center;
+        width: 100%;
+        line-height: 2.5em;
+      }
     }
 
     .content-icon {

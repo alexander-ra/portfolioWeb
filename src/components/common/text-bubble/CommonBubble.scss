@@ -72,6 +72,7 @@
       height: 2em;
       line-height: 2em;
       z-index: 1;
+      font-family: BANDAR;
     }
   }
 
@@ -91,10 +92,12 @@
     }
 
     &.text-bubble {
+      font-weight: 100;
       padding: 1em;
     }
 
     &.menu-bubble {
+      font-weight: 100;
       margin-top: .2em;
       padding: 1em 1em 3em 1em;
 
@@ -123,7 +126,8 @@
       }
 
       .avatar-name {
-        padding-left: 1.2em;
+        font-family: BANDAR;
+        padding-left: .8em;
         border-radius: 0.2em 1em 1em 1em;
         margin-top: -2.5em;
       }
@@ -165,7 +169,7 @@
 
       .avatar-name {
         text-align: right;
-        padding-right: 1.2em;
+        padding-right: .8em;
         border-radius: 1em 1em 0.2em 1em;
         margin-top: -2em;
 
