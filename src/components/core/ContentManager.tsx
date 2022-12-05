@@ -18,6 +18,8 @@ import ChessPage from '../chess/ChessPage';
 import BrowserUtils from '../../utils/BrowserUtils';
 import { UIOrientation } from './UIOrientation';
 import "./ContentManager.scss";
+import store from "../../store/store";
+import {setWindowSize} from "../../reducers/window/windowAction";
 
 interface ContentManagerProps {
     pageToChange?: Page
@@ -66,6 +68,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     }
 
     updateWindowClasses(element: Window): void {
+        store.dispatch(setWindowSize(element.innerWidth, element.innerHeight));
         const addToClassList = (classToAdd: string) => document.body.classList.add(classToAdd);
         const removeFromClassList = (classToRemove: string) => document.body.classList.remove(classToRemove);
         const uiOrientation = BrowserUtils.getOrientation();

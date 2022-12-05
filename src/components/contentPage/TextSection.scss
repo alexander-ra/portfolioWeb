@@ -48,7 +48,7 @@ $menu-radius: 6em;
         .vw-portrait & {
           position: absolute;
           top: 0;
-          margin: 4em 0 0 0 !important; // TODO: Remove calculation on portrait from controller
+          margin: 8rem 0 0 0 !important; // TODO: Remove calculation on portrait from controller
         }
       }
 
@@ -140,7 +140,7 @@ $menu-radius: 6em;
         .vw-portrait & {
           position: absolute;
           bottom: 0;
-          margin: 0 0 4em 0 !important; // TODO: Remove calculation on portrait from controller
+          margin: 0 0 8rem 0 !important; // TODO: Remove calculation on portrait from controller
         }
       }
 
@@ -160,6 +160,7 @@ $menu-radius: 6em;
     .vw-landscape & {
       width: calc(50vw - 4em);
       max-width: 45em;
+      min-width: 30em;
     }
 
     .vw-portrait & {
@@ -172,7 +173,7 @@ $menu-radius: 6em;
 
       .vw-landscape & {
         font-size: 1.5rem;
-        padding-top: .5em;
+        padding-top: 1.5rem;
       }
 
       .vw-portrait & {

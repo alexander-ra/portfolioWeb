@@ -6,32 +6,39 @@ import {ContentData, ContentLabels} from "../../labels/ContentLabels";
 import Wings from "./Wings";
 import {current} from "@reduxjs/toolkit";
 import Utils from "../../utils/Utils";
+import { connect } from "react-redux";
+import {WindowSize} from "../../reducers/window/windowReducer";
+import {UIOrientation} from "../core/UIOrientation";
 
 export enum TextSectionPosition {
     LEFT = "LEFT",
     RIGHT = "RIGHT"
 }
 
-interface ContentBubbleProps {
+interface TextSectionProps {
     data: ContentData;
     sectionPosition: TextSectionPosition;
+    windowSize: WindowSize;
+    uiOrientation: UIOrientation;
 }
 
 
-class TextSection extends React.Component<ContentBubbleProps> {
+class TextSection extends React.Component<TextSectionProps> {
     private myRef: React.RefObject<HTMLDivElement>;
+    private readonly DEFAULT_FONT_SIZE = 1.5;
+    private currentFontSize = this.DEFAULT_FONT_SIZE;
 
-    constructor(props: ContentBubbleProps) {
+    constructor(props: TextSectionProps) {
         super(props);
         this.myRef = React.createRef();
     }
 
     componentDidMount() {
         this.updateDimensions();
-        window.addEventListener('resize', this.updateDimensions);
+        window.addEventListener('resize', () => {this.updateDimensions()});
     }
 
-    componentDidUpdate(prevProps: Readonly<ContentBubbleProps>, prevState: Readonly<{}>, snapshot?: any) {
+    componentDidUpdate(prevProps: Readonly<TextSectionProps>, prevState: Readonly<{}>, snapshot?: any) {
         setTimeout(() => {
             if (prevProps.data.description !== this.props.data.description) {
                 this.updateDimensions();
@@ -39,12 +46,38 @@ class TextSection extends React.Component<ContentBubbleProps> {
         });
     }
 
-    private updateDimensions = () => {
+    private updateDimensions = (previousSize?: number) => {
         const currElement = this.myRef.current;
         if (Utils.isNotNull(currElement?.style)) {
-            const parentElement = currElement?.parentElement;
-            const parentHeightDiff = parentElement?.offsetHeight - currElement?.offsetHeight;
-            currElement.style.margin = `${parentHeightDiff / 2}px 0`;
+            if (this.currentFontSize !== this.DEFAULT_FONT_SIZE && Utils.isNull(previousSize)) {
+                currElement.style.fontSize = `${this.DEFAULT_FONT_SIZE}rem`;
+                currElement.style.visibility = `hidden`;
+                this.currentFontSize = this.DEFAULT_FONT_SIZE;
+                setTimeout(() => {
+                    this.updateDimensions(this.DEFAULT_FONT_SIZE);
+                });
+            } else {
+                if (this.props.uiOrientation === UIOrientation.LANDSCAPE) {
+                    const parentElement = currElement?.parentElement;
+
+                    if (parentElement?.offsetHeight / currElement?.offsetHeight >= 1.33) {
+                        const parentHeightDiff = parentElement?.offsetHeight - currElement?.offsetHeight;
+                        currElement.style.margin = `${parentHeightDiff / 2}px 0`;
+                        currElement.style.visibility = `visible`;
+                    } else {
+                        this.currentFontSize = previousSize - 0.1;
+                        currElement.style.fontSize = `${this.currentFontSize}rem`;
+                        currElement.style.visibility = `hidden`;
+                        setTimeout(() => {
+                            this.updateDimensions(this.currentFontSize);
+                        });
+                    }
+                } else {
+
+                }
+            }
+        } else {
+            console.log("Unable to get element");
         }
     }
 
@@ -66,5 +99,14 @@ class TextSection extends React.Component<ContentBubbleProps> {
     }
 }
 
-export default TextSection;
+export default connect(
+    (state: any, ownProps) => {
+        const { windowSize, uiOrientation } = state.windowReducer;
+        return {
+            ...ownProps,
+            windowSize,
+            uiOrientation
+        }
+    }
+)(TextSection);
 
