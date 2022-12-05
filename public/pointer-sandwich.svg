@@ -4,18 +4,14 @@
             <feGaussianBlur in='SourceGraphic' stdDeviation='50'/>
         </filter>
     </defs>
-    <g  fill='#54114b' fill-opacity=".2">
+    <g  fill='#54114b' fill-opacity=".33">
         <polygon points='-203 1800 -203 -900 397 450'/>
         <polygon points='1803 -900 1803 1800 1203 450'/>
     </g>
-    <g  fill='#6D1950' filter='url(#a)'>
+    <g  fill='#3a0c43' fill-opacity=".33">
         <polygon points='-203 1581 -203 -681 300 450'/>
         <polygon points='1803 -681 1803 1581 1300 450'/>
-    </g>
-    <g  fill='#3a0c43' fill-opacity=".2">
-        <polygon points='-203 1581 -203 -681 300 450'/>
-        <polygon points='1803 -681 1803 1581 1300 450'/>
-    </g><g  fill='#20073A' fill-opacity=".2">
+    </g><g  fill='#20073A' fill-opacity=".66">
     <polygon points='-203 1356 -203 -456 200 450'/>
     <polygon points='1803 -456 1803 1356 1400 450'/>
 </g>

@@ -46,9 +46,8 @@ $menu-radius: 6em;
 
       .content-text {
         .vw-portrait & {
-          position: absolute;
-          top: 0;
-          margin: 8rem 0 0 0 !important; // TODO: Remove calculation on portrait from controller
+          margin-top: 2em;
+          padding: 1em 1em 6.5em 1em;
         }
       }
 
@@ -138,9 +137,8 @@ $menu-radius: 6em;
 
       .content-text {
         .vw-portrait & {
-          position: absolute;
-          bottom: 0;
-          margin: 0 0 8rem 0 !important; // TODO: Remove calculation on portrait from controller
+          padding: 3em 1em 1em 1em;
+          margin: 7em 0 2em 0;
         }
       }
 
@@ -169,7 +167,6 @@ $menu-radius: 6em;
 
     .content-text {
       text-align: justify;
-      //width: 50em;
 
       .vw-landscape & {
         font-size: 1.5rem;
@@ -177,8 +174,9 @@ $menu-radius: 6em;
       }
 
       .vw-portrait & {
-        text-align: center;
-        font-size: 2rem;
+        font-size: 1em;
+        overflow: scroll;
+        height: calc(100% - 12em);
       }
     }
 
@@ -209,18 +207,19 @@ $menu-radius: 6em;
       background-image: url("../../../public/walls/clientFinal.jpg");
       background-size: cover;
       background-repeat: no-repeat;
-      opacity: 0.66;
-      filter: sepia(0.33);
 
       .vw-landscape & {
         width: 13em;
         height: 100%;
+        opacity: 0.66;
+        filter: sepia(0.33);
       }
 
       .vw-portrait & {
         position: absolute;
         width: 100%;
         height: 13em;
+        filter: sepia(0.66) saturate(0.66);
       }
     }
 

@@ -162,6 +162,9 @@ $menu-radius: 6em;
 
     .vw-portrait & {
       font-size: .9em;
+    }
+
+    .vw-mobile & {
       .menu-section {
         box-shadow: 0 0 0 0.2em rgba($dark-purple, .75);
         color: $dark-purple;

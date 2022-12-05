@@ -49,15 +49,15 @@ class TextSection extends React.Component<TextSectionProps> {
     private updateDimensions = (previousSize?: number) => {
         const currElement = this.myRef.current;
         if (Utils.isNotNull(currElement?.style)) {
-            if (this.currentFontSize !== this.DEFAULT_FONT_SIZE && Utils.isNull(previousSize)) {
-                currElement.style.fontSize = `${this.DEFAULT_FONT_SIZE}rem`;
-                currElement.style.visibility = `hidden`;
-                this.currentFontSize = this.DEFAULT_FONT_SIZE;
-                setTimeout(() => {
-                    this.updateDimensions(this.DEFAULT_FONT_SIZE);
-                });
-            } else {
-                if (this.props.uiOrientation === UIOrientation.LANDSCAPE) {
+            if (this.props.uiOrientation === UIOrientation.LANDSCAPE) {
+                if (this.currentFontSize !== this.DEFAULT_FONT_SIZE && Utils.isNull(previousSize)) {
+                    currElement.style.fontSize = `${this.DEFAULT_FONT_SIZE}rem`;
+                    currElement.style.visibility = `hidden`;
+                    this.currentFontSize = this.DEFAULT_FONT_SIZE;
+                    setTimeout(() => {
+                        this.updateDimensions(this.DEFAULT_FONT_SIZE);
+                    });
+                } else {
                     const parentElement = currElement?.parentElement;
 
                     if (parentElement?.offsetHeight / currElement?.offsetHeight >= 1.33) {
@@ -72,9 +72,11 @@ class TextSection extends React.Component<TextSectionProps> {
                             this.updateDimensions(this.currentFontSize);
                         });
                     }
-                } else {
-
                 }
+            } else {
+                currElement.style.visibility = `visible`;
+                currElement.style.margin = null;
+                currElement.style.fontSize = null;
             }
         } else {
             console.log("Unable to get element");
