@@ -3,8 +3,9 @@
 $circle-text-padding: 2em;
 $outer-radius: 24em;
 $outer-offset: $outer-radius / 2;
-$inner-radius: 22em;
-$border: calc($outer-radius - $inner-radius) / 2;
+$inner-radius-landscape: 22em;
+$inner-radius-portrait: 18.5em;
+$border: calc($outer-radius - $inner-radius-landscape) / 2;
 $menu-radius: 6em;
 
 
@@ -18,6 +19,12 @@ $menu-radius: 6em;
     .circle-rot#{$i} {
       transition: transform 1s, font-size .25s;
       transform: rotate(calc($i + 0deg)) !important;
+
+      &.menu-section {
+        .vw-portrait & {
+          transform: rotate(calc($i + 0deg)) scale(.93) !important;
+        }
+      }
     }
   }
 }
@@ -40,6 +47,11 @@ $menu-radius: 6em;
   &.dragging {
     .content-outer-circle-sections {
       font-size: .97em;
+
+      .vw-portrait & {
+        font-size: .85em;
+      }
+
       .section-edge {
         opacity: 1;
       }
@@ -47,6 +59,10 @@ $menu-radius: 6em;
 
     .content-outer-circle {
       font-size: 1.025em;
+
+      .vw-portrait & {
+        font-size: .95em;
+      }
 
       .menu-section {
         color: rgba($dark-purple, .75);
@@ -79,6 +95,11 @@ $menu-radius: 6em;
     left: calc(50% - 4.5em);
     transform: rotate(315deg);
     pointer-events: none;
+
+    .vw-portrait & {
+      top: calc(50% - 15.5em);
+    }
+
     .indicator-arrow-point {
       background: linear-gradient(45deg, $light-yellow 0%, $dark-purple 100%);
       box-shadow: 0 0 .25em $dark-purple;
@@ -103,6 +124,10 @@ $menu-radius: 6em;
     left: calc(50% - $outer-offset);
     z-index: 2;
     pointer-events: none;
+
+    .vw-portrait & {
+      font-size: .7em;
+    }
 
     .section-edge{
       transition: opacity .25s;
@@ -135,6 +160,13 @@ $menu-radius: 6em;
     border-radius: 50%;
     z-index: 1;
 
+    .vw-portrait & {
+      font-size: .9em;
+      .menu-section {
+        box-shadow: 0 0 0 0.2em rgba($dark-purple, .75);
+        color: $dark-purple;
+      }
+    }
 
     &:hover {
       .menu-section {
@@ -180,10 +212,10 @@ $menu-radius: 6em;
     cursor: grab;
     box-sizing: border-box;
     position: absolute;
-    height: $inner-radius;
-    width: $inner-radius;
-    top: calc(50% - $inner-radius / 2);
-    left: calc(50% - $inner-radius / 2);
+    height: $inner-radius-landscape;
+    width: $inner-radius-landscape;
+    top: calc(50% - $inner-radius-landscape / 2);
+    left: calc(50% - $inner-radius-landscape / 2);
     border-radius: 50%;
     background-image: url("../../../public/walls/clientFinal.jpg");
     background-size: cover;
@@ -191,8 +223,14 @@ $menu-radius: 6em;
     text-align: center;
     z-index: 2;
     overflow: hidden;
-
     pointer-events: none;
+
+    .vw-portrait & {
+      height: $inner-radius-portrait;
+      width: $inner-radius-portrait;
+      top: calc(50% - $inner-radius-portrait / 2);
+      left: calc(50% - $inner-radius-portrait / 2);
+    }
 
     .back-button {
       text-align: center;

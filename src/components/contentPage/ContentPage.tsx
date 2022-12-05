@@ -2,7 +2,7 @@ import React from 'react';
 import './ContentPage.scss';
 import {connect} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowsLeftRight, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {faGroupArrowsRotate, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {Position} from "../../models/common/Position";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
 import {CircleRotationUtils} from "../../utils/CircleRotationUtils";
