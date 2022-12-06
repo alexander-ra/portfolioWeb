@@ -17,8 +17,10 @@ $menu-radius: 6em;
       }
     }
     .circle-rot#{$i} {
-      transition: transform 1s, font-size .25s;
       transform: rotate(calc($i + 0deg)) !important;
+      .slow-rotation & {
+        transition: transform .66s, font-size .25s;
+      }
 
       &.menu-section {
         .vw-portrait & {
@@ -29,7 +31,7 @@ $menu-radius: 6em;
   }
 }
 
-@include circleRot(360deg);
+@include circleRot(720deg);
 
 .content-page-wrapper {
   position: relative;
@@ -39,6 +41,15 @@ $menu-radius: 6em;
   opacity: 0;
   animation: bodyAppear 1s forwards;
   font-size: css-min(1.25em, 1.5vw, 3vh);
+
+  &.slow-rotation {
+    .box {
+      .box-overlay {
+        transition: opacity .66s;
+        opacity: .66;
+      }
+    }
+  }
 
   .vw-portrait & {
     font-size: css-min(1.33em, 1.75vh, 3vw);
@@ -259,6 +270,7 @@ $menu-radius: 6em;
     }
 
     .box-overlay {
+      transition: opacity .25s;
       position: absolute;
       height: 100%;
       width: 100%;
@@ -270,6 +282,7 @@ $menu-radius: 6em;
     }
 
     .section-title {
+      user-select: none;
       font-size: 2em;
       color: $light-yellow;
       line-height: 1.5em;

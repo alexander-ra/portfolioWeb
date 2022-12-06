@@ -14,6 +14,7 @@ $menu-radius: 6em;
   flex: 1 1 50%;
   background-size: cover;
   background-color: rgba($light-yellow, 0.75);
+  user-select: none;
 
   .vw-landscape & {
     max-width: 45em;

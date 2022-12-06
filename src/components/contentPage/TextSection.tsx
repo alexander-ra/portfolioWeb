@@ -46,16 +46,16 @@ class TextSection extends React.Component<TextSectionProps> {
         });
     }
 
-    private updateDimensions = (previousSize?: number) => {
+    private updateDimensions = (isResized?: boolean) => {
         const currElement = this.myRef.current;
         if (Utils.isNotNull(currElement?.style)) {
             if (this.props.uiOrientation === UIOrientation.LANDSCAPE) {
-                if (this.currentFontSize !== this.DEFAULT_FONT_SIZE && Utils.isNull(previousSize)) {
+                if (this.currentFontSize !== this.DEFAULT_FONT_SIZE && Utils.isNull(isResized)) {
                     currElement.style.fontSize = `${this.DEFAULT_FONT_SIZE}rem`;
                     currElement.style.visibility = `hidden`;
                     this.currentFontSize = this.DEFAULT_FONT_SIZE;
                     setTimeout(() => {
-                        this.updateDimensions(this.DEFAULT_FONT_SIZE);
+                        this.updateDimensions();
                     });
                 } else {
                     const parentElement = currElement?.parentElement;
@@ -65,11 +65,11 @@ class TextSection extends React.Component<TextSectionProps> {
                         currElement.style.margin = `${parentHeightDiff / 2}px 0`;
                         currElement.style.visibility = `visible`;
                     } else {
-                        this.currentFontSize = previousSize - 0.1;
+                        this.currentFontSize = this.currentFontSize - 0.1;
                         currElement.style.fontSize = `${this.currentFontSize}rem`;
                         currElement.style.visibility = `hidden`;
                         setTimeout(() => {
-                            this.updateDimensions(this.currentFontSize);
+                            this.updateDimensions(true);
                         });
                     }
                 }
