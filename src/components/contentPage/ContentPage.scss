@@ -45,7 +45,7 @@ $menu-radius: 6em;
   &.slow-rotation {
     .box {
       .box-overlay {
-        transition: opacity .66s;
+        transition: opacity .25s;
         opacity: .66;
       }
     }
@@ -231,13 +231,17 @@ $menu-radius: 6em;
     top: calc(50% - $inner-radius-landscape / 2);
     left: calc(50% - $inner-radius-landscape / 2);
     border-radius: 50%;
-    background-image: url("../../../public/walls/clientFinal.jpg");
+    background-image: url("../../../public/categoryImages/experience/home.png");
     background-size: cover;
     border: 0.2em solid $light-yellow;
     text-align: center;
     z-index: 2;
     overflow: hidden;
     pointer-events: none;
+
+    &.client_approach {
+      background-image: url("../../../public/categoryImages/client/home.png");
+    }
 
     .vw-portrait & {
       height: $inner-radius-portrait;
@@ -285,6 +289,7 @@ $menu-radius: 6em;
       user-select: none;
       font-size: 2em;
       color: $light-yellow;
+      text-shadow: 0 0 5px #20073a;
       line-height: 1.5em;
       position: absolute;
       top: calc(50% - 1.5em);
@@ -298,8 +303,8 @@ $menu-radius: 6em;
 
       .section-title-bottom {
         font-weight: bold;
-        // text-shadow: -2px 0 $light-yellow, 0 2px $light-yellow, 2px 0 $light-yellow, 0 -2px $light-yellow;
-        color: $dark-orange;
+        text-shadow: 0 0 5px #20073a;
+        color: $yellow;
       }
     }
   }

@@ -138,8 +138,8 @@
             .wall-icon {
                 transition: opacity 1s;
                 opacity: 1;
-                width: 5em;
-                height: 5em;
+                width: 4em;
+                height: 4em;
                 background-size: cover;
                 background-position: center;
                 color: $light-yellow;
@@ -151,7 +151,7 @@
             transform: rotateX(-90deg) translateZ(6.7em);
 
             .wall-content {
-                background-image: url("../../../../public/walls/chessFinal.jpg");
+                background-image: url("../../../../public/categoryImages/chess/home.png");
                 .wall-icon {
                     transform: rotate(45deg);
                 }
@@ -162,7 +162,7 @@
             transform: translateZ(6.7em);
 
             .wall-content {
-                background-image: url("../../../../public/walls/clientFinal.jpg");
+                background-image: url("../../../../public/categoryImages/client/home.png");
             }
         }
 
@@ -170,7 +170,7 @@
             transform: rotateY(90deg) translateZ(6.7em);
 
             .wall-content {
-                background-image: url("../../../../public/walls/experienceFinal.jpg");
+                background-image: url("../../../../public/categoryImages/experience/home.png");
             }
         }
 

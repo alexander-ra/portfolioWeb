@@ -32,8 +32,8 @@ interface ContentManagerState {
 
 
 class ContentManager extends React.Component<ContentManagerProps, ContentManagerState> {
-    private readonly PAGE_CLOSING_TIME_MS = 1500;
-    private readonly NEW_PAGE_DELAY_MS = 1000;
+    private readonly PAGE_CLOSING_TIME_MS = 0;
+    private readonly NEW_PAGE_DELAY_MS = 0;
     private readonly resizeListener = (event) => {
         this.updateWindowClasses(event.target);
     };

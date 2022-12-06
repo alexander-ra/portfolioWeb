@@ -205,22 +205,23 @@ $menu-radius: 6em;
     }
 
     .mask-dve {
-      background-image: url("../../../public/walls/clientFinal.jpg");
+      background-image: url("../../../public/categoryImages/experience/home.png");
       background-size: cover;
       background-repeat: no-repeat;
 
       .vw-landscape & {
         width: 13em;
         height: 100%;
-        opacity: 0.66;
-        filter: sepia(0.33);
+        opacity: 0.33;
+        filter: sepia(1);
       }
 
       .vw-portrait & {
         position: absolute;
         width: 100%;
         height: 13em;
-        filter: sepia(0.66) saturate(0.66);
+        opacity: 0.33;
+        filter: sepia(1);
       }
     }
 

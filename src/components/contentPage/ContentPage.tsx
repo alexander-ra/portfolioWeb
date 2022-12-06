@@ -2,21 +2,21 @@ import React from 'react';
 import './ContentPage.scss';
 import {connect} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faGroupArrowsRotate, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {Position} from "../../models/common/Position";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
 import {CircleRotationUtils} from "../../utils/CircleRotationUtils";
 import Utils from "../../utils/Utils";
 import TextSection, {TextSectionPosition} from "./TextSection";
-import {ContentData, ContentLabels, MenuContent} from '../../labels/ContentLabels';
+import {ContentData, MenuContent} from '../../labels/ContentLabels';
 import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
-import Flower from "../landing/cube/Flower/Flower";
 
 interface ContentPageProps {
     isClosing: boolean;
     sections: Section[];
     changePage: any;
+    currentPage: Page;
 }
 
 enum RotatingDirection {
@@ -345,10 +345,10 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             <div className={`content-outer-circle-sections circle-rot${this.calculateSectionEdgeDegrees(this.state.actualCircleOffsetDegrees)}deg`}>
                 {this.renderSectionEdges()}
             </div>
-            <div className="box">
+            <div className={`box ${this.props.currentPage.toLowerCase()}`}>
                 <div className="box-overlay"></div>
                 <div className={"section-title"}>
-                    <div className={"section-title-top"}>Experience</div>
+                    <div className={"section-title-top"}>{this.props.currentPage === Page.CLIENT_APPROACH ? "Client approach" : "Experience"}</div>
                     <div className={"section-title-bottom"}>{this.state.menuContent.title}</div>
                 </div>
             </div>
@@ -365,10 +365,12 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 export default connect(
     (state: any, ownProps) => {
         const { cubeOpened, selectedMenu } = state.cubesReducer;
+        const { currentPage } = state.stagesReducer;
         return {
             ...ownProps,
             selectedMenu,
-            cubeOpened
+            cubeOpened,
+            currentPage
         }
     }
 , { changePage })(ContentPage);
