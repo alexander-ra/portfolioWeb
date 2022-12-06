@@ -3,7 +3,6 @@ import './TextSection.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import {ContentData, ContentLabels} from "../../labels/ContentLabels";
-import Wings from "./Wings";
 import {current} from "@reduxjs/toolkit";
 import Utils from "../../utils/Utils";
 import { connect } from "react-redux";
@@ -92,7 +91,6 @@ class TextSection extends React.Component<TextSectionProps> {
                     <div className="mask"></div>
                     <div className="mask-dve"></div>
                     <div className={"content-text"} ref={this.myRef}>
-                        {/*<div className={"content-title"}>{data.title}</div>*/}
                         {data.description}
                     </div>
                 </div>
