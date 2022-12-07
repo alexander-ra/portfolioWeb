@@ -117,6 +117,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     render(){
         return (
             <div className={`chess-board-wrapper ${this.props.playerSide.toLowerCase()}-player-view`}>
+                <div className={"bg"}></div>
                 {Utils.isNotNull(this.promotionMove) &&
                     <ChessPromotionPopup playerSide={this.props.playerSide}
                                          potentialMove={{from: this.state.selectedSquare, to: this.promotionMove}}

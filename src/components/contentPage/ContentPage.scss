@@ -112,14 +112,14 @@ $menu-radius: 6em;
     }
 
     .indicator-arrow-point {
-      background: linear-gradient(45deg, $light-yellow 0%, $dark-purple 100%);
+      background: linear-gradient(45deg, $yellow 0%, $orange 100%);
       box-shadow: 0 0 .25em $dark-purple;
       box-sizing: border-box;
-      border-radius: 50% 100% 50% 0;
-      width: 3.2em;
-      height: 3.2em;
-      margin-left: -0.6em;
-      margin-top: 4.3em;
+      border-radius: 25% 100% 25% 10%;
+      width: 1.6em;
+      height: 1.6em;
+      margin-left: 1em;
+      margin-top: 4.4em;
       transform: rotate(180deg);
       position: absolute;
     }

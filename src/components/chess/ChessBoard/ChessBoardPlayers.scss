@@ -27,7 +27,7 @@
       font-size: .8em;
       text-align: center;
       width: 100%;
-      margin-bottom: -1.33rem;
+      margin-bottom: -1.66em;
       line-height: 1em;
     }
 
@@ -54,9 +54,19 @@
   &.player {
     bottom: calc(50% - 18em);
     left: calc(50% - 27.5em);
+
+    .vw-portrait & {
+      bottom: calc(50% - 28.5em);
+      left: calc(50% - 18em);
+    }
   }
   &.opponent {
     top: calc(50% - 18em);
     right: calc(50% - 27em);
+
+    .vw-portrait & {
+      top: calc(50% - 28.5em);
+      right: calc(50% - 17.5em);
+    }
   }
 }

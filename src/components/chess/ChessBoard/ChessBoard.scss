@@ -4,13 +4,26 @@
   height: 32em;
   width: 32em;
   position: absolute;
-  top: calc(50% - 18em);
-  left: calc(50% - 18em);
+  top: calc(50% - 18.2em);
+  left: calc(50% - 18.2em);
   display: flex;
   flex-direction: column-reverse;
+  border: 0.2em solid $dark-purple;
   background-color: rgba($light-yellow, .5);
   padding: 2em;
   border-radius: .5em;
+
+  .bg {
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: calc(50% - 18em);
+    left: calc(50% - 18em);
+    background-image: url("../../../../public/categoryImages/chess/bg.png");
+    background-position: center;
+    background-size: 100%;
+  }
 
   &.black-player-view {
     flex-direction: column;
@@ -24,4 +37,9 @@
     display: flex;
     flex-direction: row;
   }
+}
+
+@keyframes rotatea {
+  0% {transform: rotate(360deg)}
+  100% {transform: rotate(0deg)}
 }
