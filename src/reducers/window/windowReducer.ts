@@ -1,7 +1,8 @@
-import {SET_LAYOUT_TYPE, SET_UI_ORIENTATION, SET_WINDOW_SIZE} from "../ActionTypes"
+import {SET_LAYOUT_TYPE, SET_THEME, SET_UI_ORIENTATION, SET_WINDOW_SIZE} from "../ActionTypes"
 import {UIOrientation} from "../../components/core/UIOrientation";
 import { LayoutType } from "../../components/core/LayoutType";
 import BrowserUtils from "../../utils/BrowserUtils";
+import { ThemeType } from "../../components/core/ThemeType";
 
 export interface WindowSize {
     height: number;
@@ -12,6 +13,7 @@ export interface WindowReduceModel {
     uiOrientation: UIOrientation;
     layoutType: LayoutType;
     windowSize: WindowSize;
+    theme: ThemeType;
 }
 
 export const initialState: WindowReduceModel = {
@@ -20,7 +22,8 @@ export const initialState: WindowReduceModel = {
     windowSize: {
         height: 0,
         width: 0,
-    }
+    },
+    theme: ThemeType.LIGHT,
 }
 
 export default function windowReducer(state = initialState, action: any): WindowReduceModel {
@@ -45,6 +48,13 @@ export default function windowReducer(state = initialState, action: any): Window
                     width: action.payload.windowWidth,
                 },
                 uiOrientation: BrowserUtils.getOrientation(action.payload.windowWidth, action.payload.windowHeight)
+            }
+        }
+        case SET_THEME: {
+            console.log('asd', action.payload.theme);
+            return {
+                ...state,
+                theme: action.payload.theme
             }
         }
         default:

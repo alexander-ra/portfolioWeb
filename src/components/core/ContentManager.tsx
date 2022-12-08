@@ -20,9 +20,11 @@ import { UIOrientation } from './UIOrientation';
 import "./ContentManager.scss";
 import store from "../../store/store";
 import {setWindowSize} from "../../reducers/window/windowAction";
+import { ThemeType } from './ThemeType';
 
 interface ContentManagerProps {
-    pageToChange?: Page
+    pageToChange?: Page;
+    theme: ThemeType;
 }
 
 interface ContentManagerState {
@@ -37,6 +39,8 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     private readonly resizeListener = (event) => {
         this.updateWindowClasses(event.target);
     };
+    private readonly addToClassList = (classToAdd: string) => document.body.classList.add(classToAdd);
+    private readonly removeFromClassList = (classToRemove: string) => document.body.classList.remove(classToRemove);
 
     constructor(props: ContentManagerProps) {
         super(props);
@@ -65,55 +69,62 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
                 this.setState({actualPage: this.props.pageToChange});
             }, this.NEW_PAGE_DELAY_MS);
         }
+        if (prevProps.theme !== this.props.theme) {
+            if (this.props.theme === ThemeType.LIGHT) {
+                this.addToClassList('light-theme');
+                this.removeFromClassList('dark-theme');
+            } else {
+                this.addToClassList('dark-theme');
+                this.removeFromClassList('light-theme');
+            }
+        }
     }
 
     updateWindowClasses(element: Window): void {
         store.dispatch(setWindowSize(element.innerWidth, element.innerHeight));
-        const addToClassList = (classToAdd: string) => document.body.classList.add(classToAdd);
-        const removeFromClassList = (classToRemove: string) => document.body.classList.remove(classToRemove);
         const uiOrientation = BrowserUtils.getOrientation();
 
         if (uiOrientation === UIOrientation.LANDSCAPE) {
-            addToClassList("vw-landscape");
-            removeFromClassList("vw-portrait");
+            this.addToClassList("vw-landscape");
+            this.removeFromClassList("vw-portrait");
         } else {
-            addToClassList("vw-portrait");
-            removeFromClassList("vw-landscape");
+            this.addToClassList("vw-portrait");
+            this.removeFromClassList("vw-landscape");
 
         }
         if (BrowserUtils.isBigScreen()) {
-            addToClassList("vw-big-screen");
+            this.addToClassList("vw-big-screen");
         } else {
-            removeFromClassList("vw-big-screen");
+            this.removeFromClassList("vw-big-screen");
         }
 
         if (!BrowserUtils.isTouchable()) {
-            addToClassList("vw-no-touch");
+            this.addToClassList("vw-no-touch");
         }
 
         if (BrowserUtils.isIE()) {
-            addToClassList("vw-ie");
+            this.addToClassList("vw-ie");
         }
 
         if (BrowserUtils.isMobile()) {
-            addToClassList("vw-mobile");
+            this.addToClassList("vw-mobile");
             document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
         }
 
 
         if (BrowserUtils.isIPhone5()) {
-            addToClassList("dev-iphone5");
+            this.addToClassList("dev-iphone5");
         }
         if (BrowserUtils.isIOS()) {
-            addToClassList("dev-ios");
+            this.addToClassList("dev-ios");
         }
 
         if (BrowserUtils.isIPhone6_8()) {
-            addToClassList("dev-iphone6-8");
+            this.addToClassList("dev-iphone6-8");
         }
 
         if (BrowserUtils.isIPhoneX()) {
-            addToClassList("dev-iphoneX");
+            this.addToClassList("dev-iphoneX");
         }
     }
 
@@ -193,9 +204,11 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
 
 export default connect((state: any, ownProps) => {
     const { currentPage } = state.stagesReducer;
+    const { theme } = state.windowReducer;
     return {
         ...ownProps,
-        pageToChange: currentPage
+        pageToChange: currentPage,
+        theme
     }
 }, null)(ContentManager);
 

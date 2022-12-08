@@ -53,7 +53,7 @@
   }
 
   .avatar-wrapper {
-    color: $dark-purple;
+    color: rgb($main-primary);
     white-space: nowrap;
     z-index: 3;
 
@@ -66,7 +66,7 @@
     }
 
     .avatar-name {
-      color: $light-yellow;
+      color: rgb($button-text-color);
       background-image: url("../../../../public/portalicus.svg");
       background-size: 200%;
       font-size: 1.25em;
@@ -74,22 +74,26 @@
       line-height: 2em;
       z-index: 1;
       font-family: BANDAR;
+
+      .dark-theme & {
+        background-image: url("../../../../public/portalicus-selected.svg");
+      }
     }
   }
 
   .bubble {
     transition: opacity 2s;
     position: relative;
-    background: rgba($light-yellow, 0.75);
+    background: rgba($contrast-primary, 0.75);
     z-index: 3;
     border-radius: 1.5em;
-    border: .2em solid rgba($dark-purple, 0.85);
+    border: .2em solid rgba($common-border-color, 0.85);
     overflow-x: hidden;
     overflow-y: auto;
-    box-shadow: inset 0 0 1.5em -1em $dark-purple;
+    box-shadow: inset 0 0 1.5em -1em rgb($common-border-color);
 
     .bubble-text {
-      color: $dark-purple;
+      color: rgb($main-primary);
       font-size: 1.25em;
     }
 
@@ -160,7 +164,7 @@
         height: 3em;
         width: 3em;
         margin-left: 1em;
-        color: $light-yellow;
+        color: rgb($button-text-color);
 
         .avatar-icon {
           margin-top: .7em;
@@ -190,9 +194,8 @@
   background-size: 120% 600%;
   height: 2em;
   text-align: center;
-  drop-shadow: 0 0 1em $dark-purple;
-  background-color: $dark-orange;
-  color: $light-yellow;
+  background-color: rgb($accent-primary);
+  color: rgb($button-text-color);
   border: none;
   font-size: 1.25em;
   border-radius: 1em;
@@ -210,7 +213,7 @@
   }
 
   &:hover {
-    background-color: $purple;
-    box-shadow: 0 0 1em $purple;
+    background-color: rgb($main-secondary);
+    box-shadow: 0 0 1em rgb($main-secondary);
   }
 }

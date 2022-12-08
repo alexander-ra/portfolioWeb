@@ -6,14 +6,14 @@
 
   &.active {
     .avatar {
-      border-color: $dark-orange;
+      border-color: rgb($accent-primary);
     }
   }
 
   .avatar {
     transition: border-color .25s;
     border-style: solid;
-    border-color: $light-yellow;
+    border-color: rgb($setting-card-bg-color);
     border-width: .3em .3em 1.66em .3em;
     border-radius: .5em;
     background-size: cover;

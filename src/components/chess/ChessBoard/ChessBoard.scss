@@ -8,8 +8,8 @@
   left: calc(50% - 18.2em);
   display: flex;
   flex-direction: column-reverse;
-  border: 0.2em solid $dark-purple;
-  background-color: rgba($light-yellow, .5);
+  box-shadow: 0 0 0 0.2em rgb($shadow);
+  background-color: rgba($contrast-primary, .5);
   padding: 2em;
   border-radius: .5em;
 

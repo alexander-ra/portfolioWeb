@@ -1,16 +1,4 @@
-$dark-purple: #20073a;
-$purple: #6D1950;
-$pink: #e48686;
-$dark-orange: #CD4545;
-$orange: #E8893F;
-$yellow: #F0D171;
-$light-yellow: #f6e8d5;
-
-$header-height: 1.75em;
-$title-height: 5em;
-$content-header: $header-height + $title-height;
-
-$img-root: "Test";
+@import "Constants";
 
 @function img($key) {
   @return $img-root + $key;
@@ -35,15 +23,6 @@ $img-root: "Test";
 @function css-clamp( $values... ) {
   @return css-function( clamp, $values );
 }
-
-//@font-face {
-//  font-family: 'MyWebFont';
-//  src: url('webfont.eot'); /* IE9 Compat Modes */
-//  src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-//  url('webfont.woff') format('woff'), /* Modern Browsers */
-//  url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
-//  url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
-//}
 
 @font-face {
   font-family: MAGIC;
@@ -138,6 +117,10 @@ img{
   left: 0;
   height: 100vh;
   width: 100vw;
+
+  .dark-theme & {
+    background-image: url("../public/spectrum-triangles-oposite.svg");
+  }
 }
 
 
@@ -157,13 +140,17 @@ img{
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  border: .3em solid $light-yellow;
+  border: .3em solid rgb($contrast-primary);
   background-clip: padding-box;
   border-radius: 1em;
-  background: $dark-orange;
+  background: rgb($accent-primary);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: $orange;
+  background: rgb($accent-secondary);
+}
+
+::-webkit-scrollbar-corner {
+  visibility: hidden;
 }

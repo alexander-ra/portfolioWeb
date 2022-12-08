@@ -3,7 +3,7 @@
 .back-button {
     position: absolute;
     opacity: .75;
-    color: rgba($light-yellow, .5);
+    color: rgba($button-text-color, .5);
     transition: opacity .5s, color .5s;
     display: flex;
     z-index: 3;
@@ -12,13 +12,12 @@
 
     &:hover {
         opacity: 1;
-        color: $light-yellow;
+        color: rgb($button-text-color);
     }
     .back-cube {
         width: 4em;
         height: 4em;
-        background-image: url("../../../public/cubeBack.png");
-        background-image: url("../../../public/cubeBack.png"), radial-gradient($orange 0%, $orange 50%, transparent 66%);
+        background-image: url("../../../public/cubeBack.png"), radial-gradient(rgb($accent-secondary) 0%, rgb($accent-secondary) 50%, transparent 66%);
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;

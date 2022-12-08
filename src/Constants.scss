@@ -1,0 +1,32 @@
+$main-primary: var(--main-primary);
+$main-secondary: var(--main-secondary);
+$accent-primary: var(--accent-primary);
+$accent-secondary: var(--accent-secondary);
+$contrast-primary: var(--contrast-primary);
+$contrast-secondary: var(--contrast-secondary);
+
+$button-text-color: var(--button-text-color);
+$content-header-color: var(--content-title-color);
+$content-header-secondary-color: var(--content-title-secondary-color);
+$cube-accent-color: var(--cube-accents-color);
+$wheel-border-color: var(--wheel-border-color);
+$flower-shadow: var(--flower-shadow);
+$shadow: var(--shadow);
+$indicator-color: var(--indicator-color);
+$common-border-color: var(--common-border-color);
+$header-color: var(--header-color);
+$section-content-color: var(--section-content-color);
+$section-icon-color: var(--section-icon-color);
+$section-bg-color: var(--section-bg-color);
+$setting-card-color: var(--setting-card-color);
+$setting-card-bg-color: var(--setting-card-bg-color);
+$chess-square-white-bg: var(--chess-square-white-bg);
+$chess-square-black-bg: var(--chess-square-black-bg);
+$chess-piece-white: var(--chess-piece-white);
+$chess-piece-black: var(--chess-piece-black);
+
+$header-height: 1.75em;
+$title-height: 5em;
+$content-header: $header-height + $title-height;
+
+$img-root: "Test";

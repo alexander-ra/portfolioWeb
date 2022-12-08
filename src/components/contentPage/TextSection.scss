@@ -13,7 +13,7 @@ $menu-radius: 6em;
   display: flex;
   flex: 1 1 50%;
   background-size: cover;
-  background-color: rgba($light-yellow, 0.75);
+  background-color: $section-content-color;
   user-select: none;
 
   .vw-landscape & {
@@ -151,10 +151,10 @@ $menu-radius: 6em;
 
   .content {
     height: 100%;
-    color: $dark-purple;
+    color: rgb($main-primary);
     opacity: 0;
     animation: contentAppear 1s 2s forwards;
-    box-shadow: inset 0 0 3em -2em $dark-purple;
+    box-shadow: inset 0 0 3em -2em rgb($shadow);
 
     .vw-landscape & {
       width: calc(50vw - 4em);
@@ -183,10 +183,15 @@ $menu-radius: 6em;
 
 
     .mask {
-      //background-color: rgba($dark-purple, .25);
+      //background-color: rgba($main-primary, .25);
       background-image: url("../../../public/portalicus.svg");
       background-size: 500%;
       cursor: pointer;
+
+
+      .dark-theme & {
+        background-image: url("../../../public/portalicus-oposite.svg");
+      }
 
       &:hover {
         background-image: url("../../../public/portalicus-selected.svg");
@@ -208,20 +213,23 @@ $menu-radius: 6em;
       background-image: url("../../../public/categoryImages/experience/home.png");
       background-size: cover;
       background-repeat: no-repeat;
+      opacity: 0.33;
+      filter: sepia(1);
+
+      .dark-theme & {
+        filter: brightness(2);
+        opacity: 1;
+      }
 
       .vw-landscape & {
         width: 13em;
         height: 100%;
-        opacity: 0.33;
-        filter: sepia(1);
       }
 
       .vw-portrait & {
         position: absolute;
         width: 100%;
         height: 13em;
-        opacity: 0.33;
-        filter: sepia(1);
       }
     }
 
@@ -237,7 +245,7 @@ $menu-radius: 6em;
       position: absolute;
       font-size: 1em;
       font-weight: bold;
-      color: $dark-purple;
+      color: rgb($main-primary);
 
       .vw-landscape & {
         font-size: 1.25em;
@@ -247,15 +255,21 @@ $menu-radius: 6em;
       .vw-portrait & {
         background-image: url("../../../public/portalicus.svg");
         background-size: cover;
-        color: $light-yellow;
+        color: rgb($button-text-color);
         text-align: center;
         width: 100%;
         line-height: 2.5em;
       }
+
+
+      .vw-portrait,.dark-theme & {
+        background-image: url("../../../public/portalicus-selected.svg");
+        background-size: cover;
+      }
     }
 
     .content-icon {
-      color: $purple;
+      color: rgb($main-secondary);
       top: calc(50% - 6em);
       position: absolute;
       height: 12em;
@@ -272,11 +286,11 @@ $menu-radius: 6em;
 }
 
 @keyframes sectionAppearLeft{
-  from{background-color: rgba($light-yellow, 0); margin: 12em 9em 12em 12em;}
-  to{background-color: rgba($light-yellow, 0.5); margin: 12em 9em 12em 1em;}
+  from{background-color: rgba($contrast-primary, 0); margin: 12em 9em 12em 12em;}
+  to{background-color: rgba($contrast-primary, 0.5); margin: 12em 9em 12em 1em;}
 }
 
 @keyframes sectionAppearRight{
-  from{background-color: rgba($light-yellow, 0); margin: 12em 12em 12em 9em;}
-  to{background-color: rgba($light-yellow, 0.5); margin: 12em 1em 12em 9em;}
+  from{background-color: rgba($contrast-primary, 0); margin: 12em 12em 12em 9em;}
+  to{background-color: rgba($contrast-primary, 0.5); margin: 12em 1em 12em 9em;}
 }

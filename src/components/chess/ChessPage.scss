@@ -19,7 +19,8 @@
     height: 2em;
     left: calc(50% - 4em);
     border: none;
-    background-color: rgba($light-yellow, .5);
+    color: rgb($main-primary);
+    background-color: rgba($contrast-primary, .5);
     border-radius: 0.5em;
     cursor: pointer;
   }

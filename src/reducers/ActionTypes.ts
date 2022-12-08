@@ -8,3 +8,4 @@ export const ACTION_OTHER_ONE = "ACTION_OTHER_ONE";
 export const ACTION_OTHER_TWO = "ACTION_OTHER_TWO";
 export const SET_LAYOUT_TYPE = "SET_LAYOUT_TYPE";
 export const SET_WINDOW_SIZE = "SET_WINDOW_SIZE";
+export const SET_THEME = "SET_THEME";

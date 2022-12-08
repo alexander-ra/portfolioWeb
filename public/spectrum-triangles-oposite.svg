@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1600">
+    <rect fill="#20073A" width="2000" height="1600"/>
+    <defs>
+        <rect id="a" x="-2000" width="6000" height="220">
+            <animate attributeName="height" dur="4s" values="200; 300; 220" keyTimes="0; 0.45; 1" repeatCount="1" />
+        </rect>
+        <g id="b">
+            <use href="#a" fill="#1C0534" y="-1400"/>
+            <use href="#a" fill="#230737" y="-1200"/>
+            <use href="#a" fill="#2a0839" y="-1000"/>
+            <use href="#a" fill="#32093c" y="-800"/>
+            <use href="#a" fill="#390a3e" y="-600"/>
+            <use href="#a" fill="#400c40" y="-400"/>
+            <use href="#a" fill="#470d42" y="-200"/>
+            <use href="#a" fill="#4f0e43"/>
+            <use href="#a" fill="#560f45" y="200"/>
+            <use href="#a" fill="#5d1146" y="400"/>
+            <use href="#a" fill="#641347" y="600"/>
+            <use href="#a" fill="#5f0d43" y="800"/>
+            <use href="#a" fill="#5a063e" y="1000"/>
+            <use href="#a" fill="#55003a" y="1200"/>
+            <use href="#a" fill="#510036" y="1400"/>
+            <use href="#a" fill="#4c0032" y="1600"/>
+            <use href="#a" fill="#47002e" y="1800"/>
+            <use href="#a" fill="#42002a" y="2000"/>
+            <use href="#a" fill="#3e0026" y="2200"/>
+            <use href="#a" fill="#390022" y="2400"/>
+            <use href="#a" fill="#35001e" y="2600"/>
+            <use href="#a" fill="#32001b" y="2800"/>
+            <use href="#a" fill="#000000" y="3000"/>
+        </g>
+    </defs>
+    <g transform="">
+        <g transform="" style="transform-origin:center">
+            <g transform="scale(.5)" style="transform-origin:center">
+                <use href="#b" transform="rotate(90 1000 800)"/>
+                <use fill-opacity="0.39" href="#b" transform="rotate(150 1000 800)"/>
+                <use opacity=".25" href="#b" transform="rotate(210 1000 800)"/>
+            </g>
+        </g>
+    </g>
+</svg>

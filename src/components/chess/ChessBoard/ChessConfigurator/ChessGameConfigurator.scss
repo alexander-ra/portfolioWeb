@@ -16,9 +16,8 @@
   background-image: url("../../../../../public/pointer-sandwich.svg");
   background-position: center;
   background-size: 120% 600%;
-  drop-shadow: 0 0 1em $dark-purple;
-  background-color: $dark-orange;
-  color: $light-yellow;
+  background-color: rgb($accent-primary);
+  color: rgb($button-text-color);
   border: none;
   font-size: 1.25em;
   border-radius: 1em;
@@ -29,8 +28,8 @@
 
   &:not(:disabled) {
     &:hover {
-      background-color: $purple;
-      box-shadow: 0 0 1em $purple;
+      background-color: rgb($main-secondary);
+      box-shadow: 0 0 1em rgb($main-secondary);
       cursor: pointer;
     }
   }
@@ -41,8 +40,10 @@
 }
 
 .setting-title {
+  // font-weight: bold;
   flex: 1 1 1.25em;
   line-height: 2em;
   text-align: center;
   font-size: 1.25em;
+  color: rgb($main-primary);
 }

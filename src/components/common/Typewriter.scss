@@ -11,7 +11,7 @@
     height: 1.5em;
     position: relative;
     top: 50%;
-    color: $dark-purple;
+    color: rgb($main-primary);
     text-align: center;
     font-size: 1.25em;
     transform: translateY(-50%);
@@ -27,12 +27,12 @@
     margin-left: .2em;
     margin-right: -.285em;
     font-size: 1.25em;
-    border-right: 2px solid $dark-purple;
+    border-right: 2px solid rgb($main-primary);
     animation: blinkTextCursor 800ms infinite ease-in;
     word-break: break-all;
   }
   @keyframes blinkTextCursor{
-    from{border-right-color: $dark-purple;}
+    from{border-right-color: rgb($main-primary);}
     to{border-right-color: transparent;}
   }
 }

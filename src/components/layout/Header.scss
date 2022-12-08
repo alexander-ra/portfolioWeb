@@ -1,9 +1,9 @@
 @import "../../App";
 
 .header-wrapper {
-    background-color: rgba($light-yellow, 0.25);
+    background-color: $header-color;
     height: $header-height;
-    color: $dark-purple;
+    color: rgb($main-primary);
     z-index: 3;
     position: absolute;
     width: 100%;
@@ -36,7 +36,7 @@
 
             &:hover {
                 //text-decoration: underline;
-                color: $orange;
+                color: rgb($accent-secondary);
             }
         }
     }

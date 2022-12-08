@@ -19,7 +19,7 @@
     position: absolute;
     display: flex;
     font-weight: bold;
-    color: $dark-purple;
+    color: rgb($main-primary);
 
     &.chess-letters-top {
       top: 0;

@@ -76,7 +76,7 @@ $menu-radius: 6em;
       }
 
       .menu-section {
-        color: rgba($dark-purple, .75);
+        color: rgba($section-icon-color, .75);
       }
     }
   }
@@ -112,8 +112,8 @@ $menu-radius: 6em;
     }
 
     .indicator-arrow-point {
-      background: linear-gradient(45deg, $yellow 0%, $orange 100%);
-      box-shadow: 0 0 .25em $dark-purple;
+      background: $indicator-color;
+      box-shadow: 0 0 .25em rgb($shadow);
       box-sizing: border-box;
       border-radius: 25% 100% 25% 10%;
       width: 1.6em;
@@ -145,9 +145,9 @@ $menu-radius: 6em;
       opacity: .75;
       height: 1.8em;
       width: 0.2em;
-      background-color: $light-yellow;
+      background-color: rgb($contrast-primary);
       border-radius: .5em;
-      transform-origin: 0em 12em;
+      transform-origin: 0 12em;
       position: absolute;
       top: 0;
       left: 12em;
@@ -163,7 +163,6 @@ $menu-radius: 6em;
     position: absolute;
     top: calc(50% - $outer-offset);
     left: calc(50% - $outer-offset);
-    // background-color: rgba($dark-purple, 1);
     background-image: url("../../../public/portalicus.svg");
     background-size: 125%;
     background-position: center;
@@ -177,15 +176,15 @@ $menu-radius: 6em;
 
     .vw-mobile & {
       .menu-section {
-        box-shadow: 0 0 0 0.2em rgba($dark-purple, .75);
-        color: $dark-purple;
+        box-shadow: 0 0 0 0.2em rgba($common-border-color, .75);
+        color: rgb($section-icon-color);
       }
     }
 
     &:hover {
       .menu-section {
-        box-shadow: 0 0 0 0.2em rgba($dark-purple, .75);
-        color: rgba($dark-purple, .75);
+        box-shadow: 0 0 0 0.2em rgba($common-border-color, .75);
+        color: rgba($section-icon-color, .75);
       }
     }
 
@@ -194,24 +193,22 @@ $menu-radius: 6em;
       transform-origin: ($menu-radius / 2) 15em;
       top: -3em;
       left: calc($outer-offset - ($menu-radius / 2));
-      color: rgba($dark-purple, .5);
-      background-color: $light-yellow;
+      color: rgba($section-icon-color, .66);
+      background-color: rgb($section-bg-color);
       position: absolute;
-      border-radius: 50% 50% 0% 0%;
+      border-radius: 50% 50% 0 0;
       box-sizing: border-box;
       height: $menu-radius;
       width: $menu-radius;
       padding: 1em 1.66em 2.33em 1.66em;
 
       &:hover {
-        background-color: $light-yellow;
-        color: $dark-purple;
+        color: rgb($section-icon-color);
         cursor: pointer;
       }
 
       &.selected {
-        background-color: $light-yellow;
-        color: $dark-purple;
+        color: rgb($section-icon-color);
         cursor: grab;
       }
 
@@ -233,7 +230,7 @@ $menu-radius: 6em;
     border-radius: 50%;
     background-image: url("../../../public/categoryImages/experience/home.png");
     background-size: cover;
-    border: 0.2em solid $light-yellow;
+    border: 0.2em solid rgb($wheel-border-color);
     text-align: center;
     z-index: 2;
     overflow: hidden;
@@ -258,8 +255,8 @@ $menu-radius: 6em;
       height: 7em;
       width: 14em;
       left: 4em;
-      background-color: $dark-orange;
-      color: $dark-purple;
+      background-color: rgb($accent-primary);
+      color: rgb($main-primary);
       font-weight: bold;
       display: flex;
       align-items: center;
@@ -288,8 +285,8 @@ $menu-radius: 6em;
     .section-title {
       user-select: none;
       font-size: 2em;
-      color: $light-yellow;
-      text-shadow: 0 0 5px #20073a;
+      color: rgb($content-header-color);
+      text-shadow: 0 0 5px $shadow;
       line-height: 1.5em;
       position: absolute;
       top: calc(50% - 1.5em);
@@ -297,14 +294,10 @@ $menu-radius: 6em;
       text-align: center;
       z-index: 3;
 
-      .section-title-top {
-
-      }
-
       .section-title-bottom {
         font-weight: bold;
-        text-shadow: 0 0 5px #20073a;
-        color: $yellow;
+        text-shadow: 0 0 5px $shadow;
+        color: rgb($content-header-secondary-color);
       }
     }
   }

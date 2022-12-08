@@ -19,6 +19,11 @@
     width: 10%;
     background: url("../../../../../public/flowerFin.svg") no-repeat center;
     background-size: cover;
+
+    .dark-theme & {
+      background: url("../../../../../public/flowerFin-oposite.svg") no-repeat center;
+      background-size: cover;
+    }
   }
 
 
@@ -32,8 +37,8 @@
     width: 14em;
     height: 14em;
     border-radius: 50%;
-    box-shadow: 0 0 .25em 2em $yellow;
-    background-color: $yellow;
+    box-shadow: 0 0 .25em 2em rgb($contrast-secondary);
+    background-color: rgb($contrast-secondary);
     z-index: 1;
   }
 
@@ -60,8 +65,8 @@
 
 
     .flower-center{
-      box-shadow: 0 0 2em 1.5em $purple;
-      background-color: $purple;
+      box-shadow: 0 0 2em 1.5em rgb($flower-shadow);
+      background-color: rgb($flower-shadow);
     }
   }
 }

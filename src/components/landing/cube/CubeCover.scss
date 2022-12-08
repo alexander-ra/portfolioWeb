@@ -24,7 +24,7 @@ $peelOffDuration: 2s;
 
                     .wall-inside-under {
                         transform: scaleX(1) rotateZ(45deg);
-                        background-color: $dark-orange;
+                        background-color: rgb($accent-primary);
                     }
                 }
             }
@@ -70,6 +70,11 @@ $peelOffDuration: 2s;
         z-index: 5;
         cursor: pointer;
 
+        .dark-theme & {
+            background: url("../../../../public/quantum-gradient-oposite.svg") no-repeat center;
+            background-size: cover;
+        }
+
         .wall-inside-wrapper {
             position: absolute;
             top: -2.9em;
@@ -87,8 +92,13 @@ $peelOffDuration: 2s;
                 background: url("../../../../public/quantum-gradient.svg") no-repeat center;
                 background-size: cover;
                 box-sizing: border-box;
-                border: 0.2em solid $purple;
+                border: 0.2em solid rgb($main-secondary);
                 border-radius: .3em;
+
+                .dark-theme & {
+                    background: url("../../../../public/quantum-gradient-oposite.svg") no-repeat center;
+                    background-size: cover;
+                }
             }
 
             .wall-inside-under-wrapper {
@@ -107,7 +117,7 @@ $peelOffDuration: 2s;
                     width: 14em;
                     height: 14em;
                     transform: rotateZ(45deg);
-                    background-color: $orange;
+                    background-color: rgb($accent-secondary);
                     background-size: cover;
                     box-sizing: border-box;
                 }

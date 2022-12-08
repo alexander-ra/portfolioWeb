@@ -95,7 +95,7 @@
     top: calc(50% - 12em);
     z-index: 10;
     opacity: 0;
-    color: $light-yellow;
+    color: rgb($contrast-primary);
     background-image: url("../../../../public/360rotate.svg");
     background-size: cover;
     background-position: top center;

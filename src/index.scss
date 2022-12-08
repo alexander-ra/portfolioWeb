@@ -1,3 +1,5 @@
+@import "Themes";
+
 body {
   margin: 0;
   font-family: COMFORTAA, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -8,7 +10,7 @@ body {
 }
 
 button {
-  font-family: BANDAR;
+  font-family: BANDAR, Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
 

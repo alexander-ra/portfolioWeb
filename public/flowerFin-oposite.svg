@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1500">
+  <defs>
+    <g id='a'>
+      <path fill-opacity='0.3' d='M85 0c66-133 222-133 266 0C233 133 133 133 85 0z' transform=''>
+        <animateTransform attributeType="xml" attributeName="transform" dur="10s" values="0, 10; 50, 0; 0, 10" repeatCount="indefinite" />
+      </path>
+    </g>
+  </defs>
+  <g transform="" style="transform-origin:center">
+    <g transform="">
+      <g transform="translate(1000 750)">
+        <use href="#a" fill="#F0D58B"/>
+        <use href="#a" fill="#efd086" transform="rotate(10)"/>
+        <use href="#a" fill="#efcc81" transform="rotate(20)"/>
+        <use href="#a" fill="#eec77c" transform="rotate(30)"/>
+        <use href="#a" fill="#edc177" transform="rotate(40)"/>
+        <use href="#a" fill="#edbc72" transform="rotate(50)"/>
+        <use href="#a" fill="#ecb66d" transform="rotate(60)"/>
+        <use href="#a" fill="#ebb069" transform="rotate(70)"/>
+        <use href="#a" fill="#ebaa64" transform="rotate(80)"/>
+        <use href="#a" fill="#eaa45f" transform="rotate(90)"/>
+        <use href="#a" fill="#e99d5a" transform="rotate(100)"/>
+        <use href="#a" fill="#e99655" transform="rotate(110)"/>
+        <use href="#a" fill="#E88F50" transform="rotate(120)"/>
+        <use href="#a" fill="#e36c45" transform="rotate(130)"/>
+        <use href="#a" fill="#de473a" transform="rotate(140)"/>
+        <use href="#a" fill="#d92f3e" transform="rotate(150)"/>
+        <use href="#a" fill="#cf2a53" transform="rotate(160)"/>
+        <use href="#a" fill="#be2a68" transform="rotate(170)"/>
+        <use href="#a" fill="#ae2a77" transform="rotate(180)"/>
+        <use href="#a" fill="#9f2a82" transform="rotate(190)"/>
+        <use href="#a" fill="#902987" transform="rotate(200)"/>
+        <use href="#a" fill="#7a2781" transform="rotate(210)"/>
+        <use href="#a" fill="#602673" transform="rotate(220)"/>
+        <use href="#a" fill="#4a2465" transform="rotate(230)"/>
+        <use href="#a" fill="#382158" transform="rotate(240)"/>
+        <use href="#a" fill="#4f256a" transform="rotate(250)"/>
+        <use href="#a" fill="#6b287c" transform="rotate(260)"/>
+        <use href="#a" fill="#8e2b8e" transform="rotate(270)"/>
+        <use href="#a" fill="#a12e8b" transform="rotate(280)"/>
+        <use href="#a" fill="#b52f82" transform="rotate(290)"/>
+        <use href="#a" fill="#ca3071" transform="rotate(300)"/>
+        <use href="#a" fill="#d43c5f" transform="rotate(310)"/>
+        <use href="#a" fill="#db4a50" transform="rotate(320)"/>
+        <use href="#a" fill="#e16e5a" transform="rotate(330)"/>
+        <use href="#a" fill="#e6956a" transform="rotate(340)"/>
+        <use href="#a" fill="#ecb77a" transform="rotate(350)"/>
+      </g>
+    </g>
+  </g>
+</svg>
