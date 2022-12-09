@@ -175,8 +175,15 @@ $menu-radius: 6em;
         flex-wrap: wrap;
         justify-content: center;
         align-items: flex-end;
+        border-radius: 2em;
+        background-color: rgba(black, 0.25);
+
+        .dark-theme & {
+          background-color: rgba(white, 0.25);
+        }
 
         .technology-item {
+          font-weight: bold;
           background: rgba($main-primary, .75);
           color: rgb($contrast-secondary);
           border-radius: .5em;
