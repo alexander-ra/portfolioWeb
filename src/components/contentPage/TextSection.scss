@@ -169,6 +169,69 @@ $menu-radius: 6em;
     .content-text {
       text-align: justify;
 
+      .items-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-end;
+
+        .technology-item {
+          background: rgba($main-primary, .75);
+          color: rgb($contrast-secondary);
+          border-radius: .5em;
+          text-align: center;
+          height: 2em;
+          margin: .2em;
+          padding: .5em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .logo-item {
+          width: 8em;
+          height: 4em;
+          margin: 0.2em .5em;
+          background-size: 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+
+          &.betclic {
+            background-image: url("../../../public/categoryImages/client/companies/betclic.png");
+          }
+
+          &.bet365 {
+            background-image: url("../../../public/categoryImages/client/companies/bet365.png");
+          }
+
+          &.deloitte {
+            background-image: url("../../../public/categoryImages/client/companies/deloitte.png");
+          }
+
+          &.kbc {
+            background-image: url("../../../public/categoryImages/client/companies/kbc.png");
+          }
+
+          &.metro {
+            background-image: url("../../../public/categoryImages/client/companies/metro.png");
+          }
+
+          &.playtech {
+            background-image: url("../../../public/categoryImages/client/companies/playtech.png");
+          }
+
+          &.raiffeisen {
+            background-image: url("../../../public/categoryImages/client/companies/raiffeisen.png");
+          }
+
+          &.williamhill {
+            background-image: url("../../../public/categoryImages/client/companies/williamhill.png");
+          }
+
+        }
+      }
+
       .vw-landscape & {
         font-size: 1.5rem;
         padding-top: 1.5rem;
@@ -253,18 +316,12 @@ $menu-radius: 6em;
       }
 
       .vw-portrait & {
-        background-image: url("../../../public/portalicus.svg");
+        background-image: url("../../../public/portalicus-selected.svg");
         background-size: cover;
         color: rgb($button-text-color);
         text-align: center;
         width: 100%;
         line-height: 2.5em;
-      }
-
-
-      .vw-portrait,.dark-theme & {
-        background-image: url("../../../public/portalicus-selected.svg");
-        background-size: cover;
       }
     }
 

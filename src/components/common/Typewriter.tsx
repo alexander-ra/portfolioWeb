@@ -33,11 +33,21 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
         const curLength = this.state.currentLetterNum;
 
         if (curLength <= this.props.textToType.length && !this.props.skipTyping) {
-            const delay = this.getDelay(this.props.textToType[this.state.currentLetterNum]);
-            setTimeout(() => {
-                this.typeLetter();
-                this.setState({currentLetterNum: this.state.currentLetterNum + 1});
-            }, delay);
+            const stringToSkip = "<span className='emphasis-text'>";
+            if (this.props.textToType[this.state.currentLetterNum] === "<" &&
+                this.props.textToType[this.state.currentLetterNum + 1] === "s") {
+                console.log("Found a tag");
+                setTimeout(() => {
+                    this.typeLetter();
+                    this.setState({currentLetterNum: this.state.currentLetterNum + stringToSkip.length});
+                }, 0);
+            } else {
+                const delay = this.getDelay(this.props.textToType[this.state.currentLetterNum]);
+                setTimeout(() => {
+                    this.typeLetter();
+                    this.setState({currentLetterNum: this.state.currentLetterNum + 1});
+                }, delay);
+            }
         } else {
             setTimeout(() => {
                 this.props.onCompleted();
@@ -86,9 +96,13 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
         return (
             <div className={`typewriter-wrapper ${this.isSpedUp ? "sped-up" : ""}`} onClick={() => {this.isSpedUp = true;}}>
                 {this.props.skipTyping ?
-                    <span className="line-1">{this.props.textToType}</span>
+                    <span className="line-1" dangerouslySetInnerHTML={
+                        {__html: this.props.textToType}
+                    } />
                     :
-                    <span className="line-1">{this.props.textToType.slice(0, this.state.currentLetterNum)}</span>
+                    <span className="line-1" dangerouslySetInnerHTML={
+                        {__html: this.props.textToType.slice(0, this.state.currentLetterNum)}
+                    } />
                 }
                 {
                     !this.state.textDone && !this.props.skipTyping && <>

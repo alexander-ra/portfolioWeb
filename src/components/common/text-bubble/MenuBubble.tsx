@@ -88,8 +88,9 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
                     </div>
                 </div>
                 <div className={"menu-bubble bubble"}>
-                    <div className={"bubble-text"}>
-                        {this.state.menuDescription}
+                    <div className={"bubble-text"} dangerouslySetInnerHTML={
+                        {__html: this.state.menuDescription}
+                    }>
                     </div>
                 </div>
                 <button className={"go-page"} onClick={this.changePage.bind(this)}>Launch Page</button>

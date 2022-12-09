@@ -10,6 +10,18 @@
   margin: 0 .75em;
   z-index: 2;
 
+  .link-text {
+    color: rgb($accent-primary);
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .emphasis-text {
+    color: rgb($accent-primary);
+    font-weight: bold;
+  }
+
   .vw-landscape & {
     height: 100%;
     max-width: 20em;
@@ -201,6 +213,7 @@
   border-radius: 1em;
   z-index: 3;
   cursor: pointer;
+
 
   .vw-landscape & {
     margin-top: -1em;

@@ -1,11 +1,8 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import './TextSection.scss';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import {ContentData, ContentLabels} from "../../labels/ContentLabels";
-import {current} from "@reduxjs/toolkit";
+import {ContentData, CustomContentTypes} from "../../labels/ContentLabels";
 import Utils from "../../utils/Utils";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import {WindowSize} from "../../reducers/window/windowReducer";
 import {UIOrientation} from "../core/UIOrientation";
 
@@ -26,6 +23,8 @@ class TextSection extends React.Component<TextSectionProps> {
     private myRef: React.RefObject<HTMLDivElement>;
     private readonly DEFAULT_FONT_SIZE = 1.5;
     private currentFontSize = this.DEFAULT_FONT_SIZE;
+    private isResizing: boolean = false;
+    private resizeTimeout: NodeJS.Timeout;
 
     constructor(props: TextSectionProps) {
         super(props);
@@ -38,11 +37,12 @@ class TextSection extends React.Component<TextSectionProps> {
     }
 
     componentDidUpdate(prevProps: Readonly<TextSectionProps>, prevState: Readonly<{}>, snapshot?: any) {
-        setTimeout(() => {
-            if (prevProps.data.description !== this.props.data.description) {
+        if (prevProps.data.description !== this.props.data.description && Utils.isNotNull(this.resizeTimeout)) {
+            clearTimeout(this.resizeTimeout);
+            this.resizeTimeout = setTimeout(() => {
                 this.updateDimensions();
-            }
-        });
+            });
+        }
     }
 
     private updateDimensions = (isResized?: boolean) => {
@@ -53,7 +53,8 @@ class TextSection extends React.Component<TextSectionProps> {
                     currElement.style.fontSize = `${this.DEFAULT_FONT_SIZE}rem`;
                     currElement.style.visibility = `hidden`;
                     this.currentFontSize = this.DEFAULT_FONT_SIZE;
-                    setTimeout(() => {
+                    clearTimeout(this.resizeTimeout);
+                    this.resizeTimeout = setTimeout(() => {
                         this.updateDimensions();
                     });
                 } else {
@@ -67,7 +68,8 @@ class TextSection extends React.Component<TextSectionProps> {
                         this.currentFontSize = this.currentFontSize - 0.1;
                         currElement.style.fontSize = `${this.currentFontSize}rem`;
                         currElement.style.visibility = `hidden`;
-                        setTimeout(() => {
+                        clearTimeout(this.resizeTimeout);
+                        this.resizeTimeout = setTimeout(() => {
                             this.updateDimensions(true);
                         });
                     }
@@ -82,6 +84,26 @@ class TextSection extends React.Component<TextSectionProps> {
         }
     }
 
+    private getContentDescription = (data: ContentData) => {
+        if (Utils.isNotNull(data.customContent)) {
+            if (data.customContent === CustomContentTypes.TECHNOLOGY_LIST) {
+                return <div className={"items-list"}>
+                    {data.description.split(",").map((phrase, index) => {
+                        return <div key={index} className={"technology-item"}>{phrase}</div>
+                    })}
+                </div>
+            } else if (data.customContent === CustomContentTypes.COMPANIES_LIST) {
+                return <div className={"items-list"}>
+                    {data.description.split(",").map((phrase, index) => {
+                        return <div key={index} className={`logo-item ${phrase}`}></div>
+                    })}
+                </div>
+            }
+        } else {
+            return data.description;
+        }
+    }
+
     render(){
         const { data } = this.props;
         return (
@@ -91,7 +113,7 @@ class TextSection extends React.Component<TextSectionProps> {
                     <div className="mask"></div>
                     <div className="mask-dve"></div>
                     <div className={"content-text"} ref={this.myRef}>
-                        {data.description}
+                        {this.getContentDescription(data)}
                     </div>
                 </div>
             </div>
