@@ -93,7 +93,7 @@ class TextSection extends React.Component<TextSectionProps> {
                     })}
                 </div>
             } else if (data.customContent === CustomContentTypes.COMPANIES_LIST) {
-                return <div className={"items-list"}>
+                return <div className={"items-list with-background"}>
                     {data.description.split(",").map((phrase, index) => {
                         return <div key={index} className={`logo-item ${phrase}`}></div>
                     })}

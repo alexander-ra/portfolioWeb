@@ -2,7 +2,7 @@ import React from 'react';
 import './ContentPage.scss';
 import {connect} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {faAsterisk, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {Position} from "../../models/common/Position";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
 import {CircleRotationUtils} from "../../utils/CircleRotationUtils";
@@ -11,6 +11,7 @@ import TextSection, {TextSectionPosition} from "./TextSection";
 import {ContentData, MenuContent} from '../../labels/ContentLabels';
 import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
+import AppStorage, {StorageArrayKey, StorageKey} from "../../utils/AppStorage";
 
 interface ContentPageProps {
     isClosing: boolean;
@@ -47,8 +48,10 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     private readonly ROTATION_TRANSITION_MS = 660;
     private slowRotationTimeout: any;
     private doingFastRotation: boolean = false;
-
     private lastOffsetDegrees = null;
+
+    private readonly MIN_TIME_VISITED = 5000;
+    private visitedTimeout: NodeJS.Timeout = null;
 
     constructor(props: ContentPageProps) {
         super(props);
@@ -65,6 +68,9 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             isSlowRotation: false
         };
         this.addCubeRotationListeners();
+        if (!this.doingFastRotation) {
+            this.calculateDegrees();
+        }
     }
 
     componentDidUpdate(prevProps: Readonly<ContentPageProps>, prevState: Readonly<ContentPageState>) {
@@ -76,9 +82,24 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             }
         }
         if (prevState.selectedMenuIndex !== this.state.selectedMenuIndex) {
+            clearTimeout(this.visitedTimeout);
+            const visitedSections: CircleMenuStates[] = AppStorage.getArrayFromLocalStorage(StorageArrayKey.VISITED_SECTIONS) || []
+            const isVisited = visitedSections.includes(this.props.sections[this.state.selectedMenuIndex].menu);
+
+            if (!isVisited) {
+                this.visitedTimeout = setTimeout(() => {
+                    AppStorage.addItemToArrayInLocalStorage(StorageArrayKey.VISITED_SECTIONS, this.props.sections[this.state.selectedMenuIndex].menu);
+                    this.setState({});
+                    }, this.MIN_TIME_VISITED);
+            }
+
             this.setState({
                 menuContent: ContentData.getMenuContent(this.props.sections[this.state.selectedMenuIndex].menu)
             });
+        }
+        if (((prevState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees)
+                || prevState.selectedMenuIndex !== this.state.selectedMenuIndex) && !this.doingFastRotation) {
+            this.calculateDegrees();
         }
     }
 
@@ -295,11 +316,16 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 
     renderSections(): JSX.Element[] {
         const sections: JSX.Element[] = [];
+        const visitedSections: CircleMenuStates[] = AppStorage.getArrayFromLocalStorage(StorageArrayKey.VISITED_SECTIONS) || [];
         this.props.sections.forEach((section: Section, index) => {
+           const isVisited = visitedSections.includes(section.menu);
            sections.push(
                <div className={`menu-section circle-rot${this.sectionDegrees[index]}deg ${this.state.selectedMenuIndex === index ? "selected": ""}`}
                     onClick={() => { this.clickSection(index); }}>
-                   <FontAwesomeIcon className={`menu-icon circle-rot${this.sectionIconDegrees[index]}deg`} icon={section.icon}/>
+                   <div className={`menu-icon-wrapper circle-rot${this.sectionIconDegrees[index]}deg`}>
+                       <FontAwesomeIcon className={"menu-icon"}  icon={section.icon}></FontAwesomeIcon>
+                       {!isVisited && <div className={"icon-new"}>New*</div>}
+                   </div>
                </div>
            )
         });
@@ -331,9 +357,6 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     render(){
-        if (!this.doingFastRotation) {
-            this.calculateDegrees();
-        }
         return (
         <div draggable={!this.state.isSlowRotation} className={`content-page-wrapper ${this.getContentPageAdditionalClasses()}`}>
             <div className={"indicator"}>

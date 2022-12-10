@@ -176,10 +176,13 @@ $menu-radius: 6em;
         justify-content: center;
         align-items: flex-end;
         border-radius: 2em;
-        background-color: rgba(black, 0.25);
 
-        .dark-theme & {
-          background-color: rgba(white, 0.25);
+        &.with-background {
+          background-color: rgba(black, 0.25);
+
+          .dark-theme & {
+            background-color: rgba(white, 0.25);
+          }
         }
 
         .technology-item {

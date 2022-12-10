@@ -9,3 +9,4 @@ export const ACTION_OTHER_TWO = "ACTION_OTHER_TWO";
 export const SET_LAYOUT_TYPE = "SET_LAYOUT_TYPE";
 export const SET_WINDOW_SIZE = "SET_WINDOW_SIZE";
 export const SET_THEME = "SET_THEME";
+export const ADD_CIRCLE_MENU_STATE = "ADD_CIRCLE_MENU_STATE";

@@ -1,3 +1,5 @@
+import Utils from "./Utils";
+
 export default class AppStorage {
 
     public static setStorage(key: StorageKey, value: any): void {
@@ -11,12 +13,43 @@ export default class AppStorage {
     public static deleteStorage(key: StorageKey): any {
         window.localStorage.removeItem(key);
     }
+
+    public static saveArrayToLocalStorage(key: StorageArrayKey, array: any[]) {
+        if (Utils.isArrayEmpty(array)) {
+            localStorage.setItem(key, JSON.stringify([]));
+        }
+        localStorage.setItem(key, JSON.stringify(array));
+    }
+
+    public static getArrayFromLocalStorage(key: StorageArrayKey) {
+        let array = []
+        try {
+            array = JSON.parse(localStorage.getItem(key));
+        } catch (e) {
+            console.warn("Error parsing array from local storage", e);
+        }
+        return array;
+    }
+
+    public static addItemToArrayInLocalStorage(key: StorageArrayKey, item: any) {
+        let array = AppStorage.getArrayFromLocalStorage(key);
+        if (Utils.isArrayEmpty(array)) {
+            array = [];
+        }
+        array.push(item);
+        AppStorage.saveArrayToLocalStorage(key, array);
+    }
+
 }
 
 export enum StorageKey {
     THEME = "THEME",
     CHESS_GAME_ID = "CHESS_GAME_ID",
-    PLAYER_AVATAR = "PLAYER_AVATAR",
+    PLAYER_AVATAR = "PLAYER_AVATAR"
+}
+
+export enum StorageArrayKey {
+    VISITED_SECTIONS = "VISITED_SECTIONS",
 }
 
 export { AppStorage };

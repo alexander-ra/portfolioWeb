@@ -1,4 +1,4 @@
-import {CHANGE_PAGE, COMPLETE_DEV_INTRO} from "../ActionTypes";
+import {ADD_CIRCLE_MENU_STATE, CHANGE_PAGE, COMPLETE_DEV_INTRO} from "../ActionTypes";
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 import {Page} from "../../models/common/Page";
 import {UIOrientation} from "../../components/core/UIOrientation";
@@ -18,4 +18,11 @@ const changePage = (page: Page) => ({
     }
 });
 
-export { completeDevIntro, changePage };
+const addCircleMenuState = (state: CubeMenuStates) => ({
+    type: ADD_CIRCLE_MENU_STATE,
+    payload: {
+        state: state,
+    }
+});
+
+export { completeDevIntro, changePage, addCircleMenuState };
