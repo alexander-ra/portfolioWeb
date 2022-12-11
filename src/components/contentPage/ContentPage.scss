@@ -40,7 +40,7 @@ $menu-radius: 6em;
   height: 100%;
   opacity: 0;
   animation: bodyAppear 1s forwards;
-  font-size: css-min(1.25em, 1.5vw, 3vh);
+  font-size: css-min(1.25em, calc(1.5 * var(--calc-vw)), calc(3 * var(--calc-vh)));
 
   &.slow-rotation {
     .box {
@@ -52,7 +52,7 @@ $menu-radius: 6em;
   }
 
   .vw-portrait & {
-    font-size: css-min(1.33em, 1.75vh, 3vw);
+    font-size: css-min(1.33em, calc(1.75 * var(--calc-vh)), calc(3 * var(--calc-vw)));
   }
 
   &.dragging {

@@ -1,11 +1,11 @@
-import * as isAndroid from "@braintree/browser-detection/is-android";
 import * as isIos from "@braintree/browser-detection/is-ios";
 import isIE from "@braintree/browser-detection/is-ie";
 import isEdge from "@braintree/browser-detection/is-edge";
 import isChrome from "@braintree/browser-detection/is-chrome";
 import MobileDetect from "mobile-detect";
 import Utils from "./Utils";
-import { UIOrientation } from "../components/core/UIOrientation";
+import {UIOrientation} from "../components/core/UIOrientation";
+import {LayoutType} from "../components/core/LayoutType";
 
 export enum deviceFamily {
     "windows" = "windows",

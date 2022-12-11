@@ -5,10 +5,10 @@
   position: relative;
   width: 100%;
   height: 100%;
-  font-size: css-min(1em, 2.25vh);
+  font-size: css-min(1em, calc(2.25 * var(--calc-vh)));
 
   .vw-portrait & {
-    font-size: css-min(1.1em, 1.66vh);
+    font-size: css-min(1.1em, calc(1.66 * var(--calc-vh)), calc(2.6 * var(--calc-vw)));
   }
 
   .game-end {

@@ -1,0 +1,34 @@
+@import "../../App";
+
+.device-simulator-wrapper {
+    height: 4em;
+    background-color: rgba($shadow, 1);
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+    display: flex;
+    padding: 1em;
+    border-radius: 1em;
+    z-index: 2;
+
+    .device {
+        width: 4em;
+        height: 4em;
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        margin: 0 .2em;
+
+        &.desktop-device {
+            background-image: url("../../../public/landing_desktop.svg");
+        }
+
+        &.mobile-device {
+            background-image: url("../../../public/landing_phone.svg");
+        }
+
+        &.tablet-device {
+            background-image: url("../../../public/landing_tablet.svg");
+        }
+    }
+}

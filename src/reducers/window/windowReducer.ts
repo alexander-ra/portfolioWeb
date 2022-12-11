@@ -18,7 +18,7 @@ export interface WindowReduceModel {
 
 export const initialState: WindowReduceModel = {
     uiOrientation: UIOrientation.LANDSCAPE,
-    layoutType: LayoutType.DESKTOP,
+    layoutType: LayoutType.NATIVE,
     windowSize: {
         height: 0,
         width: 0,

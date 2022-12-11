@@ -72,7 +72,7 @@
 
 
 html {
-  font-size: css-min(1vmax, 3px);
+  font-size: css-min(var(--calc-vmax), 3px);
   overflow: hidden;
 }
 
@@ -80,25 +80,16 @@ body {
   margin: auto;
   width:100%;
   height: 100%;
-  font-size: css-max(1vmin, css-min(calc(1.25rem + 0.61vmin), 16px));
+  font-size: css-max(calc( 1 * var(--calc-vmin)), css-min(calc(1.5 * var(--calc-vmax)), 16px));
 
   &.vw-portrait {
-    font-size: css-max(1vmin, css-min(calc(1.25rem + 1.22vmin), 12px));
+    font-size: css-max((calc(.22 * var(--calc-vmax))), css-min(calc(1.25rem + (0.22 * var(--calc-vmin))), 11px));
   }
 }
 
 html {
-  font-size: css-min(1vw, 11px);
+  font-size: css-min(var(--calc-vw), 11px);
 }
-
-// Targets mobile only. IOS 15 is calculating vmin/vh with tabs bar included that is causing some UI issues
-// This code relays on the vh calculated with JS that is more accurate than the CSS calculation
-@media screen and (min-aspect-ratio: 16/9) and (pointer:coarse) {
-  html {
-    font-size: calc(var(--vh) * 1.7);
-  }
-}
-
 img{
   width: 100%;
   height: 100%;
@@ -112,11 +103,11 @@ img{
   background-image: url("../public/spectrum-triangles.svg");
   background-size: cover;
   background-position: center;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 
   .dark-theme & {
     background-image: url("../public/spectrum-triangles-oposite.svg");

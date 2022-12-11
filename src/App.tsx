@@ -8,16 +8,20 @@ import ContentManager from './components/core/ContentManager';
 import BackButton from "./components/layout/BackButton";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
+import DeviceSimulator from "./components/layout/DeviceSimulator";
 
 function App() {
     library.add(fab);
   return (
       <Provider store={store}>
-          <div className={"background"}></div>
-          <div>
-              <Header></Header>
-              <BackButton />
-              <ContentManager />
+          <div className={"parent-wrapper"}>
+              <div className={"background"} />
+              <div className={"app-wrapper"}>
+                  <Header></Header>
+                  <BackButton />
+                  <ContentManager />
+                  <DeviceSimulator />
+              </div>
           </div>
       </Provider>
     );

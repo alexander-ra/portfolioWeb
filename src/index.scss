@@ -1,5 +1,37 @@
 @import "Themes";
 
+@media (orientation: portrait) {
+  body {
+    --calc-vh: calc( .5 * 1.5vmax);
+    --calc-vw: calc( .9 * 1.5vmax);
+    --calc-vmax: calc( .9 * 1.5vmax);
+    --calc-vmin: calc( .5 * 1.5vmax);
+
+    &.layout-native {
+      --calc-vh: calc( 1 * 1vh);
+      --calc-vw: calc( 1 * 1vw);
+      --calc-vmax: calc( 1 * 1vmax);
+      --calc-vmin: calc( 1 * 1vmin);
+    }
+  }
+}
+
+@media (orientation: landscape) {
+  body {
+    --calc-vh: calc( .5 * 1.5vmin);
+    --calc-vw: calc( .9 * 1.5vmin);
+    --calc-vmax: calc( .9 * 1.5vmin);
+    --calc-vmin: calc( .5 * 1.5vmin);
+
+    &.layout-native {
+      --calc-vh: calc( 1 * 1vh);
+      --calc-vw: calc( 1 * 1vw);
+      --calc-vmax: calc( 1 * 1vmax);
+      --calc-vmin: calc( 1 * 1vmin);
+    }
+  }
+}
+
 body {
   margin: 0;
   font-family: COMFORTAA, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,6 +39,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-size: 200%;
+  background-image: url("../public/spectrum-triangles-oposite.svg");
+  &.dark-theme {
+    background-image: url("../public/spectrum-triangles.svg");
+  }
 }
 
 button {
@@ -17,4 +55,37 @@ button {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.parent-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  margin: 0vh 0vw;
+
+  .app-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (orientation: portrait) {
+  .parent-wrapper {
+    .layout-mobile-portrait & {
+      width: 50vmax;
+      height: 90vmax;
+      margin: calc(50vh - 45vmax) calc(50vw - 25vmax);
+    }
+  }
+}
+
+@media (orientation: landscape) {
+  .parent-wrapper {
+    .layout-mobile-portrait &{
+      width: 50vmin;
+      height: 90vmin;
+      margin: calc(50vh - 45vmin) calc(50vw - 25vmin);
+    }
+  }
 }

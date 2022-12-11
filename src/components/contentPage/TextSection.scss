@@ -47,8 +47,8 @@ $menu-radius: 6em;
 
       .content-text {
         .vw-portrait & {
-          margin-top: 2em;
-          padding: 1em 1em 6.5em 1em;
+          margin-top: 2.4em;
+          padding: 1em 1em 3.5em 1em;
         }
       }
 
@@ -139,7 +139,7 @@ $menu-radius: 6em;
       .content-text {
         .vw-portrait & {
           padding: 3em 1em 1em 1em;
-          margin: 7em 0 2em 0;
+          margin: 6.7em 0 2em 0;
         }
       }
 
@@ -244,7 +244,7 @@ $menu-radius: 6em;
 
       .vw-landscape & {
         font-size: 1.5rem;
-        padding-top: 1.5rem;
+        padding-top: 1em;
       }
 
       .vw-portrait & {
@@ -263,11 +263,15 @@ $menu-radius: 6em;
 
 
       .dark-theme & {
-        background-image: url("../../../public/portalicus-oposite.svg");
+        background-image: url("../../../public/portalicus-selected.svg");
       }
 
       &:hover {
         background-image: url("../../../public/portalicus-selected.svg");
+
+        .dark-theme & {
+          background-image: url("../../../public/portalicus-oposite.svg");
+        }
       }
 
       .vw-landscape & {

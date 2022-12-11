@@ -8,11 +8,11 @@
     max-width: 32em;
 
     .vw-landscape & {
-        font-size: min(3.5vh, max(0.9em, 1vw));
+        font-size: min(calc(3.5 * var(--calc-vh)), max(0.9em, calc(var(--calc-vw))));
     }
 
     .vw-portrait & {
-        font-size: min(3vw, max(0.75em, 1.33vh));
+        font-size: min(calc(3 * var(--calc-vw)), max(0.9em, 1.33 * calc(var(--calc-vh))));
         flex: 0 0 33%;
     }
 }

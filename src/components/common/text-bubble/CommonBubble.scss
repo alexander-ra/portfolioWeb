@@ -8,7 +8,7 @@
   justify-content: center;
   flex-direction: column;
   margin: 0 .75em;
-  z-index: 2;
+  z-index: 3;
 
   .link-text {
     color: rgb($accent-primary);
@@ -39,7 +39,7 @@
 
     .avatar-wrapper {
       transition: width 0.5s;
-      width: 10em;
+      width: 66%;
     }
 
     .go-page {
@@ -54,7 +54,7 @@
 
     .avatar-wrapper {
       transition: width 1.5s;
-      width: 15em;
+      width: 100%;
     }
 
     .go-page {
@@ -67,6 +67,7 @@
   .avatar-wrapper {
     color: rgb($main-primary);
     white-space: nowrap;
+    max-width: 14em;
     z-index: 3;
 
     .avatar-icon {
@@ -164,7 +165,7 @@
   &.menu-bubble-wrapper {
     .vw-portrait & {
       margin: 1em .75em 2em .75em;
-      height: calc(36% - 3em);
+      height: calc(36% - 1em);
       align-items: start;
       position: relative;
     }
@@ -204,7 +205,7 @@
   background-image: url("../../../../public/pointer-sandwich.svg");
   background-position: center;
   background-size: 120% 600%;
-  height: 2em;
+  line-height: 2em;
   text-align: center;
   background-color: rgb($accent-primary);
   color: rgb($button-text-color);
@@ -216,13 +217,11 @@
 
 
   .vw-landscape & {
-    margin-top: -1em;
-    line-height: 2em;
+    margin-top: -1.2em;
   }
 
   .vw-portrait & {
-    margin: -1em auto 0em auto;
-    line-height: 1em;
+    margin: -1.2em auto 0em auto;
   }
 
   &:hover {

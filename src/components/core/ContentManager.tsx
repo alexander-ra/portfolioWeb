@@ -19,12 +19,14 @@ import BrowserUtils from '../../utils/BrowserUtils';
 import { UIOrientation } from './UIOrientation';
 import "./ContentManager.scss";
 import store from "../../store/store";
-import {setWindowSize} from "../../reducers/window/windowAction";
+import {setUiOrientation, setWindowSize} from "../../reducers/window/windowAction";
 import { ThemeType } from './ThemeType';
+import {LayoutType} from "./LayoutType";
 
 interface ContentManagerProps {
     pageToChange?: Page;
     theme: ThemeType;
+    layoutType: LayoutType;
 }
 
 interface ContentManagerState {
@@ -78,11 +80,61 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
                 this.removeFromClassList('light-theme');
             }
         }
+        if (prevProps.layoutType !== this.props.layoutType) {
+            //TODO everything like this must be in separate util class
+            if (this.props.layoutType === LayoutType.NATIVE) {
+                this.addToClassList('layout-native');
+                this.removeFromClassList('layout-mobile-portrait');
+                this.removeFromClassList('layout-mobile-landscape');
+                this.removeFromClassList('layout-tablet-portrait');
+                this.removeFromClassList('layout-tablet-landscape');
+            } else if (this.props.layoutType === LayoutType.MOBILE_PORTRAIT) {
+                this.addToClassList('layout-mobile-portrait');
+                this.removeFromClassList('layout-native');
+                this.removeFromClassList('layout-mobile-landscape');
+                this.removeFromClassList('layout-tablet-portrait');
+                this.removeFromClassList('layout-tablet-landscape');
+            } else if (this.props.layoutType === LayoutType.MOBILE_LANDSCAPE) {
+                this.addToClassList('layout-mobile-landscape');
+                this.removeFromClassList('layout-native');
+                this.removeFromClassList('layout-mobile-portrait');
+                this.removeFromClassList('layout-tablet-portrait');
+                this.removeFromClassList('layout-tablet-landscape');
+            } else if (this.props.layoutType === LayoutType.TABLET_PORTRAIT) {
+                this.addToClassList('layout-tablet-portrait');
+                this.removeFromClassList('layout-native');
+                this.removeFromClassList('layout-mobile-portrait');
+                this.removeFromClassList('layout-mobile-landscape');
+                this.removeFromClassList('layout-tablet-landscape');
+            } else if (this.props.layoutType === LayoutType.TABLET_LANDSCAPE) {
+                this.addToClassList('layout-tablet-landscape');
+                this.removeFromClassList('layout-native');
+                this.removeFromClassList('layout-mobile-portrait');
+                this.removeFromClassList('layout-mobile-landscape');
+                this.removeFromClassList('layout-tablet-portrait');
+            }
+
+        }
     }
 
     updateWindowClasses(element: Window): void {
         store.dispatch(setWindowSize(element.innerWidth, element.innerHeight));
-        const uiOrientation = BrowserUtils.getOrientation();
+        let uiOrientation = BrowserUtils.getOrientation();
+        const customLayout = this.props.layoutType;
+        if (customLayout !== LayoutType.NATIVE) {
+            if (customLayout === LayoutType.MOBILE_PORTRAIT || customLayout === LayoutType.TABLET_PORTRAIT) {
+                uiOrientation = UIOrientation.PORTRAIT;
+            } else if (customLayout === LayoutType.MOBILE_LANDSCAPE || customLayout === LayoutType.TABLET_LANDSCAPE) {
+                uiOrientation = UIOrientation.LANDSCAPE;
+            }
+            store.dispatch(setUiOrientation(uiOrientation));
+        } else {
+            this.addToClassList('layout-native');
+            this.removeFromClassList('layout-mobile-portrait');
+            this.removeFromClassList('layout-mobile-landscape');
+            this.removeFromClassList('layout-tablet-portrait');
+            this.removeFromClassList('layout-tablet-landscape');
+        }
 
         if (uiOrientation === UIOrientation.LANDSCAPE) {
             this.addToClassList("vw-landscape");
@@ -204,11 +256,12 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
 
 export default connect((state: any, ownProps) => {
     const { currentPage } = state.stagesReducer;
-    const { theme } = state.windowReducer;
+    const { theme, layoutType } = state.windowReducer;
     return {
         ...ownProps,
         pageToChange: currentPage,
-        theme
+        theme,
+        layoutType
     }
 }, null)(ContentManager);
 
