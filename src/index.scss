@@ -3,85 +3,47 @@
 html {
   --mobile-height: 80;
   --mobile-width: 40;
+  --mobile-scale: 1.5;
 
   --tablet-height: 75;
   --tablet-width: 60;
+  --tablet-scale: 0.8;
 }
 
 @media (orientation: portrait) {
   body {
-    &.layout-mobile-portrait {
-      --calc-vh: calc( var(--mobile-height) / 100 * 1vmax);
-      --calc-vw: calc( var(--mobile-width) / 100 * 1vmax);
-      --calc-vmax: calc( var(--mobile-height) / 100 * 1vmax);
+    &.layout-mobile-portrait, &.layout-mobile-landscape {
       --calc-vmin: calc( var(--mobile-width) / 100 * 1vmax);
-    }
-
-    &.layout-mobile-landscape {
-      --calc-vh: calc( var(--mobile-width) / 100 * 1vmax);
-      --calc-vw: calc( var(--mobile-height) / 100 * 1vmax);
       --calc-vmax: calc( var(--mobile-height) / 100 * 1vmax);
-      --calc-vmin: calc( var(--mobile-width) / 100 * 1vmax);
     }
 
-    &.layout-tablet-portrait {
-      --calc-vh: calc( var(--tablet-height) / 100 * 1vmax);
-      --calc-vw: calc( var(--tablet-width) / 100 * 1vmax);
-      --calc-vmax: calc( var(--tablet-height) / 100 * 1vmax);
+    &.layout-tablet-portrait, &.layout-tablet-landscape {
       --calc-vmin: calc( var(--tablet-width) / 100 * 1vmax);
-    }
-
-    &.layout-tablet-landscape {
-      --calc-vh: calc( var(--tablet-width) / 100 * 1vmax);
-      --calc-vw: calc( var(--tablet-height) / 100 * 1vmax);
       --calc-vmax: calc( var(--tablet-height) / 100 * 1vmax);
-      --calc-vmin: calc( var(--tablet-width) / 100 * 1vmax);
     }
 
     &.layout-native {
-      --calc-vh: calc( 1 * 1vh);
-      --calc-vw: calc( 1 * 1vw);
-      --calc-vmax: calc( 1 * 1vmax);
       --calc-vmin: calc( 1 * 1vmin);
+      --calc-vmax: calc( 1 * 1vmax);
     }
   }
 }
 
 @media (orientation: landscape) {
   body {
-    &.layout-mobile-portrait {
-      --calc-vh: calc( var(--mobile-height) / 100 * 1vmin);
-      --calc-vw: calc( var(--mobile-width) / 100 * 1vmin);
-      --calc-vmax: calc( var(--mobile-width) / 100 * 1vmin);
-      --calc-vmin: calc( var(--mobile-height) / 100 * 1vmin);
+    &.layout-mobile-portrait, &.layout-mobile-landscape {
+      --calc-vmin: calc( var(--mobile-width) / 100 * 1vmin);
+      --calc-vmax: calc( var(--mobile-height) / 100 * 1vmin);
     }
 
-    &.layout-mobile-landscape {
-      --calc-vh: calc( var(--mobile-width) / 100 * 1vmin);
-      --calc-vw: calc( var(--mobile-height) / 100 * 1vmin);
-      --calc-vmax: calc( var(--mobile-width) / 100 * 1vmin);
-      --calc-vmin: calc( var(--mobile-height) / 100 * 1vmin);
-    }
-
-    &.layout-tablet-portrait {
-      --calc-vh: calc( var(--tablet-height) / 100 * 1vmin);
-      --calc-vw: calc( var(--tablet-width) / 100 * 1vmin);
-      --calc-vmax: calc( var(--tablet-width) / 100 * 1vmin);
-      --calc-vmin: calc( var(--tablet-height) / 100 * 1vmin);
-    }
-
-    &.layout-tablet-landscape {
-      --calc-vh: calc( var(--tablet-width) / 100 * 1vmin);
-      --calc-vw: calc( var(--tablet-height) / 100 * 1vmin);
-      --calc-vmax: calc( var(--tablet-width) / 100 * 1vmin);
-      --calc-vmin: calc( var(--tablet-height) / 100 * 1vmin);
+    &.layout-tablet-portrait, &.layout-tablet-landscape {
+      --calc-vmin: calc( var(--tablet-width) / 100 * 1vmin);
+      --calc-vmax: calc( var(--tablet-height) / 100 * 1vmin);
     }
 
     &.layout-native {
-      --calc-vh: calc( 1 * 1vh);
-      --calc-vw: calc( 1 * 1vw);
-      --calc-vmax: calc( 1 * 1vmax);
       --calc-vmin: calc( 1 * 1vmin);
+      --calc-vmax: calc( 1 * 1vmax);
     }
   }
 }
@@ -159,24 +121,90 @@ code {
       width: calc(var(--mobile-width) * 1vmax);
       height: calc(var(--mobile-height) * 1vmax);
       margin: calc(50vh - var(--mobile-height) * .5vmax) calc(50vw - var(--mobile-width) * .5vmax);
+
+      .app-decorator:before {
+        width: 100%;
+        left: 0;
+        top: calc(var(--tablet-height) * 0.05vmax * -1);
+        height: calc(var(--tablet-height) * 0.05vmax);
+        border-radius: 100% 100% 0 0;
+      }
+
+      .app-decorator:after {
+        width: 100%;
+        left: 0;
+        bottom: calc(var(--tablet-height) * 0.05vmax * -1);
+        height: calc(var(--tablet-height) * 0.05vmax);
+        border-radius: 0 0 100% 100%;
+      }
     }
 
     .layout-mobile-landscape & {
       width: calc(var(--mobile-height) * 1vmax);
       height: calc(var(--mobile-width) * 1vmax);
       margin: calc(50vh - var(--mobile-width) * .5vmax) calc(50vw - var(--mobile-height) * .5vmax);
+
+      .app-decorator:before {
+        width: calc(var(--tablet-height) * 0.05vmax);
+        left: calc(var(--tablet-height) * 0.05vmax * -1);
+        top: 0;
+        height: 100%;
+        border-radius: 100% 0 0 100%;
+      }
+
+      .app-decorator:after {
+        width: calc(var(--tablet-height) * 0.05vmax);
+        right: calc(var(--tablet-height) * 0.05vmax * -1);
+        top: 0;
+        height: 100%;
+        border-radius: 0 0 100% 100%;
+        border-radius: 0 100% 100% 0;
+      }
     }
 
     .layout-tablet-portrait & {
       width: calc(var(--tablet-width) * 1vmax);
       height: calc(var(--tablet-height) * 1vmax);
       margin: calc(50vh - var(--tablet-height) * .5vmax) calc(50vw - var(--tablet-width) * .5vmax);
+
+      .app-decorator:before {
+        width: 100%;
+        left: 0;
+        top: calc(var(--tablet-height) * 0.1vmax * -1);
+        height: calc(var(--tablet-height) * 0.1vmax);
+        border-radius: 100% 100% 0 0;
+      }
+
+      .app-decorator:after {
+        width: 100%;
+        left: 0;
+        bottom: calc(var(--tablet-height) * 0.1vmax * -1);
+        height: calc(var(--tablet-height) * 0.1vmax);
+        border-radius: 0 0 100% 100%;
+      }
     }
 
     .layout-tablet-landscape & {
       width: calc(var(--tablet-height) * 1vmax);
       height: calc(var(--tablet-width) * 1vmax);
       margin: calc(50vh - var(--tablet-width) * .5vmax) calc(50vw - var(--tablet-height) * .5vmax);
+
+      .app-decorator:before {
+        width: calc(var(--tablet-height) * 0.1vmax);
+        left: calc(var(--tablet-height) * 0.1vmax * -1);
+        top: 0;
+        height: 100%;
+        border-radius: 100% 0 0 100%;
+      }
+
+      .app-decorator:after {
+        width: calc(var(--tablet-height) * 0.1vmax);
+        right: calc(var(--tablet-height) * 0.1vmax * -1);
+        top: 0;
+        height: 100%;
+        border-radius: 0 0 100% 100%;
+        border-radius: 0 100% 100% 0;
+      }
     }
   }
 }

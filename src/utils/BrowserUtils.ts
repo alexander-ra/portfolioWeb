@@ -110,14 +110,6 @@ export default class BrowserUtils {
         return BrowserUtils.isMobile() && Utils.isNotNull(this._md.tablet());
     }
 
-    // TODO: suppose to detect all tablets and desktop devices with big widget size
-    public static isBigScreen(): boolean {
-        const isDesktopWithBigFrame: boolean = (!BrowserUtils.isMobile() && (window.innerWidth >= 600 && window.innerHeight >= 600));
-
-        return BrowserUtils.isTablet()
-            || isDesktopWithBigFrame;
-    }
-
     // Internet Explorer 6-11
     public static isIE(): boolean {
         return isIE();
@@ -181,22 +173,6 @@ export default class BrowserUtils {
         }
 
         return null;
-    }
-
-    public static getDeviceType(): string {
-        let deviceType: string = null;
-
-        if (this.isMobile()) {
-            if (this.isBigScreen()) {
-                deviceType = DeviceType.tablet;
-            } else {
-                deviceType = DeviceType.smartphone;
-            }
-        } else {
-            deviceType = DeviceType.pc;
-        }
-
-        return deviceType;
     }
 
     public static getDeviceOsVersion(): string {

@@ -16,17 +16,19 @@ import {
 import {faAccessibleIcon} from "@fortawesome/free-brands-svg-icons";
 import ChessPage from '../chess/ChessPage';
 import BrowserUtils from '../../utils/BrowserUtils';
-import { UIOrientation } from './UIOrientation';
+import {UIOrientation} from './UIOrientation';
 import "./ContentManager.scss";
 import store from "../../store/store";
-import {setUiOrientation, setWindowSize} from "../../reducers/window/windowAction";
-import { ThemeType } from './ThemeType';
+import {setLayoutType, setUiOrientation, setWindowSize} from "../../reducers/window/windowAction";
+import {ThemeType} from './ThemeType';
 import {LayoutType} from "./LayoutType";
+import Utils from "../../utils/Utils";
 
 interface ContentManagerProps {
     pageToChange?: Page;
     theme: ThemeType;
     layoutType: LayoutType;
+    windowSize: {width: number, height: number};
 }
 
 interface ContentManagerState {
@@ -43,9 +45,11 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     };
     private readonly addToClassList = (classToAdd: string) => document.body.classList.add(classToAdd);
     private readonly removeFromClassList = (classToRemove: string) => document.body.classList.remove(classToRemove);
+    private mainContentRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: ContentManagerProps) {
         super(props);
+        this.mainContentRef = React.createRef();
         this.state = {
             actualPage: Page.LANDING,
         }
@@ -115,6 +119,12 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
             }
             this.updateWindowClasses(window);
         }
+        if (prevProps.windowSize.width !== this.props.windowSize.width && Utils.isNotNull(this.mainContentRef)) {
+            const currElement = this.mainContentRef.current;
+            if (Utils.isNotNull(currElement?.getBoundingClientRect()) && currElement.getBoundingClientRect().width > window.innerWidth) {
+                store.dispatch(setLayoutType(LayoutType.NATIVE));
+            }
+        }
     }
 
     updateWindowClasses(element: Window): void {
@@ -143,11 +153,6 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
             this.addToClassList("vw-portrait");
             this.removeFromClassList("vw-landscape");
 
-        }
-        if (BrowserUtils.isBigScreen()) {
-            this.addToClassList("vw-big-screen");
-        } else {
-            this.removeFromClassList("vw-big-screen");
         }
 
         if (!BrowserUtils.isTouchable()) {
@@ -231,7 +236,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     }
 
     render(){
-        return (<div className={"main-content-wrapper"}>
+        return (<div className={"main-content-wrapper"} ref={this.mainContentRef}>
             {
                 this.displayPage(Page.LANDING) &&
                 <LandingPage isClosing={this.state.closingPage === Page.LANDING} />
@@ -256,12 +261,13 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
 
 export default connect((state: any, ownProps) => {
     const { currentPage } = state.stagesReducer;
-    const { theme, layoutType } = state.windowReducer;
+    const { theme, layoutType, windowSize } = state.windowReducer;
     return {
         ...ownProps,
         pageToChange: currentPage,
         theme,
-        layoutType
+        layoutType,
+        windowSize
     }
 }, null)(ContentManager);
 

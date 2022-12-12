@@ -70,25 +70,19 @@
   font-weight: bold;
 }
 
-
-html {
-  font-size: css-min(var(--calc-vmax), 3px);
-  overflow: hidden;
-}
-
 body {
   margin: auto;
   width:100%;
   height: 100%;
-  font-size: css-max(calc( 1 * var(--calc-vmin)), css-min(calc(1.5 * var(--calc-vmax)), 16px));
+  font-size: calc( 2 * var(--calc-vmin));
 
   &.vw-portrait {
-    font-size: css-max((calc(.22 * var(--calc-vmax))), css-min(calc(1.25rem + (0.22 * var(--calc-vmin))), 11px));
+    font-size: calc( 2.25 * var(--calc-vmin));
   }
 }
 
 html {
-  font-size: css-min(var(--calc-vw), 11px);
+  font-size: var(--calc-vmin);
 }
 img{
   width: 100%;
