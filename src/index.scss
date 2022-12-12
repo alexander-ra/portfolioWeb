@@ -112,9 +112,18 @@ code {
     monospace;
 }
 
-.device-frame {
-  background-image: url("../public/landing_tablet_frame.svg");
-}
+//.device-frame {
+//  height: 150vmin;
+//  width: 60vmin;
+//  position: absolute;
+//  transform: rotate(270deg);
+//  background-position: center;
+//  background-repeat: no-repeat;
+//  background-size: auto;
+//  left: 60em;
+//  top: -27em;
+//  background-image: url("../public/landing_tablet_frame.svg");
+//}
 
 .parent-wrapper {
   width: 100vw;
@@ -127,6 +136,20 @@ code {
     overflow: hidden;
     width: 100%;
     height: 100%;
+  }
+
+  .app-decorator:before {
+    content: "";
+    display: block;
+    position: absolute;
+    background-color: black;
+  }
+
+  .app-decorator:after {
+    content: "";
+    display: block;
+    position: absolute;
+    background-color: black;
   }
 }
 
@@ -164,24 +187,90 @@ code {
       width: calc(var(--mobile-width) * 1vmin);
       height: calc(var(--mobile-height) * 1vmin);
       margin: calc(50vh - var(--mobile-height) * .5vmin) calc(50vw - var(--mobile-width) * .5vmin);
+
+      .app-decorator:before {
+        width: 100%;
+        left: 0;
+        top: calc(var(--tablet-height) * 0.05vmin * -1);
+        height: calc(var(--tablet-height) * 0.05vmin);
+        border-radius: 100% 100% 0 0;
+      }
+
+      .app-decorator:after {
+        width: 100%;
+        left: 0;
+        bottom: calc(var(--tablet-height) * 0.05vmin * -1);
+        height: calc(var(--tablet-height) * 0.05vmin);
+        border-radius: 0 0 100% 100%;
+      }
     }
 
     .layout-mobile-landscape & {
       width: calc(var(--mobile-height) * 1vmin);
       height: calc(var(--mobile-width) * 1vmin);
       margin: calc(50vh - var(--mobile-width) * .5vmin) calc(50vw - var(--mobile-height) * .5vmin);
+
+      .app-decorator:before {
+        width: calc(var(--tablet-height) * 0.05vmin);
+        left: calc(var(--tablet-height) * 0.05vmin * -1);
+        top: 0;
+        height: 100%;
+        border-radius: 100% 0 0 100%;
+      }
+
+      .app-decorator:after {
+        width: calc(var(--tablet-height) * 0.05vmin);
+        right: calc(var(--tablet-height) * 0.05vmin * -1);
+        top: 0;
+        height: 100%;
+        border-radius: 0 0 100% 100%;
+        border-radius: 0 100% 100% 0;
+      }
     }
 
     .layout-tablet-portrait & {
       width: calc(var(--tablet-width) * 1vmin);
       height: calc(var(--tablet-height) * 1vmin);
       margin: calc(50vh - var(--tablet-height) * .5vmin) calc(50vw - var(--tablet-width) * .5vmin);
+
+      .app-decorator:before {
+        width: 100%;
+        left: 0;
+        top: calc(var(--tablet-height) * 0.1vmin * -1);
+        height: calc(var(--tablet-height) * 0.1vmin);
+        border-radius: 100% 100% 0 0;
+      }
+
+      .app-decorator:after {
+        width: 100%;
+        left: 0;
+        bottom: calc(var(--tablet-height) * 0.1vmin * -1);
+        height: calc(var(--tablet-height) * 0.1vmin);
+        border-radius: 0 0 100% 100%;
+      }
     }
 
     .layout-tablet-landscape & {
       width: calc(var(--tablet-height) * 1vmin);
       height: calc(var(--tablet-width) * 1vmin);
       margin: calc(50vh - var(--tablet-width) * .5vmin) calc(50vw - var(--tablet-height) * .5vmin);
+
+      .app-decorator:before {
+        width: calc(var(--tablet-height) * 0.1vmin);
+        left: calc(var(--tablet-height) * 0.1vmin * -1);
+        top: 0;
+        height: 100%;
+        border-radius: 100% 0 0 100%;
+      }
+
+      .app-decorator:after {
+        width: calc(var(--tablet-height) * 0.1vmin);
+        right: calc(var(--tablet-height) * 0.1vmin * -1);
+        top: 0;
+        height: 100%;
+        border-radius: 0 0 100% 100%;
+        border-radius: 0 100% 100% 0;
+      }
     }
   }
 }
