@@ -113,7 +113,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
                 this.removeFromClassList('layout-mobile-landscape');
                 this.removeFromClassList('layout-tablet-portrait');
             }
-
+            this.updateWindowClasses(window);
         }
     }
 

@@ -97,10 +97,6 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                 menuContent: ContentData.getMenuContent(this.props.sections[this.state.selectedMenuIndex].menu)
             });
         }
-        if (((prevState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees)
-                || prevState.selectedMenuIndex !== this.state.selectedMenuIndex) && !this.doingFastRotation) {
-            this.calculateDegrees();
-        }
     }
 
     addCubeRotationListeners() {
@@ -357,6 +353,9 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     render(){
+        if (!this.doingFastRotation) {
+            this.calculateDegrees();
+        }
         return (
         <div draggable={!this.state.isSlowRotation} className={`content-page-wrapper ${this.getContentPageAdditionalClasses()}`}>
             <div className={"indicator"}>

@@ -1,0 +1,12 @@
+@import "../../App";
+
+.device-rotator-wrapper {
+    height: 4em;
+    color: rgb($contrast-primary);
+    font-size: 2em;
+    position: absolute;
+    top: 0;
+    right: -1.5em;
+    z-index: 2;
+    cursor: pointer;
+}

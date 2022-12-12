@@ -157,7 +157,7 @@ $menu-radius: 6em;
     box-shadow: inset 0 0 3em -2em rgb($shadow);
 
     .vw-landscape & {
-      width: calc(50vw - 4em);
+      width: calc(50 * var(--calc-vw) - 4em);
       max-width: 45em;
       min-width: 30em;
     }
@@ -344,7 +344,7 @@ $menu-radius: 6em;
       top: calc(50% - 6em);
       position: absolute;
       height: 12em;
-      width: calc(50vw - 10em);
+      width: calc((50 * var(--calc-vw)) - 10em);
       opacity: .2;
       z-index: -1;
     }

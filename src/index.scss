@@ -1,11 +1,42 @@
 @import "Themes";
 
+html {
+  --mobile-height: 80;
+  --mobile-width: 40;
+
+  --tablet-height: 75;
+  --tablet-width: 60;
+}
+
 @media (orientation: portrait) {
   body {
-    --calc-vh: calc( .5 * 1.5vmax);
-    --calc-vw: calc( .9 * 1.5vmax);
-    --calc-vmax: calc( .9 * 1.5vmax);
-    --calc-vmin: calc( .5 * 1.5vmax);
+    &.layout-mobile-portrait {
+      --calc-vh: calc( var(--mobile-height) / 100 * 1vmax);
+      --calc-vw: calc( var(--mobile-width) / 100 * 1vmax);
+      --calc-vmax: calc( var(--mobile-height) / 100 * 1vmax);
+      --calc-vmin: calc( var(--mobile-width) / 100 * 1vmax);
+    }
+
+    &.layout-mobile-landscape {
+      --calc-vh: calc( var(--mobile-width) / 100 * 1vmax);
+      --calc-vw: calc( var(--mobile-height) / 100 * 1vmax);
+      --calc-vmax: calc( var(--mobile-height) / 100 * 1vmax);
+      --calc-vmin: calc( var(--mobile-width) / 100 * 1vmax);
+    }
+
+    &.layout-tablet-portrait {
+      --calc-vh: calc( var(--tablet-height) / 100 * 1vmax);
+      --calc-vw: calc( var(--tablet-width) / 100 * 1vmax);
+      --calc-vmax: calc( var(--tablet-height) / 100 * 1vmax);
+      --calc-vmin: calc( var(--tablet-width) / 100 * 1vmax);
+    }
+
+    &.layout-tablet-landscape {
+      --calc-vh: calc( var(--tablet-width) / 100 * 1vmax);
+      --calc-vw: calc( var(--tablet-height) / 100 * 1vmax);
+      --calc-vmax: calc( var(--tablet-height) / 100 * 1vmax);
+      --calc-vmin: calc( var(--tablet-width) / 100 * 1vmax);
+    }
 
     &.layout-native {
       --calc-vh: calc( 1 * 1vh);
@@ -18,10 +49,33 @@
 
 @media (orientation: landscape) {
   body {
-    --calc-vh: calc( .5 * 1.5vmin);
-    --calc-vw: calc( .9 * 1.5vmin);
-    --calc-vmax: calc( .9 * 1.5vmin);
-    --calc-vmin: calc( .5 * 1.5vmin);
+    &.layout-mobile-portrait {
+      --calc-vh: calc( var(--mobile-height) / 100 * 1vmin);
+      --calc-vw: calc( var(--mobile-width) / 100 * 1vmin);
+      --calc-vmax: calc( var(--mobile-width) / 100 * 1vmin);
+      --calc-vmin: calc( var(--mobile-height) / 100 * 1vmin);
+    }
+
+    &.layout-mobile-landscape {
+      --calc-vh: calc( var(--mobile-width) / 100 * 1vmin);
+      --calc-vw: calc( var(--mobile-height) / 100 * 1vmin);
+      --calc-vmax: calc( var(--mobile-width) / 100 * 1vmin);
+      --calc-vmin: calc( var(--mobile-height) / 100 * 1vmin);
+    }
+
+    &.layout-tablet-portrait {
+      --calc-vh: calc( var(--tablet-height) / 100 * 1vmin);
+      --calc-vw: calc( var(--tablet-width) / 100 * 1vmin);
+      --calc-vmax: calc( var(--tablet-width) / 100 * 1vmin);
+      --calc-vmin: calc( var(--tablet-height) / 100 * 1vmin);
+    }
+
+    &.layout-tablet-landscape {
+      --calc-vh: calc( var(--tablet-width) / 100 * 1vmin);
+      --calc-vw: calc( var(--tablet-height) / 100 * 1vmin);
+      --calc-vmax: calc( var(--tablet-width) / 100 * 1vmin);
+      --calc-vmin: calc( var(--tablet-height) / 100 * 1vmin);
+    }
 
     &.layout-native {
       --calc-vh: calc( 1 * 1vh);
@@ -41,6 +95,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   background-size: 200%;
+  background-position: center;
   background-image: url("../public/spectrum-triangles-oposite.svg");
   &.dark-theme {
     background-image: url("../public/spectrum-triangles.svg");
@@ -57,14 +112,19 @@ code {
     monospace;
 }
 
+.device-frame {
+  background-image: url("../public/landing_tablet_frame.svg");
+}
+
 .parent-wrapper {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
   position: relative;
   margin: 0vh 0vw;
 
   .app-wrapper {
+    position: relative;
+    overflow: hidden;
     width: 100%;
     height: 100%;
   }
@@ -73,19 +133,55 @@ code {
 @media (orientation: portrait) {
   .parent-wrapper {
     .layout-mobile-portrait & {
-      width: 50vmax;
-      height: 90vmax;
-      margin: calc(50vh - 45vmax) calc(50vw - 25vmax);
+      width: calc(var(--mobile-width) * 1vmax);
+      height: calc(var(--mobile-height) * 1vmax);
+      margin: calc(50vh - var(--mobile-height) * .5vmax) calc(50vw - var(--mobile-width) * .5vmax);
+    }
+
+    .layout-mobile-landscape & {
+      width: calc(var(--mobile-height) * 1vmax);
+      height: calc(var(--mobile-width) * 1vmax);
+      margin: calc(50vh - var(--mobile-width) * .5vmax) calc(50vw - var(--mobile-height) * .5vmax);
+    }
+
+    .layout-tablet-portrait & {
+      width: calc(var(--tablet-width) * 1vmax);
+      height: calc(var(--tablet-height) * 1vmax);
+      margin: calc(50vh - var(--tablet-height) * .5vmax) calc(50vw - var(--tablet-width) * .5vmax);
+    }
+
+    .layout-tablet-landscape & {
+      width: calc(var(--tablet-height) * 1vmax);
+      height: calc(var(--tablet-width) * 1vmax);
+      margin: calc(50vh - var(--tablet-width) * .5vmax) calc(50vw - var(--tablet-height) * .5vmax);
     }
   }
 }
 
 @media (orientation: landscape) {
   .parent-wrapper {
-    .layout-mobile-portrait &{
-      width: 50vmin;
-      height: 90vmin;
-      margin: calc(50vh - 45vmin) calc(50vw - 25vmin);
+    .layout-mobile-portrait & {
+      width: calc(var(--mobile-width) * 1vmin);
+      height: calc(var(--mobile-height) * 1vmin);
+      margin: calc(50vh - var(--mobile-height) * .5vmin) calc(50vw - var(--mobile-width) * .5vmin);
+    }
+
+    .layout-mobile-landscape & {
+      width: calc(var(--mobile-height) * 1vmin);
+      height: calc(var(--mobile-width) * 1vmin);
+      margin: calc(50vh - var(--mobile-width) * .5vmin) calc(50vw - var(--mobile-height) * .5vmin);
+    }
+
+    .layout-tablet-portrait & {
+      width: calc(var(--tablet-width) * 1vmin);
+      height: calc(var(--tablet-height) * 1vmin);
+      margin: calc(50vh - var(--tablet-height) * .5vmin) calc(50vw - var(--tablet-width) * .5vmin);
+    }
+
+    .layout-tablet-landscape & {
+      width: calc(var(--tablet-height) * 1vmin);
+      height: calc(var(--tablet-width) * 1vmin);
+      margin: calc(50vh - var(--tablet-width) * .5vmin) calc(50vw - var(--tablet-height) * .5vmin);
     }
   }
 }

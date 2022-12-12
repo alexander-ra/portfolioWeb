@@ -9,13 +9,17 @@ import BackButton from "./components/layout/BackButton";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import DeviceSimulator from "./components/layout/DeviceSimulator";
+import DeviceRotator from './components/layout/DeviceRotator';
 
 function App() {
     library.add(fab);
   return (
       <Provider store={store}>
+          <div className={"device-frame"}></div>
           <div className={"parent-wrapper"}>
-              <div className={"background"} />
+              <div className={"app-decorator"}>
+                  <DeviceRotator />
+              </div>
               <div className={"app-wrapper"}>
                   <Header></Header>
                   <BackButton />
