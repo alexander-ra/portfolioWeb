@@ -20,6 +20,12 @@
         }
     }
 
+    &.closed {
+        .wall {
+            filter: brightness(0.5);
+        }
+    }
+
     &.closing {
         .wall {
             opacity: 0;
@@ -72,7 +78,7 @@
 
     &:hover:not(.opened):not(.closing) {
         .wall {
-
+            filter: brightness(1);
             .wall-content {
                 border: 0.33em solid rgb($accent-primary);
             }
@@ -92,8 +98,9 @@
     }
 
     .wall {
-        transition-property: transform;
-        transition-duration: 1s;
+        filter: brightness(1);
+        transition-property: transform, filter;
+        transition-duration: 1s, 1s;
         display: flex;
         align-items: center;
         justify-content: center;

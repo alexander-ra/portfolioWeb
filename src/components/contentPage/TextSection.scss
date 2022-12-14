@@ -31,7 +31,6 @@ $menu-radius: 6em;
 
 
   &.text-section-left {
-    animation: sectionAppearLeft 2s;
     margin: 0 3em 0 1em;
 
     .vw-landscape & {
@@ -75,9 +74,9 @@ $menu-radius: 6em;
       .mask-dve {
         .vw-landscape & {
           float: right;
-          background-position: -55% 0;
-          shape-outside: circle(70% at 100% 50%);
-          clip-path: circle(100% at 160% 50%);
+          background-position: -15% 0;
+          shape-outside: circle(65% at 100% 50%);
+          clip-path: circle(100% at 170% 50%);
         }
         .vw-portrait & {
           bottom: 0;
@@ -87,7 +86,6 @@ $menu-radius: 6em;
     }
   }
   &.text-section-right {
-    animation: sectionAppearRight 2s;
     margin: 0 1em 0 3em;
 
     .vw-landscape & {
@@ -109,9 +107,9 @@ $menu-radius: 6em;
     .mask-dve {
       .vw-landscape & {
         float: left;
-        background-position: 155% 0;
-        shape-outside: circle(70% at 0 50%);
-        clip-path: circle(100% at -60% 50%);
+        background-position: 115% 0;
+        shape-outside: circle(65% at 0 50%);
+        clip-path: circle(100% at -70% 50%);
       }
 
       .vw-portrait & {
@@ -144,8 +142,6 @@ $menu-radius: 6em;
   .content {
     height: 100%;
     color: rgb($main-primary);
-    opacity: 0;
-    animation: contentAppear 1s 2s forwards;
     box-shadow: inset 0 0 3em -2em rgb($shadow);
 
     .vw-landscape & {
@@ -331,19 +327,4 @@ $menu-radius: 6em;
       }
     }
   }
-}
-
-@keyframes contentAppear{
-  from{opacity: 0;}
-  to{opacity: 1;}
-}
-
-@keyframes sectionAppearLeft{
-  from{background-color: rgba($contrast-primary, 0); margin: 12em 9em 12em 12em;}
-  to{background-color: rgba($contrast-primary, 0.5); margin: 12em 9em 12em 1em;}
-}
-
-@keyframes sectionAppearRight{
-  from{background-color: rgba($contrast-primary, 0); margin: 12em 12em 12em 9em;}
-  to{background-color: rgba($contrast-primary, 0.5); margin: 12em 1em 12em 9em;}
 }

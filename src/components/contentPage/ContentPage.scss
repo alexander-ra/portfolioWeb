@@ -38,8 +38,6 @@ $menu-radius: 6em;
   z-index: 2;
   width:  100%;
   height: 100%;
-  opacity: 0;
-  animation: bodyAppear 1s forwards;
 
   &.slow-rotation {
     .box {
@@ -51,7 +49,7 @@ $menu-radius: 6em;
   }
 
   .vw-portrait & {
-    font-size: css-min(1.3em, calc(1.5 * var(--calc-vmin)));
+    font-size: css-min(1.5em, calc(1.33 * var(--calc-vmax)));
   }
 
   &.dragging {
@@ -322,26 +320,4 @@ $menu-radius: 6em;
       }
     }
   }
-}
-
-@keyframes outerCircleAppear{
-  0%{font-size: 0.5em}
-  30%{font-size: 0.5em}
-  100%{font-size: .97em}
-}
-
-@keyframes bodyAppear{
-  from{opacity: 0}
-  to{opacity: 1}
-}
-
-@keyframes titleAppear{
-  from{opacity: 0;}
-  to{opacity: 1;}
-}
-
-@keyframes saturateAnim{
-  from{filter: saturate(.25);}
-  50%{filter: saturate(.75);}
-  to{filter: saturate(.25);}
 }

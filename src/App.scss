@@ -75,6 +75,7 @@ body {
   width:100%;
   height: 100%;
   font-size: calc( 2 * var(--calc-vmin));
+  transition: background-image 1s linear;
 
   &.vw-portrait {
     font-size: calc( 2.25 * var(--calc-vmin));
@@ -83,6 +84,7 @@ body {
 
 html {
   font-size: var(--calc-vmin);
+  overflow: hidden;
 }
 img{
   width: 100%;
@@ -92,22 +94,6 @@ img{
 .text-center{
   text-align: center;
 }
-
-.app-decorator {
-  background-image: url("../public/spectrum-triangles.svg");
-  background-size: cover;
-  background-position: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-
-  .dark-theme & {
-    background-image: url("../public/spectrum-triangles-oposite.svg");
-  }
-}
-
 
 ::-webkit-scrollbar-track-piece {
   margin: 0.6em;

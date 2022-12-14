@@ -2,14 +2,18 @@
 
 .device-simulator-wrapper {
     height: 4em;
-    background-color: rgba($shadow, 1);
+    background-color: rgba($contrast-primary, .5);
     position: fixed;
-    bottom: 1em;
-    left: 1em;
+    bottom: .5em;
+    left: calc(50% - 8em);
     display: flex;
     padding: 1em;
     border-radius: 1em;
     z-index: 2;
+
+    .layout-native.vw-portrait & {
+        display: none;
+    }
 
     .device {
         width: 4em;
@@ -30,5 +34,16 @@
         &.tablet-device {
             background-image: url("../../../public/landing_tablet.svg");
         }
+    }
+}
+@media (orientation: landscape) {
+    .device-simulator-wrapper {
+        font-size: 1vmin;
+    }
+}
+
+@media (orientation: portrait) {
+    .device-simulator-wrapper {
+        font-size: 1vmax;
     }
 }

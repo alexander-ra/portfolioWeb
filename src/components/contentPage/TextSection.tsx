@@ -5,6 +5,7 @@ import Utils from "../../utils/Utils";
 import {connect} from "react-redux";
 import {WindowSize} from "../../reducers/window/windowReducer";
 import {UIOrientation} from "../core/UIOrientation";
+import {LayoutType} from "../core/LayoutType";
 
 export enum TextSectionPosition {
     LEFT = "LEFT",
@@ -16,6 +17,7 @@ interface TextSectionProps {
     sectionPosition: TextSectionPosition;
     windowSize: WindowSize;
     uiOrientation: UIOrientation;
+    layoutType: LayoutType;
 }
 
 
@@ -37,11 +39,13 @@ class TextSection extends React.Component<TextSectionProps> {
     }
 
     componentDidUpdate(prevProps: Readonly<TextSectionProps>, prevState: Readonly<{}>, snapshot?: any) {
-        if (prevProps.data.description !== this.props.data.description && Utils.isNotNull(this.resizeTimeout)) {
-            clearTimeout(this.resizeTimeout);
-            this.resizeTimeout = setTimeout(() => {
-                this.updateDimensions();
-            });
+        if (prevProps.data.description !== this.props.data.description && Utils.isNotNull(this.resizeTimeout) ||
+            prevProps.uiOrientation !== this.props.uiOrientation && Utils.isNotNull(this.resizeTimeout) ||
+            prevProps.layoutType !== this.props.layoutType && Utils.isNotNull(this.resizeTimeout)) {
+                clearTimeout(this.resizeTimeout);
+                this.resizeTimeout = setTimeout(() => {
+                    this.updateDimensions();
+                });
         }
     }
 
@@ -123,11 +127,12 @@ class TextSection extends React.Component<TextSectionProps> {
 
 export default connect(
     (state: any, ownProps) => {
-        const { windowSize, uiOrientation } = state.windowReducer;
+        const { windowSize, uiOrientation, layoutType } = state.windowReducer;
         return {
             ...ownProps,
             windowSize,
-            uiOrientation
+            uiOrientation,
+            layoutType
         }
     }
 )(TextSection);

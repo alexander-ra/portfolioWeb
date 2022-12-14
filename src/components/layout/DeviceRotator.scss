@@ -5,8 +5,26 @@
     color: rgb($button-text-color);
     font-size: 3em;
     position: absolute;
-    top: 0;
-    right: -1.5em;
     z-index: 2;
     cursor: pointer;
+
+    .layout-mobile-landscape & {
+        top: calc(50% - 0.5em);
+        left: -1.125em;
+    }
+
+    .layout-mobile-portrait & {
+        top: -1em;
+        left: calc(50% - 0.5em);
+    }
+
+    .layout-tablet-landscape & {
+        top: calc(50% - 0.5em);
+        left: -1.25em;
+    }
+
+    .layout-tablet-portrait & {
+        top: -1.125em;
+        left: calc(50% - 0.5em);
+    }
 }
