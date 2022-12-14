@@ -25,6 +25,8 @@ export default function stagesReducer(state = initialState, action: any): Stages
         }
         case CHANGE_PAGE: {
             console.log(action);
+            window.history.pushState(null, null, `/${action.payload.currentPage.toLowerCase()}`);
+            console.log("settet to ", action.payload.currentPage);
             return {
                 ...state,
                 landingPageLeft: state.landingPageLeft || state.currentPage !== Page.LANDING || action.payload.currentPage === Page.LANDING,

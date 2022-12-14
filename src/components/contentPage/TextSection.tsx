@@ -69,7 +69,11 @@ class TextSection extends React.Component<TextSectionProps> {
                         currElement.style.margin = `${parentHeightDiff / 2}px 0`;
                         currElement.style.visibility = `visible`;
                     } else {
-                        this.currentFontSize = this.currentFontSize - 0.1;
+                        if (this.currentFontSize > 1) {
+                            this.currentFontSize -= 0.1;
+                        } else {
+                            this.currentFontSize -= 0.05;
+                        }
                         currElement.style.fontSize = `${this.currentFontSize}rem`;
                         currElement.style.visibility = `hidden`;
                         clearTimeout(this.resizeTimeout);

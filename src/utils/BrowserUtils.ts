@@ -5,7 +5,8 @@ import isChrome from "@braintree/browser-detection/is-chrome";
 import MobileDetect from "mobile-detect";
 import Utils from "./Utils";
 import {UIOrientation} from "../components/core/UIOrientation";
-import {LayoutType} from "../components/core/LayoutType";
+import {Page} from "../models/common/Page";
+import {CircleMenuStates} from "../models/landing/CircleMenuStates";
 
 export enum deviceFamily {
     "windows" = "windows",
@@ -128,7 +129,7 @@ export default class BrowserUtils {
     public static getOrientation(innerWidth?: number, innerHeight?: number): UIOrientation {
         const width = innerWidth || window.innerWidth;
         const height = innerHeight || window.innerHeight;
-        const orientationType: UIOrientation = ((width > height) && ((width / height) > 1.1)) ? UIOrientation.LANDSCAPE : UIOrientation.PORTRAIT;
+        const orientationType: UIOrientation = ((width > height) && ((width / height) >= 1.2)) ? UIOrientation.LANDSCAPE : UIOrientation.PORTRAIT;
         return orientationType;
     }
 
@@ -242,6 +243,30 @@ export default class BrowserUtils {
         }
 
         return deviceName;
+    }
+
+    // Function that reads current url and returns it in array
+    public static getURL(): string[] {
+        let url = window.location.pathname;
+        let urlArray = url.split("/").filter(part => part.length > 0).map(part => part.toLowerCase());
+        return urlArray;
+    }
+
+    // Get page from string
+    public static getPageFromURL(): Page {
+        const urlArray = this.getURL();
+
+        let page: Page;
+        switch (urlArray[0]) {
+            case Page.CHESS_DEMO.toLowerCase():
+                return Page.CHESS_DEMO;
+            case Page.CLIENT_APPROACH.toLowerCase():
+                return Page.CLIENT_APPROACH;
+            case Page.PAST_EXPERIENCE.toLowerCase():
+                return Page.PAST_EXPERIENCE;
+            default:
+                return Page.LANDING;
+        }
     }
 
     private static getScreenInfo(): any {

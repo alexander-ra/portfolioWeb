@@ -27,13 +27,13 @@
         background-position: center;
         background-repeat: no-repeat;
         margin-left: -20em;
-        animation: cubeEnter 2s 1s 1 forwards;
+        animation: cubeEnter .5s 1 forwards;
     }
 
     .back-icon {
         opacity: 0;
         height: 4em;
-        animation: transparentAppear .5s 2.5s forwards;
+        animation: transparentAppear .5s .5s forwards;
     }
 }
 

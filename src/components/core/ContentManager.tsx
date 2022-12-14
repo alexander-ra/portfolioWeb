@@ -23,6 +23,7 @@ import {setLayoutType, setUiOrientation, setWindowSize} from "../../reducers/win
 import {ThemeType} from './ThemeType';
 import {LayoutType} from "./LayoutType";
 import Utils from "../../utils/Utils";
+import {changePage} from "../../reducers/stages/stagesAction";
 
 interface ContentManagerProps {
     pageToChange?: Page;
@@ -50,14 +51,26 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     constructor(props: ContentManagerProps) {
         super(props);
         this.mainContentRef = React.createRef();
+        const page: Page = BrowserUtils.getPageFromURL();
+        if (page === Page.LANDING) {
+            window.history.pushState(null, null, "/landing");
+        } else {
+            store.dispatch(changePage(page));
+        }
         this.state = {
             actualPage: Page.LANDING,
         }
+
     }
 
     componentDidMount() {
         this.updateWindowClasses(window);
         window.addEventListener('resize', this.resizeListener);
+
+        window.addEventListener('hashchange', function () {
+            console.log("locationchange");
+            store.dispatch(changePage(BrowserUtils.getPageFromURL()));
+        });
     }
 
     componentWillUnmount() {

@@ -31,10 +31,10 @@ $menu-radius: 6em;
 
 
   &.text-section-left {
-    margin: 0 3em 0 1em;
+    margin: 0 3em 0 0.5em;
 
     .vw-landscape & {
-      clip-path: polygon(9em 0%, 100% 0%, 100% 100%, 9em 100%, 0% 50%);
+      clip-path: polygon(6em 0%, 100% 0%, 100% 100%, 6em 100%, 0% 50%);
     }
 
     .vw-portrait & {
@@ -60,8 +60,8 @@ $menu-radius: 6em;
 
       .mask {
         float: left;
-        shape-outside: polygon(100% 0, 0 0, 0 100%, 100% 100%, 33% 50%);
-        clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%, 33% 50%);
+        shape-outside: polygon(70% 0, 0 0, 0 100%, 70% 100%, 25% 50%);
+        clip-path: polygon(70% 0, 0 0, 0 100%, 70% 100%, 25% 50%);
         background-position: 48em center;
         transform: translateX(-1em);
 
@@ -86,10 +86,10 @@ $menu-radius: 6em;
     }
   }
   &.text-section-right {
-    margin: 0 1em 0 3em;
+    margin: 0 .5em 0 3em;
 
     .vw-landscape & {
-      clip-path: polygon(0% 0%, calc(100% - 9em) 0%, 100% 50%, calc(100% - 9em) 100%, 0% 100%);
+      clip-path: polygon(0% 0%, calc(100% - 6em) 0%, 100% 50%, calc(100% - 6em) 100%, 0% 100%);
     }
 
     .vw-portrait & {
@@ -98,8 +98,8 @@ $menu-radius: 6em;
 
     .mask {
       float: right;
-      shape-outside: polygon(0 0, 100% 0, 100% 100%, 0 100%, 66% 50%);
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 66% 50%);
+      shape-outside: polygon(30% 0, 100% 0, 100% 100%, 30% 100%, 75% 50%);
+      clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%, 75% 50%);
       background-position: -36em center;
       transform: translateX(1em);
     }
