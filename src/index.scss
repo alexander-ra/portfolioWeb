@@ -56,9 +56,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-size: contain;
+  background-size: cover;
   background-position: center;
-  background-image: url("../public/gradient-cubes.svg");
+  background-image: url("../public/meshing-around.svg");
 
   &:not(.layout-native) {
     .app-wrapper {
