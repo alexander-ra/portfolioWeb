@@ -60,9 +60,9 @@ $menu-radius: 6em;
 
       .mask {
         float: left;
-        shape-outside: polygon(70% 0, 0 0, 0 100%, 70% 100%, 25% 50%);
-        clip-path: polygon(70% 0, 0 0, 0 100%, 70% 100%, 25% 50%);
-        background-position: 48em center;
+        shape-outside: polygon(100% 0, 0 0, 0 100%, 100% 100%, 50% 50%);
+        clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%, 50% 50%);
+        background-position: 47.25em center;
         transform: translateX(-1em);
 
         .vw-portrait & {
@@ -98,9 +98,9 @@ $menu-radius: 6em;
 
     .mask {
       float: right;
-      shape-outside: polygon(30% 0, 100% 0, 100% 100%, 30% 100%, 75% 50%);
-      clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%, 75% 50%);
-      background-position: -36em center;
+      shape-outside: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%);
+      background-position: -40.25em center;
       transform: translateX(1em);
     }
 
@@ -246,6 +246,7 @@ $menu-radius: 6em;
     .mask {
       //background-color: rgba($main-primary, .25);
       background-image: url("../../../public/portalicus.svg");
+      transition: background-image 0.1s;
       background-size: 500%;
       cursor: pointer;
 
@@ -263,7 +264,7 @@ $menu-radius: 6em;
       }
 
       .vw-landscape & {
-        width: 10em;
+        width: 7em;
         height: 100%;
       }
 
