@@ -25,14 +25,26 @@
 
         &.desktop-device {
             background-image: url("../../../public/landing_desktop.svg");
+
+            &.selected {
+                background-image: url("../../../public/landing_desktop_selected.svg");
+            }
         }
 
         &.mobile-device {
             background-image: url("../../../public/landing_phone.svg");
+
+            &.selected {
+                background-image: url("../../../public/landing_phone_selected.svg");
+            }
         }
 
         &.tablet-device {
             background-image: url("../../../public/landing_tablet.svg");
+
+            &.selected {
+                background-image: url("../../../public/landing_tablet_selected.svg");
+            }
         }
     }
 }

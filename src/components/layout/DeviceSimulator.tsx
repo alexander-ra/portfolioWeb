@@ -3,8 +3,10 @@ import './DeviceSimulator.scss';
 import store from "../../store/store";
 import {setLayoutType} from '../../reducers/window/windowAction';
 import {LayoutType} from "../core/LayoutType";
+import {connect} from "react-redux";
 
 interface DeviceSimulatorProps {
+    layoutType: LayoutType;
 }
 
 interface DeviceSimulatorState {
@@ -19,12 +21,24 @@ class DeviceSimulator extends React.Component<DeviceSimulatorProps, DeviceSimula
     render(){
         return (
         <div className={`device-simulator-wrapper`}>
-            <div className={"desktop-device device"} onClick={() => {this.setStateOfSimulation(LayoutType.NATIVE)}}/>
-            <div className={"mobile-device device"} onClick={() => {this.setStateOfSimulation(LayoutType.MOBILE_PORTRAIT)}}/>
-            <div className={"tablet-device device"} onClick={() => {this.setStateOfSimulation(LayoutType.TABLET_LANDSCAPE)}}/>
+            <div className={`desktop-device device ${this.props.layoutType === LayoutType.NATIVE ? "selected" : ""}`}
+                 onClick={() => {this.setStateOfSimulation(LayoutType.NATIVE)}}/>
+            <div className={`mobile-device device ${this.props.layoutType === LayoutType.MOBILE_PORTRAIT || 
+                this.props.layoutType === LayoutType.MOBILE_LANDSCAPE ?
+                "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.MOBILE_PORTRAIT)}}/>
+            <div className={`tablet-device device ${this.props.layoutType === LayoutType.TABLET_PORTRAIT ||
+            this.props.layoutType === LayoutType.TABLET_LANDSCAPE ?
+                "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.TABLET_LANDSCAPE)}}/>
         </div>
         )
     }
 }
 
-export default DeviceSimulator;
+export default connect(
+    (state: any, ownProps) => {
+        const { layoutType } = state.windowReducer;
+        return {
+            layoutType
+        }
+    }
+)(DeviceSimulator);
