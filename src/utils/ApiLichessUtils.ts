@@ -11,14 +11,15 @@ import {
 import store from "../store/store";
 import {
     endGame,
-    makeMove,
+    makeMove, resetGame,
     setChessGame,
     setOpponentLevel,
     setPlayerSide,
     syncMoves
 } from "../reducers/chess/chessAction";
 import {Buffer} from "buffer";
-import { resetBoardState } from "../reducers/chessBoard/chessBoardAction";
+import {resetBoardState} from "../reducers/chessBoard/chessBoardAction";
+import {GameStatus} from "../components/chess/ChessBoard/ChessBoardEndgameMessage";
 
 export class ApiLichessUtils {
     private static readonly AUTH_KEY = "Bearer lip_ySt9nnwhXfyDdaO5InlE";
@@ -46,11 +47,14 @@ export class ApiLichessUtils {
 
     public static resignGame(): void {
         const gameId = store.getState().chessReducer.gameId;
+        store.dispatch(resetGame());
         fetch(`${this.LICHESS_API_PREFIX}/bot/game/${gameId}/resign`, {
             method: 'POST',
             headers: this.getRequestHeaders()
         })
-            .catch(() => {}); // TODO: handle resign
+        .catch(() => {
+
+        })// TODO: handle resign
     }
 
     public static createNewGame(aiLevel: ChessAiDifficulty, playerSide: ChessStartingSide): void {
@@ -139,7 +143,14 @@ export class ApiLichessUtils {
                     }
 
                     if (Utils.isNotNull(state.status) && state.status !== "started") {
-                        store.dispatch(endGame());
+                        let gameStatus: GameStatus;
+                        if (Utils.isNotNull(state.winner)) {
+                            gameStatus = state.winner === store.getState().chessReducer.playerSide.toLowerCase() ?
+                                GameStatus.WIN : GameStatus.LOSS;
+                        } else {
+                            gameStatus = GameStatus.DRAW;
+                        }
+                        store.dispatch(endGame(gameStatus));
                     }
                 }
             }
@@ -225,7 +236,7 @@ export class ApiLichessUtils {
             opponentLevel: aiLevel,
             playerSide,
             playerAvatar,
-            gameEnded: false
+            gameStatus: GameStatus.IN_PROGRESS
         };
     }
 }

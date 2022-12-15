@@ -11,14 +11,16 @@ import ChessPromotionPopup from "./ChessPromotionPopup";
 import ChessPlayers from "./ChessBoardPlayers";
 import ChessBoardSquare from "./ChessBoardSquare";
 import {CastleInfo, ChessPiece, ChessMove, ChessSide, ChessSquare, ChessUtils, ChessPieceType } from '../../../utils/ChessUtils';
+import ChessBoardEndgameMessage, {GameStatus} from "./ChessBoardEndgameMessage";
 
 interface ChessBoardProps {
     chessGameId: number;
     playerSide: ChessSide;
     chessMoves: ChessMove[];
-    gameEnded: boolean;
+    gameStatus: GameStatus;
     chessPieces: ChessPiece[];
     castleInfo: CastleInfo;
+    sideInTurn: ChessSide;
 }
 
 interface ChessBoardState {
@@ -66,28 +68,33 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     }
 
     clickSquare(square: ChessSquare): void {
-        if (Utils.isNotNull(this.state.selectedSquare)) {
-            if (ChessUtils.chessSquaresEqual(this.state.selectedSquare, square)) {
-                this.setState({selectedSquare: null});
+        if (this.props.sideInTurn === this.props.playerSide && this.props.gameStatus === GameStatus.IN_PROGRESS) {
+            if (Utils.isNotNull(this.state.selectedSquare)) {
+                if (ChessUtils.chessSquaresEqual(this.state.selectedSquare, square)) {
+                    this.setState({selectedSquare: null});
+                } else if (ChessUtils.squareOnSidePiece(square, this.props.chessPieces, this.props.playerSide)) {
+                    this.setState({selectedSquare: square})
+                } else if (Utils.isNotNull(this.possibleMoves.find(possibleMove => ChessUtils.chessSquaresEqual(possibleMove, square)))) {
+                    const move = {
+                        from: this.state.selectedSquare,
+                        to: square
+                    };
+                    if (ChessUtils.getPieceFromSquare(this.state.selectedSquare, this.props.chessPieces).type === ChessPieceType.PAWN &&
+                        (this.props.playerSide === ChessSide.WHITE && square.row === 8 ||
+                            this.props.playerSide === ChessSide.BLACK && square.row === 1)) {
+                        this.promotionMove = square;
+                        this.setState({});
+                    } else {
+                        ApiLichessUtils.makeMove(move);
+                        this.setState({selectedSquare: null});
+                    }
+                }
             } else if (ChessUtils.squareOnSidePiece(square, this.props.chessPieces, this.props.playerSide)) {
                 this.setState({selectedSquare: square})
-            } else if (Utils.isNotNull(this.possibleMoves.find(possibleMove => ChessUtils.chessSquaresEqual(possibleMove, square)))) {
-                const move = {
-                    from: this.state.selectedSquare,
-                    to: square
-                };
-                if (ChessUtils.getPieceFromSquare(this.state.selectedSquare, this.props.chessPieces).type === ChessPieceType.PAWN &&
-                    (this.props.playerSide === ChessSide.WHITE && square.row === 8 ||
-                    this.props.playerSide === ChessSide.BLACK && square.row === 1)) {
-                    this.promotionMove = square;
-                    this.setState({});
-                } else {
-                    ApiLichessUtils.makeMove(move);
-                    this.setState({selectedSquare: null});
-                }
             }
-        } else if (ChessUtils.squareOnSidePiece(square, this.props.chessPieces, this.props.playerSide)) {
-            this.setState({selectedSquare: square})
+        } else {
+            this.setState({selectedSquare: null});
+            console.log('Not your turn');
         }
     }
 
@@ -115,6 +122,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     }
 
     render(){
+        console.log('render chess game id', this.props.chessGameId);
         return (
             <div className={`chess-board-wrapper ${this.props.playerSide.toLowerCase()}-player-view`}>
                 <div className={"bg"}></div>
@@ -126,13 +134,15 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
                                              this.setState({selectedSquare: null});
                                          }} />
                 }
-                {(!this.props.chessGameId || this.props.gameEnded) &&
+                {Utils.isNull(this.props.chessGameId) &&
                     <ChessGameConfigurator />}
 
-                {this.props.chessGameId && !this.props.gameEnded && <>
+                {Utils.isNotNull(this.props.chessGameId) && <>
                     <ChessPlayers />
                     {this.rednderChessBoard()}
                     <ChessBoardLetters />
+                    {Utils.isNotNull(this.props.gameStatus) && this.props.gameStatus !== GameStatus.IN_PROGRESS &&
+                        <ChessBoardEndgameMessage gameStatus={this.props.gameStatus} />}
                 </>}
             </div>)
     }
@@ -140,15 +150,16 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
 
 export default connect(
     (state: any, ownProps) => {
-        const { gameId, playerSide, chessMoves, gameEnded } = state.chessReducer;
-        const { chessPieces, castleInfo } = state.chessBoardReducer;
+        const { gameId, playerSide, chessMoves, gameStatus } = state.chessReducer;
+        const { chessPieces, castleInfo, sideInTurn } = state.chessBoardReducer;
         return {
             ...ownProps,
             chessGameId: gameId,
             playerSide,
             chessMoves,
-            gameEnded,
+            gameStatus,
             chessPieces,
-            castleInfo
+            castleInfo,
+            sideInTurn
         }
     })(ChessBoard);

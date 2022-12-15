@@ -1,6 +1,15 @@
 import {ChessAiDifficulty, ChessMove, ChessSide, ChessStartingSide} from "../../utils/ChessUtils";
-import {END_GAME, MAKE_MOVE, SET_CHESS_GAME, SET_OPPONENT_LEVEL, SET_PLAYER_SIDE, SYNC_MOVES} from "./ChessActionTypes";
+import {
+    END_GAME,
+    MAKE_MOVE,
+    RESET_GAME,
+    SET_CHESS_GAME,
+    SET_OPPONENT_LEVEL,
+    SET_PLAYER_SIDE,
+    SYNC_MOVES
+} from "./ChessActionTypes";
 import AppStorage, {StorageKey} from "../../utils/AppStorage";
+import {GameStatus} from "../../components/chess/ChessBoard/ChessBoardEndgameMessage";
 
 export interface ChessReduceModel {
     gameId?: number;
@@ -8,7 +17,7 @@ export interface ChessReduceModel {
     playerSide: ChessSide;
     playerAvatar: ChessStartingSide;
     chessMoves: ChessMove[];
-    gameEnded: boolean;
+    gameStatus: GameStatus;
 }
 
 const initialId = AppStorage.getStorage(StorageKey.CHESS_GAME_ID);
@@ -20,7 +29,7 @@ const initialState: ChessReduceModel = {
     playerSide: ChessSide.WHITE,
     playerAvatar: initialAvatar,
     chessMoves: [],
-    gameEnded: false
+    gameStatus: GameStatus.IN_PROGRESS
 };
 
 export default function chessReducer(state = initialState, action: any): ChessReduceModel {
@@ -35,7 +44,7 @@ export default function chessReducer(state = initialState, action: any): ChessRe
                 playerSide: action.payload.playerSide,
                 playerAvatar: action.payload.playerAvatar,
                 chessMoves: action.payload.chessMoves,
-                gameEnded: action.payload.gameEnded
+                gameStatus: action.payload.gameStatus
             }
         }
         case SET_PLAYER_SIDE: {
@@ -66,7 +75,14 @@ export default function chessReducer(state = initialState, action: any): ChessRe
         case END_GAME: {
             return {
                 ...state,
-                gameEnded: true
+                gameStatus: action.payload.gameStatus
+            }
+        }
+        case RESET_GAME: {
+            AppStorage.deleteStorage(StorageKey.CHESS_GAME_ID);
+            return {
+                ...state,
+                ...initialState
             }
         }
         default:

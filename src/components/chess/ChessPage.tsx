@@ -23,13 +23,14 @@ import ChessBoardLetters from "./ChessBoard/ChessBoardLetters";
 import ChessPromotionPopup from "./ChessBoard/ChessPromotionPopup";
 import ChessPlayers from "./ChessBoard/ChessBoardPlayers";
 import ChessBoard from "./ChessBoard/ChessBoard";
+import {GameStatus} from "./ChessBoard/ChessBoardEndgameMessage";
 
 interface ChessPageProps {
     isClosing: boolean;
     chessGameId: number;
     playerSide: ChessSide;
     chessMoves: ChessMove[];
-    gameEnded: boolean;
+    gameStatus: GameStatus;
     chessPieces: ChessPiece[];
     castleInfo: CastleInfo;
     sideInCheck: ChessSide;
@@ -41,24 +42,25 @@ class ChessPage extends React.Component<ChessPageProps> {
         return (
         <div className={`chess-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
             <ChessBoard />
-            <button className={`game-end`} onClick={() => {ApiLichessUtils.resignGame()}}>
-                <span>End game </span>
-                <FontAwesomeIcon icon={faXmark} />
-            </button>
+            {this.props.gameStatus === GameStatus.IN_PROGRESS &&
+                <button className={`game-end`} onClick={() => {ApiLichessUtils.resignGame()}}>
+                    <span>End game </span>
+                    <FontAwesomeIcon icon={faXmark} />
+                </button>}
         </div>)
     }
 }
 
 export default connect(
     (state: any, ownProps) => {
-        const { gameId, playerSide, chessMoves, gameEnded } = state.chessReducer;
+        const { gameId, playerSide, chessMoves, gameStatus } = state.chessReducer;
         const { chessPieces, castleInfo, sideInCheck } = state.chessBoardReducer as ChessBoardModel;
         return {
             ...ownProps,
             chessGameId: gameId,
             playerSide,
             chessMoves,
-            gameEnded,
+            gameStatus,
             chessPieces,
             castleInfo,
             sideInCheck
