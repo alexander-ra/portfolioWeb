@@ -2,18 +2,19 @@
 
 .contact-expanded-menu {
     position: absolute;
-    top: 2.65em;
+    top: 1.75em;
     left: 0;
     padding: .5em;
     width: 28em;
     background-color: $header-color;
     border-radius: 0 0 1em 1em;
     flex-direction: row;
-    font-size: .66em;
     justify-content: space-evenly;
     color: rgb($main-primary);
 
     .vw-portrait & {
+        font-size: .66em;
+        top: 2.65em;
         position: fixed;
         left: 0;
         right: auto;
