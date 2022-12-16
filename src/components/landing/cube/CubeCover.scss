@@ -65,6 +65,7 @@ $peelOffDuration: 2s;
         box-sizing: border-box;
         border-radius: 0.3em;
         background: url("../../../../public/quantum-gradient.svg") no-repeat center;
+        background-color: rgb($main-secondary);
         background-size: cover;
         opacity: 1;
         z-index: 5;

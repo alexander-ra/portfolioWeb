@@ -52,22 +52,22 @@
     }
 
     &.setting-easy {
-      background-image: url("../../../../../public/categoryImages/chess/easy.jpg");
+      background-image: url("../../../../../public/categoryImages/chess/avatars/easy.jpg");
     }
     &.setting-medium {
-      background-image: url("../../../../../public/categoryImages/chess/medium.jpg");
+      background-image: url("../../../../../public/categoryImages/chess/avatars/medium.jpg");
     }
     &.setting-hard {
-      background-image: url("../../../../../public/categoryImages/chess/hard.jpg");
+      background-image: url("../../../../../public/categoryImages/chess/avatars/hard.jpg");
     }
     &.setting-white {
-      background-image: url("../../../../../public/categoryImages/chess/white.jpg");
+      background-image: url("../../../../../public/categoryImages/chess/avatars/white.jpg");
     }
     &.setting-random {
-      background-image: url("../../../../../public/categoryImages/chess/color.jpg");
+      background-image: url("../../../../../public/categoryImages/chess/avatars/color.jpg");
     }
     &.setting-black {
-      background-image: url("../../../../../public/categoryImages/chess/black.jpg");
+      background-image: url("../../../../../public/categoryImages/chess/avatars/black.jpg");
     }
   }
 }

@@ -38,14 +38,6 @@
                 transition-timing-function: ease-out;
                 border-radius: 50%;
                 box-shadow: 0 0 0 transparent;
-
-                .wall-content-overlay {
-                    transition-property: border-radius, opacity;
-                    transition-duration: .5s, 1.5s;
-                    transition-delay: .5s, 0s;
-                    opacity: 0.5;
-                    border-radius: 50%;
-                }
             }
             .wall-icon {
                 display: none;
@@ -130,17 +122,6 @@
             background-repeat:   no-repeat;
             background-position: center center;
 
-            .wall-content-overlay {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                z-index: 2;
-                background-image: url("../../../../public/tabletop-spotlight.svg");
-                opacity: 0;
-                background-size: cover;
-                border-radius: 100%;
-            }
-
             .wall-icon {
                 transition: opacity 1s;
                 opacity: 1;
@@ -157,7 +138,7 @@
             transform: rotateX(-90deg) translateZ(6.7em);
 
             .wall-content {
-                background-image: url("../../../../public/categoryImages/chess/home.png");
+                background-image: url("../../../../public/categoryImages/chess/home.jpg");
                 .wall-icon {
                     transform: rotate(45deg);
                 }
@@ -168,7 +149,7 @@
             transform: translateZ(6.7em);
 
             .wall-content {
-                background-image: url("../../../../public/categoryImages/client/home.png");
+                background-image: url("../../../../public/categoryImages/client/home.jpg");
             }
         }
 
@@ -176,7 +157,7 @@
             transform: rotateY(90deg) translateZ(6.7em);
 
             .wall-content {
-                background-image: url("../../../../public/categoryImages/experience/home.png");
+                background-image: url("../../../../public/categoryImages/experience/home.jpg");
             }
         }
 
