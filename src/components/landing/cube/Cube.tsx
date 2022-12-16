@@ -9,7 +9,7 @@ import {CubeRotationUtils} from "../../../utils/CubeRotationUtils";
 import Flower from "./Flower/Flower";
 import CubeCover from "./CubeCover";
 import CubeWall from "./CubeWall";
-import {faChessKnight, faHandshake, faSuitcase} from '@fortawesome/free-solid-svg-icons';
+import {faChess, faChessKnight, faHandshake, faSuitcase} from '@fortawesome/free-solid-svg-icons';
 
 interface CubeProps {
     openCube?: any;
@@ -153,7 +153,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
                         <CubeWall menu={CubeMenuStates.BOTTOM}
                                   selected={this.state.selectedMenuState === CubeMenuStates.BOTTOM}
                                   onSelect={this.selectMenu.bind(this)}
-                                  icon={faChessKnight}/>
+                                  icon={faChess}/>
                         <CubeWall menu={CubeMenuStates.TOP_LEFT}
                                   selected={this.state.selectedMenuState === CubeMenuStates.TOP_LEFT}
                                   onSelect={this.selectMenu.bind(this)}

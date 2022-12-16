@@ -10,7 +10,7 @@
     top: 0;
 
     .vw-portrait & {
-        height: $header-height * 1.5;
+        height: $header-height * 2.5;
     }
 
     .navigation-wrapper {
@@ -22,13 +22,30 @@
         width: 100%;
 
         .navigation-item {
-            padding: 0 1em;
-            margin: 0 2em;
+            height: 100%;
+            position: relative;
+            padding: 0 3em;
             cursor: pointer;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .navigation-label {
+                margin-left: 0.5em;
+
+                .vw-portrait & {
+                    display: none;
+                }
+            }
+
+            .navigation-sub-icon {
+                margin-left: .5em;
+                font-size: .5em;
+            }
 
             .vw-portrait & {
-                font-size: 1.25em;
+                font-size: 2.5em;
                 margin: 0;
                 padding: 1em 0;
                 flex: 0 0 25%;
@@ -38,6 +55,23 @@
                 //text-decoration: underline;
                 color: rgb($accent-secondary);
             }
+
+            .expanded-menu {
+                display: none;
+            }
+
+            &:hover .expanded-menu {
+                display: flex;
+            }
+        }
+
+        .navigation-item + .navigation-item:before {
+            position: absolute;
+            left: 0;
+            display: block;
+            height: 1em;
+            content: "";
+            border-left: rgba($main-primary, 0.25) solid 1px;
         }
     }
 

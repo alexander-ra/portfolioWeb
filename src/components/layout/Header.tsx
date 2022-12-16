@@ -3,8 +3,17 @@ import './Header.scss';
 import store from "../../store/store";
 import {setTheme} from '../../reducers/window/windowAction';
 import {ThemeType} from "../core/ThemeType";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAddressCard, faAngleDown, faArrowDown, faAt, faCircleDot, faCompass, faFaceSadCry, faLink, faMoon,
+    faPalette, faSun} from "@fortawesome/free-solid-svg-icons";
+import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
+import {connect} from "react-redux";
+import {ChessBoardModel} from "../../reducers/chessBoard/chessBoardReducer";
+import NavigationSubMenu from "./NavigationSubMenu";
+import ContactsSubMenu from "./ContactsSubMenu";
 
 interface HeaderProps {
+    theme: ThemeType;
 }
 
 interface HeaderState {
@@ -23,19 +32,29 @@ class Header extends React.Component<HeaderProps, HeaderState> {
         <div className={`header-wrapper`}>
             <div className={`navigation-wrapper`}>
                 <div className={`navigation-item`}>
-                    Experience
+                    <FontAwesomeIcon className={"navigation-icon"} icon={faCompass} />
+                    <span className={"navigation-label"}>Menus</span>
+                    <FontAwesomeIcon className={"navigation-sub-icon"} icon={faAngleDown} />
+                    <NavigationSubMenu></NavigationSubMenu>
                 </div>
                 <div className={`navigation-item`}>
-                    Approach
+                    <FontAwesomeIcon className={"navigation-icon"} icon={faAddressCard} />
+                    <span className={"navigation-label"}>Contact Me</span>
+                    <FontAwesomeIcon className={"navigation-sub-icon"} icon={faAngleDown} />
+                    <ContactsSubMenu></ContactsSubMenu>
                 </div>
                 <div className={`navigation-item`}>
-                    Demos
-                </div>
-                <div className={`navigation-item`}>
-                    Contacts
+                    <FontAwesomeIcon className={"navigation-icon"} icon={faGithubAlt} />
+                    <span className={"navigation-label"}>GitHub</span>
+                    <FontAwesomeIcon className={"navigation-sub-icon"} icon={faLink} />
                 </div>
                 <div className={`navigation-item`} onClick={this.changeTheme}>
-                    Theme
+                    <FontAwesomeIcon className={"navigation-icon"} icon={faPalette} />
+                    <span className={"navigation-label"}>Theme</span>
+                    {this.props.theme === ThemeType.DARK &&
+                        <FontAwesomeIcon className={"navigation-sub-icon"} icon={faMoon} />}
+                    {this.props.theme === ThemeType.LIGHT &&
+                        <FontAwesomeIcon className={"navigation-sub-icon"} icon={faSun} />}
                 </div>
             </div>
         </div>
@@ -43,4 +62,10 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     }
 }
 
-export default Header;
+export default connect(
+    (state: any, ownProps) => {
+        const { theme } = state.windowReducer;
+        return {
+            theme
+        }
+    })(Header);

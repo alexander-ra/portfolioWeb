@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import './ChessBoard.scss';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Utils from '../../../utils/Utils';
 import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
 import AppStorage, {StorageKey} from "../../../utils/AppStorage";
@@ -10,7 +9,15 @@ import ChessBoardLetters from "./ChessBoardLetters";
 import ChessPromotionPopup from "./ChessPromotionPopup";
 import ChessPlayers from "./ChessBoardPlayers";
 import ChessBoardSquare from "./ChessBoardSquare";
-import {CastleInfo, ChessPiece, ChessMove, ChessSide, ChessSquare, ChessUtils, ChessPieceType } from '../../../utils/ChessUtils';
+import {
+    CastleInfo,
+    ChessMove,
+    ChessPiece,
+    ChessPieceType,
+    ChessSide,
+    ChessSquare,
+    ChessUtils
+} from '../../../utils/ChessUtils';
 import ChessBoardEndgameMessage, {GameStatus} from "./ChessBoardEndgameMessage";
 
 interface ChessBoardProps {
@@ -141,8 +148,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
                     <ChessPlayers />
                     {this.rednderChessBoard()}
                     <ChessBoardLetters />
-                    {Utils.isNotNull(this.props.gameStatus) && this.props.gameStatus !== GameStatus.IN_PROGRESS &&
-                        <ChessBoardEndgameMessage gameStatus={this.props.gameStatus} />}
+                    {<ChessBoardEndgameMessage gameStatus={GameStatus.LOSS} />}
                 </>}
             </div>)
     }

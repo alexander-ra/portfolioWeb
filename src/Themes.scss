@@ -27,7 +27,7 @@ body {
   --wheel-border-color: var(--contrast-primary);
   --flower-shadow: var(--main-secondary);
   --common-border-color: var(--main-primary);
-  --header-color: rgba(var(--contrast-primary), 0.25);
+  --header-color: rgba(var(--contrast-primary), 1);
   --section-content-color: rgba(var(--contrast-primary), 0.75);
   --section-bg-color: var(--contrast-primary);
   --section-icon-color: var(--main-primary);
@@ -44,7 +44,7 @@ body {
     --wheel-border-color: var(--dark-orange-rgb);
     --flower-shadow: var(--orange-rgb);
     --common-border-color: var(--purple-rgb);
-    --header-color: rgba(var(--black-purple-rgb), .5);
+    --header-color: rgba(var(--black-purple-rgb), 1);
     --section-content-color: rgba(var(--black-purple-rgb), .5);
     --section-bg-color: var(--dark-orange-rgb);
     --section-icon-color: var(--light-yellow-rgb);

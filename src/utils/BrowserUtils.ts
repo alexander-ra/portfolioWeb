@@ -129,7 +129,7 @@ export default class BrowserUtils {
     public static getOrientation(innerWidth?: number, innerHeight?: number): UIOrientation {
         const width = innerWidth || window.innerWidth;
         const height = innerHeight || window.innerHeight;
-        const orientationType: UIOrientation = ((width > height) && ((width / height) >= 1.2)) ? UIOrientation.LANDSCAPE : UIOrientation.PORTRAIT;
+        const orientationType: UIOrientation = ((width > height) && ((width / height) >= 1.1)) ? UIOrientation.LANDSCAPE : UIOrientation.PORTRAIT;
         return orientationType;
     }
 

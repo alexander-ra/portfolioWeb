@@ -1,0 +1,38 @@
+@import "../../App";
+
+.navigation-expanded-menu {
+    position: absolute;
+    top: 1.75em;
+    right: 0;
+    padding: .5em;
+    width: 100%;
+    background-color: $header-color;
+    border-radius: 0 0 1em 1em;
+    display: flex;
+    flex-direction: column;
+
+    .vw-portrait & {
+        position: fixed;
+        left: 0;
+        right: auto;
+        width: calc(100% - 1em);
+    }
+
+    .expanded-menu-item {
+        line-height: 1.5em;
+        flex: 1;
+        display: flex;
+        cursor: pointer;
+        color: rgb($main-primary);
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            color: rgb($accent-secondary);
+        }
+
+        .expanded-menu-icon {
+            width: 2em;
+        }
+    }
+}
