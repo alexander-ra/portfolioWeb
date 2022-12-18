@@ -1,19 +1,15 @@
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 import {CubeReduceModel} from "../cube/cubeReducer";
 import {
-    ChessAiDifficulty,
-    ChessCastleInfo,
-    ChessMove,
-    ChessPiece,
-    ChessSide,
-    ChessSquare
-} from "../../utils/ChessUtils";
-import {
     RESET_BOARD_STATE,
     SET_CASTLE_INFO,
     SET_CHESS_BOARD_PIECES,
     SET_EN_PASSANT_SQUARE, SET_SIDE_IN_CHECK, UPDATE_PROCESSED_BOARD
 } from "../chessBoard/ChessBoardActionTypes";
+import { ChessPiece } from "../../models/chess/ChessPiece";
+import { ChessSide } from "../../models/chess/ChessSide";
+import { ChessSquare } from "../../models/chess/ChessSquare";
+import { ChessCastleInfo } from "../../models/chess/ChessCastleInfo";
 
 const setChessBoardPieces = (boardPieces: ChessPiece[]) => ({
     type: SET_CHESS_BOARD_PIECES,

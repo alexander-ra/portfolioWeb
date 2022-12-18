@@ -13,7 +13,7 @@ import {
     faMoneyBillTrendUp,
     faUserTie
 } from '@fortawesome/free-solid-svg-icons';
-import {faAccessibleIcon} from "@fortawesome/free-brands-svg-icons";
+import {faAccessibleIcon, fab} from "@fortawesome/free-brands-svg-icons";
 import ChessPage from '../chess/ChessPage';
 import BrowserUtils from '../../utils/BrowserUtils';
 import {UIOrientation} from './UIOrientation';
@@ -24,6 +24,7 @@ import {ThemeType} from './ThemeType';
 import {LayoutType} from "./LayoutType";
 import Utils from "../../utils/Utils";
 import {changePage} from "../../reducers/stages/stagesAction";
+import { library } from '@fortawesome/fontawesome-svg-core'
 
 interface ContentManagerProps {
     pageToChange?: Page;
@@ -50,6 +51,7 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
 
     constructor(props: ContentManagerProps) {
         super(props);
+        library.add(fab);
         this.mainContentRef = React.createRef();
         const page: Page = BrowserUtils.getPageFromURL();
         if (page === Page.LANDING) {

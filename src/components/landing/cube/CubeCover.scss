@@ -64,7 +64,9 @@ $peelOffDuration: 2s;
         color: #fff;
         box-sizing: border-box;
         border-radius: 0.3em;
-        background: url("../../../../public/quantum-gradient.svg") no-repeat center;
+        background-image: url("../../../../public/quantum-gradient.svg"), linear-gradient(135deg, rgb($main-secondary), rgb($main-primary) 66%);
+        background-repeat: no-repeat;
+        background-position: center;
         background-color: rgb($main-secondary);
         background-size: cover;
         opacity: 1;
@@ -72,7 +74,7 @@ $peelOffDuration: 2s;
         cursor: pointer;
 
         .dark-theme & {
-            background: url("../../../../public/quantum-gradient-oposite.svg") no-repeat center;
+            background: url("../../../../public/quantum-gradient-oposite.svg"), linear-gradient(135deg, rgb($main-secondary), rgb($accent-secondary) 66%);
             background-size: cover;
         }
 

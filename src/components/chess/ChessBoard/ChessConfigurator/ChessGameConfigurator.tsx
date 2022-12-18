@@ -1,10 +1,12 @@
 import React from 'react';
-import {ChessAiDifficulty, ChessSide, ChessStartingSide} from '../../../../utils/ChessUtils';
 import './ChessGameConfigurator.scss';
 import {connect} from 'react-redux';
 import Utils from '../../../../utils/Utils';
 import ConfigurationSection from "./ConfiguratorSection";
 import {ApiLichessUtils} from "../../../../utils/ApiLichessUtils";
+import { ChessAiDifficulty } from '../../../../models/chess/ChessAiDifficulty';
+import { ChessStartingSide } from '../../../../models/chess/ChessStartingSide';
+import { ChessSide } from '../../../../models/chess/ChessSide';
 
 interface ChessGameConfiguratorProps {
 }

@@ -1,4 +1,3 @@
-import {ChessAiDifficulty, ChessMove, ChessSide, ChessStartingSide} from "../../utils/ChessUtils";
 import {
     END_GAME,
     MAKE_MOVE,
@@ -9,7 +8,11 @@ import {
     SYNC_MOVES
 } from "./ChessActionTypes";
 import AppStorage, {StorageKey} from "../../utils/AppStorage";
-import {GameStatus} from "../../components/chess/ChessBoard/ChessBoardEndgameMessage";
+import {ChessGameStatus} from "../../models/chess/ChessGameStatus";
+import { ChessAiDifficulty } from "../../models/chess/ChessAiDifficulty";
+import { ChessSide } from "../../models/chess/ChessSide";
+import { ChessStartingSide } from "../../models/chess/ChessStartingSide";
+import { ChessMove } from "../../models/chess/ChessMove";
 
 export interface ChessReduceModel {
     gameId?: number;
@@ -17,7 +20,7 @@ export interface ChessReduceModel {
     playerSide: ChessSide;
     playerAvatar: ChessStartingSide;
     chessMoves: ChessMove[];
-    gameStatus: GameStatus;
+    gameStatus: ChessGameStatus;
 }
 
 const initialId = AppStorage.getStorage(StorageKey.CHESS_GAME_ID);
@@ -29,7 +32,7 @@ const initialState: ChessReduceModel = {
     playerSide: ChessSide.WHITE,
     playerAvatar: initialAvatar,
     chessMoves: [],
-    gameStatus: GameStatus.IN_PROGRESS
+    gameStatus: ChessGameStatus.IN_PROGRESS
 };
 
 export default function chessReducer(state = initialState, action: any): ChessReduceModel {

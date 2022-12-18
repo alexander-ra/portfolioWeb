@@ -4,6 +4,7 @@ import store from "../../store/store";
 import {setLayoutType} from '../../reducers/window/windowAction';
 import {LayoutType} from "../core/LayoutType";
 import {connect} from "react-redux";
+import DeviceRotator from "./DeviceRotator";
 
 interface DeviceSimulatorProps {
     layoutType: LayoutType;
@@ -19,17 +20,19 @@ class DeviceSimulator extends React.Component<DeviceSimulatorProps, DeviceSimula
     }
 
     render(){
-        return (
-        <div className={`device-simulator-wrapper`}>
-            <div className={`desktop-device device ${this.props.layoutType === LayoutType.NATIVE ? "selected" : ""}`}
-                 onClick={() => {this.setStateOfSimulation(LayoutType.NATIVE)}}/>
-            <div className={`mobile-device device ${this.props.layoutType === LayoutType.MOBILE_PORTRAIT || 
+        return ( <>
+            <DeviceRotator />
+            <div className={`device-simulator-wrapper`}>
+                <div className={`desktop-device device ${this.props.layoutType === LayoutType.NATIVE ? "selected" : ""}`}
+                     onClick={() => {this.setStateOfSimulation(LayoutType.NATIVE)}}/>
+                <div className={`mobile-device device ${this.props.layoutType === LayoutType.MOBILE_PORTRAIT ||
                 this.props.layoutType === LayoutType.MOBILE_LANDSCAPE ?
-                "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.MOBILE_PORTRAIT)}}/>
-            <div className={`tablet-device device ${this.props.layoutType === LayoutType.TABLET_PORTRAIT ||
-            this.props.layoutType === LayoutType.TABLET_LANDSCAPE ?
-                "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.TABLET_LANDSCAPE)}}/>
-        </div>
+                    "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.MOBILE_PORTRAIT)}}/>
+                <div className={`tablet-device device ${this.props.layoutType === LayoutType.TABLET_PORTRAIT ||
+                this.props.layoutType === LayoutType.TABLET_LANDSCAPE ?
+                    "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.TABLET_LANDSCAPE)}}/>
+            </div>
+        </>
         )
     }
 }

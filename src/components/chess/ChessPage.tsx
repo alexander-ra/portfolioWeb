@@ -3,17 +3,6 @@ import {connect} from 'react-redux';
 import './ChessPage.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Utils from '../../utils/Utils';
-import {
-    CastleInfo,
-    ChessAiDifficulty,
-    ChessLetters,
-    ChessMove,
-    ChessPiece,
-    ChessPieceType,
-    ChessSide,
-    ChessSquare, ChessStartingSide,
-    ChessUtils
-} from "../../utils/ChessUtils";
 import {ApiLichessUtils} from "../../utils/ApiLichessUtils";
 import AppStorage, {StorageKey} from "../../utils/AppStorage";
 import ChessGameConfigurator from "./ChessBoard/ChessConfigurator/ChessGameConfigurator";
@@ -23,16 +12,20 @@ import ChessBoardLetters from "./ChessBoard/ChessBoardLetters";
 import ChessPromotionPopup from "./ChessBoard/ChessPromotionPopup";
 import ChessPlayers from "./ChessBoard/ChessBoardPlayers";
 import ChessBoard from "./ChessBoard/ChessBoard";
-import {GameStatus} from "./ChessBoard/ChessBoardEndgameMessage";
+import {ChessGameStatus} from "../../models/chess/ChessGameStatus";
+import { ChessSide } from '../../models/chess/ChessSide';
+import { ChessMove } from '../../models/chess/ChessMove';
+import { ChessPiece } from '../../models/chess/ChessPiece';
+import { ChessCastleInfo } from '../../models/chess/ChessCastleInfo';
 
 interface ChessPageProps {
     isClosing: boolean;
     chessGameId: number;
     playerSide: ChessSide;
     chessMoves: ChessMove[];
-    gameStatus: GameStatus;
+    gameStatus: ChessGameStatus;
     chessPieces: ChessPiece[];
-    castleInfo: CastleInfo;
+    castleInfo: ChessCastleInfo;
     sideInCheck: ChessSide;
 }
 
@@ -42,7 +35,7 @@ class ChessPage extends React.Component<ChessPageProps> {
         return (
         <div className={`chess-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
             <ChessBoard />
-            {this.props.gameStatus === GameStatus.IN_PROGRESS &&
+            {this.props.gameStatus === ChessGameStatus.IN_PROGRESS &&
                 <button className={`game-end`} onClick={() => {ApiLichessUtils.resignGame()}}>
                     <span>End game </span>
                     <FontAwesomeIcon icon={faXmark} />

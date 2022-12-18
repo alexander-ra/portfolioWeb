@@ -2,9 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import './ChessPromotionPopup.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {ChessMove, ChessPieceType, ChessSide, ChessUtils} from "../../../utils/ChessUtils";
 import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
 import {ChessBoardModel} from "../../../reducers/chessBoard/chessBoardReducer";
+import { ChessSide } from '../../../models/chess/ChessSide';
+import { ChessMove } from '../../../models/chess/ChessMove';
+import { ChessPieceType } from '../../../models/chess/ChessPieceType';
+import { ChessUtils } from '../../../utils/ChessUtils';
 
 interface ChessPromotionPopupProps {
     playerSide: ChessSide;

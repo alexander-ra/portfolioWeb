@@ -2,8 +2,10 @@ import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 import {MAKE_MOVE, SYNC_MOVES, SET_CHESS_GAME, END_GAME, SET_PLAYER_SIDE, SET_OPPONENT_LEVEL, RESET_GAME} from "./ChessActionTypes";
 import {CubeReduceModel} from "../cube/cubeReducer";
 import {ChessReduceModel} from "./chessReducer";
-import {ChessAiDifficulty, ChessMove, ChessSide} from "../../utils/ChessUtils";
-import {GameStatus} from "../../components/chess/ChessBoard/ChessBoardEndgameMessage";
+import { ChessSide } from "../../models/chess/ChessSide";
+import { ChessAiDifficulty } from "../../models/chess/ChessAiDifficulty";
+import { ChessMove } from "../../models/chess/ChessMove";
+import {ChessGameStatus} from "../../models/chess/ChessGameStatus";
 
 const setChessGame = (chessGame: ChessReduceModel) => ({
     type: SET_CHESS_GAME,
@@ -45,7 +47,7 @@ const syncMoves = (moves: ChessMove[]) => ({
     }
 });
 
-const endGame = (gameStatus: GameStatus) => ({
+const endGame = (gameStatus: ChessGameStatus) => ({
     type: END_GAME,
     payload: {
         gameStatus,

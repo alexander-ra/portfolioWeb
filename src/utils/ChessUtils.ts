@@ -1,6 +1,3 @@
-import {Position} from "../models/common/Position";
-import {ContentPageState} from "../components/contentPage/ContentPage";
-import {CircleMenuStates} from "../models/landing/CircleMenuStates";
 import {
     faChessBishop, faChessKing,
     faChessKnight,
@@ -16,67 +13,13 @@ import {
     setCastleInfo,
     setChessBoardPieces, setEnPassantSquare, setSideInCheck, updateProcessedBoard
 } from "../reducers/chessBoard/chessBoardAction";
-
-export enum ChessAiDifficulty {
-    EASY = "EASY",
-    MEDIUM = "MEDIUM",
-    HARD = "HARD"
-}
-
-export enum ChessLetters {
-    A = 1,B = 2, C = 3, D = 4, E = 5, F = 6, G = 7, H = 8
-}
-
-export enum ChessSide {
-    WHITE = "WHITE",
-    BLACK = "BLACK",
-}
-
-export enum ChessStartingSide {
-    WHITE = "WHITE",
-    RANDOM = "RANDOM",
-    BLACK = "BLACK",
-}
-
-export enum ChessPieceType {
-    PAWN = "PAWN",
-    KNIGHT = "KNIGHT",
-    BISHOP = "BISHOP",
-    ROOK = "ROOK",
-    QUEEN = "QUEEN",
-    KING = "KING"
-}
-
-export interface ChessSquare {
-    row: number;
-    col: ChessLetters;
-}
-
-export interface ChessMove {
-    from: ChessSquare;
-    to: ChessSquare;
-    promoteTo?: ChessPieceType;
-}
-
-export interface ChessPiece {
-    side: ChessSide,
-    type: ChessPieceType,
-    square: ChessSquare;
-}
-
-export interface ChessCastleInfo {
-    castleHappened: boolean;
-    leftRookMoved: boolean;
-    rightRookMoved: boolean;
-    kingMoved: boolean;
-}
-
-export interface CastleInfo {
-    castleHappened: boolean;
-    leftRookMoved: boolean;
-    rightRookMoved: boolean;
-    kingMoved: boolean;
-};
+import { ChessSquare } from "../models/chess/ChessSquare";
+import { ChessPiece } from "../models/chess/ChessPiece";
+import { ChessSide } from "../models/chess/ChessSide";
+import { ChessPieceType } from "../models/chess/ChessPieceType";
+import { ChessMove } from "../models/chess/ChessMove";
+import { ChessCastleInfo } from "../models/chess/ChessCastleInfo";
+import { ChessLetters } from "../models/chess/ChessLetters";
 
 export class ChessUtils {
 
@@ -449,7 +392,7 @@ export class ChessUtils {
     }
 
 
-    public static calculatePossibleMoves(square: ChessSquare, chessBoard: ChessPiece[], playerSide: ChessSide, skipCheck: boolean, castleInfo?: CastleInfo): ChessSquare[] {
+    public static calculatePossibleMoves(square: ChessSquare, chessBoard: ChessPiece[], playerSide: ChessSide, skipCheck: boolean, castleInfo?: ChessCastleInfo): ChessSquare[] {
         let uncheckedMoves: ChessSquare[] = [];
         if (this.squareOnSidePiece(square, chessBoard, playerSide)){
             const playerPiece = this.getPieceFromSquare(square, chessBoard);
@@ -680,7 +623,7 @@ export class ChessUtils {
         return uncheckedMoves.concat(this.getBishopPossibleMoves(square, chessBoard, playerSide));
     }
 
-    private static getKingPossibleMoves(square: ChessSquare, chessBoard: ChessPiece[], playerSide: ChessSide, castleInfo?: CastleInfo): ChessSquare[] {
+    private static getKingPossibleMoves(square: ChessSquare, chessBoard: ChessPiece[], playerSide: ChessSide, castleInfo?: ChessCastleInfo): ChessSquare[] {
         const uncheckedMoves: ChessSquare[] = [];
         const colSteps = [-1, 0, 1];
         const rowSteps = [-1, 0, 1];

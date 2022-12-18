@@ -3,17 +3,7 @@ import {connect} from 'react-redux';
 import './ChessBoardSquare.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Utils from '../../../utils/Utils';
-import {
-    CastleInfo,
-    ChessAiDifficulty,
-    ChessLetters,
-    ChessMove,
-    ChessPiece,
-    ChessPieceType,
-    ChessSide,
-    ChessSquare, ChessStartingSide,
-    ChessUtils
-} from "../../../utils/ChessUtils";
+import {ChessUtils} from "../../../utils/ChessUtils";
 import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
 import AppStorage, {StorageKey} from "../../../utils/AppStorage";
 import ChessGameConfigurator from "./ChessConfigurator/ChessGameConfigurator";
@@ -22,6 +12,11 @@ import {ChessBoardModel} from "../../../reducers/chessBoard/chessBoardReducer";
 import ChessBoardLetters from "./ChessBoardLetters";
 import ChessPromotionPopup from "./ChessPromotionPopup";
 import ChessPlayers from "./ChessBoardPlayers";
+import { ChessSquare } from '../../../models/chess/ChessSquare';
+import { ChessPiece } from '../../../models/chess/ChessPiece';
+import { ChessMove } from '../../../models/chess/ChessMove';
+import { ChessSide } from '../../../models/chess/ChessSide';
+import { ChessPieceType } from '../../../models/chess/ChessPieceType';
 
 interface ChessBoardSquareProps {
     chessSquare: ChessSquare;

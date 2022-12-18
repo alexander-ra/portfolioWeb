@@ -9,24 +9,23 @@ import ChessBoardLetters from "./ChessBoardLetters";
 import ChessPromotionPopup from "./ChessPromotionPopup";
 import ChessPlayers from "./ChessBoardPlayers";
 import ChessBoardSquare from "./ChessBoardSquare";
-import {
-    CastleInfo,
-    ChessMove,
-    ChessPiece,
-    ChessPieceType,
-    ChessSide,
-    ChessSquare,
-    ChessUtils
-} from '../../../utils/ChessUtils';
-import ChessBoardEndgameMessage, {GameStatus} from "./ChessBoardEndgameMessage";
+import { ChessSide } from '../../../models/chess/ChessSide';
+import { ChessMove } from '../../../models/chess/ChessMove';
+import { ChessPiece } from '../../../models/chess/ChessPiece';
+import { ChessCastleInfo } from '../../../models/chess/ChessCastleInfo';
+import { ChessSquare } from '../../../models/chess/ChessSquare';
+import { ChessUtils } from '../../../utils/ChessUtils';
+import { ChessPieceType } from '../../../models/chess/ChessPieceType';
+import {ChessGameStatus} from "../../../models/chess/ChessGameStatus";
+import ChessBoardEndgameMessage from './ChessBoardEndgameMessage';
 
 interface ChessBoardProps {
     chessGameId: number;
     playerSide: ChessSide;
     chessMoves: ChessMove[];
-    gameStatus: GameStatus;
+    gameStatus: ChessGameStatus;
     chessPieces: ChessPiece[];
-    castleInfo: CastleInfo;
+    castleInfo: ChessCastleInfo;
     sideInTurn: ChessSide;
 }
 
@@ -75,7 +74,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     }
 
     clickSquare(square: ChessSquare): void {
-        if (this.props.sideInTurn === this.props.playerSide && this.props.gameStatus === GameStatus.IN_PROGRESS) {
+        if (this.props.sideInTurn === this.props.playerSide && this.props.gameStatus === ChessGameStatus.IN_PROGRESS) {
             if (Utils.isNotNull(this.state.selectedSquare)) {
                 if (ChessUtils.chessSquaresEqual(this.state.selectedSquare, square)) {
                     this.setState({selectedSquare: null});
@@ -148,7 +147,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
                     <ChessPlayers />
                     {this.rednderChessBoard()}
                     <ChessBoardLetters />
-                    {<ChessBoardEndgameMessage gameStatus={GameStatus.LOSS} />}
+                    {<ChessBoardEndgameMessage gameStatus={ChessGameStatus.LOSS} />}
                 </>}
             </div>)
     }

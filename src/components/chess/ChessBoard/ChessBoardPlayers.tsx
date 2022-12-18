@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {ChessAiDifficulty, ChessSide, ChessStartingSide } from '../../../utils/ChessUtils';
+import { ChessAiDifficulty } from '../../../models/chess/ChessAiDifficulty';
+import { ChessSide } from '../../../models/chess/ChessSide';
+import { ChessStartingSide } from '../../../models/chess/ChessStartingSide';
 import './ChessBoardPlayers.scss';
 
 interface ChessPlayersProps {

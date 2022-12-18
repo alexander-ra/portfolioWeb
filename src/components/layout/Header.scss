@@ -32,16 +32,21 @@
             justify-content: center;
 
             .navigation-label {
-                margin: 0.25em 0.5em 0 0.5em;
+                margin: 0.25em 0.25em 0 0.25em;
 
                 .vw-portrait & {
                     display: none;
+                    margin: 0.25em 0.5em 0 0.5em;
                 }
             }
 
             .navigation-sub-icon {
-                margin-left: .5em;
-                font-size: .5em;
+                width: 1.5em;
+                font-size: .66em;
+
+                .vw-portrait & {
+                    font-size: .5em;
+                }
             }
 
             .vw-portrait & {

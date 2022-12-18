@@ -56,18 +56,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-size: cover;
+  background-size: contain;
   background-position: center;
-  background-image: url("../public/meshing-around.svg");
-
   &:not(.layout-native) {
     .app-wrapper {
       border-radius: 1em;
     }
-    .app-decorator {
-      border-radius: 1em;
-      box-shadow: inset 0 0 .5em $black-purple;
-    }
+  }
+
+  &.layout-mobile-landscape,
+  &.layout-mobile-portrait,
+  &.layout-tablet-landscape,
+  &.layout-tablet-portrait {
+    background-image: url("../public/gradient-cubes.svg");
   }
 }
 
@@ -85,67 +86,14 @@ code {
   width: 100vw;
   height: 100vh;
   position: relative;
-  margin: 0vh 0vw;
+  margin: 0;
+  top: 0;
 
   .app-wrapper {
     position: relative;
     overflow: hidden;
     width: 100%;
     height: 100%;
-  }
-
-  .app-decorator {
-    background-image: url("../public/spectrum-triangles.svg");
-    background-size: cover;
-    background-position: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-
-    .dark-theme & {
-      background-image: url("../public/spectrum-triangles-oposite.svg");
-    }
-  }
-
-  .app-decorator:before, .app-decorator:after {
-    content: "";
-    display: block;
-    position: absolute;
-    height: 100%;
-    padding: 1em;
-    z-index: -1;
-  }
-
-  .app-decorator:before {
-    background: linear-gradient(90deg, $dark-orange, $orange);
-    border-radius: 2em 0 0 2em;
-    top: -1em;
-    box-shadow: inset 3em 0 3em -4.5em black;
-
-    .vw-portrait & {
-      background: linear-gradient(180deg, $dark-orange, $orange);
-      border-radius: 2em 2em 0 0;
-      width: 100%;
-      left: -1em;
-      box-shadow: inset 0 3em 3em -4.5em black;
-    }
-  }
-
-  .app-decorator:after {
-    background: linear-gradient(270deg, $dark-orange, $orange);
-    border-radius: 0 2em 2em 0;
-    bottom: -1em;
-    box-shadow: inset -3em 0 3em -4.5em black;
-
-    .vw-portrait & {
-      background: linear-gradient(0deg, $dark-orange, $orange);
-      border-radius: 0 0 2em 2em;
-      width: 100%;
-      right: -1em;
-      box-shadow: inset 0 -3em 3em -4.5em black;
-    }
   }
 }
 
@@ -155,64 +103,24 @@ code {
       width: calc(var(--mobile-width) * 1vmax);
       height: calc(var(--mobile-height) * 1vmax);
       margin: calc(50vh - var(--mobile-height) * .5vmax) calc(50vw - var(--mobile-width) * .5vmax);
-
-      .app-decorator:before {
-        top: calc(var(--tablet-height) * 0.05vmax* -0.75);
-        height: calc(var(--tablet-height) * 0.55vmax);
-      }
-
-      .app-decorator:after {
-        bottom: calc(var(--tablet-height) * 0.05vmax* -0.75);
-        height: calc(var(--tablet-height) * 0.55vmax);
-      }
     }
 
     .layout-mobile-landscape & {
       width: calc(var(--mobile-height) * 1vmax);
       height: calc(var(--mobile-width) * 1vmax);
       margin: calc(50vh - var(--mobile-width) * .5vmax) calc(50vw - var(--mobile-height) * .5vmax);
-
-      .app-decorator:before {
-        width: calc(var(--tablet-height) * 0.55vmax);
-        left: calc(var(--tablet-height) * 0.05vmax* -0.75);
-      }
-
-      .app-decorator:after {
-        width: calc(var(--tablet-height) * 0.55vmax);
-        right: calc(var(--tablet-height) * 0.05vmax* -0.75);
-      }
     }
 
     .layout-tablet-portrait & {
       width: calc(var(--tablet-width) * 1vmax);
       height: calc(var(--tablet-height) * 1vmax);
       margin: calc(50vh - var(--tablet-height) * .5vmax) calc(50vw - var(--tablet-width) * .5vmax);
-
-      .app-decorator:before {
-        top: calc(var(--tablet-height) * 0.1vmax* -0.75);
-        height: calc(var(--tablet-height) * 0.55vmax);
-      }
-
-      .app-decorator:after {
-        bottom: calc(var(--tablet-height) * 0.1vmax* -0.75);
-        height: calc(var(--tablet-height) * 0.55vmax);
-      }
     }
 
     .layout-tablet-landscape & {
       width: calc(var(--tablet-height) * 1vmax);
       height: calc(var(--tablet-width) * 1vmax);
       margin: calc(50vh - var(--tablet-width) * .5vmax) calc(50vw - var(--tablet-height) * .5vmax);
-
-      .app-decorator:before {
-        width: calc(var(--tablet-height) * 0.55vmax);
-        left: calc(var(--tablet-height) * 0.1vmax* -0.75);
-      }
-
-      .app-decorator:after {
-        width: calc(var(--tablet-height) * 0.55vmax);
-        right: calc(var(--tablet-height) * 0.1vmax* -0.75);
-      }
     }
   }
 }
@@ -223,64 +131,24 @@ code {
       width: calc(var(--mobile-width) * 1vmin);
       height: calc(var(--mobile-height) * 1vmin);
       margin: calc(50vh - var(--mobile-height) * .5vmin) calc(50vw - var(--mobile-width) * .5vmin);
-
-      .app-decorator:before {
-        top: calc(var(--tablet-height) * 0.05vmin* -0.75);
-        height: calc(var(--tablet-height) * 0.55vmin);
-      }
-
-      .app-decorator:after {
-        bottom: calc(var(--tablet-height) * 0.05vmin* -0.75);
-        height: calc(var(--tablet-height) * 0.55vmin);
-      }
     }
 
     .layout-mobile-landscape & {
       width: calc(var(--mobile-height) * 1vmin);
       height: calc(var(--mobile-width) * 1vmin);
       margin: calc(50vh - var(--mobile-width) * .5vmin) calc(50vw - var(--mobile-height) * .5vmin);
-
-      .app-decorator:before {
-        width: calc(var(--tablet-height) * 0.55vmin);
-        left: calc(var(--tablet-height) * 0.05vmin* -0.75);
-      }
-
-      .app-decorator:after {
-        width: calc(var(--tablet-height) * 0.55vmin);
-        right: calc(var(--tablet-height) * 0.05vmin* -0.75);
-      }
     }
 
     .layout-tablet-portrait & {
       width: calc(var(--tablet-width) * 1vmin);
       height: calc(var(--tablet-height) * 1vmin);
       margin: calc(50vh - var(--tablet-height) * .5vmin) calc(50vw - var(--tablet-width) * .5vmin);
-
-      .app-decorator:before {
-        top: calc(var(--tablet-height) * 0.1vmin* -0.75);
-        height: calc(var(--tablet-height) * 0.55vmin);
-      }
-
-      .app-decorator:after {
-        bottom: calc(var(--tablet-height) * 0.1vmin * -0.75);
-        height: calc(var(--tablet-height) * 0.55vmin);
-      }
     }
 
     .layout-tablet-landscape & {
       width: calc(var(--tablet-height) * 1vmin);
       height: calc(var(--tablet-width) * 1vmin);
       margin: calc(50vh - var(--tablet-width) * .5vmin) calc(50vw - var(--tablet-height) * .5vmin);
-
-      .app-decorator:before {
-        width: calc(var(--tablet-height) * 0.55vmin);
-        left: calc(var(--tablet-height) * 0.1vmin * -0.75);
-      }
-
-      .app-decorator:after {
-        width: calc(var(--tablet-height) * 0.55vmin);
-        right: calc(var(--tablet-height) * 0.1vmin * -0.75);
-      }
     }
   }
 }

@@ -25,11 +25,6 @@
 }
 
 @font-face {
-  font-family: MAGIC;
-  src: url("../public/fonts/MAGIC.otf") format("opentype");
-}
-
-@font-face {
   font-family: BANDAR;
   src: url("../public/fonts/bandar-font/Bandar.ttf") format("truetype");
   font-weight: normal;
@@ -39,17 +34,6 @@
   font-family: BANDAR;
   src: url("../public/fonts/bandar-font/BandarBold.ttf") format("truetype");
   font-weight: bold;
-}
-
-@font-face {
-  font-family: VARELA;
-  src: url("../public/fonts/varela-font/Varela.ttf") format("truetype");
-
-}
-
-@font-face {
-  font-family: GEOSANS;
-  src: url("../public/fonts/geo_sans_light/GeosansLight.ttf") format("truetype");
 }
 
 @font-face {
@@ -124,4 +108,15 @@ img{
 
 ::-webkit-scrollbar-corner {
   visibility: hidden;
+}
+
+.loadingbe {
+  position: fixed;
+  height: 10em;
+  width: 10em;
+  font-size: 2em;
+  background: red;
+  color: white;
+  top: calc(50% - 5em);
+  left: calc(50% - 5em);
 }

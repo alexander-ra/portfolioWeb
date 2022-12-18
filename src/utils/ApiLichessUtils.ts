@@ -1,13 +1,5 @@
 import Utils from "./Utils";
-import {
-    ChessAiDifficulty,
-    ChessMove,
-    ChessPieceType,
-    ChessSide,
-    ChessSquare,
-    ChessStartingSide,
-    ChessUtils
-} from "./ChessUtils";
+import {ChessUtils} from "./ChessUtils";
 import store from "../store/store";
 import {
     endGame,
@@ -19,7 +11,13 @@ import {
 } from "../reducers/chess/chessAction";
 import {Buffer} from "buffer";
 import {resetBoardState} from "../reducers/chessBoard/chessBoardAction";
-import {GameStatus} from "../components/chess/ChessBoard/ChessBoardEndgameMessage";
+import { ChessMove } from "../models/chess/ChessMove";
+import { ChessAiDifficulty } from "../models/chess/ChessAiDifficulty";
+import { ChessStartingSide } from "../models/chess/ChessStartingSide";
+import { ChessSide } from "../models/chess/ChessSide";
+import { ChessSquare } from "../models/chess/ChessSquare";
+import { ChessPieceType } from "../models/chess/ChessPieceType";
+import { ChessGameStatus } from "../models/chess/ChessGameStatus";
 
 export class ApiLichessUtils {
     private static readonly AUTH_KEY = "Bearer lip_ySt9nnwhXfyDdaO5InlE";
@@ -143,12 +141,12 @@ export class ApiLichessUtils {
                     }
 
                     if (Utils.isNotNull(state.status) && state.status !== "started") {
-                        let gameStatus: GameStatus;
+                        let gameStatus: ChessGameStatus;
                         if (Utils.isNotNull(state.winner)) {
                             gameStatus = state.winner === store.getState().chessReducer.playerSide.toLowerCase() ?
-                                GameStatus.WIN : GameStatus.LOSS;
+                                ChessGameStatus.WIN : ChessGameStatus.LOSS;
                         } else {
-                            gameStatus = GameStatus.DRAW;
+                            gameStatus = ChessGameStatus.DRAW;
                         }
                         store.dispatch(endGame(gameStatus));
                     }
@@ -236,7 +234,7 @@ export class ApiLichessUtils {
             opponentLevel: aiLevel,
             playerSide,
             playerAvatar,
-            gameStatus: GameStatus.IN_PROGRESS
+            gameStatus: ChessGameStatus.IN_PROGRESS
         };
     }
 }

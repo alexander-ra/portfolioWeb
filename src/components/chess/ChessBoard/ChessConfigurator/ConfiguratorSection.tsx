@@ -1,7 +1,7 @@
 import React from 'react';
-import {ChessAiDifficulty, ChessSide, ChessStartingSide} from '../../../../utils/ChessUtils';
 import './ConfiguratorSection.scss';
 import {connect} from 'react-redux';
+import { ChessSide } from '../../../../models/chess/ChessSide';
 
 interface ConfigurationSectionProps {
     onSelectChange: (selectedIndex: number) => void;

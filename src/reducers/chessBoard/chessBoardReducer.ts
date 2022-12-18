@@ -1,4 +1,7 @@
-import {ChessCastleInfo, ChessPiece, ChessSide, ChessSquare} from "../../utils/ChessUtils";
+import { ChessCastleInfo } from "../../models/chess/ChessCastleInfo";
+import { ChessPiece } from "../../models/chess/ChessPiece";
+import { ChessSide } from "../../models/chess/ChessSide";
+import { ChessSquare } from "../../models/chess/ChessSquare";
 import {
     SET_EN_PASSANT_SQUARE,
     RESET_BOARD_STATE,

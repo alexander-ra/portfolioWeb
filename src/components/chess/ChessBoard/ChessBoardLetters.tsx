@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChessLetters } from '../../../utils/ChessUtils';
+import { ChessLetters } from '../../../models/chess/ChessLetters';
 import './ChessBoardLetters.scss';
 
 class ChessBoardLetters extends React.Component {
