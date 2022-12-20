@@ -245,21 +245,21 @@ $menu-radius: 6em;
 
     .mask {
       //background-color: rgba($main-primary, .25);
-      background-image: url("../../../public/portalicus.svg");
+      background-image: url("../../../public/svgAssets/light-theme/crystal.svg");
       transition: background-image 0.1s;
       background-size: 500%;
       cursor: pointer;
 
 
       .dark-theme & {
-        background-image: url("../../../public/portalicus-selected.svg");
+        background-image: url("../../../public/svgAssets/crystalSelected.svg");
       }
 
       &:hover {
-        background-image: url("../../../public/portalicus-selected.svg");
+        background-image: url("../../../public/svgAssets/crystalSelected.svg");
 
         .dark-theme & {
-          background-image: url("../../../public/portalicus-oposite.svg");
+          background-image: url("../../../public/svgAssets/dark-theme/crystal.svg");
         }
       }
 
@@ -319,7 +319,7 @@ $menu-radius: 6em;
       }
 
       .vw-portrait & {
-        background-image: url("../../../public/portalicus-selected.svg");
+        background-image: url("../../../public/svgAssets/crystalSelected.svg");
         background-size: cover;
         color: rgb($button-text-color);
         text-align: center;

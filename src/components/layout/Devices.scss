@@ -13,20 +13,20 @@
     }
 
     .tablet {
-        background-image: url("../../../public/landing_tablet.svg");
+        background-image: url("../../../public/svgAssets/deviceSimulatorIcons/tablet.svg");
         transform: rotate(-90deg) scaleX(0);
         left: calc(95vw - 35em);
         top: calc(50% - 10em);
     }
 
     .smartphone {
-        background-image: url("../../../public/landing_phone.svg");
+        background-image: url("../../../public/svgAssets/deviceSimulatorIcons/phone.svg");
         left: calc(95vw - 25em);
         top: calc(50% - 5em);
     }
 
     .desktop {
-        background-image: url("../../../public/landing_desktop.svg");
+        background-image: url("../../../public/svgAssets/deviceSimulatorIcons/desktop.svg");
         filter: dropShadow(1em 1em 1em white);
         left: calc(95vw - 15em);
         top: calc(50% - 10em);

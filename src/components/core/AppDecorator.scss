@@ -11,7 +11,7 @@ body {
 
 .app-decorator {
     background-color: rgb($contrast-primary);
-    background-image: url("../../../public/spectrum-triangles.svg");
+    background-image: url("../../../public/svgAssets/light-theme/spectrum-triangles.svg");
     background-size: cover;
     background-position: center;
     position: absolute;
@@ -22,7 +22,7 @@ body {
 
     .dark-theme & {
         background-color: rgb($contrast-secondary);
-        background-image: url("../../../public/spectrum-triangles-oposite.svg");
+        background-image: url("../../../public/svgAssets/dark-theme/spectrum-triangles.svg");
     }
 }
 

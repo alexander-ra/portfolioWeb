@@ -24,26 +24,26 @@
         margin: 0 .2em;
 
         &.desktop-device {
-            background-image: url("../../../public/landing_desktop.svg");
+            background-image: url("../../../public/svgAssets/deviceSimulatorIcons/desktop.svg");
 
             &.selected {
-                background-image: url("../../../public/landing_desktop_selected.svg");
+                background-image: url("../../../public/svgAssets/deviceSimulatorIcons/desktopSelected.svg");
             }
         }
 
         &.mobile-device {
-            background-image: url("../../../public/landing_phone.svg");
+            background-image: url("../../../public/svgAssets/deviceSimulatorIcons/phone.svg");
 
             &.selected {
-                background-image: url("../../../public/landing_phone_selected.svg");
+                background-image: url("../../../public/svgAssets/deviceSimulatorIcons/phoneSelected.svg");
             }
         }
 
         &.tablet-device {
-            background-image: url("../../../public/landing_tablet.svg");
+            background-image: url("../../../public/svgAssets/deviceSimulatorIcons/tablet.svg");
 
             &.selected {
-                background-image: url("../../../public/landing_tablet_selected.svg");
+                background-image: url("../../../public/svgAssets/deviceSimulatorIcons/tabletSelected.svg");
             }
         }
     }
