@@ -1,8 +1,6 @@
 import React from 'react';
 import './ContentPage.scss';
 import {connect} from 'react-redux';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faAsterisk, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {Position} from "../../models/common/Position";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
 import {CircleRotationUtils} from "../../utils/CircleRotationUtils";
@@ -12,6 +10,7 @@ import {ContentData, MenuContent} from '../../labels/ContentLabels';
 import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
 import AppStorage, {StorageArrayKey, StorageKey} from "../../utils/AppStorage";
+import Icon from '../common/icon/Icon';
 
 interface ContentPageProps {
     isClosing: boolean;
@@ -27,7 +26,7 @@ enum RotatingDirection {
 }
 
 export interface Section {
-    icon: IconDefinition;
+    icon: any;
     menu: CircleMenuStates;
 }
 
@@ -319,7 +318,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                <div className={`menu-section circle-rot${this.sectionDegrees[index]}deg ${this.state.selectedMenuIndex === index ? "selected": ""}`}
                     onClick={() => { this.clickSection(index); }}>
                    <div className={`menu-icon-wrapper circle-rot${this.sectionIconDegrees[index]}deg`}>
-                       <FontAwesomeIcon className={"menu-icon"}  icon={section.icon}></FontAwesomeIcon>
+                       <Icon className={"menu-icon"}  icon={section.icon}></Icon>
                        {!isVisited && <div className={"icon-new"}>New*</div>}
                    </div>
                </div>

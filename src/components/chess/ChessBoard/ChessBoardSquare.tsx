@@ -1,13 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import './ChessBoardSquare.scss';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Utils from '../../../utils/Utils';
 import {ChessUtils} from "../../../utils/ChessUtils";
 import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
 import AppStorage, {StorageKey} from "../../../utils/AppStorage";
 import ChessGameConfigurator from "./ChessConfigurator/ChessGameConfigurator";
-import {faSquareXmark, faXmark, faXmarkSquare} from '@fortawesome/free-solid-svg-icons';
 import {ChessBoardModel} from "../../../reducers/chessBoard/chessBoardReducer";
 import ChessBoardLetters from "./ChessBoardLetters";
 import ChessPromotionPopup from "./ChessPromotionPopup";
@@ -17,6 +15,7 @@ import { ChessPiece } from '../../../models/chess/ChessPiece';
 import { ChessMove } from '../../../models/chess/ChessMove';
 import { ChessSide } from '../../../models/chess/ChessSide';
 import { ChessPieceType } from '../../../models/chess/ChessPieceType';
+import Icon from '../../common/icon/Icon';
 
 interface ChessBoardSquareProps {
     chessSquare: ChessSquare;
@@ -78,7 +77,7 @@ class ChessBoardSquare extends React.Component<ChessBoardSquareProps> {
     renderChessPiece(pieceIndex: number): JSX.Element {
         return <>
             { pieceIndex !== -1 && <div className={`chess-piece chess-piece-${this.props.chessPieces[pieceIndex].side.toLowerCase()}`}>
-                <FontAwesomeIcon className={"back-icon"} icon={ChessUtils.getPieceIcon(this.props.chessPieces[pieceIndex].type)} />
+                <Icon icon={ChessUtils.getPieceIcon(this.props.chessPieces[pieceIndex].type)} />
             </div>
             }
         </>

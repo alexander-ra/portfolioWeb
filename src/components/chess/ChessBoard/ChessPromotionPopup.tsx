@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import './ChessPromotionPopup.scss';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
 import {ChessBoardModel} from "../../../reducers/chessBoard/chessBoardReducer";
 import { ChessSide } from '../../../models/chess/ChessSide';
 import { ChessMove } from '../../../models/chess/ChessMove';
 import { ChessPieceType } from '../../../models/chess/ChessPieceType';
 import { ChessUtils } from '../../../utils/ChessUtils';
+import Icon from '../../common/icon/Icon';
 
 interface ChessPromotionPopupProps {
     playerSide: ChessSide;
@@ -35,7 +35,7 @@ class ChessPromotionPopup extends React.Component<ChessPromotionPopupProps> {
             promotionOptions.push(
                 <div className={`chess-piece chess-piece-${this.props.playerSide.toLowerCase()}`}
                      onClick={() =>this.clickPromotion(option)}>
-                    <FontAwesomeIcon icon={ChessUtils.getPieceIcon(option)} />
+                    <Icon icon={ChessUtils.getPieceIcon(option)} />
                 </div>
             );
         })

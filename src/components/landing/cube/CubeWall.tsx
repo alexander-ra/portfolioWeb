@@ -1,14 +1,14 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { CubeMenuStates } from '../../../models/landing/CubeMenuStates';
+import Icon from '../../common/icon/Icon';
+import { IconType } from '../../common/icon/IconType';
 import './CubeWall.scss';
 
 interface CubeWallProps {
     menu: CubeMenuStates;
     selected: boolean;
     onSelect: (menu: CubeMenuStates) => void;
-    icon: IconProp;
+    icon: IconType;
 }
 
 export interface CubeWallState {
@@ -25,7 +25,7 @@ class CubeWall extends React.Component<CubeWallProps, CubeWallState> {
                  onClick={() => {this.props.onSelect(this.props.menu)}}>
                 <div className={"wall-content"}>
 
-                    <FontAwesomeIcon className={"wall-icon"} icon={this.props.icon} />
+                    <Icon className={"wall-icon"} icon={this.props.icon} />
                 </div>
             </div>
         )

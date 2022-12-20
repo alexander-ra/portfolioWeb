@@ -4,7 +4,6 @@
     position: absolute;
     top: $header-height;
     opacity: .75;
-    color: rgba($button-text-color, .5);
     transition: opacity .5s, color .5s;
     display: flex;
     z-index: 3;
@@ -33,7 +32,9 @@
     .back-icon {
         opacity: 0;
         height: 4em;
+        width: 2em;
         animation: transparentAppear .5s .5s forwards;
+        background-color: rgba($button-text-color, .5);
     }
 }
 

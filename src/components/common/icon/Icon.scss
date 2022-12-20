@@ -1,0 +1,57 @@
+@import "../../../App";
+
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: rgb($main-primary);
+  vertical-align: middle;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+}
+
+@mixin loadIcon($iconName) {
+  .#{$iconName} {
+    mask-image: url("../../../../public/icons/#{$iconName}.svg");
+  }
+}
+
+@include loadIcon("faHome");
+@include loadIcon("faBusinessTime");
+@include loadIcon("faKey");
+@include loadIcon("faGauge");
+@include loadIcon("faAccessibleIcon");
+@include loadIcon("faUserTie");
+@include loadIcon("faMoneyBillTrendUp");
+@include loadIcon("faFileCode");
+@include loadIcon("faChessPawn");
+@include loadIcon("faChessBishop");
+@include loadIcon("faChessKnight");
+@include loadIcon("faChessRook");
+@include loadIcon("faChessQueen");
+@include loadIcon("faChessKing");
+@include loadIcon("faHandshake");
+@include loadIcon("faSuitcase");
+@include loadIcon("faCube");
+@include loadIcon("faChess");
+@include loadIcon("faCompass");
+@include loadIcon("faAngleDown");
+@include loadIcon("faAddressCard");
+@include loadIcon("faLink");
+@include loadIcon("faGithubAlt");
+@include loadIcon("faPalette");
+@include loadIcon("faMoon");
+@include loadIcon("faSun");
+@include loadIcon("faRotateLeft");
+@include loadIcon("faChevronLeft");
+@include loadIcon("faMobile");
+@include loadIcon("faEnvelope");
+@include loadIcon("faLinkedin");
+@include loadIcon("faXmark");
+@include loadIcon("faFaceSadCry");
+@include loadIcon("faHandshakeAngle");
+@include loadIcon("faPeace");
+@include loadIcon("faStar");
+@include loadIcon("faTrophy");

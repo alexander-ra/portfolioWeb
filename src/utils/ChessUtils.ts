@@ -1,10 +1,3 @@
-import {
-    faChessBishop, faChessKing,
-    faChessKnight,
-    faChessPawn, faChessQueen,
-    faChessRook, faDotCircle,
-    IconDefinition
-} from "@fortawesome/free-solid-svg-icons";
 import {inspect} from "util";
 import Utils from "./Utils";
 import store from "../store/store";
@@ -20,6 +13,7 @@ import { ChessPieceType } from "../models/chess/ChessPieceType";
 import { ChessMove } from "../models/chess/ChessMove";
 import { ChessCastleInfo } from "../models/chess/ChessCastleInfo";
 import { ChessLetters } from "../models/chess/ChessLetters";
+import { IconType } from "../components/common/icon/IconType";
 
 export class ChessUtils {
 
@@ -721,22 +715,22 @@ export class ChessUtils {
         throw new Error(`String does not represent a chess letter: ${char}`);
     }
 
-    public static getPieceIcon(pieceType: ChessPieceType): IconDefinition {
+    public static getPieceIcon(pieceType: ChessPieceType): any {
 
         switch (pieceType) {
             case ChessPieceType.PAWN:
-                return faChessPawn
+                return IconType.faChessPawn
             case ChessPieceType.BISHOP:
-                return faChessBishop
+                return IconType.faChessBishop
             case ChessPieceType.KNIGHT:
-                return faChessKnight
+                return IconType.faChessKnight
             case ChessPieceType.ROOK:
-                return faChessRook
+                return IconType.faChessRook
             case ChessPieceType.QUEEN:
-                return faChessQueen
+                return IconType.faChessQueen
             case ChessPieceType.KING:
-                return faChessKing
+                return IconType.faChessKing
         }
-        return faDotCircle;
+        return null;
     }
 }

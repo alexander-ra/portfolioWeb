@@ -1,18 +1,3 @@
-import {
-    faArrowUpRightDots, faBolt,
-    faCircleNodes,
-    faCookie,
-    faDice,
-    faFeather,
-    faForwardStep,
-    faMoneyBillTransfer,
-    faPaintBrush,
-    faRulerCombined, faTablet, faThumbsUp,
-    faTty, faUniversalAccess, faVialVirus,
-    IconDefinition
-} from "@fortawesome/free-solid-svg-icons";
-import {faBuildingColumns} from "@fortawesome/free-solid-svg-icons/faBuildingColumns";
-import {Icon} from "@fortawesome/fontawesome-svg-core";
 import {CircleMenuStates} from "../models/landing/CircleMenuStates";
 
 export interface MenuContent {
@@ -29,7 +14,6 @@ export enum CustomContentTypes {
 export interface ContentData {
     title: string;
     description: any;
-    icon: IconDefinition;
     customContent?: CustomContentTypes;
 }
 
@@ -60,12 +44,10 @@ export class ContentData {
         title: "Home",
         leftContent: {
             title: "Introduction",
-            icon: faForwardStep,
             description: ContentLabels.EXPERIENCE_HOME_LEFT
         },
         rightContent: {
             title: "Mastered Skills",
-            icon: faCircleNodes,
             description: ContentLabels.EXPERIENCE_HOME_RIGHT,
             customContent: CustomContentTypes.TECHNOLOGY_LIST
         }
@@ -75,12 +57,10 @@ export class ContentData {
         title: "By Title",
         leftContent: {
             title: "Senior Front-end Dev",
-            icon: faRulerCombined,
             description: ContentLabels.POSITION_EXPERIENCE_TEXT_LEFT
         },
         rightContent: {
             title: "Other Positions",
-            icon: faBuildingColumns,
             description: ContentLabels.POSITION_EXPERIENCE_TEXT_RIGHT
         }
     } as MenuContent;
@@ -103,12 +83,10 @@ export class ContentData {
         title: "By Field",
         leftContent: {
             title: "Banking",
-            icon: faMoneyBillTransfer,
             description: ContentLabels.FIELD_EXPERIENCE_TEXT_LEFT
         },
         rightContent: {
             title: "Online Gambling",
-            icon: faDice,
             description: ContentLabels.FIELD_EXPERIENCE_TEXT_RIGHT
         }
     } as MenuContent;
@@ -117,12 +95,10 @@ export class ContentData {
         title: "Home",
         leftContent: {
             title: "Introduction",
-            icon: faForwardStep,
             description: ContentLabels.CLIENT_APPROACH_HOME_LEFT
         },
         rightContent: {
             title: "Past Clients",
-            icon: faThumbsUp,
             description: ContentLabels.CLIENT_APPROACH_HOME_RIGHT,
             customContent: CustomContentTypes.COMPANIES_LIST
         }
@@ -132,12 +108,10 @@ export class ContentData {
         title: "Business",
         leftContent: {
             title: "Communication",
-            icon: faTty,
             description: ContentLabels.BUSINESS_APPROACH_LEFT
         },
         rightContent: {
             title: "Scaling Growth",
-            icon: faArrowUpRightDots,
             description: ContentLabels.BUSINESS_APPROACH_RIGHT
         }
     } as MenuContent;
@@ -146,12 +120,10 @@ export class ContentData {
         title: "Security",
         leftContent: {
             title: "Encryption",
-            icon: faCookie,
             description: ContentLabels.SECURITY_APPROACH_LEFT
         },
         rightContent: {
             title: "Quality assurance",
-            icon: faVialVirus,
             description: ContentLabels.SECURITY_APPROACH_RIGHT
         }
     } as MenuContent;
@@ -160,12 +132,10 @@ export class ContentData {
         title: "Swiftness",
         leftContent: {
             title: "Slim approach",
-            icon: faFeather,
             description: ContentLabels.SWIFTNESS_APPROACH_LEFT
         },
         rightContent: {
             title: "Fast Loading",
-            icon: faBolt,
             description: ContentLabels.SWIFTNESS_APPROACH_RIGHT
         }
     } as MenuContent;
@@ -174,12 +144,10 @@ export class ContentData {
         title: "Compatibility",
         leftContent: {
             title: "Device Compatibility",
-            icon: faTablet,
             description: ContentLabels.COMPATIBILITY_APPROACH_LEFT
         },
         rightContent: {
             title: "User Accessibility",
-            icon: faUniversalAccess,
             description: ContentLabels.COMPATIBILITY_APPROACH_RIGHT
         }
     } as MenuContent;

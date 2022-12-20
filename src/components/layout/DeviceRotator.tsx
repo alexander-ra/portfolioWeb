@@ -3,9 +3,9 @@ import './DeviceRotator.scss';
 import store from "../../store/store";
 import {setLayoutType} from '../../reducers/window/windowAction';
 import {LayoutType} from "../core/LayoutType";
-import {faChevronLeft, faRotateLeft} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {connect} from "react-redux";
+import Icon from '../common/icon/Icon';
+import { IconType } from '../common/icon/IconType';
 
 interface DeviceRotatorProps {
     layoutType: LayoutType;
@@ -40,7 +40,7 @@ class DeviceRotator extends React.Component<DeviceRotatorProps, DeviceRotatorSta
     render(){
         return ( this.props.layoutType !== LayoutType.NATIVE &&
         <div className={`device-rotator-wrapper`} onClick={() => this.setStateOfSimulation()}>
-            <FontAwesomeIcon className={"rotation-icon"} icon={faRotateLeft} />
+            <Icon className={"rotation-icon"} icon={IconType.faRotateLeft} />
         </div>
         )
     }

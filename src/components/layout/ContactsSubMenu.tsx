@@ -1,9 +1,8 @@
 import React from 'react';
 import './ContactsSubMenu.scss';
 import store from "../../store/store";
-import {faGithubAlt, faLinkedin} from "@fortawesome/free-brands-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChess, faCube, faEnvelope, faHandshake, faMobile, faSuitcase} from '@fortawesome/free-solid-svg-icons';
+import Icon from "../common/icon/Icon";
+import { IconType } from '../common/icon/IconType';
 
 interface ExpandedMenuProps {
 }
@@ -23,19 +22,19 @@ class NavigationSubMenu extends React.Component<ExpandedMenuProps, ExpandedMenuS
                 </div>
                 <div className={"contact-right"}>
                     <div className={"contact-line"}>
-                        <FontAwesomeIcon className={"contact-icon"} icon={faMobile} />
+                        <Icon className={"contact-icon"} icon={IconType.faMobile} />
                         <div className={"expanded-menu-label"}>(+359) 885-654-188</div>
                     </div>
                     <div className={"contact-line"}>
-                        <FontAwesomeIcon className={"contact-icon"} icon={faEnvelope} />
+                        <Icon className={"contact-icon"} icon={IconType.faEnvelope} />
                         <div className={"expanded-menu-label"}>info@alexdev.pro</div>
                     </div>
                     <div className={"contact-line"}>
-                        <FontAwesomeIcon className={"contact-icon"} icon={faLinkedin} />
+                        <Icon className={"contact-icon"} icon={IconType.faLinkedin} />
                         <div className={"expanded-menu-label"}>/in/alexandar-andreev</div>
                     </div>
                     <div className={"contact-line"}>
-                        <FontAwesomeIcon className={"contact-icon"} icon={faGithubAlt} />
+                        <Icon className={"contact-icon"} icon={IconType.faGithubAlt} />
                         <div className={"expanded-menu-label"}>alexander-ra/portfolioWeb</div>
                     </div>
                 </div>

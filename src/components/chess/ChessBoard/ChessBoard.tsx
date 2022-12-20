@@ -147,7 +147,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
                     <ChessPlayers />
                     {this.rednderChessBoard()}
                     <ChessBoardLetters />
-                    {<ChessBoardEndgameMessage gameStatus={ChessGameStatus.LOSS} />}
+                    {<ChessBoardEndgameMessage gameStatus={ChessGameStatus.WIN} />}
                 </>}
             </div>)
     }

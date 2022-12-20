@@ -58,16 +58,16 @@
     text-align: center;
     z-index: 2;
     &.chess-piece-white {
-      color: rgb($chess-piece-white);
-
-      path {
-        stroke: rgb($shadow);
-        stroke-width: .2em;
+      filter: drop-shadow(0 0 1px rgb($shadow));
+      .icon {
+        background-color: rgb($chess-piece-white);
       }
     }
 
     &.chess-piece-black {
-      color: rgb($chess-piece-black);
+      .icon {
+        color: rgb($chess-piece-black);
+      }
     }
   }
 }

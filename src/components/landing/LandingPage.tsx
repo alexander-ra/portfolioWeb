@@ -6,8 +6,7 @@ import {LandingDescriptions} from "../../labels/LandingLabels";
 import {connect} from 'react-redux';
 import TextBubble from "../common/text-bubble/TextBubble";
 import MenuBubble from "../common/text-bubble/MenuBubble";
-import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {faChessKnight, faHandshake, faSuitcase} from '@fortawesome/free-solid-svg-icons';
+import { IconType } from '../common/icon/IconType';
 
 interface LandingCubeProps {
     cubeOpened: boolean;
@@ -26,17 +25,17 @@ class LandingPage extends React.Component<LandingCubeProps> {
         };
     }
 
-    private getIcon(): IconProp {
+    private getIcon(): IconType {
         switch (this.props.selectedMenu) {
             case CubeMenuStates.BOTTOM:
-                return faChessKnight;
+                return IconType.faChess;
             case CubeMenuStates.TOP_RIGHT:
-                return faSuitcase;
+                return IconType.faSuitcase;
             case CubeMenuStates.TOP_LEFT:
-                return faHandshake;
+                return IconType.faHandshake;
         }
 
-        return faHandshake;
+        return IconType.faHandshake;
     }
 
     render(){

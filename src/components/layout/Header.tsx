@@ -3,16 +3,14 @@ import './Header.scss';
 import store from "../../store/store";
 import {setTheme} from '../../reducers/window/windowAction';
 import {ThemeType} from "../core/ThemeType";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAddressCard, faAngleDown, faArrowDown, faAt, faCircleDot, faCompass, faFaceSadCry, faLink, faMoon,
-    faPalette, faSun} from "@fortawesome/free-solid-svg-icons";
-import { faGithubAlt } from '@fortawesome/free-brands-svg-icons';
 import {connect} from "react-redux";
 import {ChessBoardModel} from "../../reducers/chessBoard/chessBoardReducer";
 import NavigationSubMenu from "./NavigationSubMenu";
 import ContactsSubMenu from "./ContactsSubMenu";
 import BackButton from "./BackButton";
 import cubesReducer from "../../reducers/cube/cubeReducer";
+import Icon from "../common/icon/Icon";
+import {IconType} from "../common/icon/IconType";
 
 interface HeaderProps {
     theme: ThemeType;
@@ -36,29 +34,30 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                 <div className={`header-wrapper`}>
                     <div className={`navigation-wrapper`}>
                         <div className={`navigation-item`}>
-                            <FontAwesomeIcon className={"navigation-icon"} icon={faCompass} />
+                            {/*<FontAwesomeIcon className={"expanded-menu-icon"} icon={faHandshake} />*/}
+                            <Icon className={"navigation-icon"} icon={IconType.faCompass} />
                             <span className={"navigation-label"}>Menus</span>
-                            <FontAwesomeIcon className={"navigation-sub-icon"} icon={faAngleDown} />
+                            <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
                             <NavigationSubMenu></NavigationSubMenu>
                         </div>
                         <div className={`navigation-item`}>
-                            <FontAwesomeIcon className={"navigation-icon"} icon={faAddressCard} />
+                            <Icon className={"navigation-icon"} icon={IconType.faAddressCard} />
                             <span className={"navigation-label"}>Contact Me</span>
-                            <FontAwesomeIcon className={"navigation-sub-icon"} icon={faAngleDown} />
+                            <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
                             <ContactsSubMenu></ContactsSubMenu>
                         </div>
                         <div className={`navigation-item`}>
-                            <FontAwesomeIcon className={"navigation-icon"} icon={faGithubAlt} />
+                            <Icon className={"navigation-icon"} icon={IconType.faGithubAlt} />
                             <span className={"navigation-label"}>GitHub</span>
-                            <FontAwesomeIcon className={"navigation-sub-icon"} icon={faLink} />
+                            <Icon className={"navigation-sub-icon"} icon={IconType.faLink} />
                         </div>
                         <div className={`navigation-item`} onClick={this.changeTheme}>
-                            <FontAwesomeIcon className={"navigation-icon"} icon={faPalette} />
+                            <Icon className={"navigation-icon"} icon={IconType.faPalette} />
                             <span className={"navigation-label"}>Theme</span>
                             {this.props.theme === ThemeType.DARK &&
-                                <FontAwesomeIcon className={"navigation-sub-icon"} icon={faMoon} />}
+                                <Icon className={"navigation-sub-icon"} icon={IconType.faMoon} />}
                             {this.props.theme === ThemeType.LIGHT &&
-                                <FontAwesomeIcon className={"navigation-sub-icon"} icon={faSun} />}
+                                <Icon className={"navigation-sub-icon"} icon={IconType.faSun} />}
                         </div>
                     </div>
                 </div>

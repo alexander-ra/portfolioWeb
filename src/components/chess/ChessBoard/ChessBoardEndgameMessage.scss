@@ -22,11 +22,12 @@
     flex-direction: column;
     justify-content: center;
     margin-right: .5em;
-    color: rgb($main-primary);
     width: 4em;
 
     &.win {
-      color: rgb($accent-secondary);
+      .chess-message-icon {
+        background-color: rgb($accent-secondary);
+      }
     }
 
 
@@ -51,7 +52,9 @@
 
     .chess-message-icon {
       height: 2em;
+      width: 2em;
       font-size: 1.5em;
+      background-color: rgb($main-primary);
     }
 
   }
@@ -81,13 +84,13 @@
 }
 
 @keyframes star-side {
-  0% {font-size: 0.75em; color: rgb($accent-secondary);}
-  66% {font-size: .66em; color: rgb($accent-primary);}
-  100% {font-size: 0.75em; color: rgb($accent-secondary);}
+  0% {font-size: 0.75em; background-color: rgb($accent-secondary);}
+  66% {font-size: .66em; background-color: rgb($accent-primary);}
+  100% {font-size: 0.75em; background-color: rgb($accent-secondary);}
 }
 
 @keyframes star-center {
-  0% {font-size: 0.9em; color: rgb($accent-primary);}
-  66% {font-size: 1.1em; color: rgb($accent-secondary);}
-  100% {font-size: 0.9em; color: rgb($accent-primary);}
+  0% {font-size: 0.9em; background-color: rgb($accent-primary);}
+  66% {font-size: 1.1em; background-color: rgb($accent-secondary);}
+  100% {font-size: 0.9em; background-color: rgb($accent-primary);}
 }

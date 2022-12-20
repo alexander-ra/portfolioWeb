@@ -1,9 +1,9 @@
 import React from 'react';
 import './ChessBoardEndgameMessage.scss';
-import {faChevronLeft, faFaceSadCry, faHandshakeAngle, faPeace, faStar, faTrophy} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
 import { ChessGameStatus } from '../../../models/chess/ChessGameStatus';
+import Icon from '../../common/icon/Icon';
+import { IconType } from '../../common/icon/IconType';
 
 interface ChessBoardEndgameMessageProps {
     gameStatus: ChessGameStatus;
@@ -30,18 +30,18 @@ class ChessBoardEndgameMessage extends React.Component<ChessBoardEndgameMessageP
             case ChessGameStatus.WIN:
                 return <>
                     <div className={"stars-wrapper"}>
-                        <FontAwesomeIcon className={"star star-left"} icon={faStar} />
-                        <FontAwesomeIcon className={"star star-center"} icon={faStar} />
-                        <FontAwesomeIcon className={"star star-right"} icon={faStar} />
+                        <Icon className={"star star-left"} icon={IconType.faStar} />
+                        <Icon className={"star star-center"} icon={IconType.faStar} />
+                        <Icon className={"star star-right"} icon={IconType.faStar} />
                     </div>
-                    <FontAwesomeIcon className={"chess-message-icon"} icon={faTrophy} />
+                    <Icon className={"chess-message-icon"} icon={IconType.faTrophy} />
                 </>
             case ChessGameStatus.LOSS:
-                return <FontAwesomeIcon className={"chess-message-icon"} icon={faFaceSadCry} />
+                return <Icon className={"chess-message-icon"} icon={IconType.faFaceSadCry} />
             case ChessGameStatus.DRAW:
-                return <FontAwesomeIcon className={"chess-message-icon"} icon={faHandshakeAngle} />
+                return <Icon className={"chess-message-icon"} icon={IconType.faHandshakeAngle} />
             default:
-                return <FontAwesomeIcon className={"chess-message-icon"} icon={faPeace} />
+                return <Icon className={"chess-message-icon"} icon={IconType.faPeace} />
         }
     }
 

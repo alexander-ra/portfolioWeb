@@ -4,16 +4,6 @@ import {Page} from '../../models/common/Page';
 import LandingPage from "../landing/LandingPage";
 import ContentPage, {Section} from "../contentPage/ContentPage";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
-import {
-    faBusinessTime,
-    faFileCode,
-    faGauge,
-    faHome,
-    faKey,
-    faMoneyBillTrendUp,
-    faUserTie
-} from '@fortawesome/free-solid-svg-icons';
-import {faAccessibleIcon, fab} from "@fortawesome/free-brands-svg-icons";
 import ChessPage from '../chess/ChessPage';
 import BrowserUtils from '../../utils/BrowserUtils';
 import {UIOrientation} from './UIOrientation';
@@ -24,7 +14,7 @@ import {ThemeType} from './ThemeType';
 import {LayoutType} from "./LayoutType";
 import Utils from "../../utils/Utils";
 import {changePage} from "../../reducers/stages/stagesAction";
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { IconType } from '../common/icon/IconType';
 
 interface ContentManagerProps {
     pageToChange?: Page;
@@ -51,7 +41,6 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
 
     constructor(props: ContentManagerProps) {
         super(props);
-        library.add(fab);
         this.mainContentRef = React.createRef();
         const page: Page = BrowserUtils.getPageFromURL();
         if (page === Page.LANDING) {
@@ -207,23 +196,23 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     getClinetApproachSections(): Section[] {
         return [
             {
-                icon: faHome,
+                icon: IconType.faHome,
                 menu: CircleMenuStates.APPROACH_HOME
             },
             {
-                icon: faBusinessTime,
+                icon: IconType.faBusinessTime,
                 menu: CircleMenuStates.BUSINESS
             },
             {
-                icon: faKey,
+                icon: IconType.faKey,
                 menu: CircleMenuStates.SECURITY
             },
             {
-                icon: faGauge,
+                icon: IconType.faGauge,
                 menu: CircleMenuStates.SWIFTNESS
             },
             {
-                icon: faAccessibleIcon,
+                icon: IconType.faAccessibleIcon,
                 menu: CircleMenuStates.ACCESSIBILITY
             }
         ];
@@ -232,19 +221,19 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     getPastExperienceSections(): Section[] {
         return [
             {
-                icon: faHome,
+                icon: IconType.faHome,
                 menu: CircleMenuStates.EXPERIENCE_HOME
             },
             {
-                icon: faUserTie,
+                icon: IconType.faUserTie,
                 menu: CircleMenuStates.POSITION
             },
             {
-                icon: faMoneyBillTrendUp,
+                icon: IconType.faMoneyBillTrendUp,
                 menu: CircleMenuStates.FIELD
             },
             {
-                icon: faFileCode,
+                icon: IconType.faFileCode,
                 menu: CircleMenuStates.FRAMEWORK
             }
         ];
