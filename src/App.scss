@@ -24,36 +24,6 @@
   @return css-function( clamp, $values );
 }
 
-@font-face {
-  font-family: BANDAR;
-  src: url("../public/fonts/bandar-font/Bandar.ttf") format("truetype");
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: BANDAR;
-  src: url("../public/fonts/bandar-font/BandarBold.ttf") format("truetype");
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: COMFORTAA;
-  src: url("../public/fonts/comfortaa/Comfortaa-Light.ttf") format("truetype");
-  font-weight: 100;
-}
-
-@font-face {
-  font-family: COMFORTAA;
-  src: url("../public/fonts/comfortaa/Comfortaa-Regular.ttf") format("truetype");
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: COMFORTAA;
-  src: url("../public/fonts/comfortaa/Comfortaa-Bold.ttf") format("truetype");
-  font-weight: bold;
-}
-
 body {
   margin: auto;
   width:100%;

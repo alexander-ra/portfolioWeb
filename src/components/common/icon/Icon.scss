@@ -14,7 +14,7 @@
 
 @mixin loadIcon($iconName) {
   .#{$iconName} {
-    mask-image: url("../../../../public/icons/#{$iconName}.svg");
+    mask-image: url("../../../resources/icons/#{$iconName}.svg");
   }
 }
 

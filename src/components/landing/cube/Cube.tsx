@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import './Cube.scss';
 import {CubeRotationStates} from "../../../models/landing/CubeRotationStates";
 import {Position} from "../../../models/common/Position";
@@ -17,10 +17,12 @@ interface CubeProps {
     devIntroCompleted?: boolean;
     isCLosing: boolean;
     firstTimeLanding?: boolean;
+    isLoading: boolean;
 }
 
 export interface CubeRotationState {
-    cubeDragClass?: string;
+    dragX?: number;
+    dragY: number;
     selectedMenuState: CubeMenuStates;
 }
 
@@ -63,7 +65,9 @@ class Cube extends React.Component<CubeProps, CubeState> {
             cubeCoverVisible: this.props.firstTimeLanding,
             cubeRotationClass: CubeRotationStates.NORMAL,
             selectedMenuState: CubeMenuStates.NONE,
-            rotationInitialState: CubeMenuStates.NONE
+            rotationInitialState: CubeMenuStates.NONE,
+            dragX: 0,
+            dragY: 0,
         };
 
         setTimeout(() => {
@@ -90,13 +94,14 @@ class Cube extends React.Component<CubeProps, CubeState> {
         window.addEventListener("drag", (event) => {
             this.dragInitiated = true;
             const newState = CubeRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.rotationInitialState);
-            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.cubeDragClass !== this.state.cubeDragClass) {
+            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
                 this.setState(newState);
             }
         });
         window.addEventListener("dragend", () => {
             this.setState({
-                cubeDragClass: "",
+                dragX: 0,
+                dragY: 0,
                 rotationInitialState: this.state.selectedMenuState
             })
         });
@@ -106,13 +111,14 @@ class Cube extends React.Component<CubeProps, CubeState> {
         window.addEventListener("touchmove", (event) => {
             this.dragInitiated = true;
             const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
-            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.cubeDragClass !== this.state.cubeDragClass) {
+            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
                 this.setState(newState);
             }
         });
         window.addEventListener("touchend", () => {
             this.setState({
-                cubeDragClass: "",
+                dragX: 0,
+                dragY: 0,
                 rotationInitialState: this.state.selectedMenuState
             })
         });
@@ -146,7 +152,10 @@ class Cube extends React.Component<CubeProps, CubeState> {
                 {this.shouldDisplayRotationHint() && <div className={`rotate-hint-icon`}/>}
                 <Flower isClosing={this.props.isCLosing} flowerVisible={this.state.cubeOpened} />
                 <div draggable={this.state.cubeOpened}
-                     className={`cube-wrapper  ${this.state.cubeOpened ? (this.props.isCLosing ? "closing" : "opened") : "closed"} ${this.state.cubeDragClass} ${this.state.cubeRotationClass} ${this.state.rotationInitialState}`}
+                     style={{
+                         transform: `scale(1) rotateX(calc(37deg - ${this.state.dragY}deg)) rotateY(calc(-45deg - ${this.state.dragX}deg)) rotateZ(0deg)`
+                }}
+                     className={`cube-wrapper  ${this.state.cubeOpened ? (this.props.isCLosing ? "closing" : "opened") : "closed"} ${this.state.cubeRotationClass} ${this.state.rotationInitialState} ${this.props.isLoading ? "" : "loaded"}`}
                      onClick={this.openCube.bind(this)}>
                     {this.state.cubeCoverVisible && <CubeCover />}
                     <>
@@ -164,6 +173,12 @@ class Cube extends React.Component<CubeProps, CubeState> {
                                   icon={IconType.faSuitcase}/>
                     </>
                 </div>
+                { !this.state.cubeOpened &&
+                    <>
+                        {this.props.isLoading && <div className={"starting-text loading-text"}>Loading...</div>}
+                        {!this.props.isLoading && <div className={"starting-text ready-text"}>Ready!</div>}
+                    </>
+                }
             </div>
         )
     }

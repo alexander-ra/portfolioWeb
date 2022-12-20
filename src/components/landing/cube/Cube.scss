@@ -1,11 +1,29 @@
 @import "../../../App";
 @import "../mixins";
 
-@include rotid-xy(50deg, 50deg);
+//@include rotid-xy(50deg, 50deg);
 
 .loading-element-wrapper {
     flex: 0 0 40%;
     max-width: 32em;
+
+    .starting-text {
+        position: absolute;
+        top: calc(50% + 14em);
+        left: calc(50% - 5em);
+        width: 10em;
+        text-align: center;
+        opacity: 1;
+
+        .vw-portrait & {
+            font-size: 2em;
+            top: calc(50% + 7em);
+        }
+    }
+
+    .loading-text {
+        animation: blinkLoading 2s infinite;
+    }
 
     .vw-portrait & {
         font-size: .9em;
@@ -92,7 +110,7 @@
     z-index: 10;
     opacity: 0;
     color: rgb($contrast-primary);
-    background-image: url("../../../../public/svgAssets/360rotate.svg");
+    background-image: url("../../../resources/svgAssets/360rotate.svg");
     background-size: cover;
     background-position: top center;
     pointer-events: none;
@@ -104,4 +122,10 @@
     44%{opacity: .5;}
     55%{opacity: .5;}
     100%{opacity: .0;}
+}
+
+@keyframes blinkLoading{
+    0%{opacity: 1;}
+    50%{opacity: .25;}
+    100%{opacity: 1;}
 }

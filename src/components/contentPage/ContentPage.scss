@@ -160,7 +160,7 @@ $menu-radius: 6em;
     position: absolute;
     top: calc(50% - $outer-offset);
     left: calc(50% - $outer-offset);
-    background-image: url("../../../public/svgAssets/light-theme/crystal.svg");
+    background-image: url("../../resources/svgAssets/light-theme/crystal.svg");
     background-size: 125%;
     background-position: center;
     padding: -1em;
@@ -247,7 +247,7 @@ $menu-radius: 6em;
     top: calc(50% - $inner-radius-landscape / 2);
     left: calc(50% - $inner-radius-landscape / 2);
     border-radius: 50%;
-    background-image: url("../../../public/categoryImages/experience/home.jpg");
+    background-image: url("../../resources/categoryImages/experience/home.jpg");
     background-size: cover;
     border: 0.2em solid rgb($wheel-border-color);
     text-align: center;
@@ -256,7 +256,7 @@ $menu-radius: 6em;
     pointer-events: none;
 
     &.client_approach {
-      background-image: url("../../../public/categoryImages/client/home.jpg");
+      background-image: url("../../resources/categoryImages/client/home.jpg");
     }
 
     .vw-portrait & {
@@ -272,7 +272,7 @@ $menu-radius: 6em;
       height: 100%;
       width: 100%;
       z-index: 2;
-      background-image: url("../../../public/svgAssets/tabletop-spotlight.svg");
+      background-image: url("../../resources/svgAssets/tabletop-spotlight.svg");
       opacity: .5;
       background-size: cover;
       border-radius: 50%;

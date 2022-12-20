@@ -12,7 +12,6 @@ interface CubeWallProps {
 }
 
 export interface CubeWallState {
-    cubeDragClass?: string;
     selectedMenuState: CubeMenuStates;
 }
 

@@ -12,14 +12,14 @@ function App() {
           <div className={"device-frame"}></div>
           <div className={"parent-wrapper"}>
               <AppDecorator />
-                  <div className={"app-wrapper"}>
-                      <Suspense>
-                          <Header />
-                      </Suspense>
-                      <Suspense>
-                          <ContentManager />
-                      </Suspense>
-                  </div>
+              <div className={"app-wrapper"}>
+                  <Suspense>
+                      <Header />
+                  </Suspense>
+                  <Suspense>
+                      <ContentManager />
+                  </Suspense>
+              </div>
           </div>
       </Provider>
     );

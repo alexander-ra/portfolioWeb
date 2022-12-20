@@ -245,30 +245,6 @@ export default class BrowserUtils {
         return deviceName;
     }
 
-    // Function that reads current url and returns it in array
-    public static getURL(): string[] {
-        let url = window.location.pathname;
-        let urlArray = url.split("/").filter(part => part.length > 0).map(part => part.toLowerCase());
-        return urlArray;
-    }
-
-    // Get page from string
-    public static getPageFromURL(): Page {
-        const urlArray = this.getURL();
-
-        let page: Page;
-        switch (urlArray[0]) {
-            case Page.CHESS_DEMO.toLowerCase():
-                return Page.CHESS_DEMO;
-            case Page.CLIENT_APPROACH.toLowerCase():
-                return Page.CLIENT_APPROACH;
-            case Page.PAST_EXPERIENCE.toLowerCase():
-                return Page.PAST_EXPERIENCE;
-            default:
-                return Page.LANDING;
-        }
-    }
-
     private static getScreenInfo(): any {
         const w = (window.screen.width > window.screen.height) ? window.screen.height : window.screen.width;
         const h = (window.screen.width > window.screen.height) ? window.screen.width : window.screen.height;

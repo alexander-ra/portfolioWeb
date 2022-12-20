@@ -1,11 +1,6 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {connect} from "react-redux";
 import {Page} from '../../models/common/Page';
-import LandingPage from "../landing/LandingPage";
-import ContentPage, {Section} from "../contentPage/ContentPage";
-import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
-import ChessPage from '../chess/ChessPage';
-import BrowserUtils from '../../utils/BrowserUtils';
 import {UIOrientation} from './UIOrientation';
 import "./ContentManager.scss";
 import store from "../../store/store";
@@ -14,7 +9,10 @@ import {ThemeType} from './ThemeType';
 import {LayoutType} from "./LayoutType";
 import Utils from "../../utils/Utils";
 import {changePage} from "../../reducers/stages/stagesAction";
-import { IconType } from '../common/icon/IconType';
+import {WindowUtils} from "../../utils/WindowUtils";
+const ContentPage = React.lazy(() => import('../contentPage/ContentPage')); // Lazy-loaded
+const ChessPage = React.lazy(() => import('../chess/ChessPage')); // Lazy-loaded
+const LandingPage = React.lazy(() => import('../landing/LandingPage')); // Lazy-loaded
 
 interface ContentManagerProps {
     pageToChange?: Page;
@@ -33,16 +31,14 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     private readonly PAGE_CLOSING_TIME_MS = 0;
     private readonly NEW_PAGE_DELAY_MS = 0;
     private readonly resizeListener = (event) => {
-        this.updateWindowClasses(event.target);
+        WindowUtils.updateWindowClasses(event.target);
     };
-    private readonly addToClassList = (classToAdd: string) => document.body.classList.add(classToAdd);
-    private readonly removeFromClassList = (classToRemove: string) => document.body.classList.remove(classToRemove);
     private mainContentRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: ContentManagerProps) {
         super(props);
         this.mainContentRef = React.createRef();
-        const page: Page = BrowserUtils.getPageFromURL();
+        const page: Page = WindowUtils.getPageFromURL();
         if (page === Page.LANDING) {
             window.history.pushState(null, null, "/landing");
         } else {
@@ -51,16 +47,14 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
         this.state = {
             actualPage: Page.LANDING,
         }
-
     }
 
     componentDidMount() {
-        this.updateWindowClasses(window);
+        WindowUtils.updateWindowClasses(window);
         window.addEventListener('resize', this.resizeListener);
 
         window.addEventListener('hashchange', function () {
-            console.log("locationchange");
-            store.dispatch(changePage(BrowserUtils.getPageFromURL()));
+            store.dispatch(changePage(WindowUtils.getPageFromURL()));
         });
     }
 
@@ -74,54 +68,16 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
             setTimeout(() => {
                 this.setState({closingPage: undefined});
             }, this.PAGE_CLOSING_TIME_MS);
-
             setTimeout(() => {
                 this.setState({actualPage: this.props.pageToChange});
             }, this.NEW_PAGE_DELAY_MS);
         }
         if (prevProps.theme !== this.props.theme) {
-            if (this.props.theme === ThemeType.LIGHT) {
-                this.addToClassList('light-theme');
-                this.removeFromClassList('dark-theme');
-            } else {
-                this.addToClassList('dark-theme');
-                this.removeFromClassList('light-theme');
-            }
+            WindowUtils.setTheme(this.props.theme);
         }
         if (prevProps.layoutType !== this.props.layoutType) {
-            //TODO everything like this must be in separate util class
-            if (this.props.layoutType === LayoutType.NATIVE) {
-                this.addToClassList('layout-native');
-                this.removeFromClassList('layout-mobile-portrait');
-                this.removeFromClassList('layout-mobile-landscape');
-                this.removeFromClassList('layout-tablet-portrait');
-                this.removeFromClassList('layout-tablet-landscape');
-            } else if (this.props.layoutType === LayoutType.MOBILE_PORTRAIT) {
-                this.addToClassList('layout-mobile-portrait');
-                this.removeFromClassList('layout-native');
-                this.removeFromClassList('layout-mobile-landscape');
-                this.removeFromClassList('layout-tablet-portrait');
-                this.removeFromClassList('layout-tablet-landscape');
-            } else if (this.props.layoutType === LayoutType.MOBILE_LANDSCAPE) {
-                this.addToClassList('layout-mobile-landscape');
-                this.removeFromClassList('layout-native');
-                this.removeFromClassList('layout-mobile-portrait');
-                this.removeFromClassList('layout-tablet-portrait');
-                this.removeFromClassList('layout-tablet-landscape');
-            } else if (this.props.layoutType === LayoutType.TABLET_PORTRAIT) {
-                this.addToClassList('layout-tablet-portrait');
-                this.removeFromClassList('layout-native');
-                this.removeFromClassList('layout-mobile-portrait');
-                this.removeFromClassList('layout-mobile-landscape');
-                this.removeFromClassList('layout-tablet-landscape');
-            } else if (this.props.layoutType === LayoutType.TABLET_LANDSCAPE) {
-                this.addToClassList('layout-tablet-landscape');
-                this.removeFromClassList('layout-native');
-                this.removeFromClassList('layout-mobile-portrait');
-                this.removeFromClassList('layout-mobile-landscape');
-                this.removeFromClassList('layout-tablet-portrait');
-            }
-            this.updateWindowClasses(window);
+            WindowUtils.setLayoutType(this.props.layoutType);
+            WindowUtils.updateWindowClasses(window);
         }
         if (prevProps.windowSize.width !== this.props.windowSize.width && Utils.isNotNull(this.mainContentRef)) {
             const currElement = this.mainContentRef.current;
@@ -131,133 +87,35 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
         }
     }
 
-    updateWindowClasses(element: Window): void {
-        store.dispatch(setWindowSize(element.innerWidth, element.innerHeight));
-        let uiOrientation = BrowserUtils.getOrientation();
-        const customLayout = this.props.layoutType;
-        if (customLayout !== LayoutType.NATIVE) {
-            if (customLayout === LayoutType.MOBILE_PORTRAIT || customLayout === LayoutType.TABLET_PORTRAIT) {
-                uiOrientation = UIOrientation.PORTRAIT;
-            } else if (customLayout === LayoutType.MOBILE_LANDSCAPE || customLayout === LayoutType.TABLET_LANDSCAPE) {
-                uiOrientation = UIOrientation.LANDSCAPE;
-            }
-            store.dispatch(setUiOrientation(uiOrientation));
-        } else {
-            this.addToClassList('layout-native');
-            this.removeFromClassList('layout-mobile-portrait');
-            this.removeFromClassList('layout-mobile-landscape');
-            this.removeFromClassList('layout-tablet-portrait');
-            this.removeFromClassList('layout-tablet-landscape');
-        }
-
-        if (uiOrientation === UIOrientation.LANDSCAPE) {
-            this.addToClassList("vw-landscape");
-            this.removeFromClassList("vw-portrait");
-        } else {
-            this.addToClassList("vw-portrait");
-            this.removeFromClassList("vw-landscape");
-
-        }
-
-        if (!BrowserUtils.isTouchable()) {
-            this.addToClassList("vw-no-touch");
-        }
-
-        if (BrowserUtils.isIE()) {
-            this.addToClassList("vw-ie");
-        }
-
-        if (BrowserUtils.isMobile()) {
-            this.addToClassList("vw-mobile");
-            document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
-        }
-
-
-        if (BrowserUtils.isIPhone5()) {
-            this.addToClassList("dev-iphone5");
-        }
-        if (BrowserUtils.isIOS()) {
-            this.addToClassList("dev-ios");
-        }
-
-        if (BrowserUtils.isIPhone6_8()) {
-            this.addToClassList("dev-iphone6-8");
-        }
-
-        if (BrowserUtils.isIPhoneX()) {
-            this.addToClassList("dev-iphoneX");
-        }
-    }
-
     displayPage(page: Page): boolean {
         return this.state.actualPage === page || this.state.closingPage === page;
-    }
-
-    getClinetApproachSections(): Section[] {
-        return [
-            {
-                icon: IconType.faHome,
-                menu: CircleMenuStates.APPROACH_HOME
-            },
-            {
-                icon: IconType.faBusinessTime,
-                menu: CircleMenuStates.BUSINESS
-            },
-            {
-                icon: IconType.faKey,
-                menu: CircleMenuStates.SECURITY
-            },
-            {
-                icon: IconType.faGauge,
-                menu: CircleMenuStates.SWIFTNESS
-            },
-            {
-                icon: IconType.faAccessibleIcon,
-                menu: CircleMenuStates.ACCESSIBILITY
-            }
-        ];
-    }
-
-    getPastExperienceSections(): Section[] {
-        return [
-            {
-                icon: IconType.faHome,
-                menu: CircleMenuStates.EXPERIENCE_HOME
-            },
-            {
-                icon: IconType.faUserTie,
-                menu: CircleMenuStates.POSITION
-            },
-            {
-                icon: IconType.faMoneyBillTrendUp,
-                menu: CircleMenuStates.FIELD
-            },
-            {
-                icon: IconType.faFileCode,
-                menu: CircleMenuStates.FRAMEWORK
-            }
-        ];
     }
 
     render(){
         return (<div className={"main-content-wrapper"} ref={this.mainContentRef}>
             {
                 this.displayPage(Page.LANDING) &&
-                <LandingPage isClosing={this.state.closingPage === Page.LANDING} />
+                <Suspense>
+                    <LandingPage isClosing={this.state.closingPage === Page.LANDING} />
+                </Suspense>
             }
             {
                 this.displayPage(Page.CLIENT_APPROACH) &&
-                <ContentPage sections={this.getClinetApproachSections()}
-                             isClosing={this.state.closingPage === Page.CLIENT_APPROACH} />
+                <Suspense>
+                    <ContentPage isClosing={this.state.closingPage === Page.CLIENT_APPROACH} />
+                </Suspense>
             }
             {
                 this.displayPage(Page.PAST_EXPERIENCE) &&
-                <ContentPage sections={this.getPastExperienceSections()}
-                             isClosing={this.state.closingPage === Page.PAST_EXPERIENCE} />
+                <Suspense>
+                    <ContentPage isClosing={this.state.closingPage === Page.PAST_EXPERIENCE} />
+                </Suspense>
             }
             {
                 this.displayPage(Page.CHESS_DEMO) &&
-                <ChessPage isClosing={this.state.closingPage === Page.CHESS_DEMO} />
+                <Suspense>
+                    <ChessPage isClosing={this.state.closingPage === Page.CHESS_DEMO} />
+                </Suspense>
             }
         </div>)
     }

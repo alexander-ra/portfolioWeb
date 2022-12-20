@@ -77,7 +77,7 @@
 
     .avatar-name {
       color: rgb($button-text-color);
-      background-image: url("../../../../public/svgAssets/light-theme/crystal.svg");
+      background-image: url("../../../resources/svgAssets/light-theme/crystal.svg");
       background-size: 200%;
       font-size: 1.25em;
       height: 2em;
@@ -86,7 +86,7 @@
       font-family: BANDAR;
 
       .dark-theme & {
-        background-image: url("../../../../public/svgAssets/crystalSelected.svg");
+        background-image: url("../../../resources/svgAssets/crystalSelected.svg");
       }
     }
   }
@@ -138,7 +138,7 @@
         height: 4em;
         width: 4em;
         margin-left: auto;
-        background-image: url("../../../../public/images/avatar-jpeg.jpg");
+        background-image: url("../../../resources/images/avatar-jpeg.jpg");
         border-radius: 50%;
         background-repeat: no-repeat;
         background-size: contain;
@@ -202,7 +202,7 @@
 }
 
 .go-page {
-  background-image: url("../../../../public/svgAssets/pointer-sandwich.svg");
+  background-image: url("../../../resources/svgAssets/pointer-sandwich.svg");
   background-position: center;
   background-size: 120% 600%;
   line-height: 2em;

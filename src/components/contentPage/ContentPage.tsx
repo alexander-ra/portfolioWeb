@@ -11,6 +11,7 @@ import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
 import AppStorage, {StorageArrayKey, StorageKey} from "../../utils/AppStorage";
 import Icon from '../common/icon/Icon';
+import {ProvisionUtils} from "../../utils/ProvisionUtils";
 
 interface ContentPageProps {
     isClosing: boolean;
@@ -391,7 +392,8 @@ export default connect(
             ...ownProps,
             selectedMenu,
             cubeOpened,
-            currentPage
+            currentPage,
+            sections: currentPage === Page.CLIENT_APPROACH ? ProvisionUtils.getClientApproachSections() : ProvisionUtils.getPastExperienceSections()
         }
     }
 , { changePage })(ContentPage);

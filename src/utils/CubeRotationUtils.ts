@@ -52,7 +52,8 @@ export class CubeRotationUtils {
             const rotationOffset: Position = this.getActualRotationOffset(dragStartingPos, dragCurrentPos, offsectCorrectionFromSection);
 
             return {
-                cubeDragClass: `cube-rotate-x${rotationOffset.y}deg-y${rotationOffset.x}deg`,
+                dragX: rotationOffset.x,
+                dragY: rotationOffset.y,
                 selectedMenuState: this.setSectionFromRotation(rotationOffset)
             };
         }

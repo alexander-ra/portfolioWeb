@@ -196,35 +196,35 @@ $menu-radius: 6em;
           background-position: center;
 
           &.betclic {
-            background-image: url("../../../public/categoryImages/client/companies/betclic.png");
+            background-image: url("../../resources/categoryImages/client/companies/betclic.png");
           }
 
           &.bet365 {
-            background-image: url("../../../public/categoryImages/client/companies/bet365.png");
+            background-image: url("../../resources/categoryImages/client/companies/bet365.png");
           }
 
           &.deloitte {
-            background-image: url("../../../public/categoryImages/client/companies/deloitte.png");
+            background-image: url("../../resources/categoryImages/client/companies/deloitte.png");
           }
 
           &.kbc {
-            background-image: url("../../../public/categoryImages/client/companies/kbc.png");
+            background-image: url("../../resources/categoryImages/client/companies/kbc.png");
           }
 
           &.metro {
-            background-image: url("../../../public/categoryImages/client/companies/metro.png");
+            background-image: url("../../resources/categoryImages/client/companies/metro.png");
           }
 
           &.playtech {
-            background-image: url("../../../public/categoryImages/client/companies/playtech.png");
+            background-image: url("../../resources/categoryImages/client/companies/playtech.png");
           }
 
           &.raiffeisen {
-            background-image: url("../../../public/categoryImages/client/companies/raiffeisen.png");
+            background-image: url("../../resources/categoryImages/client/companies/raiffeisen.png");
           }
 
           &.williamhill {
-            background-image: url("../../../public/categoryImages/client/companies/williamhill.png");
+            background-image: url("../../resources/categoryImages/client/companies/williamhill.png");
           }
 
         }
@@ -245,21 +245,21 @@ $menu-radius: 6em;
 
     .mask {
       //background-color: rgba($main-primary, .25);
-      background-image: url("../../../public/svgAssets/light-theme/crystal.svg");
+      background-image: url("../../resources/svgAssets/light-theme/crystal.svg");
       transition: background-image 0.1s;
       background-size: 500%;
       cursor: pointer;
 
 
       .dark-theme & {
-        background-image: url("../../../public/svgAssets/crystalSelected.svg");
+        background-image: url("../../resources/svgAssets/crystalSelected.svg");
       }
 
       &:hover {
-        background-image: url("../../../public/svgAssets/crystalSelected.svg");
+        background-image: url("../../resources/svgAssets/crystalSelected.svg");
 
         .dark-theme & {
-          background-image: url("../../../public/svgAssets/dark-theme/crystal.svg");
+          background-image: url("../../resources/svgAssets/dark-theme/crystal.svg");
         }
       }
 
@@ -276,7 +276,7 @@ $menu-radius: 6em;
     }
 
     .mask-dve {
-      background-image: url("../../../public/categoryImages/experience/home.jpg");
+      background-image: url("../../resources/categoryImages/experience/home.jpg");
       background-size: cover;
       background-repeat: no-repeat;
       opacity: 0.33;
@@ -319,7 +319,7 @@ $menu-radius: 6em;
       }
 
       .vw-portrait & {
-        background-image: url("../../../public/svgAssets/crystalSelected.svg");
+        background-image: url("../../resources/svgAssets/crystalSelected.svg");
         background-size: cover;
         color: rgb($button-text-color);
         text-align: center;

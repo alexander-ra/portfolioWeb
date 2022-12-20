@@ -58,17 +58,16 @@ body {
 
   background-size: contain;
   background-position: center;
-  &:not(.layout-native) {
-    .app-wrapper {
-      border-radius: 1em;
-    }
-  }
 
   &.layout-mobile-landscape,
   &.layout-mobile-portrait,
   &.layout-tablet-landscape,
   &.layout-tablet-portrait {
-    background-image: url("../public/svgAssets/gradient-cubes.svg");
+    .app-wrapper {
+      border-radius: 1em;
+    }
+
+    background-image: url("resources/svgAssets/gradient-cubes.svg");
   }
 }
 

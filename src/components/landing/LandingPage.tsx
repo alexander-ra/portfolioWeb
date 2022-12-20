@@ -7,6 +7,9 @@ import {connect} from 'react-redux';
 import TextBubble from "../common/text-bubble/TextBubble";
 import MenuBubble from "../common/text-bubble/MenuBubble";
 import { IconType } from '../common/icon/IconType';
+import image1 from "../../resources/categoryImages/chess/home.jpg";
+import image2 from "../../resources/categoryImages/client/home.jpg";
+import image3 from "../../resources/categoryImages/experience/home.jpg";
 
 interface LandingCubeProps {
     cubeOpened: boolean;
@@ -15,14 +18,33 @@ interface LandingCubeProps {
     landingPageLeft: boolean;
 }
 
+interface LandingCubeState {
+    loadedImages: number;
+}
 
-class LandingPage extends React.Component<LandingCubeProps> {
+
+class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
+
     constructor(props: LandingCubeProps) {
         super(props);
 
         this.state = {
-            selectedMenuState: CubeMenuStates.NONE,
+            loadedImages: 0,
         };
+        const img1 = new Image();
+        img1.src = image1;
+        img1.onload = () => {
+            this.setState({loadedImages: 1});
+            img1.src = image2;
+            img1.onload = () => {
+                img1.src = image3;
+                this.setState({loadedImages: 2});
+                img1.onload = () => {
+                    this.setState({loadedImages: 3});
+                };
+            };
+        };
+
     }
 
     private getIcon(): IconType {
@@ -43,7 +65,7 @@ class LandingPage extends React.Component<LandingCubeProps> {
             <TextBubble visible={this.props.cubeOpened && !this.props.isClosing}
                         textToType={LandingDescriptions.DEVELOPER_INTRODUCTION}
                         skipTyping={this.props.landingPageLeft}/>
-            <LandingCube isCLosing={this.props.isClosing}/>
+            <LandingCube isCLosing={this.props.isClosing} isLoading={this.state.loadedImages < 3}/>
             <MenuBubble textBubbleType={this.props.selectedMenu}
                         visible={this.props.selectedMenu !== CubeMenuStates.NONE && !this.props.isClosing}
                         icon={this.getIcon()}/>
