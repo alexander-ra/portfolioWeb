@@ -9,6 +9,9 @@ import MenuBubble from "../common/text-bubble/MenuBubble";
 import { IconType } from '../common/icon/IconType';
 import BrowserUtils from '../../utils/BrowserUtils';
 import { ProvisionUtils } from '../../utils/ProvisionUtils';
+import img1 from "../../../public/resources/categoryImages/chess/home.jpg";
+import img2 from "../../../public/resources/categoryImages/client/home.jpg";
+import img3 from "../../../public/resources/categoryImages/experience/home.jpg";
 
 interface LandingCubeProps {
     cubeOpened: boolean;

@@ -12,31 +12,31 @@ html {
 
 @font-face {
   font-family: BANDAR;
-  src: url("resources/fonts/bandar-font/Bandar.ttf") format("truetype");
+  src: url("../public/resources/fonts/bandar-font/Bandar.ttf") format("truetype");
   font-weight: normal;
 }
 
 @font-face {
   font-family: BANDAR;
-  src: url("resources/fonts/bandar-font/BandarBold.ttf") format("truetype");
+  src: url("../public/resources/fonts/bandar-font/BandarBold.ttf") format("truetype");
   font-weight: bold;
 }
 
 @font-face {
   font-family: COMFORTAA;
-  src: url("resources/fonts/comfortaa/Comfortaa-Light.ttf") format("truetype");
+  src: url("../public/resources/fonts/comfortaa/Comfortaa-Light.ttf") format("truetype");
   font-weight: 100;
 }
 
 @font-face {
   font-family: COMFORTAA;
-  src: url("resources/fonts/comfortaa/Comfortaa-Regular.ttf") format("truetype");
+  src: url("../public/resources/fonts/comfortaa/Comfortaa-Regular.ttf") format("truetype");
   font-weight: normal;
 }
 
 @font-face {
   font-family: COMFORTAA;
-  src: url("resources/fonts/comfortaa/Comfortaa-Bold.ttf") format("truetype");
+  src: url("../public/resources/fonts/comfortaa/Comfortaa-Bold.ttf") format("truetype");
   font-weight: bold;
 }
 
@@ -97,7 +97,7 @@ body {
       border-radius: 1em;
     }
 
-    background-image: url("resources/svgAssets/gradient-cubes.svg");
+    background-image: url("../public/resources/svgAssets/gradient-cubes.svg");
   }
 }
 

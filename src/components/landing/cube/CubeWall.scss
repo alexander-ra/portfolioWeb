@@ -138,7 +138,7 @@
             transform: rotateX(-90deg) translateZ(6.7em);
 
             .wall-content {
-                background-image: url("../../../resources/categoryImages/chess/home.jpg");
+                background-image: url("../../../../public/resources/categoryImages/chess/home.jpg");
                 .wall-icon {
                     transform: rotate(45deg);
                 }
@@ -149,7 +149,7 @@
             transform: translateZ(6.7em);
 
             .wall-content {
-                background-image: url("../../../resources/categoryImages/client/home.jpg");
+                background-image: url("../../../../public/resources/categoryImages/client/home.jpg");
             }
         }
 
@@ -157,7 +157,7 @@
             transform: rotateY(90deg) translateZ(6.7em);
 
             .wall-content {
-                background-image: url("../../../resources/categoryImages/experience/home.jpg");
+                background-image: url("../../../../public/resources/categoryImages/experience/home.jpg");
             }
         }
 

@@ -17,11 +17,11 @@
     display: block;
     height: 10%;
     width: 10%;
-    background: url("../../../../resources/svgAssets/light-theme/flowerFin.svg") no-repeat center;
+    background: url("../../../../../public/resources/svgAssets/light-theme/flowerFin.svg") no-repeat center;
     background-size: cover;
 
     .dark-theme & {
-      background: url("../../../../resources/svgAssets/dark-theme/flowerFin.svg") no-repeat center;
+      background: url("../../../../../public/resources/svgAssets/dark-theme/flowerFin.svg") no-repeat center;
       background-size: cover;
     }
   }

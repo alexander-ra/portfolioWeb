@@ -25,26 +25,26 @@
         margin: 0 .2em;
 
         &.desktop-device {
-            background-image: url("../../resources/svgAssets/deviceSimulatorIcons/desktop.svg");
+            background-image: url("../../../public/resources/svgAssets/deviceSimulatorIcons/desktop.svg");
 
             &.selected {
-                background-image: url("../../resources/svgAssets/deviceSimulatorIcons/desktopSelected.svg");
+                background-image: url("../../../public/resources/svgAssets/deviceSimulatorIcons/desktopSelected.svg");
             }
         }
 
         &.mobile-device {
-            background-image: url("../../resources/svgAssets/deviceSimulatorIcons/phone.svg");
+            background-image: url("../../../public/resources/svgAssets/deviceSimulatorIcons/phone.svg");
 
             &.selected {
-                background-image: url("../../resources/svgAssets/deviceSimulatorIcons/phoneSelected.svg");
+                background-image: url("../../../public/resources/svgAssets/deviceSimulatorIcons/phoneSelected.svg");
             }
         }
 
         &.tablet-device {
-            background-image: url("../../resources/svgAssets/deviceSimulatorIcons/tablet.svg");
+            background-image: url("../../../public/resources/svgAssets/deviceSimulatorIcons/tablet.svg");
 
             &.selected {
-                background-image: url("../../resources/svgAssets/deviceSimulatorIcons/tabletSelected.svg");
+                background-image: url("../../../public/resources/svgAssets/deviceSimulatorIcons/tabletSelected.svg");
             }
         }
     }

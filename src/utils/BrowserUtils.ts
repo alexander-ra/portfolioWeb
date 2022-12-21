@@ -2,9 +2,6 @@ import Utils from "./Utils";
 import {UIOrientation} from "../components/core/UIOrientation";
 import {Page} from "../models/common/Page";
 import {CircleMenuStates} from "../models/landing/CircleMenuStates";
-import image1 from "../resources/categoryImages/chess/home.jpg";
-import image2 from "../resources/categoryImages/client/home.jpg";
-import image3 from "../resources/categoryImages/experience/home.jpg";
 
 export default class BrowserUtils {
 

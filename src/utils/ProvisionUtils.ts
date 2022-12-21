@@ -51,15 +51,15 @@ export class ProvisionUtils {
     }
 
     public static landingResources(): string[] {
-        return [ "./src/resources/categoryImages/chess/home.jpg",
-            "./src/resources/categoryImages/client/home.jpg",
-            "./src/resources/categoryImages/experience/home.jpg",
-            "./src/resources/images/avatar-jpeg.jpg",
-            "./src/resources/fonts/bandar-font/Bandar.ttf",
-            "./src/resources/fonts/bandar-font/BandarBold.tff",
-            "./src/resources/fonts/comfortaa/Comfortaa-Bold.ttf",
-            "./src/resources/fonts/comfortaa/Comfortaa-Light.ttf",
-            "./src/resources/fonts/comfortaa/Comfortaa-Regular.ttf",
+        return [ "./public/resources/categoryImages/chess/home.jpg",
+            "./public/resources/categoryImages/client/home.jpg",
+            "./public/resources/categoryImages/experience/home.jpg",
+            "./public/resources/images/avatar-jpeg.jpg",
+            "./public/resources/fonts/bandar-font/Bandar.ttf",
+            "./public/resources/fonts/bandar-font/BandarBold.tff",
+            "./public/resources/fonts/comfortaa/Comfortaa-Bold.ttf",
+            "./public/resources/fonts/comfortaa/Comfortaa-Light.ttf",
+            "./public/resources/fonts/comfortaa/Comfortaa-Regular.ttf",
             ProvisionUtils.getIconResourcePath(IconType.faHandshake),
             ProvisionUtils.getIconResourcePath(IconType.faSuitcase),
             ProvisionUtils.getIconResourcePath(IconType.faChess),
@@ -67,18 +67,18 @@ export class ProvisionUtils {
     }
 
     public static deviceSimulatorResources(): string[] {
-        return [ "./src/resources/svgAssets/deviceSimulatorIcons/desktop.svg",
-            "./src/resources/svgAssets/deviceSimulatorIcons/phone.svg",
-            "./src/resources/svgAssets/deviceSimulatorIcons/tablet.svg",
-            "./src/resources/svgAssets/deviceSimulatorIcons/desktopSelected.svg",
-            "./src/resources/svgAssets/deviceSimulatorIcons/phoneSelected.svg",
-            "./src/resources/svgAssets/deviceSimulatorIcons/tabletSelected.svg",
-            "./src/resources/svgAssets/gradient-cubes.svg",
+        return [ "./public/resources/svgAssets/deviceSimulatorIcons/desktop.svg",
+            "./public/resources/svgAssets/deviceSimulatorIcons/phone.svg",
+            "./public/resources/svgAssets/deviceSimulatorIcons/tablet.svg",
+            "./public/resources/svgAssets/deviceSimulatorIcons/desktopSelected.svg",
+            "./public/resources/svgAssets/deviceSimulatorIcons/phoneSelected.svg",
+            "./public/resources/svgAssets/deviceSimulatorIcons/tabletSelected.svg",
+            "./public/resources/svgAssets/gradient-cubes.svg",
         ];
     }
 
     public static getIconResourcePath(icon: IconType): string {
-        return `./src/resources/icons/${icon.toString()}`;
+        return `./public/resources/icons/${icon.toString()}`;
     }
 
     public static headerIconResources(): string[] {
