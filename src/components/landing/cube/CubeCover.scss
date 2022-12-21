@@ -4,6 +4,13 @@ $peelOffDuration: 2s;
 
 .cube-wrapper {
 
+    &.hover {
+        .wall-initial {
+            clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%, 0 100%, 60% 60%);
+            opacity: 1;
+        }
+    }
+
     &.opened{
 
         .wall-initial {
@@ -34,7 +41,6 @@ $peelOffDuration: 2s;
     &.loaded, &.opened {
 
         .wall-initial {
-
             &.wall-bottom-initial {
                 transform: rotateX(-90deg) translateZ(8.2em) scaleX(-1);
             }

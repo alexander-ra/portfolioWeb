@@ -5,15 +5,34 @@ import {setLayoutType} from '../../reducers/window/windowAction';
 import {LayoutType} from "../core/LayoutType";
 import {connect} from "react-redux";
 import DeviceRotator from "./DeviceRotator";
+import BrowserUtils from "../../utils/BrowserUtils";
+import {ProvisionUtils} from "../../utils/ProvisionUtils";
 
 interface DeviceSimulatorProps {
     layoutType: LayoutType;
 }
 
 interface DeviceSimulatorState {
+    isLoading: boolean;
 }
 
 class DeviceSimulator extends React.Component<DeviceSimulatorProps, DeviceSimulatorState> {
+
+    constructor(props: DeviceSimulatorProps) {
+        super(props);
+
+        this.state = {
+            isLoading: true
+        }
+
+        BrowserUtils.loadResources(ProvisionUtils.deviceSimulatorResources())
+        .then(() => {
+            this.setState({isLoading: false});
+        })
+        .catch(() => {
+            console.error('Error loading resources');
+        });
+    }
 
     setStateOfSimulation(layoutType: LayoutType): void {
         store.dispatch(setLayoutType(layoutType));
@@ -22,16 +41,18 @@ class DeviceSimulator extends React.Component<DeviceSimulatorProps, DeviceSimula
     render(){
         return ( <>
             <DeviceRotator />
-            <div className={`device-simulator-wrapper`}>
-                <div className={`desktop-device device ${this.props.layoutType === LayoutType.NATIVE ? "selected" : ""}`}
-                     onClick={() => {this.setStateOfSimulation(LayoutType.NATIVE)}}/>
-                <div className={`mobile-device device ${this.props.layoutType === LayoutType.MOBILE_PORTRAIT ||
-                this.props.layoutType === LayoutType.MOBILE_LANDSCAPE ?
-                    "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.MOBILE_PORTRAIT)}}/>
-                <div className={`tablet-device device ${this.props.layoutType === LayoutType.TABLET_PORTRAIT ||
-                this.props.layoutType === LayoutType.TABLET_LANDSCAPE ?
-                    "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.TABLET_LANDSCAPE)}}/>
-            </div>
+            { !this.state.isLoading &&
+                <div className={`device-simulator-wrapper`}>
+                    <div className={`desktop-device device ${this.props.layoutType === LayoutType.NATIVE ? "selected" : ""}`}
+                         onClick={() => {this.setStateOfSimulation(LayoutType.NATIVE)}}/>
+                    <div className={`mobile-device device ${this.props.layoutType === LayoutType.MOBILE_PORTRAIT ||
+                    this.props.layoutType === LayoutType.MOBILE_LANDSCAPE ?
+                        "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.MOBILE_PORTRAIT)}}/>
+                    <div className={`tablet-device device ${this.props.layoutType === LayoutType.TABLET_PORTRAIT ||
+                    this.props.layoutType === LayoutType.TABLET_LANDSCAPE ?
+                        "selected" : ""}`} onClick={() => {this.setStateOfSimulation(LayoutType.TABLET_LANDSCAPE)}}/>
+                </div>
+            }
         </>
         )
     }

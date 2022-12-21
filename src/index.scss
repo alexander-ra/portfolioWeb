@@ -10,6 +10,36 @@ html {
   --tablet-scale: 0.8;
 }
 
+@font-face {
+  font-family: BANDAR;
+  src: url("resources/fonts/bandar-font/Bandar.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: BANDAR;
+  src: url("resources/fonts/bandar-font/BandarBold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: COMFORTAA;
+  src: url("resources/fonts/comfortaa/Comfortaa-Light.ttf") format("truetype");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: COMFORTAA;
+  src: url("resources/fonts/comfortaa/Comfortaa-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: COMFORTAA;
+  src: url("resources/fonts/comfortaa/Comfortaa-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
 @media (orientation: portrait) {
   body {
     &.layout-mobile-portrait, &.layout-mobile-landscape {
@@ -50,7 +80,7 @@ html {
 
 body {
   margin: 0;
-  font-family: COMFORTAA, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: COMFORTAA, Tahoma, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -72,7 +102,7 @@ body {
 }
 
 button {
-  font-family: BANDAR, Arial, Helvetica, sans-serif;
+  font-family: BANDAR, Verdana, Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
 

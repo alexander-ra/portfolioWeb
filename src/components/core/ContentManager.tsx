@@ -1,15 +1,14 @@
 import React, {Suspense} from 'react';
 import {connect} from "react-redux";
 import {Page} from '../../models/common/Page';
-import {UIOrientation} from './UIOrientation';
 import "./ContentManager.scss";
 import store from "../../store/store";
-import {setLayoutType, setUiOrientation, setWindowSize} from "../../reducers/window/windowAction";
 import {ThemeType} from './ThemeType';
 import {LayoutType} from "./LayoutType";
 import Utils from "../../utils/Utils";
 import {changePage} from "../../reducers/stages/stagesAction";
 import {WindowUtils} from "../../utils/WindowUtils";
+import { setLayoutType } from '../../reducers/window/windowAction';
 const ContentPage = React.lazy(() => import('../contentPage/ContentPage')); // Lazy-loaded
 const ChessPage = React.lazy(() => import('../chess/ChessPage')); // Lazy-loaded
 const LandingPage = React.lazy(() => import('../landing/LandingPage')); // Lazy-loaded

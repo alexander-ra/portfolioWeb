@@ -90,29 +90,9 @@ export class WindowUtils {
             this.addToClassList("vw-no-touch");
         }
 
-        if (BrowserUtils.isIE()) {
-            this.addToClassList("vw-ie");
-        }
-
         if (BrowserUtils.isMobile()) {
             this.addToClassList("vw-mobile");
             document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
-        }
-
-
-        if (BrowserUtils.isIPhone5()) {
-            this.addToClassList("dev-iphone5");
-        }
-        if (BrowserUtils.isIOS()) {
-            this.addToClassList("dev-ios");
-        }
-
-        if (BrowserUtils.isIPhone6_8()) {
-            this.addToClassList("dev-iphone6-8");
-        }
-
-        if (BrowserUtils.isIPhoneX()) {
-            this.addToClassList("dev-iphoneX");
         }
     }
 

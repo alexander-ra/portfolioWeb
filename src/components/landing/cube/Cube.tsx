@@ -36,6 +36,7 @@ interface CubeState extends CubeRotationState{
 class Cube extends React.Component<CubeProps, CubeState> {
     private readonly CUBE_OPEN_TIME_MS = 2000;
     private readonly CLOSED_CUBE_AUTO_ROTATION_TIME_MS = 3000;
+    private readonly CUBE_INITIAL_AUTO_ROTATION_DELAY_MS = 1000;
     private cubeRotationClass = CubeRotationStates.LEFT_ZOOM;
     private dragStartingPos: Position;
     private dragInitiated: boolean = false;
@@ -67,29 +68,29 @@ class Cube extends React.Component<CubeProps, CubeState> {
             selectedMenuState: CubeMenuStates.NONE,
             rotationInitialState: CubeMenuStates.NONE,
             dragX: 0,
-            dragY: 0,
+            dragY: 0
         };
 
         setTimeout(() => {
             this.setState({cubeRotationClass: CubeRotationStates.LEFT_ZOOM});
-        });
-
-        setInterval(() => {
-            if (this.state.cubeRotationClass !== CubeRotationStates.NORMAL) {
-                if (this.state.cubeRotationClass === CubeRotationStates.LEFT_ZOOM) {
-                    this.cubeRotationClass = CubeRotationStates.RIGHT_ZOOM;
+            setInterval(() => {
+                if (this.state.cubeRotationClass !== CubeRotationStates.NORMAL) {
+                    if (this.state.cubeRotationClass === CubeRotationStates.LEFT_ZOOM) {
+                        this.cubeRotationClass = CubeRotationStates.RIGHT_ZOOM;
+                    } else {
+                        this.cubeRotationClass = CubeRotationStates.LEFT_ZOOM;
+                    }
+                    this.setState({cubeRotationClass: CubeRotationStates.NORMAL});
                 } else {
-                    this.cubeRotationClass = CubeRotationStates.LEFT_ZOOM;
+                    this.setState({cubeRotationClass: this.cubeRotationClass});
                 }
-                this.setState({cubeRotationClass: CubeRotationStates.NORMAL});
-            } else {
-                this.setState({cubeRotationClass: this.cubeRotationClass});
-            }
-        }, this.CLOSED_CUBE_AUTO_ROTATION_TIME_MS);
+            }, this.CLOSED_CUBE_AUTO_ROTATION_TIME_MS);
+        }, this.CUBE_INITIAL_AUTO_ROTATION_DELAY_MS);
     }
     addCubeRotationListeners() {
         window.addEventListener("dragstart", (event) => {
             this.dragStartingPos = CubeRotationUtils.initializeDragCursor(event);
+
         });
         window.addEventListener("drag", (event) => {
             this.dragInitiated = true;
@@ -104,6 +105,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
                 dragY: 0,
                 rotationInitialState: this.state.selectedMenuState
             })
+            this.dragInitiated = false;
         });
         window.addEventListener("touchstart", (event) => {
             this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
@@ -116,6 +118,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
             }
         });
         window.addEventListener("touchend", () => {
+            this.dragInitiated = false;
             this.setState({
                 dragX: 0,
                 dragY: 0,
@@ -152,9 +155,9 @@ class Cube extends React.Component<CubeProps, CubeState> {
                 {this.shouldDisplayRotationHint() && <div className={`rotate-hint-icon`}/>}
                 <Flower isClosing={this.props.isCLosing} flowerVisible={this.state.cubeOpened} />
                 <div draggable={this.state.cubeOpened}
-                     style={{
+                     style={this.dragInitiated ? {
                          transform: `scale(1) rotateX(calc(37deg - ${this.state.dragY}deg)) rotateY(calc(-45deg - ${this.state.dragX}deg)) rotateZ(0deg)`
-                }}
+                } : null}
                      className={`cube-wrapper  ${this.state.cubeOpened ? (this.props.isCLosing ? "closing" : "opened") : "closed"} ${this.state.cubeRotationClass} ${this.state.rotationInitialState} ${this.props.isLoading ? "" : "loaded"}`}
                      onClick={this.openCube.bind(this)}>
                     {this.state.cubeCoverVisible && <CubeCover />}

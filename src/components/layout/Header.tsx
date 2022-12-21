@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './Header.scss';
 import store from "../../store/store";
 import {setTheme} from '../../reducers/window/windowAction';
@@ -11,16 +11,18 @@ import BackButton from "./BackButton";
 import cubesReducer from "../../reducers/cube/cubeReducer";
 import Icon from "../common/icon/Icon";
 import {IconType} from "../common/icon/IconType";
+import BrowserUtils from "../../utils/BrowserUtils";
+import {ProvisionUtils} from "../../utils/ProvisionUtils";
+import Navigation from "./Navigation";
+import {Page} from "../../models/common/Page";
 
 interface HeaderProps {
     theme: ThemeType;
     cubeOpened: boolean;
+    currentPage: Page;
 }
 
-interface HeaderState {
-}
-
-class Header extends React.Component<HeaderProps, HeaderState> {
+class Header extends React.Component<HeaderProps> {
 
     private changeTheme = () => {
         //Change theme
@@ -30,39 +32,17 @@ class Header extends React.Component<HeaderProps, HeaderState> {
 
     render(){
         return (
-            <>{this.props.cubeOpened && <>
-                <div className={`header-wrapper`}>
-                    <div className={`navigation-wrapper`}>
-                        <div className={`navigation-item`}>
-                            {/*<FontAwesomeIcon className={"expanded-menu-icon"} icon={faHandshake} />*/}
-                            <Icon className={"navigation-icon"} icon={IconType.faCompass} />
-                            <span className={"navigation-label"}>Menus</span>
-                            <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
-                            <NavigationSubMenu></NavigationSubMenu>
-                        </div>
-                        <div className={`navigation-item`}>
-                            <Icon className={"navigation-icon"} icon={IconType.faAddressCard} />
-                            <span className={"navigation-label"}>Contact Me</span>
-                            <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
-                            <ContactsSubMenu></ContactsSubMenu>
-                        </div>
-                        <div className={`navigation-item`}>
-                            <Icon className={"navigation-icon"} icon={IconType.faGithubAlt} />
-                            <span className={"navigation-label"}>GitHub</span>
-                            <Icon className={"navigation-sub-icon"} icon={IconType.faLink} />
-                        </div>
-                        <div className={`navigation-item`} onClick={this.changeTheme}>
-                            <Icon className={"navigation-icon"} icon={IconType.faPalette} />
-                            <span className={"navigation-label"}>Theme</span>
-                            {this.props.theme === ThemeType.DARK &&
-                                <Icon className={"navigation-sub-icon"} icon={IconType.faMoon} />}
-                            {this.props.theme === ThemeType.LIGHT &&
-                                <Icon className={"navigation-sub-icon"} icon={IconType.faSun} />}
-                        </div>
-                    </div>
-                </div>
-                <BackButton />
-            </>}
+            <>
+                {this.props.cubeOpened &&
+                    <Suspense>
+                        <Navigation />
+                    </Suspense>
+                }
+                {this.props.currentPage !== Page.LANDING &&
+                    <Suspense>
+                        <BackButton />
+                    </Suspense>
+                }
             </>
         )
     }
@@ -72,8 +52,10 @@ export default connect(
     (state: any, ownProps) => {
         const { theme } = state.windowReducer;
         const { cubeOpened } = state.cubesReducer;
+        const { currentPage } = state.stagesReducer;
         return {
             theme,
-            cubeOpened
+            cubeOpened,
+            currentPage
         }
     })(Header);

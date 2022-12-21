@@ -4,12 +4,13 @@
     height: 4em;
     background-color: rgba($contrast-primary, .5);
     position: fixed;
-    bottom: .5em;
+    bottom: -6em;
     left: calc(50% - 7.5em);
     display: flex;
     padding: 1em;
     border-radius: 1em;
     z-index: 2;
+    animation: deviceSimulatorAppear .5s 1s ease-in-out forwards;
 
     .layout-native.vw-portrait & {
         display: none;
@@ -57,5 +58,14 @@
 @media (orientation: portrait) {
     .device-simulator-wrapper {
         font-size: 1vmax;
+    }
+}
+
+@keyframes deviceSimulatorAppear {
+    0% {
+        bottom: -6em;
+    }
+    100% {
+        bottom: .5em;
     }
 }
