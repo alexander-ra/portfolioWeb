@@ -40,6 +40,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
     private cubeRotationClass = CubeRotationStates.LEFT_ZOOM;
     private dragStartingPos: Position;
     private dragInitiated: boolean = false;
+    private showRotatingIndicator: boolean = true;
 
     constructor(props: CubeProps) {
         super(props);
@@ -94,6 +95,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
         });
         window.addEventListener("drag", (event) => {
             this.dragInitiated = true;
+            this.showRotatingIndicator = false;
             const newState = CubeRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.rotationInitialState);
             if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
                 this.setState(newState);
@@ -112,6 +114,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
         });
         window.addEventListener("touchmove", (event) => {
             this.dragInitiated = true;
+            this.showRotatingIndicator = false;
             const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
             if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
                 this.setState(newState);
@@ -145,7 +148,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     shouldDisplayRotationHint(): boolean {
-        return Boolean(this.state.cubeOpened && !this.dragInitiated && this.props.firstTimeLanding &&
+        return Boolean(this.state.cubeOpened && this.showRotatingIndicator && this.props.firstTimeLanding &&
             this.props.devIntroCompleted && this.state.selectedMenuState === CubeMenuStates.NONE);
     }
 

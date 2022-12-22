@@ -10,6 +10,7 @@
     top: 0;
     transform: translateY(-150%);
     animation: headerAppear .5s 1s ease-in-out forwards;
+    box-shadow: 0 0 1em -0.2em rgb($shadow);
 
     .vw-portrait & {
         height: $header-height * 2.5;
