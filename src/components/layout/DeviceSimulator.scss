@@ -9,7 +9,7 @@
     display: flex;
     padding: 1em;
     border-radius: 1em;
-    z-index: 2;
+    z-index: 3;
     animation: deviceSimulatorAppear .5s 1s ease-in-out forwards;
 
     .layout-native.vw-portrait & {
