@@ -36,4 +36,5 @@ export enum IconType {
     faPeace = "faPeace",
     faStar = "faStar",
     faTrophy = "faTrophy",
+    faSave = "faSave",
 }

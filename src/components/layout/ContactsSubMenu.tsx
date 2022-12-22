@@ -37,6 +37,10 @@ class NavigationSubMenu extends React.Component<ExpandedMenuProps, ExpandedMenuS
                         <Icon className={"contact-icon"} icon={IconType.faGithubAlt} />
                         <div className={"expanded-menu-label"}>alexander-ra/portfolioWeb</div>
                     </div>
+                    <div className={"contact-line"}>
+                        <Icon className={"contact-icon"} icon={IconType.faSave} />
+                        <div className={"expanded-menu-label"}>Download Resume.pdf</div>
+                    </div>
                 </div>
             </div>
         )

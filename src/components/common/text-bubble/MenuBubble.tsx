@@ -33,7 +33,7 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
 
     componentDidUpdate(prevProps: MenuBubbleProps) {
         if (this.props.textBubbleType !== prevProps.textBubbleType) {
-            if (prevProps.textBubbleType === CubeMenuStates.NONE) {
+            if (this.props.textBubbleType !== CubeMenuStates.NONE) {
                 this.setDescription(this.props.textBubbleType);
             } else {
                 setTimeout(() => {

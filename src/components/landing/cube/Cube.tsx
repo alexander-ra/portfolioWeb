@@ -143,8 +143,10 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     selectMenu(menu: CubeMenuStates): void {
-        this.props.selectMenu(menu);
-        this.setState({rotationInitialState: menu, selectedMenuState: menu});
+        if (this.state.cubeOpened) {
+            this.props.selectMenu(menu);
+            this.setState({rotationInitialState: menu, selectedMenuState: menu});
+        }
     }
 
     shouldDisplayRotationHint(): boolean {

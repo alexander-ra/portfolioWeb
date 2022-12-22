@@ -39,5 +39,13 @@
         .expanded-menu-icon {
             width: 2em;
         }
+
+        &.selected-menu {
+            background-color: rgb($accent-secondary);
+            border-radius: 1em;
+            &:hover {
+                color: rgb($main-primary);
+            }
+        }
     }
 }
