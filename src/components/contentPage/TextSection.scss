@@ -32,14 +32,15 @@ $menu-radius: 6em;
 
   &.text-section-left {
     margin: 0 3em 0 0.5em;
-    animation: leftSectionAppear 1s;
 
     .vw-landscape & {
       clip-path: polygon(6em 0%, 100% 0%, 100% 100%, 6em 100%, 0% 50%);
+      animation: leftSectionAppearLandscape 1s;
     }
 
     .vw-portrait & {
       margin: 1em 0 3em 0;
+      animation: leftSectionAppearPortrait 1s;
     }
 
     .content {
@@ -88,14 +89,15 @@ $menu-radius: 6em;
   }
   &.text-section-right {
     margin: 0 .5em 0 3em;
-    animation: rightSectionAppear 1s;
 
     .vw-landscape & {
       clip-path: polygon(0% 0%, calc(100% - 6em) 0%, 100% 50%, calc(100% - 6em) 100%, 0% 100%);
+      animation: rightSectionAppearLandscape 1s;
     }
 
     .vw-portrait & {
       margin: 3em 0 1em 0;
+      animation: rightSectionAppearPortrait 1s;
     }
 
     .mask {
@@ -332,7 +334,7 @@ $menu-radius: 6em;
   }
 }
 
-@keyframes leftSectionAppear {
+@keyframes leftSectionAppearLandscape {
     0% {
         transform: translateX(9em);
         opacity: 0;
@@ -343,7 +345,7 @@ $menu-radius: 6em;
     }
 }
 
-@keyframes rightSectionAppear {
+@keyframes rightSectionAppearLandscape {
     0% {
         transform: translateX(-9em);
         opacity: 0;
@@ -352,4 +354,26 @@ $menu-radius: 6em;
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+@keyframes leftSectionAppearPortrait {
+  0% {
+    transform: translateY(9em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rightSectionAppearPortrait {
+  0% {
+    transform: translateY(-9em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
