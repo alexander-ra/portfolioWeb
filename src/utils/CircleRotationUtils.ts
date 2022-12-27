@@ -4,11 +4,6 @@ import {CircleMenuStates} from "../models/landing/CircleMenuStates";
 
 export class CircleRotationUtils {
     private static readonly CUBE_SIDE_ROTATION_DEG = 50;
-    private static readonly SECTION_INITIAL_DIFFERENCE_DEG = 35;
-    private static readonly SECTION_FREE_RANGE_DEG = 20;
-    private static readonly SECTION_VERTICAL_OFFSET_DEG= 8;
-    // How fast the cube is rotated by dragging. Value less than 1 is not commented.
-    private static readonly ROTATION_SENSITIVITY= 2;
 
     public static initializeDragCursor(event: DragEvent): Position {
         this.removeDragGhosting(event);
@@ -58,10 +53,6 @@ export class CircleRotationUtils {
             };
         }
         return {};
-    }
-
-    static setSectionFromRotation(rotationOffset: Position): CircleMenuStates {
-        return CircleMenuStates.EXPERIENCE_HOME;
     }
 
     static getActualRotationOffset(dragStartingPos: Position, dragCurrentPos: Position, circleOffsetDegrees: number): number {

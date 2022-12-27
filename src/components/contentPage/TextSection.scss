@@ -78,7 +78,7 @@ $menu-radius: 6em;
         .vw-landscape & {
           float: right;
           background-position: 33% center;
-          shape-outside: circle(65% at 100% 50%);
+          shape-outside: circle(67% at 100% 50%);
           clip-path: circle(100% at 170% 50%);
         }
         .vw-portrait & {
@@ -115,7 +115,7 @@ $menu-radius: 6em;
       .vw-landscape & {
         float: left;
         background-position: 67% center;
-        shape-outside: circle(65% at 0 50%);
+        shape-outside: circle(67% at 0 50%);
         clip-path: circle(100% at -70% 50%);
       }
 

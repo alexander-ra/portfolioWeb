@@ -42,7 +42,6 @@ class TextSection extends React.Component<TextSectionProps> {
         if (prevProps.data.description !== this.props.data.description && Utils.isNotNull(this.resizeTimeout) ||
             prevProps.uiOrientation !== this.props.uiOrientation && Utils.isNotNull(this.resizeTimeout) ||
             prevProps.layoutType !== this.props.layoutType && Utils.isNotNull(this.resizeTimeout)) {
-            console.log("wHat");
                 clearTimeout(this.resizeTimeout);
                 this.resizeTimeout = setTimeout(() => {
                     this.updateDimensions();

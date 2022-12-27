@@ -12,6 +12,7 @@ import {changePage} from "../../reducers/stages/stagesAction";
 import AppStorage, {StorageArrayKey, StorageKey} from "../../utils/AppStorage";
 import Icon from '../common/icon/Icon';
 import {ProvisionUtils} from "../../utils/ProvisionUtils";
+import BrowserUtils from "../../utils/BrowserUtils";
 
 interface ContentPageProps {
     isClosing: boolean;
@@ -54,11 +55,8 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     private visitedTimeout: NodeJS.Timeout = null;
 
     constructor(props: ContentPageProps) {
+        console.log('ContentPage constructor');
         super(props);
-        this.dragStartingPos = {
-            x: 0,
-            y: 0
-        }
         this.state = {
             actualCircleOffsetDegrees: 0,
             initialCircleOffsetDegrees: 0,
@@ -67,10 +65,19 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             menuContent: ContentData.getMenuContent(this.props.sections[0].menu),
             isSlowRotation: false
         };
-        this.addCubeRotationListeners();
-        if (!this.doingFastRotation) {
-            this.calculateDegrees();
+        this.dragStartingPos = {
+            x: 0,
+            y: 0
         }
+    }
+
+    componentDidMount() {
+        this.addCubeRotationListeners();
+        this.calculateDegrees();
+    }
+
+    componentWillUnmount() {
+        this.removeCubeRotationListeners();
     }
 
     componentDidUpdate(prevProps: Readonly<ContentPageProps>, prevState: Readonly<ContentPageState>) {
@@ -99,84 +106,82 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         }
     }
 
-    addCubeRotationListeners() {
-        window.addEventListener("dragstart", (event) => {
-            this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
+    dragStart = (event: any) => {
+        console.log('dragStart', event.target);
+        this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
+        this.setState({
+            initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees,
+            dragInitiated: true,
+            isSlowRotation: false
+        });
+    }
+
+    dragMove = (event: any) => {
+        console.log("move");
+        const newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
+        if (Utils.isNotNull(newState) && newState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
             this.setState({
-                initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees,
-                dragInitiated: true,
-                isSlowRotation: false
+                ...newState,
+                selectedMenuIndex: this.getSelectedSection(newState.actualCircleOffsetDegrees)
             });
-        });
-        window.addEventListener("drag", (event) => {
-            const newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
-            if (Utils.isNotNull(newState) && newState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
-                this.setState({
-                    ...newState,
-                    selectedMenuIndex: this.getSelectedSection(newState.actualCircleOffsetDegrees)
-                });
-            }
-        });
-        window.addEventListener("dragend", () => {
-            if (Utils.isArrayNotEmpty(this.sectionDegrees)) {
-                const potentialOffsetDegrees = 360 - this.sectionDegrees[this.state.selectedMenuIndex];
-                const rotatingDirection = this.getRotatingDirectionFromDegrees(this.state.actualCircleOffsetDegrees, potentialOffsetDegrees);
-                if (rotatingDirection !== RotatingDirection.NONE) {
-                    if (rotatingDirection === RotatingDirection.COUNTER_CLOCKWISE && this.state.actualCircleOffsetDegrees > potentialOffsetDegrees) {
+        }
+    }
+
+    dragEnd = (event: any) => {
+        console.log('dragEnd');
+        if (Utils.isArrayNotEmpty(this.sectionDegrees)) {
+            const potentialOffsetDegrees = 360 - this.sectionDegrees[this.state.selectedMenuIndex];
+            const rotatingDirection = this.getRotatingDirectionFromDegrees(this.state.actualCircleOffsetDegrees, potentialOffsetDegrees);
+            if (rotatingDirection !== RotatingDirection.NONE) {
+                if (rotatingDirection === RotatingDirection.COUNTER_CLOCKWISE && this.state.actualCircleOffsetDegrees > potentialOffsetDegrees) {
+                    this.doingFastRotation = true;
+                    this.setState(
+                        {
+                            actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees - 360,
+                        }
+                    )
+                } else if (rotatingDirection === RotatingDirection.CLOCKWISE) {
+                    // this.sectionIconDegrees[this.state.selectedMenuIndex] += 360;
+                    if (this.state.actualCircleOffsetDegrees < potentialOffsetDegrees) {
                         this.doingFastRotation = true;
                         this.setState(
                             {
-                                actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees - 360,
+                                actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees + 360,
                             }
                         )
-                    } else if (rotatingDirection === RotatingDirection.CLOCKWISE) {
-                        // this.sectionIconDegrees[this.state.selectedMenuIndex] += 360;
-                        if (this.state.actualCircleOffsetDegrees < potentialOffsetDegrees) {
-                            this.doingFastRotation = true;
-                            this.setState(
-                                {
-                                    actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees + 360,
-                                }
-                            )
-                        }
                     }
+                }
 
-                    if (this.doingFastRotation) {
-                        setTimeout(() => {
-                            this.doingFastRotation = false;
-                            this.triggerSlowRotation();
-                            this.setState({
-                                dragInitiated: false,
-                                actualCircleOffsetDegrees: potentialOffsetDegrees
-                            });
-                        }, 50);
-                    } else {
+                if (this.doingFastRotation) {
+                    setTimeout(() => {
+                        this.doingFastRotation = false;
                         this.triggerSlowRotation();
                         this.setState({
                             dragInitiated: false,
                             actualCircleOffsetDegrees: potentialOffsetDegrees
                         });
-                    }
+                    }, 50);
+                } else {
+                    this.triggerSlowRotation();
+                    this.setState({
+                        dragInitiated: false,
+                        actualCircleOffsetDegrees: potentialOffsetDegrees
+                    });
                 }
             }
-        });
-        window.addEventListener("touchstart", (event) => {
-            this.dragStartingPos = CircleRotationUtils.initializeDragTouch(event);
-            this.setState({
-                dragInitiated: true
-            });
-        });
-        window.addEventListener("touchmove", (event) => {
-            const newState = CircleRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
-            if (newState.initialCircleOffsetDegrees !== this.state.initialCircleOffsetDegrees) {
-                this.setState(newState);
-            }
-        });
-        window.addEventListener("touchend", () => {
-            this.setState({
-                dragInitiated: false
-            })
-        });
+        }
+    }
+
+    addCubeRotationListeners() {
+        window.addEventListener('dragstart', this.dragStart);
+        window.addEventListener('drag', this.dragMove);
+        window.addEventListener('dragend', this.dragEnd);
+    }
+
+    removeCubeRotationListeners() {
+        window.removeEventListener('dragstart', this.dragStart);
+        window.removeEventListener('drag', this.dragMove);
+        window.removeEventListener('dragend', this.dragEnd);
     }
 
     triggerSlowRotation() {

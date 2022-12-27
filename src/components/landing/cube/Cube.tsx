@@ -69,6 +69,12 @@ class Cube extends React.Component<CubeProps, CubeState> {
         this.addCubeRotationListeners();
     }
 
+    componentWillUnmount() {
+        console.log("cube unmount");
+        clearInterval(this.autoRotationInterval);
+        this.removeCubeRotationListeners();
+    }
+
     componentDidUpdate(prevProps: Readonly<CubeProps>, prevState: Readonly<CubeState>, snapshot?: any) {
         if (prevState.selectedMenuState !== this.state.selectedMenuState) {
             console.log("componentDidUpdate", this.state.selectedMenuState);
@@ -97,61 +103,75 @@ class Cube extends React.Component<CubeProps, CubeState> {
             }, this.CUBE_INITIAL_AUTO_ROTATION_DELAY_MS);
         }
     }
+
+
+    dragStart = (event: any) => {
+        console.log("cube drag start");
+        this.dragStartingPos = CubeRotationUtils.initializeDragCursor(event);
+        event.preventDefault();
+        window.onmousemove = (event) => {
+            this.dragInitiated = true;
+            this.showRotatingIndicator = false;
+            const newState = CubeRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.rotationInitialState);
+            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
+                this.setState(newState);
+            }
+
+            window.onmouseup = () => {
+                console.log("cube drag end");
+                event.preventDefault();
+                window.onmousemove = null;
+                window.onmouseup = null;
+                this.setState({
+                    dragX: 0,
+                    dragY: 0,
+                    rotationInitialState: this.state.selectedMenuState
+                })
+                this.dragInitiated = false;
+                this.lastDrag = Date.now();
+            }
+        }
+    }
+
+    dragStartTouch = (event: any) => {
+        console.log("cube drag start touch");
+        this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
+        event.preventDefault();
+        document.ontouchmove = (event) => {
+            this.dragInitiated = true;
+            this.showRotatingIndicator = false;
+            const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
+            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
+                this.setState(newState);
+            }
+
+            document.ontouchend = () => {
+                console.log("cube drag end touch");
+                event.preventDefault();
+                document.onmousemove = null;
+                document.onmouseup = null;
+                this.dragInitiated = false;
+                this.lastDrag = Date.now();
+                this.setState({
+                    dragX: 0,
+                    dragY: 0,
+                    rotationInitialState: this.state.selectedMenuState
+                })
+                setTimeout(() => {
+                    this.dragInitiated = false;
+                }, 100);
+            }
+        }
+    }
+
     addCubeRotationListeners() {
-        window.addEventListener("dragstart", (event) => {
-            this.dragStartingPos = CubeRotationUtils.initializeDragCursor(event);
-            event.stopPropagation();
-            event.preventDefault();
-            document.onmousemove = (event) => {
-                this.dragInitiated = true;
-                this.showRotatingIndicator = false;
-                const newState = CubeRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.rotationInitialState);
-                if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
-                    this.setState(newState);
-                }
+        window.addEventListener("dragstart", this.dragStart);
+        window.addEventListener("touchstart", this.dragStartTouch);
+    }
 
-                document.onmouseup = () => {
-                    event.preventDefault();
-                    document.onmousemove = null;
-                    document.onmouseup = null;
-                    this.setState({
-                        dragX: 0,
-                        dragY: 0,
-                        rotationInitialState: this.state.selectedMenuState
-                    })
-                    this.dragInitiated = false;
-                    this.lastDrag = Date.now();
-                }
-            }
-        });
-        window.addEventListener("touchstart", (event) => {
-            this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
-            event.preventDefault();
-            document.ontouchmove = (event) => {
-                this.dragInitiated = true;
-                this.showRotatingIndicator = false;
-                const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
-                if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
-                    this.setState(newState);
-                }
-
-                document.ontouchend = () => {
-                    event.preventDefault();
-                    document.onmousemove = null;
-                    document.onmouseup = null;
-                    this.dragInitiated = false;
-                    this.lastDrag = Date.now();
-                    this.setState({
-                        dragX: 0,
-                        dragY: 0,
-                        rotationInitialState: this.state.selectedMenuState
-                    })
-                    setTimeout(() => {
-                        this.dragInitiated = false;
-                    }, 100);
-                }
-            }
-        });
+    removeCubeRotationListeners() {
+        window.removeEventListener("dragstart", this.dragStart);
+        window.removeEventListener("touchstart", this.dragStartTouch);
     }
 
     openCube(): void {
