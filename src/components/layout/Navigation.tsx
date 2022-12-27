@@ -17,13 +17,17 @@ interface NavigationProps {
 
 interface NavigationState {
     isLoading: boolean;
+    navigationItemsShown: boolean;
+    contactsItemsShown: boolean;
 }
 
 class Navigation extends React.Component<NavigationProps, NavigationState> {
     constructor(props: NavigationProps) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            navigationItemsShown: false,
+            contactsItemsShown: false
         }
     }
 
@@ -43,24 +47,53 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         store.dispatch(setTheme(newTheme));
     }
 
+    private toggleNavigationItems = () => {
+        this.setState({navigationItemsShown: !this.state.navigationItemsShown});
+
+        if (this.state.contactsItemsShown) {
+            this.setState({contactsItemsShown: false});
+        }
+    }
+
+    private toggleContactsItems = () => {
+        this.setState({contactsItemsShown: !this.state.contactsItemsShown});
+
+        if (this.state.navigationItemsShown) {
+            this.setState({navigationItemsShown: false});
+        }
+    }
+
     render(){
         return (<>
             {
                 !this.state.isLoading &&
                 <div className={`header-wrapper`}>
                     <div className={`navigation-wrapper`}>
-                        <div className={`navigation-item`}>
-                            {/*<FontAwesomeIcon className={"expanded-menu-icon"} icon={faHandshake} />*/}
+                        <div className={`navigation-item`} onClick={this.toggleNavigationItems} onMouseEnter={
+                            () => {
+                                this.setState({
+                                    navigationItemsShown: true,
+                                    contactsItemsShown: false
+                                })
+                            }
+                        }>
                             <Icon className={"navigation-icon"} icon={IconType.faCompass} />
                             <span className={"navigation-label"}>Menus</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
-                            <NavigationSubMenu></NavigationSubMenu>
+                            {this.state.navigationItemsShown && <NavigationSubMenu></NavigationSubMenu>}
                         </div>
-                        <div className={`navigation-item`}>
+                        <div className={`navigation-item`} onClick={this.toggleContactsItems} onMouseEnter={
+                            () => {
+                                this.setState({
+                                    navigationItemsShown: false,
+                                    contactsItemsShown: true
+                                })
+                            }
+                        }>
                             <Icon className={"navigation-icon"} icon={IconType.faAddressCard} />
                             <span className={"navigation-label"}>Contact Me</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
-                            <ContactsSubMenu></ContactsSubMenu>
+                            {this.state.contactsItemsShown && <ContactsSubMenu></ContactsSubMenu>}
                         </div>
                         <div className={`navigation-item`}>
                             <Icon className={"navigation-icon"} icon={IconType.faGithubAlt} />
