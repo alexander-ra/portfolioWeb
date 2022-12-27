@@ -6,7 +6,7 @@
     right: -3em;
     padding: .5em;
     width: 100%;
-    background-color: $header-color;
+    background:  linear-gradient(rgba($header-color, 0.5), rgba($header-color, 1) 10%);
     border-radius: 0 0 1em 1em;
     display: flex;
     flex-direction: column;
@@ -33,7 +33,7 @@
         }
 
         .vw-portrait & {
-            margin-left: 0.5em;
+            margin-left: 0.33em;
         }
 
         .expanded-menu-icon {

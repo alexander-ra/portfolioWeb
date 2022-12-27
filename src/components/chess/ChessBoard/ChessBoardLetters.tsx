@@ -20,7 +20,7 @@ class ChessBoardLetters extends React.Component {
             }
         })
         return this.CHESS_BOARD_SIDES.map((side, index) => {
-            return <div className={`chess-letters chess-letters-${this.CHESS_BOARD_SIDES[index]}`}>{boardLetters[index]}</div>
+            return <div key={`${side}${index}`} className={`chess-letters chess-letters-${this.CHESS_BOARD_SIDES[index]}`}>{boardLetters[index]}</div>
         });
     }
 

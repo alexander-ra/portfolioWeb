@@ -25,7 +25,9 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         this.state = {
             isLoading: true
         }
+    }
 
+    componentDidMount() {
         BrowserUtils.loadResources(ProvisionUtils.headerIconResources())
             .then(() => {
                 this.setState({isLoading: false});

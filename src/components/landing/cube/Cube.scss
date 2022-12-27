@@ -32,7 +32,7 @@
 }
 
 .cube-wrapper {
-    cursor: pointer;
+    cursor: grab;
     position: absolute;
     left: calc(50% - 7em);
     top: calc(50% - 7em);
@@ -85,7 +85,11 @@
         transition-delay: -.1s;
         transition-timing-function: ease-out;
         transform: rotateX(37deg) rotateY(-45deg) rotateZ(0deg);
-        cursor: all-scroll;
+        cursor: grab;
+
+        &:active {
+            cursor: grabbing;
+        }
 
         &.BOTTOM {
             transform: rotateX(80deg) rotateY(-45deg) rotateZ(0deg);

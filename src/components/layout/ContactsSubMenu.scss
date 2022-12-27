@@ -6,7 +6,7 @@
     left: 0;
     padding: .5em;
     width: 28em;
-    background-color: $header-color;
+    background:  linear-gradient(rgba($header-color, 0.5), rgba($header-color, 1) 10%);
     border-radius: 0 0 1em 1em;
     flex-direction: row;
     justify-content: space-evenly;

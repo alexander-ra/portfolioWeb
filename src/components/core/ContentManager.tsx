@@ -9,6 +9,7 @@ import Utils from "../../utils/Utils";
 import {changePage} from "../../reducers/stages/stagesAction";
 import {WindowUtils} from "../../utils/WindowUtils";
 import { setLayoutType } from '../../reducers/window/windowAction';
+import {openCube} from "../../reducers/cube/cubeAction";
 const ContentPage = React.lazy(() => import('../contentPage/ContentPage')); // Lazy-loaded
 const ChessPage = React.lazy(() => import('../chess/ChessPage')); // Lazy-loaded
 const LandingPage = React.lazy(() => import('../landing/LandingPage')); // Lazy-loaded
@@ -42,6 +43,10 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
             window.history.pushState(null, null, "/landing");
         } else {
             store.dispatch(changePage(page));
+
+            if (!store.getState().cubesReducer.cubeOpened) {
+                store.dispatch(openCube());
+            }
         }
         this.state = {
             actualPage: Page.LANDING,

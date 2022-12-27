@@ -33,13 +33,16 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
         this.state = {
             isLoading: true,
         };
+    }
+
+    componentDidMount() {
         BrowserUtils.loadResources(ProvisionUtils.landingResources())
-        .then(() => {
-            this.setState({isLoading: false});
-        })
-        .catch(() => {
-            console.error('Error loading resources');
-        });
+            .then(() => {
+                this.setState({isLoading: false});
+            })
+            .catch(() => {
+                console.error('Error loading resources');
+            });
     }
 
     private getIcon(): IconType {

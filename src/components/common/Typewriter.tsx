@@ -26,6 +26,9 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
     constructor(props: TypewriterProps) {
         super(props);
         this.state = {currentLetterNum: 0, textDone: false};
+    }
+
+    componentDidMount() {
         setTimeout(this.typeLetter.bind(this), this.initialDelay);
     }
 

@@ -120,15 +120,15 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
             chessRow.push(<ChessBoardSquare selectedSquare={this.state.selectedSquare}
                                             onClick={this.clickSquare.bind(this)}
                                             chessSquare={{row, col}}
-                                            possibleMoves={this.possibleMoves} />);
+                                            possibleMoves={this.possibleMoves}
+                                            key={`${row}${col}`}/>);
         }
-        return <div className={`chess-row`}>
+        return <div className={`chess-row`} key={row}>
             {chessRow}
         </div>
     }
 
     render(){
-        console.log('render chess game id', this.props.chessGameId);
         return (
             <div className={`chess-board-wrapper ${this.props.playerSide.toLowerCase()}-player-view`}>
                 <div className={"bg"}></div>

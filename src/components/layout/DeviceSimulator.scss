@@ -10,7 +10,7 @@
     padding: 1em;
     border-radius: 1em;
     z-index: 3;
-    animation: deviceSimulatorAppear .5s 1s ease-in-out forwards;
+    animation: deviceSimulatorAppear 1s ease-in-out forwards;
 
     .layout-native.vw-portrait & {
         display: none;

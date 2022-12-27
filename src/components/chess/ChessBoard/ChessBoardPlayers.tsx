@@ -21,7 +21,7 @@ class ChessBoardPlayers extends React.Component<ChessPlayersProps> {
            const isInTurn = index === 0 ? this.props.playerSide === this.props.sideInTurn : this.props.playerSide !== this.props.sideInTurn;
            const avatarType = index === 0 ? this.props.playerAvatar?.toLowerCase() : this.props.opponentLevel?.toLowerCase();
            playerWindows.push(
-               <div className={`player-window-wrapper ${this.PLAYER_NAMES[index].toLowerCase()} ${isInTurn ? "active" : ""}`}>
+               <div className={`player-window-wrapper ${this.PLAYER_NAMES[index].toLowerCase()} ${isInTurn ? "active" : ""}`} key={name}>
                    <div className={`avatar avatar-${avatarType}`}>
                        <div className={`avatar-label`}>{`${this.PLAYER_NAMES[index]}${isInTurn ? "'s turn" : " waiting"}`}</div>
                    </div>

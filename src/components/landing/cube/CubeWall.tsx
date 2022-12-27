@@ -21,7 +21,8 @@ class CubeWall extends React.Component<CubeWallProps, CubeWallState> {
     render(){
         return (
             <div className={`wall wall-${this.props.menu.toString().toLowerCase().replace("_", "-")} ${this.props.selected ? "selected" : ""}`}
-                 onClick={() => {this.props.onSelect(this.props.menu)}}>
+                 onClick={() => {this.props.onSelect(this.props.menu)}}
+                >
                 <div className={"wall-content"}>
 
                     <Icon className={"wall-icon"} icon={this.props.icon} />

@@ -27,7 +27,7 @@ body {
   --wheel-border-color: var(--contrast-primary);
   --flower-shadow: var(--main-secondary);
   --common-border-color: var(--main-primary);
-  --header-color: rgba(var(--contrast-primary), 1);
+  --header-color: var(--contrast-primary);
   --section-content-color: rgba(var(--contrast-primary), 0.75);
   --section-bg-color: var(--contrast-primary);
   --section-icon-color: var(--main-primary);
@@ -41,12 +41,12 @@ body {
     --contrast-primary: var(--black-purple-rgb);
     --contrast-secondary: var(--purple-rgb);
 
-    --wheel-border-color: var(--dark-orange-rgb);
+    --wheel-border-color: var(--dark-purple-rgb);
     --flower-shadow: var(--orange-rgb);
     --common-border-color: var(--purple-rgb);
-    --header-color: rgba(var(--black-purple-rgb), 1);
+    --header-color: var(--black-purple-rgb);
     --section-content-color: rgba(var(--black-purple-rgb), .5);
-    --section-bg-color: var(--dark-orange-rgb);
+    --section-bg-color: var(--dark-purple-rgb);
     --section-icon-color: var(--light-yellow-rgb);
   }
 
@@ -54,7 +54,7 @@ body {
   --button-text-color: var(--light-yellow-rgb);
   --content-title-color: var(--light-yellow-rgb);
   --content-title-secondary-color: var(--yellow-rgb);
-  --cube-accents-color: var(--light-yellow-rgb);
+  --cube-accents-color: var(--white-rgb);
   --shadow: var(--dark-purple-rgb);
   --indicator-color: linear-gradient(45deg, rgb(var(--yellow-rgb)) 0%, rgb(var(--orange-rgb)) 100%);
   --setting-card-color: var(--dark-purple-rgb);

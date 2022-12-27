@@ -27,7 +27,7 @@ export class CubeRotationUtils {
         }
     }
 
-    public static dragRotateCursor(event: DragEvent, dragStartPos: Position, rotationInitialState: CubeMenuStates): CubeRotationState {
+    public static dragRotateCursor(event: MouseEvent, dragStartPos: Position, rotationInitialState: CubeMenuStates): CubeRotationState {
         const dragCurrentPos: Position = {
             x: event.screenX,
             y: event.screenY
@@ -128,12 +128,11 @@ export class CubeRotationUtils {
         }
     }
 
-    private static removeDragGhosting(event: Event): void {
+    private static removeDragGhosting(event: DragEvent): void {
         // TODO: Find better solution for drag image
         var img = new Image();
-        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
-
-        // @ts-ignore
+        img.src = "";
         event.dataTransfer.setDragImage(img, 0, 0);
+        event.dataTransfer.setData("text/plain", "");
     }
 }

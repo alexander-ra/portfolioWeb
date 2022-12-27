@@ -317,7 +317,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
            const isVisited = visitedSections.includes(section.menu);
            sections.push(
                <div className={`menu-section circle-rot${this.sectionDegrees[index]}deg ${this.state.selectedMenuIndex === index ? "selected": ""}`}
-                    onClick={() => { this.clickSection(index); }}>
+                    onClick={() => { this.clickSection(index); }} key={section.menu.toString()}>
                    <div className={`menu-icon-wrapper circle-rot${this.sectionIconDegrees[index]}deg`}>
                        <Icon className={"menu-icon"}  icon={section.icon}></Icon>
                        {!isVisited && <div className={"icon-new"}>New*</div>}
@@ -331,8 +331,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     renderSectionEdges(): JSX.Element[] {
         const sections: JSX.Element[] = [];
         this.props.sections.forEach((section: Section, index) => {
-            sections.push(<div className={`section-edge circle-rot${this.sectionDegrees[index]}deg`}>
-                </div>
+            sections.push(<div className={`section-edge circle-rot${this.sectionDegrees[index]}deg`} key={section.menu.toString()}/>
             )
         });
         return sections;

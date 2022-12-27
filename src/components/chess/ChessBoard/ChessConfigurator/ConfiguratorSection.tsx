@@ -18,7 +18,7 @@ class ConfigurationSection extends React.Component<ConfigurationSectionProps> {
         const items: JSX.Element[] = [];
         this.props.items.forEach((item, index) => {
             items.push(<div className={`setting-${item.toLowerCase()} setting ${this.props.selectedIndex === index ? "selected": ""}`}
-                            onClick={() => this.props.onSelectChange(index)}>
+                            onClick={() => this.props.onSelectChange(index)} key={item}>
                 <div className={"setting-label"}>{item.charAt(0).toUpperCase() + item.toLowerCase().slice(1)}</div>
             </div>)
         })

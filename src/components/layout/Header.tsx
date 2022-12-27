@@ -7,7 +7,6 @@ import {connect} from "react-redux";
 import {ChessBoardModel} from "../../reducers/chessBoard/chessBoardReducer";
 import NavigationSubMenu from "./NavigationSubMenu";
 import ContactsSubMenu from "./ContactsSubMenu";
-import BackButton from "./BackButton";
 import cubesReducer from "../../reducers/cube/cubeReducer";
 import Icon from "../common/icon/Icon";
 import {IconType} from "../common/icon/IconType";
@@ -15,11 +14,14 @@ import BrowserUtils from "../../utils/BrowserUtils";
 import {ProvisionUtils} from "../../utils/ProvisionUtils";
 import Navigation from "./Navigation";
 import {Page} from "../../models/common/Page";
+import {UIOrientation} from "../core/UIOrientation";
+const BackButton = React.lazy(() => import('./BackButton')); // Lazy-loaded
 
 interface HeaderProps {
     theme: ThemeType;
     cubeOpened: boolean;
     currentPage: Page;
+    uiOrientation: UIOrientation;
 }
 
 class Header extends React.Component<HeaderProps> {
@@ -38,7 +40,7 @@ class Header extends React.Component<HeaderProps> {
                         <Navigation />
                     </Suspense>
                 }
-                {this.props.currentPage !== Page.LANDING &&
+                {this.props.currentPage !== Page.LANDING && this.props.uiOrientation === UIOrientation.LANDSCAPE &&
                     <Suspense>
                         <BackButton />
                     </Suspense>
@@ -50,12 +52,13 @@ class Header extends React.Component<HeaderProps> {
 
 export default connect(
     (state: any, ownProps) => {
-        const { theme } = state.windowReducer;
+        const { theme, uiOrientation } = state.windowReducer;
         const { cubeOpened } = state.cubesReducer;
         const { currentPage } = state.stagesReducer;
         return {
             theme,
             cubeOpened,
-            currentPage
+            currentPage,
+            uiOrientation,
         }
     })(Header);

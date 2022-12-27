@@ -306,7 +306,7 @@ export class ChessUtils {
         }
         const colDiff = move.to.col - pieceToMove.square.col;
         if (colDiff > 1) {
-            console.log("performing castle for", pieceToMove);
+
             ChessUtils.getPieceFromSquare({row: pieceToMove.square.row, col: 8}, processedChessBoard).square = {
                 row: pieceToMove.square.row,
                 col: move.to.col - 1
@@ -315,7 +315,6 @@ export class ChessUtils {
                 processedCastleInfo.castleHappened = true;
             }
         } else if (colDiff < -1) {
-            console.log("performing castle for", pieceToMove);
             ChessUtils.getPieceFromSquare({row: pieceToMove.square.row, col: 1}, processedChessBoard).square = {
                 row: pieceToMove.square.row,
                 col: move.to.col + 1

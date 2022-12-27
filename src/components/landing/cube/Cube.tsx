@@ -10,6 +10,7 @@ import Flower from "./Flower/Flower";
 import CubeCover from "./CubeCover";
 import CubeWall from "./CubeWall";
 import { IconType } from '../../common/icon/IconType';
+import Utils from '../../../utils/Utils';
 
 interface CubeProps {
     openCube?: any;
@@ -37,9 +38,11 @@ class Cube extends React.Component<CubeProps, CubeState> {
     private readonly CUBE_OPEN_TIME_MS = 2000;
     private readonly CLOSED_CUBE_AUTO_ROTATION_TIME_MS = 3000;
     private readonly CUBE_INITIAL_AUTO_ROTATION_DELAY_MS = 1000;
+    private autoRotationInterval: any;
     private cubeRotationClass = CubeRotationStates.LEFT_ZOOM;
     private dragStartingPos: Position;
     private dragInitiated: boolean = false;
+    private lastDrag = 0;
     private showRotatingIndicator: boolean = true;
 
     constructor(props: CubeProps) {
@@ -49,19 +52,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
             x: 0,
             y: 0
         }
-        this.setInitialValues();
-        this.addCubeRotationListeners();
-    }
 
-    componentDidUpdate(prevProps: Readonly<CubeProps>, prevState: Readonly<CubeState>, snapshot?: any) {
-        if (prevState.selectedMenuState !== this.state.selectedMenuState) {
-            this.props.selectMenu(this.state.selectedMenuState);
-        } else if (prevProps.isCLosing !== this.props.isCLosing && this.props.isCLosing) {
-            this.setState({selectedMenuState: CubeMenuStates.NONE});
-        }
-    }
-
-    setInitialValues() {
         this.state = {
             cubeOpened: !this.props.firstTimeLanding,
             cubeCoverVisible: this.props.firstTimeLanding,
@@ -71,66 +62,102 @@ class Cube extends React.Component<CubeProps, CubeState> {
             dragX: 0,
             dragY: 0
         };
+    }
 
-        setTimeout(() => {
-            this.setState({cubeRotationClass: CubeRotationStates.LEFT_ZOOM});
-            setInterval(() => {
-                if (this.state.cubeRotationClass !== CubeRotationStates.NORMAL) {
-                    if (this.state.cubeRotationClass === CubeRotationStates.LEFT_ZOOM) {
-                        this.cubeRotationClass = CubeRotationStates.RIGHT_ZOOM;
+    componentDidMount() {
+        this.setInitialValues();
+        this.addCubeRotationListeners();
+    }
+
+    componentDidUpdate(prevProps: Readonly<CubeProps>, prevState: Readonly<CubeState>, snapshot?: any) {
+        if (prevState.selectedMenuState !== this.state.selectedMenuState) {
+            console.log("componentDidUpdate", this.state.selectedMenuState);
+            this.props.selectMenu(this.state.selectedMenuState);
+        } else if (prevProps.isCLosing !== this.props.isCLosing && this.props.isCLosing) {
+            this.setState({selectedMenuState: CubeMenuStates.NONE});
+        }
+    }
+
+    setInitialValues() {
+        if (!this.props.firstTimeLanding) {
+            setTimeout(() => {
+                this.setState({cubeRotationClass: CubeRotationStates.LEFT_ZOOM});
+                this.autoRotationInterval = setInterval(() => {
+                    if (this.state.cubeRotationClass !== CubeRotationStates.NORMAL) {
+                        if (this.state.cubeRotationClass === CubeRotationStates.LEFT_ZOOM) {
+                            this.cubeRotationClass = CubeRotationStates.RIGHT_ZOOM;
+                        } else {
+                            this.cubeRotationClass = CubeRotationStates.LEFT_ZOOM;
+                        }
+                        this.setState({cubeRotationClass: CubeRotationStates.NORMAL});
                     } else {
-                        this.cubeRotationClass = CubeRotationStates.LEFT_ZOOM;
+                        this.setState({cubeRotationClass: this.cubeRotationClass});
                     }
-                    this.setState({cubeRotationClass: CubeRotationStates.NORMAL});
-                } else {
-                    this.setState({cubeRotationClass: this.cubeRotationClass});
-                }
-            }, this.CLOSED_CUBE_AUTO_ROTATION_TIME_MS);
-        }, this.CUBE_INITIAL_AUTO_ROTATION_DELAY_MS);
+                }, this.CLOSED_CUBE_AUTO_ROTATION_TIME_MS);
+            }, this.CUBE_INITIAL_AUTO_ROTATION_DELAY_MS);
+        }
     }
     addCubeRotationListeners() {
         window.addEventListener("dragstart", (event) => {
             this.dragStartingPos = CubeRotationUtils.initializeDragCursor(event);
+            event.stopPropagation();
+            event.preventDefault();
+            document.onmousemove = (event) => {
+                this.dragInitiated = true;
+                this.showRotatingIndicator = false;
+                const newState = CubeRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.rotationInitialState);
+                if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
+                    this.setState(newState);
+                }
 
-        });
-        window.addEventListener("drag", (event) => {
-            this.dragInitiated = true;
-            this.showRotatingIndicator = false;
-            const newState = CubeRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.rotationInitialState);
-            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
-                this.setState(newState);
+                document.onmouseup = () => {
+                    event.preventDefault();
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    this.setState({
+                        dragX: 0,
+                        dragY: 0,
+                        rotationInitialState: this.state.selectedMenuState
+                    })
+                    this.dragInitiated = false;
+                    this.lastDrag = Date.now();
+                }
             }
-        });
-        window.addEventListener("dragend", () => {
-            this.setState({
-                dragX: 0,
-                dragY: 0,
-                rotationInitialState: this.state.selectedMenuState
-            })
-            this.dragInitiated = false;
         });
         window.addEventListener("touchstart", (event) => {
             this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
-        });
-        window.addEventListener("touchmove", (event) => {
-            this.dragInitiated = true;
-            this.showRotatingIndicator = false;
-            const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
-            if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
-                this.setState(newState);
+            event.preventDefault();
+            document.ontouchmove = (event) => {
+                this.dragInitiated = true;
+                this.showRotatingIndicator = false;
+                const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
+                if (newState.selectedMenuState !== this.state.selectedMenuState || newState.dragX !== this.state.dragX || newState.dragY !== this.state.dragY) {
+                    this.setState(newState);
+                }
+
+                document.ontouchend = () => {
+                    event.preventDefault();
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    this.dragInitiated = false;
+                    this.lastDrag = Date.now();
+                    this.setState({
+                        dragX: 0,
+                        dragY: 0,
+                        rotationInitialState: this.state.selectedMenuState
+                    })
+                    setTimeout(() => {
+                        this.dragInitiated = false;
+                    }, 100);
+                }
             }
-        });
-        window.addEventListener("touchend", () => {
-            this.dragInitiated = false;
-            this.setState({
-                dragX: 0,
-                dragY: 0,
-                rotationInitialState: this.state.selectedMenuState
-            })
         });
     }
 
     openCube(): void {
+        if (Utils.isNotNull(this.autoRotationInterval)) {
+            clearInterval(this.autoRotationInterval);
+        }
         this.props.openCube();
         this.setState({
             cubeOpened: true
@@ -143,7 +170,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     selectMenu(menu: CubeMenuStates): void {
-        if (this.state.cubeOpened) {
+        if (this.state.cubeOpened && !this.dragInitiated && Date.now() - this.lastDrag > 500) {
             this.props.selectMenu(menu);
             this.setState({rotationInitialState: menu, selectedMenuState: menu});
         }
@@ -154,16 +181,49 @@ class Cube extends React.Component<CubeProps, CubeState> {
             this.props.devIntroCompleted && this.state.selectedMenuState === CubeMenuStates.NONE);
     }
 
+    getCubeAdditionalClasses(): string {
+        let additionalClass = "";
+
+        if (this.state.cubeOpened) {
+            additionalClass = additionalClass.concat(this.props.isCLosing ? " closing" : " opened");
+        } else {
+            additionalClass = additionalClass.concat(" closed");
+        }
+
+        if (Utils.isNotNull(this.state.cubeRotationClass)) {
+            additionalClass = additionalClass.concat(` ${this.state.cubeRotationClass}`);
+        }
+
+        if (Utils.isNotNull(this.state.rotationInitialState)) {
+            additionalClass = additionalClass.concat(` ${this.state.rotationInitialState}`);
+        }
+
+        if (Utils.isNotNull(this.props.isLoading) && !this.props.isLoading) {
+            additionalClass = additionalClass.concat(" loaded");
+        }
+
+        return additionalClass;
+    }
+
+    getCubeStyle(): React.CSSProperties {
+        if (this.dragInitiated) {
+            return {
+                transform: `scale(1) rotateX(calc(37deg - ${this.state.dragY}deg)) rotateY(calc(-45deg - ${this.state.dragX}deg)) rotateZ(0deg)`
+            }
+        } else {
+            return {};
+        }
+    }
+
+
     render(){
         return (
             <div className="loading-element-wrapper">
                 {this.shouldDisplayRotationHint() && <div className={`rotate-hint-icon`}/>}
                 <Flower isClosing={this.props.isCLosing} flowerVisible={this.state.cubeOpened} />
                 <div draggable={this.state.cubeOpened}
-                     style={this.dragInitiated ? {
-                         transform: `scale(1) rotateX(calc(37deg - ${this.state.dragY}deg)) rotateY(calc(-45deg - ${this.state.dragX}deg)) rotateZ(0deg)`
-                } : null}
-                     className={`cube-wrapper  ${this.state.cubeOpened ? (this.props.isCLosing ? "closing" : "opened") : "closed"} ${this.state.cubeRotationClass} ${this.state.rotationInitialState} ${this.props.isLoading ? "" : "loaded"}`}
+                     style={this.getCubeStyle()}
+                     className={`cube-wrapper ${this.getCubeAdditionalClasses()}`}
                      onClick={this.openCube.bind(this)}>
                     {this.state.cubeCoverVisible && <CubeCover />}
                     <>

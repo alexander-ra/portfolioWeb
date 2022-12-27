@@ -2,19 +2,22 @@
 
 .device-rotator-wrapper {
     height: 4em;
-    color: rgb($button-text-color);
     font-size: 3em;
     position: absolute;
     z-index: 2;
     cursor: pointer;
 
+    .icon {
+        background-color: rgb($button-text-color);
+    }
+
     .layout-mobile-landscape & {
         top: calc(50% - 0.5em);
-        left: -1.125em;
+        left: -1.1em;
     }
 
     .layout-mobile-portrait & {
-        top: -1em;
+        top: -1.1em;
         left: calc(50% - 0.5em);
     }
 
@@ -24,7 +27,7 @@
     }
 
     .layout-tablet-portrait & {
-        top: -1.125em;
+        top: -1.25em;
         left: calc(50% - 0.5em);
     }
 }

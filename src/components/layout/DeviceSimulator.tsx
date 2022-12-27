@@ -24,14 +24,16 @@ class DeviceSimulator extends React.Component<DeviceSimulatorProps, DeviceSimula
         this.state = {
             isLoading: true
         }
+    }
 
+    componentDidMount() {
         BrowserUtils.loadResources(ProvisionUtils.deviceSimulatorResources())
-        .then(() => {
-            this.setState({isLoading: false});
-        })
-        .catch(() => {
-            console.error('Error loading resources');
-        });
+            .then(() => {
+                this.setState({isLoading: false});
+            })
+            .catch(() => {
+                console.error('Error loading resources');
+            });
     }
 
     setStateOfSimulation(layoutType: LayoutType): void {

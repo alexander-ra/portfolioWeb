@@ -51,7 +51,6 @@ export default function windowReducer(state = initialState, action: any): Window
             }
         }
         case SET_THEME: {
-            console.log('asd', action.payload.theme);
             return {
                 ...state,
                 theme: action.payload.theme
