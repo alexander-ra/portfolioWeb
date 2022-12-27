@@ -7,7 +7,7 @@
     cursor: default;
   }
 
-  .line-1{
+  .typewriter-section{
     height: 1.5em;
     position: relative;
     top: 50%;
@@ -19,6 +19,15 @@
 
     &.transparent {
       color: transparent;
+    }
+
+    &.bold {
+      color: rgb($accent-primary);
+      font-weight: bold;
+
+        &.transparent {
+            color: transparent;
+        }
     }
   }
 

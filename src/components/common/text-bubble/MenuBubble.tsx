@@ -12,7 +12,6 @@ import Icon from '../icon/Icon';
 interface MenuBubbleProps {
     textBubbleType: CubeMenuStates;
     visible: boolean;
-    icon: IconType;
     changePage?: any;
 }
 
@@ -38,7 +37,7 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
             } else {
                 setTimeout(() => {
                     this.setDescription(this.props.textBubbleType);
-                }, 500)
+                }, 1000)
             }
         }
     }
@@ -74,12 +73,25 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
         this.props.changePage(pageToChange);
     }
 
+    private getIcon(): IconType {
+        switch (this.state.menuDescription) {
+            case LandingDescriptions.CHESS_DEMO:
+                return IconType.faChess;
+            case LandingDescriptions.PAST_EXPERIENCE:
+                return IconType.faSuitcase;
+            case LandingDescriptions.CLIENT_APPROACH:
+                return IconType.faHandshake;
+        }
+
+        return IconType.faHandshake;
+    }
+
     render(){
         return (
             <div className={`menu-bubble-wrapper bubble-wrapper ${!this.props.visible ? "disappear" : ""}`}>
                 <div className={"avatar-wrapper"}>
                     <div className={`avatar-icon-wrapper`}>
-                        <Icon className={"avatar-icon"} icon={this.props.icon}/>
+                        <Icon className={"avatar-icon"} icon={this.getIcon()}/>
                     </div>
                     <div className={"avatar-name"}>
                         {this.props.textBubbleType === CubeMenuStates.TOP_LEFT && <span>Client Approach</span>}

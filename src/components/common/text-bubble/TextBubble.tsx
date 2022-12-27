@@ -39,7 +39,8 @@ class TextBubble extends React.Component<TextBubbleProps, TextBubbleState> {
                             textToType={this.props.textToType}
                             onCompleted={() => {this.props.completeDevIntro();}}
                             skipTyping={this.props.skipTyping}
-                        />
+                            boldLettersStart={this.props.textToType.indexOf("Give the cube")}
+                            boldLettersEnd={this.props.textToType.indexOf(", or click")}/>
                     }
                 </div>
                 <div className={"avatar-wrapper"}>

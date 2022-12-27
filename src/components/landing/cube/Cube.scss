@@ -26,7 +26,7 @@
     }
 
     .vw-portrait & {
-        font-size: css-min(calc(1.66 * var(--calc-vmax)), calc(3.75 * var(--calc-vmin)));
+        font-size: css-min(calc(1.25 * var(--calc-vmax)), calc(3.75 * var(--calc-vmin)));
         flex: 0 0 33%;
     }
 }

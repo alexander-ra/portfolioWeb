@@ -45,19 +45,6 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
             });
     }
 
-    private getIcon(): IconType {
-        switch (this.props.selectedMenu) {
-            case CubeMenuStates.BOTTOM:
-                return IconType.faChess;
-            case CubeMenuStates.TOP_RIGHT:
-                return IconType.faSuitcase;
-            case CubeMenuStates.TOP_LEFT:
-                return IconType.faHandshake;
-        }
-
-        return IconType.faHandshake;
-    }
-
     render(){
         return (<div className={`landing-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
             <TextBubble visible={this.props.cubeOpened && !this.props.isClosing}
@@ -65,8 +52,7 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
                         skipTyping={this.props.landingPageLeft}/>
             <LandingCube isCLosing={this.props.isClosing} isLoading={this.state.isLoading}/>
             <MenuBubble textBubbleType={this.props.selectedMenu}
-                        visible={this.props.selectedMenu !== CubeMenuStates.NONE && !this.props.isClosing}
-                        icon={this.getIcon()}/>
+                        visible={this.props.selectedMenu !== CubeMenuStates.NONE && !this.props.isClosing}/>
         </div>)
     }
 }
