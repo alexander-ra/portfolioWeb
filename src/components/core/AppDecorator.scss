@@ -36,6 +36,10 @@ body {
     height: 100%;
     padding: 1em;
     z-index: -1;
+
+    .vw-mobile & {
+        display: none;
+    }
 }
 
 .app-decorator:before {

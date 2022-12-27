@@ -1,6 +1,7 @@
 import {CubeMenuStates} from "../models/landing/CubeMenuStates";
 import {Position} from "../models/common/Position";
 import Cube, {CubeRotationState} from "../components/landing/cube/Cube";
+import BrowserUtils from "./BrowserUtils";
 
 export class CubeRotationUtils {
     private static readonly CUBE_SIDE_ROTATION_DEG = 50;
@@ -8,7 +9,8 @@ export class CubeRotationUtils {
     private static readonly SECTION_FREE_RANGE_DEG = 20;
     private static readonly SECTION_VERTICAL_OFFSET_DEG= 8;
     // How fast the cube is rotated by dragging. Value less than 1 is not commented.
-    private static readonly ROTATION_SENSITIVITY= 2;
+    private static readonly ROTATION_SENSITIVITY_DESKTOP = 2;
+    private static readonly ROTATION_SENSITIVITY_MOBILE = 3;
 
     public static initializeDragCursor(event: DragEvent): Position {
         this.removeDragGhosting(event);
@@ -76,11 +78,12 @@ export class CubeRotationUtils {
 
     static getActualRotationOffset(dragStartingPos: Position, dragCurrentPos: Position, offsectCorrectionFromSection: Position): Position {
         const smallerDimension = this.getSmallerDimension();
+        const sesnsitivity = BrowserUtils.isMobile() ? this.ROTATION_SENSITIVITY_MOBILE : this.ROTATION_SENSITIVITY_DESKTOP;
         let horizontalDeg = this.validateMaxDegRotation(
-            Math.round((dragStartingPos.x - dragCurrentPos.x) / (smallerDimension / (2 * this.ROTATION_SENSITIVITY)) * 50) + offsectCorrectionFromSection.x);
+            Math.round((dragStartingPos.x - dragCurrentPos.x) / (smallerDimension / (2 * sesnsitivity)) * 50) + offsectCorrectionFromSection.x);
 
         let verticalDeg = this.validateMaxDegRotation(
-            Math.round((dragCurrentPos.y - dragStartingPos.y) / (smallerDimension / (2 * this.ROTATION_SENSITIVITY)) * 50) + offsectCorrectionFromSection.y);
+            Math.round((dragCurrentPos.y - dragStartingPos.y) / (smallerDimension / (2 * sesnsitivity)) * 50) + offsectCorrectionFromSection.y);
 
         horizontalDeg = horizontalDeg - horizontalDeg % 2;
         verticalDeg = verticalDeg - verticalDeg % 2;

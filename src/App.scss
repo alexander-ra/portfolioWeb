@@ -30,7 +30,7 @@ body {
   height: 100%;
   font-size: calc( 2 * var(--calc-vmin));
   transition: background-image 1s linear;
-
+  position: relative;
   &.vw-portrait {
     font-size: calc( 2.25 * var(--calc-vmin));
   }
@@ -38,7 +38,6 @@ body {
 
 html {
   font-size: var(--calc-vmin);
-  overflow: hidden;
 }
 img{
   width: 100%;
