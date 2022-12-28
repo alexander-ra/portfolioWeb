@@ -40,7 +40,7 @@ class Header extends React.Component<HeaderProps> {
                         <Navigation />
                     </Suspense>
                 }
-                {this.props.currentPage !== Page.LANDING && this.props.uiOrientation === UIOrientation.LANDSCAPE &&
+                {this.props.currentPage !== Page.LANDING &&
                     <Suspense>
                         <BackButton />
                     </Suspense>

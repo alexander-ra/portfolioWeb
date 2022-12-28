@@ -13,12 +13,14 @@ import AppStorage, {StorageArrayKey, StorageKey} from "../../utils/AppStorage";
 import Icon from '../common/icon/Icon';
 import {ProvisionUtils} from "../../utils/ProvisionUtils";
 import BrowserUtils from "../../utils/BrowserUtils";
+import { UIOrientation } from '../core/UIOrientation';
 
 interface ContentPageProps {
     isClosing: boolean;
     sections: Section[];
     changePage: any;
     currentPage: Page;
+    uiOrientation: UIOrientation;
 }
 
 enum RotatingDirection {
@@ -347,7 +349,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                     onClick={() => { this.clickSection(index); }} key={section.menu.toString()}>
                    <div className={`menu-icon-wrapper circle-rot${this.sectionIconDegrees[index]}deg`}>
                        <Icon className={"menu-icon"}  icon={section.icon}></Icon>
-                       {!isVisited && !BrowserUtils.isMobile() && <div className={"icon-new"}>New*</div>}
+                       {!isVisited && this.props.uiOrientation === UIOrientation.LANDSCAPE && <div className={"icon-new"}>New*</div>}
                    </div>
                </div>
            )
@@ -414,11 +416,13 @@ export default connect(
     (state: any, ownProps) => {
         const { cubeOpened, selectedMenu } = state.cubesReducer;
         const { currentPage } = state.stagesReducer;
+        const { uiOrientation } = state.windowReducer;
         return {
             ...ownProps,
             selectedMenu,
             cubeOpened,
             currentPage,
+            uiOrientation,
             sections: currentPage === Page.CLIENT_APPROACH ? ProvisionUtils.getClientApproachSections() : ProvisionUtils.getPastExperienceSections()
         }
     }

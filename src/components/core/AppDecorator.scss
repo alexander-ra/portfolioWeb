@@ -37,7 +37,7 @@ body {
     padding: 1em;
     z-index: -1;
 
-    .vw-mobile & {
+    .vw-mobile-real & {
         display: none;
     }
 }

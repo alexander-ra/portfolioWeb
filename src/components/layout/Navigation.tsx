@@ -69,18 +69,25 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                 !this.state.isLoading &&
                 <div className={`header-wrapper`}>
                     <div className={`navigation-wrapper`}>
-                        <div className={`navigation-item`} onClick={this.toggleNavigationItems} onMouseEnter={
-                            () => {
+                        <div className={`navigation-item`}
+                             onClick={this.toggleNavigationItems}
+                             onMouseEnter={() => {
                                 this.setState({
                                     navigationItemsShown: true,
                                     contactsItemsShown: false
                                 })
-                            }
-                        }>
+                            }}
+                             onBlur={() => {
+                                 console.log('ade')
+                                this.setState({
+                                    navigationItemsShown: false
+                                })
+                             }}
+                        >
                             <Icon className={"navigation-icon"} icon={IconType.faCompass} />
                             <span className={"navigation-label"}>Menus</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
-                            {this.state.navigationItemsShown && <NavigationSubMenu></NavigationSubMenu>}
+                            {this.state.navigationItemsShown && <NavigationSubMenu />}
                         </div>
                         <div className={`navigation-item`} onClick={this.toggleContactsItems} onMouseEnter={
                             () => {
@@ -93,7 +100,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                             <Icon className={"navigation-icon"} icon={IconType.faAddressCard} />
                             <span className={"navigation-label"}>Contact Me</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
-                            {this.state.contactsItemsShown && <ContactsSubMenu></ContactsSubMenu>}
+                            {this.state.contactsItemsShown && <ContactsSubMenu />}
                         </div>
                         <div className={`navigation-item`}>
                             <Icon className={"navigation-icon"} icon={IconType.faGithubAlt} />

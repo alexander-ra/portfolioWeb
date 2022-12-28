@@ -12,6 +12,8 @@
 
     .vw-portrait & {
         top: $header-height * 2.5;
+        opacity: 1;
+        color: rgb($button-text-color);
     }
 
     &:hover {
@@ -35,6 +37,13 @@
         width: 2em;
         animation: transparentAppear .5s .5s forwards;
         background-color: rgba($button-text-color, .5);
+
+        .vw-portrait & {
+            height: 6em;
+            width: 3em;
+            background-color: rgb($button-text-color);
+            margin-left: 1em;
+        }
     }
 }
 

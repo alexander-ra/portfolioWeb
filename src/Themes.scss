@@ -28,8 +28,7 @@ body {
   --common-border-color: var(--main-primary);
   --header-color: var(--contrast-primary);
   --section-content-color: rgba(var(--contrast-primary), 0.75);
-  --section-bg-color: var(--contrast-primary);
-  --section-icon-color: var(--main-primary);
+  --wheel-border-color: var(--light-yellow-rgb);
 
 
   &.dark-theme {
@@ -44,8 +43,9 @@ body {
     --common-border-color: var(--purple-rgb);
     --header-color: var(--black-purple-rgb);
     --section-content-color: rgba(var(--black-purple-rgb), .5);
-    --section-bg-color: var(--dark-purple-rgb);
-    --section-icon-color: var(--light-yellow-rgb);
+    //--section-bg-color: var(--dark-purple-rgb);
+    //--section-icon-color: var(--light-yellow-rgb);
+    --wheel-border-color: var(--dark-purple-rgb);
   }
 
   // Constant variables, regardless of theme
@@ -64,5 +64,6 @@ body {
   --chess-piece-black: var(--dark-purple-rgb);
   --device-frame-colors-start: var(--dark-orange-rgb);
   --device-frame-colors-end: var(--orange-rgb);
-  --wheel-border-color: var(--light-yellow-rgb);
+  --section-bg-color: var(--light-yellow-rgb);
+  --section-icon-color: var(--dark-purple-rgb);
 }

@@ -1,6 +1,3 @@
-import {IconType} from "../components/common/icon/IconType";
-import { Section } from "../components/contentPage/ContentPage";
-import {CircleMenuStates} from "../models/landing/CircleMenuStates";
 import {ThemeType} from "../components/core/ThemeType";
 import store from "../store/store";
 import {setUiOrientation, setWindowSize} from "../reducers/window/windowAction";
@@ -90,9 +87,14 @@ export class WindowUtils {
             this.addToClassList("vw-no-touch");
         }
 
-        if (BrowserUtils.isMobile()) {
+        if (BrowserUtils.isMobile() || layout !== LayoutType.NATIVE) {
+            if (BrowserUtils.isMobile()) {
+                this.addToClassList("vw-mobile-real");
+            }
             this.addToClassList("vw-mobile");
-            document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
+        } else {
+            this.removeFromClassList("vw-mobile-real");
+            this.removeFromClassList("vw-mobile");
         }
     }
 

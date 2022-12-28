@@ -73,7 +73,7 @@ $menu-radius: 6em;
       }
 
       .menu-section {
-        color: rgba($section-icon-color, .75);
+        background-color: rgba($section-icon-color, .75);
       }
     }
   }
@@ -198,12 +198,10 @@ $menu-radius: 6em;
       padding: 1em 1.66em 2.33em 1.66em;
 
       &:hover {
-        color: rgb($section-icon-color);
         cursor: pointer;
       }
 
       &.selected {
-        color: rgb($section-icon-color);
         cursor: grab;
       }
 
@@ -214,6 +212,7 @@ $menu-radius: 6em;
         .menu-icon {
             height: 100%;
             width: 100%;
+            background-color: rgb($section-icon-color)
         }
 
         .icon-new {

@@ -49,9 +49,8 @@ $menu-radius: 6em;
 
       .content-text {
         .vw-portrait & {
-          font-size: 1.25em;
-          margin-top: 2.4em;
-          padding: 1em 1em 3.5em 1em;
+          margin-top: 2.1em;
+          padding: 0.3em 1.2em 3.5em 1.2em;
         }
       }
 
@@ -85,7 +84,7 @@ $menu-radius: 6em;
         .vw-portrait & {
           background-position: center -7.5em;
           bottom: 0;
-          clip-path: circle(82% at 50% 150%);
+          clip-path: circle(100% at 50% 200%);
         }
       }
     }
@@ -121,8 +120,8 @@ $menu-radius: 6em;
       }
 
       .vw-portrait & {
-        background-position: center -26.5em;
-        clip-path: circle(82% at 50% -50%)
+        background-position: center -32em;
+        clip-path: circle(100% at 50% -100%)
       }
     }
 
@@ -141,8 +140,8 @@ $menu-radius: 6em;
 
       .content-text {
         .vw-portrait & {
-          padding: 3em 1em 1em 1em;
-          margin: 6.7em 0 2em 0;
+          padding: 4em 1.2em 0em 1.2em;
+          margin-top: 4.2em;
         }
       }
     }
@@ -245,9 +244,9 @@ $menu-radius: 6em;
       }
 
       .vw-portrait & {
-        font-size: 1em;
+        font-size: 1.25em;
         overflow: scroll;
-        height: calc(100% - 12em);
+        height: calc(100% - 9em);
       }
     }
 
@@ -303,6 +302,7 @@ $menu-radius: 6em;
         position: absolute;
         width: 100%;
         height: 13em;
+        background-color: rgb($contrast-primary);
       }
     }
 
@@ -328,6 +328,7 @@ $menu-radius: 6em;
       .vw-portrait & {
         background-image: url("../../../public/resources/svgAssets/crystalSelected.svg");
         background-size: cover;
+        background-color: rgb($contrast-primary);
         color: rgb($button-text-color);
         text-align: center;
         width: 100%;
