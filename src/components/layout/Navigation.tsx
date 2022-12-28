@@ -17,8 +17,13 @@ interface NavigationProps {
 
 interface NavigationState {
     isLoading: boolean;
-    navigationItemsShown: boolean;
-    contactsItemsShown: boolean;
+    activeMenu: DropdownMenu;
+}
+
+enum DropdownMenu {
+    NONE,
+    NAVIGATION,
+    CONTACTS
 }
 
 class Navigation extends React.Component<NavigationProps, NavigationState> {
@@ -26,8 +31,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         super(props);
         this.state = {
             isLoading: true,
-            navigationItemsShown: false,
-            contactsItemsShown: false
+            activeMenu: DropdownMenu.NONE
         }
     }
 
@@ -47,19 +51,12 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
         store.dispatch(setTheme(newTheme));
     }
 
-    private toggleNavigationItems = () => {
-        this.setState({navigationItemsShown: !this.state.navigationItemsShown});
-
-        if (this.state.contactsItemsShown) {
-            this.setState({contactsItemsShown: false});
-        }
-    }
-
-    private toggleContactsItems = () => {
-        this.setState({contactsItemsShown: !this.state.contactsItemsShown});
-
-        if (this.state.navigationItemsShown) {
-            this.setState({navigationItemsShown: false});
+    private toggleNavigationMenu = (menu: DropdownMenu) => {
+        console.log('toggleNavigationMenu', menu);
+        if (this.state.activeMenu === menu) {
+            this.setState({activeMenu: DropdownMenu.NONE});
+        } else {
+            this.setState({activeMenu: menu});
         }
     }
 
@@ -70,44 +67,41 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                 <div className={`header-wrapper`}>
                     <div className={`navigation-wrapper`}>
                         <div className={`navigation-item`}
-                             onClick={this.toggleNavigationItems}
+                             onClick={this.toggleNavigationMenu.bind(this, DropdownMenu.NAVIGATION)}
                              onMouseEnter={() => {
-                                this.setState({
-                                    navigationItemsShown: true,
-                                    contactsItemsShown: false
-                                })
+                                this.toggleNavigationMenu(DropdownMenu.NAVIGATION);
                             }}
-                             onBlur={() => {
-                                 console.log('ade')
-                                this.setState({
-                                    navigationItemsShown: false
-                                })
-                             }}
+                            onMouseLeave={() => {
+                            this.toggleNavigationMenu(DropdownMenu.NONE);
+                            }}
                         >
                             <Icon className={"navigation-icon"} icon={IconType.faCompass} />
                             <span className={"navigation-label"}>Menus</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
-                            {this.state.navigationItemsShown && <NavigationSubMenu />}
+                            {this.state.activeMenu === DropdownMenu.NAVIGATION && <NavigationSubMenu />}
                         </div>
-                        <div className={`navigation-item`} onClick={this.toggleContactsItems} onMouseEnter={
-                            () => {
-                                this.setState({
-                                    navigationItemsShown: false,
-                                    contactsItemsShown: true
-                                })
-                            }
-                        }>
+                        <div className={`navigation-item`} onClick={this.toggleNavigationMenu.bind(this, DropdownMenu.CONTACTS)}
+                             onMouseEnter={() => {
+                                this.toggleNavigationMenu(DropdownMenu.CONTACTS);
+                            }}
+                            onMouseLeave={() => {
+                            this.toggleNavigationMenu(DropdownMenu.NONE);
+                            }}
+                        >
                             <Icon className={"navigation-icon"} icon={IconType.faAddressCard} />
                             <span className={"navigation-label"}>Contact Me</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
-                            {this.state.contactsItemsShown && <ContactsSubMenu />}
+                            {this.state.activeMenu === DropdownMenu.CONTACTS && <ContactsSubMenu />}
                         </div>
-                        <div className={`navigation-item`}>
+                        <div className={`navigation-item`} onClick={this.toggleNavigationMenu.bind(this, DropdownMenu.NONE)}>
                             <Icon className={"navigation-icon"} icon={IconType.faGithubAlt} />
                             <span className={"navigation-label"}>GitHub</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faLink} />
                         </div>
-                        <div className={`navigation-item`} onClick={this.changeTheme}>
+                        <div className={`navigation-item`} onClick={() => {
+                            this.changeTheme();
+                            this.toggleNavigationMenu(DropdownMenu.NONE);
+                        }}>
                             <Icon className={"navigation-icon"} icon={IconType.faPalette} />
                             <span className={"navigation-label"}>Theme</span>
                             {this.props.theme === ThemeType.DARK &&
