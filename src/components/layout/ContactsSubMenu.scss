@@ -55,6 +55,14 @@
             .contact-icon {
                 margin-right: .2em;
             }
+
+            a {
+                color: rgb($main-primary);
+            }
+
+            a:visited {
+                color: rgb($main-secondary);
+            }
         }
     }
 
