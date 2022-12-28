@@ -49,7 +49,8 @@ export class CircleRotationUtils {
             const rotationOffset: number = this.getActualRotationOffset(dragStartingPos, dragCurrentPos, initialCircleOffsetDegrees);
 
             return {
-                actualCircleOffsetDegrees: rotationOffset
+                actualCircleOffsetDegrees: rotationOffset,
+                dragInitiated: true,
             };
         }
         return {};

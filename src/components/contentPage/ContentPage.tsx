@@ -141,7 +141,11 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 
     dragEnd = (event: any) => {
         console.log('dragEnd');
-        if (Utils.isArrayNotEmpty(this.sectionDegrees)) {
+        if (this.state.initialCircleOffsetDegrees === this.state.actualCircleOffsetDegrees) {
+            this.setState({
+                dragInitiated: false
+            });
+        } else if (Utils.isArrayNotEmpty(this.sectionDegrees)) {
             const potentialOffsetDegrees = 360 - this.sectionDegrees[this.state.selectedMenuIndex];
             const rotatingDirection = this.getRotatingDirectionFromDegrees(this.state.actualCircleOffsetDegrees, potentialOffsetDegrees);
             if (rotatingDirection !== RotatingDirection.NONE) {
@@ -291,7 +295,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     clickSection(index: number) {
-        if (!this.state.isSlowRotation) {
+        if (!this.state.isSlowRotation && !BrowserUtils.isMobile()) {
             const rotatingDirection = this.getRotatingDirectionFromIndex(this.state.selectedMenuIndex, index);
             if (rotatingDirection !== RotatingDirection.NONE) {
                 const potentialOffsetDegrees = 360 - this.sectionDegrees[index];
@@ -385,11 +389,11 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             this.calculateDegrees();
         }
         return (
-        <div draggable={!this.state.isSlowRotation} className={`content-page-wrapper ${this.getContentPageAdditionalClasses()}`}>
+        <div className={`content-page-wrapper ${this.getContentPageAdditionalClasses()}`}>
             <div className={"indicator"}>
                 <div className={"indicator-arrow-point"} />
             </div>
-            <div className={`content-outer-circle circle-rot${this.state.actualCircleOffsetDegrees}deg`} ref={this.wheelRef}>
+            <div draggable={!this.state.isSlowRotation} className={`content-outer-circle circle-rot${this.state.actualCircleOffsetDegrees}deg`} ref={this.wheelRef}>
                 {this.renderSections()}
             </div>
             <div className={`content-outer-circle-sections circle-rot${this.calculateSectionEdgeDegrees(this.state.actualCircleOffsetDegrees)}deg`}>

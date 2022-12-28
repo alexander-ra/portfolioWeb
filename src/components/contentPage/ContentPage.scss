@@ -71,10 +71,6 @@ $menu-radius: 6em;
       .vw-portrait & {
         font-size: .95em;
       }
-
-      .menu-section {
-        background-color: rgba($section-icon-color, .75);
-      }
     }
   }
 
@@ -172,14 +168,12 @@ $menu-radius: 6em;
     .vw-mobile & {
       .menu-section {
         box-shadow: inset 0 0 0 0.2em rgb($section-icon-color);
-        color: rgb($section-icon-color);
       }
     }
 
     &:hover {
       .menu-section {
         box-shadow: inset 0 0 0 0.1em rgb($section-icon-color);
-        color: rgba($section-icon-color, .75);
       }
     }
 
@@ -188,7 +182,6 @@ $menu-radius: 6em;
       transform-origin: ($menu-radius / 2) 15em;
       top: -3em;
       left: calc($outer-offset - ($menu-radius / 2));
-      color: rgba($section-icon-color, .66);
       background-color: rgb($section-bg-color);
       position: absolute;
       border-radius: 50% 50% 0 0;
@@ -224,7 +217,6 @@ $menu-radius: 6em;
           height: 100%;
           width: 100%;
           font-size: .75em;
-          color: rgb($accent-primary);
           text-align: center;
         }
       }
