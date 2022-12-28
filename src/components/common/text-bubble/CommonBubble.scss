@@ -10,7 +10,21 @@
   margin: 0 .75em;
   z-index: 3;
 
-  .link-text {
+  #contact-card {
+    height: 10em;
+    width: 25em;
+    display: flex;
+    position: fixed;
+    z-index: 5;
+    border-radius: 1em;
+    box-shadow: 0 0 1em rgb($shadow);
+
+    .vw-portrait & {
+      font-size: 1.25em;
+    }
+  }
+
+  #link-text {
     color: rgb($accent-primary);
     text-decoration: underline;
     cursor: pointer;

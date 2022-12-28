@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import './ContactsSubMenu.scss';
 import store from "../../store/store";
 import Icon from "../common/icon/Icon";
 import { IconType } from '../common/icon/IconType';
 
 interface ExpandedMenuProps {
+    isCard?: boolean;
+    additionalStyle?: CSSProperties;
 }
 
 interface ExpandedMenuState {
@@ -14,7 +16,9 @@ class NavigationSubMenu extends React.Component<ExpandedMenuProps, ExpandedMenuS
 
     render(){
         return (
-            <div className={"contact-expanded-menu expanded-menu"}>
+            <div className={"contact-expanded-menu expanded-menu"}
+                 id={this.props.isCard ? "contact-card" : ""}
+                 style={this.props.additionalStyle}>
                 <div className={"contact-left"}>
                     <div className={"avatar-icon"} />
                     <div className={"names"}>Alexander Andreev</div>

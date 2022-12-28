@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import './CommonBubble.scss';
 import {LandingDescriptions} from '../../../labels/LandingLabels';
 import Typewriter from '../Typewriter';
@@ -8,6 +8,7 @@ import {changePage} from "../../../reducers/stages/stagesAction";
 import { Page } from '../../../models/common/Page';
 import { IconType } from '../icon/IconType';
 import Icon from '../icon/Icon';
+import ContactsSubMenu from "../../layout/ContactsSubMenu";
 
 interface MenuBubbleProps {
     textBubbleType: CubeMenuStates;
@@ -17,6 +18,7 @@ interface MenuBubbleProps {
 
 interface MenuBubbleState {
     menuDescription: string;
+    contactCardStyle: CSSProperties;
 }
 
 
@@ -26,14 +28,79 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
         super(props);
 
         this.state = {
-            menuDescription: ""
+            menuDescription: "",
+            contactCardStyle: {
+                visibility: "hidden"
+            }
         }
+    }
+
+    componentDidMount() {
+        document.onclick = (event: any) => {
+            if (event.target.id === "link-text") {
+                if (this.state.menuDescription === LandingDescriptions.CHESS_DEMO) {
+                    window.open("https://www.google.com/", '_blank').focus();
+                }
+
+                if (this.state.menuDescription === LandingDescriptions.PAST_EXPERIENCE) {
+                    fetch('http://192.168.8.30:3000/static/media/avatar-jpeg.fbeb0d852a7c4716f705.jpg')
+                        .then(resp => resp.blob())
+                        .then(blob => {
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.style.display = 'none';
+                            a.href = url;
+                            // the filename you want
+                            a.download = 'image.jpg';
+                            document.body.appendChild(a);
+                            a.click();
+                            window.URL.revokeObjectURL(url);
+                        })
+                        .catch(() => alert('oh no!'));
+                }
+            }
+        }
+
+        document.onmouseover = (event: any) => {
+            const el = document.getElementById("contact-card");
+            if (event.target.id === "link-text") {
+                if (this.state.menuDescription === LandingDescriptions.CLIENT_APPROACH) {
+                    const top = event.target.getBoundingClientRect().bottom - el.getBoundingClientRect().height - 10;
+                    let left = event.clientX - el.getBoundingClientRect().width / 2;
+
+                    if (left + el.getBoundingClientRect().width > window.innerWidth) {
+                        left = window.innerWidth - el.getBoundingClientRect().width;
+                    } else if (left < 0) {
+                        left = 0;
+                    }
+
+                    this.setState({
+                        contactCardStyle: {
+                            top: `${top}px`,
+                            left: `${left}px`
+                        }
+                    })
+
+                }
+            } else if (!el.contains(event.target)) {
+                this.setState({
+                    contactCardStyle: {
+                        visibility: "hidden"
+                    }
+                })
+            }
+        }
+    }
+
+    componentWillUnmount() {
+        document.onclick = null;
     }
 
     componentDidUpdate(prevProps: MenuBubbleProps) {
         if (this.props.textBubbleType !== prevProps.textBubbleType) {
             if (this.props.textBubbleType !== CubeMenuStates.NONE) {
                 this.setDescription(this.props.textBubbleType);
+
             } else {
                 setTimeout(() => {
                     this.setDescription(this.props.textBubbleType);
@@ -106,6 +173,7 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
                     </div>
                 </div>
                 <button className={"go-page"} onClick={this.changePage.bind(this)}>Launch Page</button>
+                <ContactsSubMenu isCard={true} additionalStyle={this.state.contactCardStyle}/>
             </div>
         )
     }
