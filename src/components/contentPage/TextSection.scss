@@ -24,7 +24,7 @@ $menu-radius: 6em;
   .vw-portrait & {
     height: calc(50% - 6em);
     max-height: 45em;
-    width: 25em;
+    width: 28em;
     border-radius: 1em;
     overflow: hidden;
   }
@@ -49,6 +49,7 @@ $menu-radius: 6em;
 
       .content-text {
         .vw-portrait & {
+          font-size: 1.25em;
           margin-top: 2.4em;
           padding: 1em 1em 3.5em 1em;
         }

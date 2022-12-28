@@ -172,6 +172,10 @@ class Cube extends React.Component<CubeProps, CubeState> {
     removeCubeRotationListeners() {
         window.removeEventListener("dragstart", this.dragStart);
         window.removeEventListener("touchstart", this.dragStartTouch);
+        document.ontouchmove = null;
+        document.ontouchend = null;
+        window.onmousemove = null;
+        window.onmouseup = null;
     }
 
     openCube(): void {

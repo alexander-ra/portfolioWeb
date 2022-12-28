@@ -1,7 +1,7 @@
 @import "../../App";
 
 .header-wrapper {
-    background-color: rgba($header-color, 0.5);
+    background-color: rgb($header-color);
     height: $header-height;
     color: rgb($main-primary);
     z-index: 3;

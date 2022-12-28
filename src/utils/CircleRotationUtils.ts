@@ -14,8 +14,8 @@ export class CircleRotationUtils {
     }
 
     public static initializeDragTouch(event: TouchEvent): Position {
-        const posX: number = Math.round(event.touches[0].screenX);
-        const posY: number = Math.round(event.touches[0].screenY);
+        const posX: number = Math.round(event.touches[0].clientX);
+        const posY: number = Math.round(event.touches[0].clientY);
         return {
             x: posX,
             y: posY
@@ -34,8 +34,8 @@ export class CircleRotationUtils {
     }
 
     public static dragRotateTouch(event: TouchEvent, dragStartPos: Position, circleOffsetDegrees: number): ContentPageState {
-        const posX: number = Math.round(event.touches[0].screenX);
-        const posY: number = Math.round(event.touches[0].screenY);
+        const posX: number = Math.round(event.touches[0].clientX);
+        const posY: number = Math.round(event.touches[0].clientY);
         const dragCurrentPos: Position = {
             x: posX,
             y: posY

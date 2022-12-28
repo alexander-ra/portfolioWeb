@@ -50,13 +50,14 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     private slowRotationTimeout: any;
     private doingFastRotation: boolean = false;
     private lastOffsetDegrees = null;
+    private wheelRef: React.RefObject<HTMLDivElement>;
 
     private readonly MIN_TIME_VISITED = 5000;
     private visitedTimeout: NodeJS.Timeout = null;
 
     constructor(props: ContentPageProps) {
-        console.log('ContentPage constructor');
         super(props);
+        this.wheelRef = React.createRef();
         this.state = {
             actualCircleOffsetDegrees: 0,
             initialCircleOffsetDegrees: 0,
@@ -108,7 +109,11 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 
     dragStart = (event: any) => {
         console.log('dragStart', event.target);
-        this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
+        if (BrowserUtils.isMobile()) {
+            this.dragStartingPos = CircleRotationUtils.initializeDragTouch(event);
+        } else {
+            this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
+        }
         this.setState({
             initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees,
             dragInitiated: true,
@@ -118,7 +123,12 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 
     dragMove = (event: any) => {
         console.log("move");
-        const newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
+        let newState =  null;
+        if (BrowserUtils.isMobile() && this.state.dragInitiated) {
+            newState = CircleRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
+        } else {
+            newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
+        }
         if (Utils.isNotNull(newState) && newState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
             this.setState({
                 ...newState,
@@ -173,15 +183,27 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     addCubeRotationListeners() {
-        window.addEventListener('dragstart', this.dragStart);
-        window.addEventListener('drag', this.dragMove);
-        window.addEventListener('dragend', this.dragEnd);
+        if (!BrowserUtils.isMobile()) {
+            this.wheelRef.current.addEventListener('dragstart', this.dragStart);
+            this.wheelRef.current.addEventListener('drag', this.dragMove);
+            this.wheelRef.current.addEventListener('dragend', this.dragEnd);
+        } else {
+            this.wheelRef.current.addEventListener('touchstart', this.dragStart);
+            this.wheelRef.current.addEventListener('touchmove', this.dragMove);
+            this.wheelRef.current.addEventListener('touchend', this.dragEnd);
+        }
     }
 
     removeCubeRotationListeners() {
-        window.removeEventListener('dragstart', this.dragStart);
-        window.removeEventListener('drag', this.dragMove);
-        window.removeEventListener('dragend', this.dragEnd);
+        if (!BrowserUtils.isMobile()) {
+            this.wheelRef.current.removeEventListener('dragstart', this.dragStart);
+            this.wheelRef.current.removeEventListener('drag', this.dragMove);
+            this.wheelRef.current.removeEventListener('dragend', this.dragEnd);
+        } else {
+            this.wheelRef.current.removeEventListener('touchstart', this.dragStart);
+            this.wheelRef.current.removeEventListener('touchmove', this.dragMove);
+            this.wheelRef.current.removeEventListener('touchend', this.dragEnd);
+        }
     }
 
     triggerSlowRotation() {
@@ -325,7 +347,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                     onClick={() => { this.clickSection(index); }} key={section.menu.toString()}>
                    <div className={`menu-icon-wrapper circle-rot${this.sectionIconDegrees[index]}deg`}>
                        <Icon className={"menu-icon"}  icon={section.icon}></Icon>
-                       {!isVisited && <div className={"icon-new"}>New*</div>}
+                       {!isVisited && !BrowserUtils.isMobile() && <div className={"icon-new"}>New*</div>}
                    </div>
                </div>
            )
@@ -365,7 +387,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             <div className={"indicator"}>
                 <div className={"indicator-arrow-point"} />
             </div>
-            <div className={`content-outer-circle circle-rot${this.state.actualCircleOffsetDegrees}deg`}>
+            <div className={`content-outer-circle circle-rot${this.state.actualCircleOffsetDegrees}deg`} ref={this.wheelRef}>
                 {this.renderSections()}
             </div>
             <div className={`content-outer-circle-sections circle-rot${this.calculateSectionEdgeDegrees(this.state.actualCircleOffsetDegrees)}deg`}>
