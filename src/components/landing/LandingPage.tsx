@@ -12,6 +12,11 @@ import { ProvisionUtils } from '../../utils/ProvisionUtils';
 import img1 from "../../../public/resources/categoryImages/chess/home.jpg";
 import img2 from "../../../public/resources/categoryImages/client/home.jpg";
 import img3 from "../../../public/resources/categoryImages/experience/home.jpg";
+import {Page} from "../../models/common/Page";
+import {WindowUtils} from "../../utils/WindowUtils";
+import store from "../../store/store";
+import {changePage} from "../../reducers/stages/stagesAction";
+import {openCube} from "../../reducers/cube/cubeAction";
 
 interface LandingCubeProps {
     cubeOpened: boolean;
@@ -39,6 +44,15 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
         BrowserUtils.loadResources(ProvisionUtils.landingResources())
             .then(() => {
                 this.setState({isLoading: false});
+
+                const page: Page = WindowUtils.getPageFromURL();
+                if (page !== Page.LANDING) {
+                    store.dispatch(changePage(page));
+
+                    if (!store.getState().cubesReducer.cubeOpened) {
+                        store.dispatch(openCube());
+                    }
+                }
             })
             .catch(() => {
                 console.error('Error loading resources');
