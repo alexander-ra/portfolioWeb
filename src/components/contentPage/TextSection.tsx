@@ -39,9 +39,7 @@ class TextSection extends React.Component<TextSectionProps> {
     }
 
     componentDidUpdate(prevProps: Readonly<TextSectionProps>, prevState: Readonly<{}>, snapshot?: any) {
-        if (prevProps.data.description !== this.props.data.description ||
-            prevProps.uiOrientation !== this.props.uiOrientation ||
-            prevProps.layoutType !== this.props.layoutType) {
+        if (prevProps.data.description !== this.props.data.description) {
                 if (this.props.uiOrientation === UIOrientation.PORTRAIT) {
                     this.myRef.current.scrollTo(0, 0);
                 } else if (Utils.isNotNull(this.resizeTimeout)) {
@@ -50,6 +48,11 @@ class TextSection extends React.Component<TextSectionProps> {
                         this.updateDimensions();
                     });
                 }
+        }
+
+        if (prevProps.layoutType !== this.props.layoutType || prevProps.uiOrientation !== this.props.uiOrientation) {
+            clearTimeout(this.resizeTimeout);
+            this.updateDimensions();
         }
     }
 
