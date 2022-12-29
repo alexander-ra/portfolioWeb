@@ -9,11 +9,11 @@ import TextSection, {TextSectionPosition} from "./TextSection";
 import {ContentData, MenuContent} from '../../labels/ContentLabels';
 import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
-import AppStorage, {StorageArrayKey, StorageKey} from "../../utils/AppStorage";
+import AppStorage, {StorageArrayKey} from "../../utils/AppStorage";
 import Icon from '../common/icon/Icon';
 import {ProvisionUtils} from "../../utils/ProvisionUtils";
 import BrowserUtils from "../../utils/BrowserUtils";
-import { UIOrientation } from '../core/UIOrientation';
+import {UIOrientation} from '../core/UIOrientation';
 
 interface ContentPageProps {
     sections: Section[];
@@ -380,6 +380,24 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         return classes;
     }
 
+    getPreviousSectionIndex(): number {
+        const num = this.state.selectedMenuIndex - 1;
+        if (num < 0) {
+            return this.props.sections.length - 1;
+        } else {
+            return num;
+        }
+    }
+
+    getNextSectionIndex(): number {
+        const num = this.state.selectedMenuIndex + 1;
+        if (num >= this.props.sections.length) {
+            return 0;
+        } else {
+            return num;
+        }
+    }
+
     render(){
         if (!this.doingFastRotation) {
             this.calculateDegrees();
@@ -404,9 +422,13 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             </div>
             <div className={"text-sections-wrapper"}>
                 <TextSection data={this.state.menuContent.leftContent}
-                             sectionPosition={TextSectionPosition.LEFT}/>
+                             sectionPosition={TextSectionPosition.LEFT}
+                             arrowClickHandler={this.props.uiOrientation === UIOrientation.LANDSCAPE ?
+                                 () => this.clickSection(this.getPreviousSectionIndex()) : null}/>
                 <TextSection data={this.state.menuContent.rightContent}
-                             sectionPosition={TextSectionPosition.RIGHT}/>
+                             sectionPosition={TextSectionPosition.RIGHT}
+                             arrowClickHandler={this.props.uiOrientation === UIOrientation.LANDSCAPE ?
+                                 () => this.clickSection(this.getNextSectionIndex()) : null}/>
             </div>
         </div>)
     }

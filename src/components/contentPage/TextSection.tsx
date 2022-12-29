@@ -18,6 +18,7 @@ interface TextSectionProps {
     windowSize: WindowSize;
     uiOrientation: UIOrientation;
     layoutType: LayoutType;
+    arrowClickHandler: () => void;
 }
 
 
@@ -79,7 +80,7 @@ class TextSection extends React.Component<TextSectionProps> {
                         if (this.currentFontSize > 1) {
                             this.currentFontSize -= 0.1;
                         } else {
-                            this.currentFontSize -= 0.05;
+                            this.currentFontSize -= 0.025;
                         }
                         currElement.style.fontSize = `${this.currentFontSize}rem`;
                         currElement.style.visibility = `hidden`;
@@ -125,8 +126,8 @@ class TextSection extends React.Component<TextSectionProps> {
             <div className={`text-section text-section-${this.props.sectionPosition.toLowerCase()}`}>
                 <div className={"content"}>
                     <div className={"content-title"}>{data.title}</div>
-                    <div className="mask"></div>
-                    <div className="mask-dve"></div>
+                    <div className="outer-text-border" onClick={this.props.arrowClickHandler}></div>
+                    <div className="inner-text-border"></div>
                     <div className={"content-text-wrapper"} ref={this.myRef}>
                         <div className={"content-text"}>
                             {this.getContentDescription(data)}
