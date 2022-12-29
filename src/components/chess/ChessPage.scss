@@ -8,7 +8,7 @@
   font-size: 1em;
 
   .vw-portrait & {
-    font-size: css-min(1.1em, calc(1.5 * var(--calc-vmax)));
+    font-size: css-min(1.215em, calc(1.57 * var(--calc-vmax)));
   }
 
   .game-end {

@@ -21,6 +21,11 @@
     font-weight: bold;
     color: rgb($main-primary);
 
+    .chess-letter {
+      font-size: .66em;
+      font-family: MusticaPro;
+    }
+
     &.chess-letters-top {
       top: 0;
 
@@ -42,9 +47,9 @@
       flex-direction: row;
 
       .chess-letter {
-        width: 4em;
-        height: 2em;
-        line-height: 2em;
+        width: 6em;
+        height: 1.5em;
+        line-height: 1.5em;
         text-align: center;
       }
     }
@@ -53,9 +58,9 @@
       flex-direction: column-reverse;
 
       .chess-letter {
-        width: 2em;
-        height: 4em;
-        line-height: 4em;
+        width: 1.5em;
+        height: 6em;
+        line-height: 6em;
         text-align: center;
       }
     }

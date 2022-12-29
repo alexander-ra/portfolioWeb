@@ -52,21 +52,21 @@
   }
 
   &.player {
-    bottom: calc(50% - 18em);
-    left: calc(50% - 27.5em);
+    bottom: calc(50% - 17em);
+    left: calc(50% - 26.5em);
 
     .vw-portrait & {
-      bottom: calc(50% - 28.5em);
-      left: calc(50% - 18em);
+      bottom: calc(50% - 28em);
+      left: calc(50% - 17em);
     }
   }
   &.opponent {
-    top: calc(50% - 18em);
-    right: calc(50% - 27em);
+    top: calc(50% - 17em);
+    right: calc(50% - 26em);
 
     .vw-portrait & {
-      top: calc(50% - 28.5em);
-      right: calc(50% - 17.5em);
+      top: calc(50% - 28em);
+      right: calc(50% - 16.5em);
     }
   }
 }
