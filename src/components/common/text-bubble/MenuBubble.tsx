@@ -94,6 +94,7 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
 
     componentWillUnmount() {
         document.onclick = null;
+        document.onmouseover = null;
     }
 
     componentDidUpdate(prevProps: MenuBubbleProps) {

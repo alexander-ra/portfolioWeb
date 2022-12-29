@@ -124,8 +124,10 @@ class TextSection extends React.Component<TextSectionProps> {
                     <div className={"content-title"}>{data.title}</div>
                     <div className="mask"></div>
                     <div className="mask-dve"></div>
-                    <div className={"content-text"} ref={this.myRef}>
-                        {this.getContentDescription(data)}
+                    <div className={"content-text-wrapper"} ref={this.myRef}>
+                        <div className={"content-text"}>
+                            {this.getContentDescription(data)}
+                        </div>
                     </div>
                 </div>
             </div>

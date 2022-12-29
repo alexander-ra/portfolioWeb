@@ -8,28 +8,21 @@ import {LayoutType} from "./LayoutType";
 import Utils from "../../utils/Utils";
 import {changePage} from "../../reducers/stages/stagesAction";
 import {WindowUtils} from "../../utils/WindowUtils";
-import { setLayoutType } from '../../reducers/window/windowAction';
+import {setLayoutType} from '../../reducers/window/windowAction';
 import {openCube} from "../../reducers/cube/cubeAction";
+
 const ContentPage = React.lazy(() => import('../contentPage/ContentPage')); // Lazy-loaded
 const ChessPage = React.lazy(() => import('../chess/ChessPage')); // Lazy-loaded
 const LandingPage = React.lazy(() => import('../landing/LandingPage')); // Lazy-loaded
 
 interface ContentManagerProps {
-    pageToChange?: Page;
     theme: ThemeType;
     layoutType: LayoutType;
+    currentPage: Page;
     windowSize: {width: number, height: number};
 }
 
-interface ContentManagerState {
-    actualPage?: Page;
-    closingPage?: Page;
-}
-
-
-class ContentManager extends React.Component<ContentManagerProps, ContentManagerState> {
-    private readonly PAGE_CLOSING_TIME_MS = 0;
-    private readonly NEW_PAGE_DELAY_MS = 0;
+class ContentManager extends React.Component<ContentManagerProps> {
     private readonly resizeListener = (event) => {
         WindowUtils.updateWindowClasses(event.target);
     };
@@ -67,15 +60,6 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
     }
 
     componentDidUpdate(prevProps: Readonly<ContentManagerProps>) {
-        if (prevProps.pageToChange !== this.props.pageToChange) {
-            this.setState({closingPage: prevProps.pageToChange});
-            setTimeout(() => {
-                this.setState({closingPage: undefined});
-            }, this.PAGE_CLOSING_TIME_MS);
-            setTimeout(() => {
-                this.setState({actualPage: this.props.pageToChange});
-            }, this.NEW_PAGE_DELAY_MS);
-        }
         if (prevProps.theme !== this.props.theme) {
             WindowUtils.setTheme(this.props.theme);
         }
@@ -91,34 +75,30 @@ class ContentManager extends React.Component<ContentManagerProps, ContentManager
         }
     }
 
-    displayPage(page: Page): boolean {
-        return this.state.actualPage === page || this.state.closingPage === page;
-    }
-
     render(){
         return (<div className={"main-content-wrapper"} ref={this.mainContentRef}>
             {
-                this.displayPage(Page.LANDING) &&
+                this.props.currentPage === Page.LANDING &&
                 <Suspense>
-                    <LandingPage isClosing={this.state.closingPage === Page.LANDING} />
+                    <LandingPage />
                 </Suspense>
             }
             {
-                this.displayPage(Page.CLIENT_APPROACH) &&
+                this.props.currentPage === Page.CLIENT_APPROACH &&
                 <Suspense>
-                    <ContentPage isClosing={this.state.closingPage === Page.CLIENT_APPROACH} />
+                    <ContentPage />
                 </Suspense>
             }
             {
-                this.displayPage(Page.PAST_EXPERIENCE) &&
+                this.props.currentPage === Page.PAST_EXPERIENCE &&
                 <Suspense>
-                    <ContentPage isClosing={this.state.closingPage === Page.PAST_EXPERIENCE} />
+                    <ContentPage />
                 </Suspense>
             }
             {
-                this.displayPage(Page.CHESS_DEMO) &&
+                this.props.currentPage === Page.CHESS_DEMO &&
                 <Suspense>
-                    <ChessPage isClosing={this.state.closingPage === Page.CHESS_DEMO} />
+                    <ChessPage />
                 </Suspense>
             }
         </div>)
@@ -130,7 +110,7 @@ export default connect((state: any, ownProps) => {
     const { theme, layoutType, windowSize } = state.windowReducer;
     return {
         ...ownProps,
-        pageToChange: currentPage,
+        currentPage,
         theme,
         layoutType,
         windowSize

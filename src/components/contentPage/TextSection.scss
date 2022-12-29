@@ -47,10 +47,10 @@ $menu-radius: 6em;
     .content {
       text-align: right;
 
-      .content-text {
+      .content-text-wrapper {
         .vw-portrait & {
           margin-top: 2.1em;
-          padding: 0.3em 1.2em 3.5em 1.2em;
+          padding: 1em 1.2em 4em 1.2em;
         }
       }
 
@@ -138,10 +138,10 @@ $menu-radius: 6em;
         }
       }
 
-      .content-text {
+      .content-text-wrapper {
         .vw-portrait & {
-          padding: 4em 1.2em 0em 1.2em;
-          margin-top: 4.2em;
+          padding: 4em 1.2em 1em 1.2em;
+          margin-top: 4.7em;
         }
       }
     }
@@ -162,8 +162,9 @@ $menu-radius: 6em;
       width: 100%;
     }
 
-    .content-text {
+    .content-text-wrapper {
       text-align: justify;
+      box-sizing: border-box;
 
       .items-list {
         display: flex;
@@ -246,7 +247,7 @@ $menu-radius: 6em;
       .vw-portrait & {
         font-size: 1.25em;
         overflow: scroll;
-        height: calc(100% - 9em);
+        height: calc(100% - 5.5em);
       }
     }
 

@@ -26,49 +26,7 @@
         }
     }
 
-    &.closing {
-        .wall {
-            opacity: 0;
-            transition-property: transform, opacity;
-            transition-duration: 1s, 0.25s;
-            .wall-content {
-                transition-property: border-radius;
-                transition-duration: 1s;
-                transition-delay: 0s;
-                transition-timing-function: ease-out;
-                border-radius: 50%;
-                box-shadow: 0 0 0 transparent;
-            }
-            .wall-icon {
-                display: none;
-            }
-        }
-        &.BOTTOM {
-            .wall {
-                &.wall-bottom {
-                    opacity: 1;
-                }
-            }
-        }
-
-        &.TOP_LEFT {
-            .wall {
-                &.wall-top-left {
-                    opacity: 1;
-                }
-            }
-        }
-
-        &.TOP_RIGHT {
-            .wall {
-                &.wall-top-right {
-                    opacity: 1;
-                }
-            }
-        }
-    }
-
-    &.loaded:not(.opened):not(.closing) {
+    &.loaded:not(.opened) {
         .wall {
             filter: brightness(1);
             .wall-content {

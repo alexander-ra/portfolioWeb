@@ -16,7 +16,6 @@ interface CubeProps {
     openCube?: any;
     selectMenu?: any;
     devIntroCompleted?: boolean;
-    isCLosing: boolean;
     firstTimeLanding?: boolean;
     isLoading: boolean;
 }
@@ -79,8 +78,6 @@ class Cube extends React.Component<CubeProps, CubeState> {
         if (prevState.selectedMenuState !== this.state.selectedMenuState) {
             console.log("componentDidUpdate", this.state.selectedMenuState);
             this.props.selectMenu(this.state.selectedMenuState);
-        } else if (prevProps.isCLosing !== this.props.isCLosing && this.props.isCLosing) {
-            this.setState({selectedMenuState: CubeMenuStates.NONE});
         }
     }
 
@@ -209,7 +206,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
         let additionalClass = "";
 
         if (this.state.cubeOpened) {
-            additionalClass = additionalClass.concat(this.props.isCLosing ? " closing" : " opened");
+            additionalClass = additionalClass.concat(" opened");
         } else {
             additionalClass = additionalClass.concat(" closed");
         }
@@ -244,7 +241,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
         return (
             <div className="loading-element-wrapper">
                 {this.shouldDisplayRotationHint() && <div className={`rotate-hint-icon`}/>}
-                <Flower isClosing={this.props.isCLosing} flowerVisible={this.state.cubeOpened} />
+                <Flower flowerVisible={this.state.cubeOpened} />
                 <div draggable={this.state.cubeOpened}
                      style={this.getCubeStyle()}
                      className={`cube-wrapper ${this.getCubeAdditionalClasses()}`}

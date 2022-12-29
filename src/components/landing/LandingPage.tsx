@@ -21,7 +21,6 @@ import {openCube} from "../../reducers/cube/cubeAction";
 interface LandingCubeProps {
     cubeOpened: boolean;
     selectedMenu: CubeMenuStates;
-    isClosing: boolean;
     landingPageLeft: boolean;
 }
 
@@ -60,13 +59,13 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
     }
 
     render(){
-        return (<div className={`landing-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
-            <TextBubble visible={this.props.cubeOpened && !this.props.isClosing}
+        return (<div className={`landing-page-wrapper`}>
+            <TextBubble visible={this.props.cubeOpened}
                         textToType={LandingDescriptions.DEVELOPER_INTRODUCTION}
                         skipTyping={this.props.landingPageLeft}/>
-            <LandingCube isCLosing={this.props.isClosing} isLoading={this.state.isLoading}/>
+            <LandingCube isLoading={this.state.isLoading}/>
             <MenuBubble textBubbleType={this.props.selectedMenu}
-                        visible={this.props.selectedMenu !== CubeMenuStates.NONE && !this.props.isClosing}/>
+                        visible={this.props.selectedMenu !== CubeMenuStates.NONE}/>
         </div>)
     }
 }

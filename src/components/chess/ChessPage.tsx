@@ -19,7 +19,6 @@ import {IconType} from "../common/icon/IconType";
 import Icon from '../common/icon/Icon';
 
 interface ChessPageProps {
-    isClosing: boolean;
     chessGameId: number;
     playerSide: ChessSide;
     chessMoves: ChessMove[];
@@ -33,7 +32,7 @@ class ChessPage extends React.Component<ChessPageProps> {
 
     render(){
         return (
-        <div className={`chess-page-wrapper ${this.props.isClosing ? "closing" : ""}`}>
+        <div className={`chess-page-wrapper`}>
             <ChessBoard />
             {this.props.gameStatus === ChessGameStatus.IN_PROGRESS &&
                 <button className={`game-end`} onClick={() => {ApiLichessUtils.resignGame()}}>

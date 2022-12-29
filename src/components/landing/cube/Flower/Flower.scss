@@ -44,15 +44,6 @@
 
   &.opened {
 
-    &.closing {
-      .flower {
-        animation-name: flowerHide;
-        animation-delay: 0s;
-        animation-duration: 1s;
-        animation-timing-function: ease-in;
-      }
-    }
-
     .flower {
       opacity: 0;
       animation-name: flowerAppear;

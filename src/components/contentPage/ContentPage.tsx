@@ -16,7 +16,6 @@ import BrowserUtils from "../../utils/BrowserUtils";
 import { UIOrientation } from '../core/UIOrientation';
 
 interface ContentPageProps {
-    isClosing: boolean;
     sections: Section[];
     changePage: any;
     currentPage: Page;
@@ -372,9 +371,6 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 
     getContentPageAdditionalClasses(): string {
         let classes: string = "";
-        if (this.props.isClosing) {
-            classes = classes.concat(" closing");
-        }
         if (this.state.dragInitiated) {
             classes = classes.concat(" dragging");
         }

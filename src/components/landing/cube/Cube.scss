@@ -44,32 +44,6 @@
     transition-duration: 4s;
     z-index: 3;
 
-    &.closing {
-        transition-property: transform, width, height, left, top;
-        transition-duration: .5s, 1s, 1s, 1s, 1s;
-        transition-timing-function: linear, ease-out, ease-out, ease-out, ease-out;
-        left: calc(50% - 11.2em);
-        top: calc(50% - 11.2em);
-
-        &.BOTTOM, &.TOP_LEFT, &.TOP_RIGHT {
-            height: 22.4em;
-            width: 22.4em;
-            opacity: 1;
-        }
-
-        &.BOTTOM {
-            transform: rotateX(90deg) rotateY(-45deg) rotateZ(0deg);
-        }
-
-        &.TOP_LEFT {
-            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-        }
-
-        &.TOP_RIGHT {
-            transform: rotateX(0deg) rotateY(-90deg) rotateZ(0deg);
-        }
-    }
-
     &.LEFT_ZOOM {
         transform: scale(1.1) rotateX(40deg) rotateY(-35deg) rotateZ(0deg);
     }
