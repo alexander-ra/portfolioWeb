@@ -52,6 +52,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     private doingFastRotation: boolean = false;
     private lastOffsetDegrees = null;
     private wheelRef: React.RefObject<HTMLDivElement>;
+    private mobileClickSimEnabled: boolean = false;
 
     private readonly MIN_TIME_VISITED = 5000;
     private visitedTimeout: NodeJS.Timeout = null;
@@ -112,6 +113,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         console.log('dragStart', event.target);
         if (BrowserUtils.isMobile()) {
             this.dragStartingPos = CircleRotationUtils.initializeDragTouch(event);
+            this.mobileClickSimEnabled = true;
         } else {
             this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
         }
@@ -126,6 +128,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         console.log("move");
         let newState =  null;
         if (BrowserUtils.isMobile() && this.state.dragInitiated) {
+            this.mobileClickSimEnabled = false;
             newState = CircleRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
         } else {
             newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
@@ -141,6 +144,14 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     dragEnd = (event: any) => {
         console.log('dragEnd');
         if (this.state.initialCircleOffsetDegrees === this.state.actualCircleOffsetDegrees) {
+            if (BrowserUtils.isMobile() && this.mobileClickSimEnabled) {
+                const iconName = event.target.className.split(" ").find(className => className.startsWith("fa"));
+                const sectionToGoTo = this.props.sections.findIndex(section => section.icon === iconName);
+                console.log(sectionToGoTo);
+                if (sectionToGoTo !== -1) {
+                    this.selectSection(sectionToGoTo);
+                }
+            }
             this.setState({
                 dragInitiated: false
             });
@@ -293,8 +304,9 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         return tempGoalIndex - startingIndex > threshold ? RotatingDirection.CLOCKWISE : RotatingDirection.COUNTER_CLOCKWISE;
     }
 
-    clickSection(index: number) {
-        if (!this.state.isSlowRotation && !BrowserUtils.isMobile()) {
+    selectSection(index: number) {
+        if (!this.state.isSlowRotation || this.mobileClickSimEnabled) {
+            this.mobileClickSimEnabled = false;
             const rotatingDirection = this.getRotatingDirectionFromIndex(this.state.selectedMenuIndex, index);
             if (rotatingDirection !== RotatingDirection.NONE) {
                 const potentialOffsetDegrees = 360 - this.sectionDegrees[index];
@@ -349,7 +361,11 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
            const isVisited = visitedSections.includes(section.menu);
            sections.push(
                <div className={`menu-section circle-rot${this.sectionDegrees[index]}deg ${this.state.selectedMenuIndex === index ? "selected": ""}`}
-                    onClick={() => { this.clickSection(index); }} key={section.menu.toString()}>
+                    onClick={() => {
+                        if (!BrowserUtils.isMobile()) {
+                            this.selectSection(index);
+                        }
+                    }} key={section.menu.toString()}>
                    <div className={`menu-icon-wrapper circle-rot${this.sectionIconDegrees[index]}deg`}>
                        <Icon className={"menu-icon"}  icon={section.icon}></Icon>
                        {!isVisited && this.props.uiOrientation === UIOrientation.LANDSCAPE && <div className={"icon-new"}>New*</div>}
@@ -423,12 +439,12 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             <div className={"text-sections-wrapper"}>
                 <TextSection data={this.state.menuContent.leftContent}
                              sectionPosition={TextSectionPosition.LEFT}
-                             arrowClickHandler={this.props.uiOrientation === UIOrientation.LANDSCAPE ?
-                                 () => this.clickSection(this.getPreviousSectionIndex()) : null}/>
+                             arrowClickHandler={this.props.uiOrientation !== UIOrientation.PORTRAIT ?
+                                 () => this.selectSection(this.getPreviousSectionIndex()) : null}/>
                 <TextSection data={this.state.menuContent.rightContent}
                              sectionPosition={TextSectionPosition.RIGHT}
-                             arrowClickHandler={this.props.uiOrientation === UIOrientation.LANDSCAPE ?
-                                 () => this.clickSection(this.getNextSectionIndex()) : null}/>
+                             arrowClickHandler={this.props.uiOrientation !== UIOrientation.PORTRAIT ?
+                                 () => this.selectSection(this.getNextSectionIndex()) : null}/>
             </div>
         </div>)
     }
