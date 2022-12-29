@@ -32,7 +32,7 @@ const initialState: ChessReduceModel = {
     playerSide: ChessSide.WHITE,
     playerAvatar: initialAvatar,
     chessMoves: [],
-    gameStatus: ChessGameStatus.IN_PROGRESS
+    gameStatus: ChessGameStatus.NOT_STARTED
 };
 
 export default function chessReducer(state = initialState, action: any): ChessReduceModel {

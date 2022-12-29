@@ -3,4 +3,5 @@ export enum ChessGameStatus {
     LOSS = "LOSS",
     DRAW = "DRAW",
     IN_PROGRESS = "IN_PROGRESS",
+    NOT_STARTED = "NOT_STARTED"
 }

@@ -128,6 +128,10 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
         </div>
     }
 
+    isGameFinished(): boolean {
+        return this.props.gameStatus !== ChessGameStatus.IN_PROGRESS && this.props.gameStatus !== ChessGameStatus.NOT_STARTED;
+    }
+
     render(){
         return (
             <div className={`chess-board-wrapper ${this.props.playerSide.toLowerCase()}-player-view`}>
@@ -147,7 +151,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
                     <ChessPlayers />
                     {this.rednderChessBoard()}
                     <ChessBoardLetters />
-                    {<ChessBoardEndgameMessage gameStatus={this.props.gameStatus} />}
+                    { this.isGameFinished() && <ChessBoardEndgameMessage gameStatus={this.props.gameStatus} />}
                 </>}
             </div>)
     }
