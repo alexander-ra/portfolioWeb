@@ -35,13 +35,13 @@ $menu-radius: 6em;
 
     .vw-landscape & {
       clip-path: polygon(6em 0%, 100% 0%, 100% 100%, 6em 100%, 0% 50%);
-      animation: leftSectionAppearLandscape 1s;
+      animation: leftSectionAppearLandscape 1s forwards;
     }
 
     .vw-portrait & {
       border-radius: 1em 1em 7.5em 7.5em;
       margin: 1em 0 3em 0;
-      animation: leftSectionAppearPortrait 1s;
+      animation: leftSectionAppearPortrait 1s forwards;
     }
 
     .content {
@@ -97,13 +97,13 @@ $menu-radius: 6em;
 
     .vw-landscape & {
       clip-path: polygon(0% 0%, calc(100% - 6em) 0%, 100% 50%, calc(100% - 6em) 100%, 0% 100%);
-      animation: rightSectionAppearLandscape 1s;
+      animation: rightSectionAppearLandscape 1s forwards;
     }
 
     .vw-portrait & {
       border-radius: 7.5em 7.5em 1em 1em;
       margin: 3em 0 1em 0;
-      animation: rightSectionAppearPortrait 1s;
+      animation: rightSectionAppearPortrait 1s forwards;
     }
 
     .mask {
