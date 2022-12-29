@@ -49,13 +49,9 @@ img{
   text-align: center;
 }
 
-::-webkit-scrollbar-track-piece {
-  margin: 0.6em;
-}
-
 /* width */
 ::-webkit-scrollbar {
-  width: 1em;
+  width: .4em;
 }
 
 /* Track */
@@ -65,9 +61,9 @@ img{
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  border: .3em solid rgb($contrast-primary);
+  border: .1em solid rgb($contrast-primary);
   background-clip: padding-box;
-  border-radius: 1em;
+  border-radius: .2em;
   background: rgb($accent-primary);
 }
 

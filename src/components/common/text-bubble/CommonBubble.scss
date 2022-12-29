@@ -84,6 +84,10 @@
     max-width: 14em;
     z-index: 3;
 
+    .vw-portrait & {
+      font-size: css-min(1.5em, calc(2 * var(--calc-vmax)));
+    }
+
     .avatar-icon {
       position: relative;
       z-index: 2;
@@ -97,7 +101,7 @@
       height: 2em;
       line-height: 2em;
       z-index: 1;
-      font-family: BANDAR;
+      font-family: MusticaPro;
 
       .dark-theme & {
         background-image: url("../../../../public/resources/svgAssets/crystalSelected.svg");
@@ -110,7 +114,7 @@
     position: relative;
     background: rgba($contrast-primary, 0.75);
     z-index: 3;
-    border-radius: 1.5em;
+    border-radius: 1em;
     border: .2em solid rgba($common-border-color, 0.85);
     overflow-x: hidden;
     overflow-y: auto;
@@ -132,15 +136,15 @@
       padding: 1em 1em 3em 1em;
 
       .vw-portrait & {
-        border-radius: .4em 1.5em 1.5em 1.5em;
+        border-radius: .4em 1em 1em 1em;
       }
     }
   }
 
   &.text-bubble-wrapper {
     .vw-portrait & {
-      margin: 1em .75em;
-      height: calc(30% - 2em);
+      margin: 1em .75em 0 .75em;
+      height: calc(28%);
       align-items: end;
     }
 
@@ -178,8 +182,8 @@
 
   &.menu-bubble-wrapper {
     .vw-portrait & {
-      margin: 1em .75em 2em .75em;
-      height: calc(36% - 1em);
+      margin: 0 .75em 2em .75em;
+      height: calc(38% - 1em);
       align-items: start;
       position: relative;
     }
@@ -240,7 +244,7 @@
   }
 
   &:hover {
-    background-color: rgb($main-secondary);
-    box-shadow: 0 0 1em rgb($main-secondary);
+    background-color: rgb($accent-secondary);
+    box-shadow: 0 0 1em rgb($accent-secondary);
   }
 }

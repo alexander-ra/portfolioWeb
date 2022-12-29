@@ -11,15 +11,9 @@ html {
 }
 
 @font-face {
-  font-family: BANDAR;
-  src: url("../public/resources/fonts/bandar-font/Bandar.ttf") format("truetype");
+  font-family: MusticaPro;
+  src: url("../public/resources/fonts/MusticaPro/MusticaPro-SemiBold.otf") format("opentype");
   font-weight: normal;
-}
-
-@font-face {
-  font-family: BANDAR;
-  src: url("../public/resources/fonts/bandar-font/BandarBold.ttf") format("truetype");
-  font-weight: bold;
 }
 
 @font-face {
@@ -102,7 +96,7 @@ body {
 }
 
 button {
-  font-family: BANDAR, Verdana, Arial, Helvetica, sans-serif;
+  font-family: MusticaPro, Verdana, Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
 

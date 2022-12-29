@@ -16,12 +16,13 @@ import {Page} from "../../models/common/Page";
 import {WindowUtils} from "../../utils/WindowUtils";
 import store from "../../store/store";
 import {changePage} from "../../reducers/stages/stagesAction";
-import {openCube} from "../../reducers/cube/cubeAction";
+import {openCube, selectMenu} from "../../reducers/cube/cubeAction";
 
 interface LandingCubeProps {
     cubeOpened: boolean;
     selectedMenu: CubeMenuStates;
     landingPageLeft: boolean;
+    selectMenu?: (menu: CubeMenuStates) => void;
 }
 
 interface LandingCubeState {
@@ -37,6 +38,8 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
         this.state = {
             isLoading: true,
         };
+
+        this.props.selectMenu(CubeMenuStates.NONE);
     }
 
     componentDidMount() {
@@ -80,6 +83,6 @@ export default connect(
             cubeOpened,
             landingPageLeft
         }
-    }
+    }, { selectMenu }
 )(LandingPage);
 

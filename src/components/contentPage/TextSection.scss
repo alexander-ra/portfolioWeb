@@ -49,7 +49,7 @@ $menu-radius: 6em;
 
       .content-text-wrapper {
         .vw-portrait & {
-          margin-top: 2.1em;
+          margin-top: 1.6em;
 
           .content-text {
             padding: 1em .5em 6em .5em;
@@ -143,7 +143,7 @@ $menu-radius: 6em;
 
       .content-text-wrapper {
         .vw-portrait & {
-          margin-top: 4em;
+          margin-top: 4.2em;
         }
 
 
@@ -255,7 +255,7 @@ $menu-radius: 6em;
         font-size: 1.25em;
         overflow: scroll;
         height: calc(100% - 4.5em);
-        padding-left: 1em;
+        padding: 0 0.5em;
       }
     }
 
