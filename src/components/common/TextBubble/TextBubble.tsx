@@ -18,7 +18,11 @@ interface TextBubbleState {
     menuDescription: LandingDescriptions;
 }
 
-
+/**
+ * TextBubble component. This component is responsible for displaying initial message using typewriter effect.
+ *
+ * @author Alexander Andreev
+ */
 class TextBubble extends React.Component<TextBubbleProps, TextBubbleState> {
     private startedTyping: boolean = false;
 

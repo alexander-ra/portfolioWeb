@@ -8,6 +8,11 @@ interface IconProps {
     className?: string;
 }
 
+/**
+ * Icon component. This component is responsible for displaying icons.
+ *
+ * @author Alexander Andreev
+ */
 class Icon extends React.Component<IconProps> {
 
     render(){

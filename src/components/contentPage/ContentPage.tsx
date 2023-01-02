@@ -5,7 +5,7 @@ import {Position} from "../../models/common/Position";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
 import {CircleRotationUtils} from "../../utils/CircleRotationUtils";
 import Utils from "../../utils/Utils";
-import TextSection, {TextSectionPosition} from "./TextSection/TextSection";
+import TextSection from "./TextSection/TextSection";
 import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
 import StorageUtil, {StorageArrayKey} from "../../utils/StorageUtil";
@@ -16,6 +16,9 @@ import {UIOrientation} from '../../models/common/UIOrientation';
 import { MenuContent } from '../../models/content/MenuContent';
 import {ContentProvisioner} from "../../provision/ContentData";
 import { CommonLabels } from '../../provision/CommonLabels';
+import { RotatingDirection } from '../../models/content/RotatingDirection';
+import { Section } from '../../models/content/Section';
+import { TextSectionPosition } from '../../models/content/TextSectionPosition';
 
 interface ContentPageProps {
     sections: Section[];
@@ -24,32 +27,29 @@ interface ContentPageProps {
     uiOrientation: UIOrientation;
 }
 
-enum RotatingDirection {
-    CLOCKWISE = 'CLOCKWISE',
-    COUNTER_CLOCKWISE = 'COUNTER_CLOCKWISE',
-    NONE = 'NONE'
-}
-
-export interface Section {
-    icon: any;
-    menu: CircleMenuStates;
-}
-
 export interface ContentPageState {
-    initialCircleOffsetDegrees: number;
-    actualCircleOffsetDegrees: number;
-    selectedMenuIndex: number;
+    initialCircleOffsetDegrees: number; // offset of the circle in degrees at the start of dragging
+    actualCircleOffsetDegrees: number; // offset of the circle in degrees at the current moment
+    selectedMenuIndex: number; // index of the selected menu item
     dragInitiated: boolean;
     menuContent: MenuContent;
-    isSlowRotation: boolean;
+    isAutoRotating: boolean;
 }
 
-
+/**
+ * ContentPage component. This component is responsible for displaying a given a selected menu item. The menu selection
+ * is happening via the circle menu. For the whole page 0 degrees equals to the top of the circle, 90 degrees equals to
+ * the right side of the circle, 180 degrees equals to the bottom of the circle and 270 degrees equals to the left side
+ * of the circle. The css supports from -720 to 720 degrees for smooth animation, or the circle will rotate in the opposite
+ * direction.
+ *
+ * @author Alexander Andreev
+ */
 class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
-    private sectionDegrees: number[] = [];
-    private sectionIconDegrees: number[] = [];
+    private readonly ROTATION_TRANSITION_MS = 660; // the time in ms for the rotation transition
+    private sectionDegrees: number[] = []; // array of degrees for the center of each section.
+    private sectionIconDegrees: number[] = []; // the degree for each icon to compensate the rotation of the section and be always on top.
     private dragStartingPos: Position;
-    private readonly ROTATION_TRANSITION_MS = 660;
     private slowRotationTimeout: any;
     private doingFastRotation: boolean = false;
     private lastOffsetDegrees = null;
@@ -68,7 +68,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             selectedMenuIndex: 0,
             dragInitiated: false,
             menuContent: ContentProvisioner.getMenuContent(this.props.sections[0].menu),
-            isSlowRotation: false
+            isAutoRotating: false
         };
         this.dragStartingPos = {
             x: 0,
@@ -83,118 +83,6 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 
     componentWillUnmount() {
         this.removeCubeRotationListeners();
-    }
-
-    componentDidUpdate(prevProps: Readonly<ContentPageProps>, prevState: Readonly<ContentPageState>) {
-        if (prevState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
-            if (this.state.actualCircleOffsetDegrees > 540) {
-                this.setState({actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees - 360});
-            } else if (this.state.actualCircleOffsetDegrees < -540) {
-                this.setState({actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees % 360 + 360});
-            }
-        }
-        if (prevState.selectedMenuIndex !== this.state.selectedMenuIndex) {
-            clearTimeout(this.visitedTimeout);
-            const visitedSections: CircleMenuStates[] = StorageUtil.getArrayFromLocalStorage(StorageArrayKey.VISITED_SECTIONS) || []
-            const isVisited = visitedSections.includes(this.props.sections[this.state.selectedMenuIndex].menu);
-
-            if (!isVisited) {
-                this.visitedTimeout = setTimeout(() => {
-                    StorageUtil.addItemToArrayInLocalStorage(StorageArrayKey.VISITED_SECTIONS, this.props.sections[this.state.selectedMenuIndex].menu);
-                    this.setState({});
-                    }, this.MIN_TIME_VISITED);
-            }
-
-            this.setState({
-                menuContent: ContentProvisioner.getMenuContent(this.props.sections[this.state.selectedMenuIndex].menu)
-            });
-        }
-    }
-
-    dragStart = (event: any) => {
-        if (BrowserUtils.isMobile()) {
-            this.dragStartingPos = CircleRotationUtils.initializeDragTouch(event);
-            this.mobileClickSimEnabled = true;
-        } else {
-            this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
-        }
-        this.setState({
-            initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees,
-            dragInitiated: true,
-            isSlowRotation: false
-        });
-    }
-
-    dragMove = (event: any) => {
-        let newState =  null;
-        if (BrowserUtils.isMobile() && this.state.dragInitiated) {
-            this.mobileClickSimEnabled = false;
-            newState = CircleRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
-        } else {
-            newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
-        }
-        if (Utils.isNotNull(newState) && newState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
-            this.setState({
-                ...newState,
-                selectedMenuIndex: this.getSelectedSection(newState.actualCircleOffsetDegrees)
-            });
-        }
-    }
-
-    dragEnd = (event: any) => {
-        if (this.state.initialCircleOffsetDegrees === this.state.actualCircleOffsetDegrees) {
-            if (BrowserUtils.isMobile() && this.mobileClickSimEnabled) {
-                const iconName = event.target.className.split(" ").find(className => className.startsWith("fa"));
-                const sectionToGoTo = this.props.sections.findIndex(section => section.icon === iconName);
-                console.log(sectionToGoTo);
-                if (sectionToGoTo !== -1) {
-                    this.selectSection(sectionToGoTo);
-                }
-            }
-            this.setState({
-                dragInitiated: false
-            });
-        } else if (Utils.isArrayNotEmpty(this.sectionDegrees)) {
-            const potentialOffsetDegrees = 360 - this.sectionDegrees[this.state.selectedMenuIndex];
-            const rotatingDirection = this.getRotatingDirectionFromDegrees(this.state.actualCircleOffsetDegrees, potentialOffsetDegrees);
-            if (rotatingDirection !== RotatingDirection.NONE) {
-                if (rotatingDirection === RotatingDirection.COUNTER_CLOCKWISE && this.state.actualCircleOffsetDegrees > potentialOffsetDegrees) {
-                    this.doingFastRotation = true;
-                    this.setState(
-                        {
-                            actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees - 360,
-                        }
-                    )
-                } else if (rotatingDirection === RotatingDirection.CLOCKWISE) {
-                    // this.sectionIconDegrees[this.state.selectedMenuIndex] += 360;
-                    if (this.state.actualCircleOffsetDegrees < potentialOffsetDegrees) {
-                        this.doingFastRotation = true;
-                        this.setState(
-                            {
-                                actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees + 360,
-                            }
-                        )
-                    }
-                }
-
-                if (this.doingFastRotation) {
-                    setTimeout(() => {
-                        this.doingFastRotation = false;
-                        this.triggerSlowRotation();
-                        this.setState({
-                            dragInitiated: false,
-                            actualCircleOffsetDegrees: potentialOffsetDegrees
-                        });
-                    }, 50);
-                } else {
-                    this.triggerSlowRotation();
-                    this.setState({
-                        dragInitiated: false,
-                        actualCircleOffsetDegrees: potentialOffsetDegrees
-                    });
-                }
-            }
-        }
     }
 
     addCubeRotationListeners() {
@@ -221,17 +109,146 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         }
     }
 
-    triggerSlowRotation() {
+    componentDidUpdate(prevProps: Readonly<ContentPageProps>, prevState: Readonly<ContentPageState>) {
+        // Reset degrees to keep the current degrees between -720 and 720
+        if (prevState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
+            if (this.state.actualCircleOffsetDegrees > 540) {
+                this.setState({actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees - 360});
+            } else if (this.state.actualCircleOffsetDegrees < -540) {
+                this.setState({actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees % 360 + 360});
+            }
+        }
+        // Update the content when the top of the circle is rotated into another section
+        if (prevState.selectedMenuIndex !== this.state.selectedMenuIndex) {
+            clearTimeout(this.visitedTimeout);
+            const visitedSections: CircleMenuStates[] = StorageUtil.getArrayFromLocalStorage(StorageArrayKey.VISITED_SECTIONS) || []
+            const isVisited = visitedSections.includes(this.props.sections[this.state.selectedMenuIndex].menu);
+
+            if (!isVisited) {
+                this.visitedTimeout = setTimeout(() => {
+                    StorageUtil.addItemToArrayInLocalStorage(StorageArrayKey.VISITED_SECTIONS, this.props.sections[this.state.selectedMenuIndex].menu);
+                    this.setState({});
+                    }, this.MIN_TIME_VISITED);
+            }
+
+            this.setState({
+                menuContent: ContentProvisioner.getMenuContent(this.props.sections[this.state.selectedMenuIndex].menu)
+            });
+        }
+    }
+
+    /**
+     * Retrieve the current cursor position and prepare circle for rotation.
+     * @param event - the mouse down event
+     */
+    dragStart = (event: any) => {
+        if (BrowserUtils.isMobile()) {
+            this.dragStartingPos = CircleRotationUtils.initializeDragTouch(event);
+            this.mobileClickSimEnabled = true;
+        } else {
+            this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
+        }
+        this.setState({
+            initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees,
+            dragInitiated: true,
+            isAutoRotating: false
+        });
+    }
+
+    /**
+     * Calculate the new circle offset based on the current cursor position.
+     * @param event - the mouse move event
+     */
+    dragMove = (event: any) => {
+        let newState =  null;
+        if (BrowserUtils.isMobile() && this.state.dragInitiated) {
+            this.mobileClickSimEnabled = false;
+            newState = CircleRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
+        } else {
+            newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
+        }
+        if (Utils.isNotNull(newState) && newState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
+            this.setState({
+                ...newState,
+                selectedMenuIndex: this.getSelectedSection(newState.actualCircleOffsetDegrees)
+            });
+        }
+    }
+
+    /**
+     * Stop the rotation and start the transition to the nearest section.
+     * @param event - the mouse up event
+     */
+    dragEnd = (event: any) => {
+        if (this.state.initialCircleOffsetDegrees === this.state.actualCircleOffsetDegrees) {
+            if (BrowserUtils.isMobile() && this.mobileClickSimEnabled) {
+                const iconName = event.target.className.split(" ").find(className => className.startsWith("fa"));
+                const sectionToGoTo = this.props.sections.findIndex(section => section.icon === iconName);
+                console.log(sectionToGoTo);
+                if (sectionToGoTo !== -1) {
+                    this.selectSection(sectionToGoTo);
+                }
+            }
+            this.setState({
+                dragInitiated: false
+            });
+        } else if (Utils.isArrayNotEmpty(this.sectionDegrees)) {
+            const potentialOffsetDegrees = 360 - this.sectionDegrees[this.state.selectedMenuIndex];
+            const rotatingDirection = this.getRotatingDirectionFromDegrees(this.state.actualCircleOffsetDegrees, potentialOffsetDegrees);
+            if (rotatingDirection !== RotatingDirection.NONE) {
+                // Extra calculation to make sure the finalizing of rotation is to the right directions and no extra spins are being made
+                if (rotatingDirection === RotatingDirection.COUNTER_CLOCKWISE && this.state.actualCircleOffsetDegrees > potentialOffsetDegrees) {
+                    this.doingFastRotation = true;
+                    this.setState(
+                        {
+                            actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees - 360,
+                        }
+                    )
+                } else if (rotatingDirection === RotatingDirection.CLOCKWISE) {
+                    if (this.state.actualCircleOffsetDegrees < potentialOffsetDegrees) {
+                        this.doingFastRotation = true;
+                        this.setState(
+                            {
+                                actualCircleOffsetDegrees: this.state.actualCircleOffsetDegrees + 360,
+                            }
+                        )
+                    }
+                }
+
+                if (this.doingFastRotation) {
+                    setTimeout(() => {
+                        this.doingFastRotation = false;
+                        this.triggerAutoRotation();
+                        this.setState({
+                            dragInitiated: false,
+                            actualCircleOffsetDegrees: potentialOffsetDegrees
+                        });
+                    }, 50);
+                } else {
+                    this.triggerAutoRotation();
+                    this.setState({
+                        dragInitiated: false,
+                        actualCircleOffsetDegrees: potentialOffsetDegrees
+                    });
+                }
+            }
+        }
+    }
+
+    /**
+     * Trigger the rotation of the circle to the nearest section.
+     */
+    triggerAutoRotation() {
         if ( this.slowRotationTimeout) {
             clearTimeout(this.slowRotationTimeout);
         }
         this.setState({
-            isSlowRotation: true
+            isAutoRotating: true
         });
         this.slowRotationTimeout = setTimeout(() => {
-            if (this.state.isSlowRotation) {
+            if (this.state.isAutoRotating) {
                 this.setState({
-                    isSlowRotation: false
+                    isAutoRotating: false
                 });
             }
         }, this.ROTATION_TRANSITION_MS);
@@ -268,7 +285,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         }
 
         if (!this.state.dragInitiated &&
-            !this.state.isSlowRotation &&
+            !this.state.isAutoRotating &&
             this.state.selectedMenuIndex === 0 &&
             this.state.actualCircleOffsetDegrees !== 0) {
             this.lastOffsetDegrees = null;
@@ -278,7 +295,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                 selectedMenuIndex: 0,
                 dragInitiated: false,
                 menuContent: ContentProvisioner.getMenuContent(this.props.sections[0].menu),
-                isSlowRotation: false
+                isAutoRotating: false
             });
         }
     }
@@ -304,7 +321,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     selectSection(index: number) {
-        if (!this.state.isSlowRotation || this.mobileClickSimEnabled) {
+        if (!this.state.isAutoRotating || this.mobileClickSimEnabled) {
             this.mobileClickSimEnabled = false;
             const rotatingDirection = this.getRotatingDirectionFromIndex(this.state.selectedMenuIndex, index);
             if (rotatingDirection !== RotatingDirection.NONE) {
@@ -328,14 +345,14 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                 if (this.doingFastRotation) {
                     setTimeout(() => {
                         this.doingFastRotation = false;
-                        this.triggerSlowRotation();
+                        this.triggerAutoRotation();
                         this.setState({
                             selectedMenuIndex: index,
                             actualCircleOffsetDegrees: potentialOffsetDegrees
                         });
                     }, 0);
                 } else {
-                    this.triggerSlowRotation();
+                    this.triggerAutoRotation();
                     this.setState({
                         selectedMenuIndex: index,
                         actualCircleOffsetDegrees: potentialOffsetDegrees
@@ -391,7 +408,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         if (this.state.dragInitiated) {
             classes = classes.concat(" dragging");
         }
-        if (this.state.isSlowRotation) {
+        if (this.state.isAutoRotating) {
             classes = classes.concat(" slow-rotation");
         }
         return classes;
@@ -424,7 +441,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             <div className={"indicator"}>
                 <div className={"indicator-arrow-point"} />
             </div>
-            <div draggable={!this.state.isSlowRotation} className={`content-outer-circle circle-rot${this.state.actualCircleOffsetDegrees}deg`} ref={this.wheelRef}>
+            <div draggable={!this.state.isAutoRotating} className={`content-outer-circle circle-rot${this.state.actualCircleOffsetDegrees}deg`} ref={this.wheelRef}>
                 {this.renderSections()}
             </div>
             <div className={`content-outer-circle-sections circle-rot${this.calculateSectionEdgeDegrees(this.state.actualCircleOffsetDegrees)}deg`}>

@@ -4,9 +4,9 @@ import "./Typewriter.scss"
 interface TypewriterProps {
     textToType: string;
     onCompleted: () => any;
-    skipTyping?: boolean;
-    boldLettersStart: number;
-    boldLettersEnd: number;
+    skipTyping?: boolean; // if true, typing will be skipped and text will be displayed immediately
+    boldLettersStart: number; // index of the first letter to be bold
+    boldLettersEnd: number;  // index of the last letter to be bold
 }
 
 interface TypewriterState {
@@ -14,15 +14,17 @@ interface TypewriterState {
     textDone: boolean;
 }
 
+/**
+ * Typewriter component. This component is responsible for displaying text with typewriter effect.
+ *
+ * @author Alexander Andreev
+ */
 class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
     private initialDelay = 3000;
     private textDoneDelay = 1000;
     private letterDistance = 25;
     private wordDistance = 25;
     private sentenceDistance = 400;
-
-    // private STARTING_LETTER_NUM = 243;
-    // private END_LETTER_NUM = 279;
 
     // Speeds up typing on click
     private isSpedUp = false;

@@ -10,6 +10,7 @@ import { IconType } from '../../../models/common/IconType';
 import Icon from '../Icon/Icon';
 import ContactsSubMenu from "../../layout/Navigation/ContactsSubMenu";
 import { CommonLabels } from '../../../provision/CommonLabels';
+import { Links } from '../../../provision/Links';
 
 interface MenuBubbleProps {
     textBubbleType: CubeMenuStates;
@@ -22,8 +23,13 @@ interface MenuBubbleState {
     contactCardStyle: CSSProperties;
 }
 
-
+/**
+ * MenuBubble component. This component is responsible for displaying additional information about each cube section.
+ *
+ * @author Alexander Andreev
+ */
 class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
+    private readonly MENU_CLOSING_TIMEOUT = 1000;
 
     constructor(props: MenuBubbleProps) {
         super(props);
@@ -39,25 +45,27 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
     componentDidMount() {
         document.onclick = (event: any) => {
             if (event.target.id === "link-text") {
+
                 if (this.state.menuDescription === LandingDescriptions.CHESS_DEMO) {
-                    window.open("https://www.google.com/", '_blank').focus();
+                    // Open GitHub page in new tab
+                    window.open(Links.GITHUB_PAGE, '_blank').focus();
                 }
 
                 if (this.state.menuDescription === LandingDescriptions.PAST_EXPERIENCE) {
-                    fetch('http://192.168.8.30:3000/static/media/avatar-jpeg.fbeb0d852a7c4716f705.jpg')
+                    // Download CV
+                    fetch(Links.PORTFOLIO_PAGE)
                         .then(resp => resp.blob())
                         .then(blob => {
                             const url = window.URL.createObjectURL(blob);
                             const a = document.createElement('a');
                             a.style.display = 'none';
                             a.href = url;
-                            // the filename you want
                             a.download = 'image.jpg';
                             document.body.appendChild(a);
                             a.click();
                             window.URL.revokeObjectURL(url);
                         })
-                        .catch(() => alert('oh no!'));
+                        .catch(() => alert('Cannot download file!'));
                 }
             }
         }
@@ -66,6 +74,7 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
             const el = document.getElementById("contact-card");
             if (event.target.id === "link-text") {
                 if (this.state.menuDescription === LandingDescriptions.CLIENT_APPROACH) {
+                    // Show contact card and set its position relative to the cursor
                     const top = event.target.getBoundingClientRect().bottom - el.getBoundingClientRect().height - 10;
                     let left = event.clientX - el.getBoundingClientRect().width / 2;
 
@@ -106,7 +115,7 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
             } else {
                 setTimeout(() => {
                     this.setDescription(this.props.textBubbleType);
-                }, 1000)
+                }, this.MENU_CLOSING_TIMEOUT);
             }
         }
     }

@@ -7,11 +7,7 @@ import {UIOrientation} from "../../../models/common/UIOrientation";
 import {LayoutType} from "../../../models/common/LayoutType";
 import { ContentData } from '../../../models/content/ContentData';
 import { CustomContentTypes } from '../../../models/content/CustomContentTypes';
-
-export enum TextSectionPosition {
-    LEFT = "LEFT",
-    RIGHT = "RIGHT"
-}
+import { TextSectionPosition } from '../../../models/content/TextSectionPosition';
 
 interface TextSectionProps {
     data: ContentData;
@@ -22,7 +18,11 @@ interface TextSectionProps {
     arrowClickHandler: () => void;
 }
 
-
+/**
+ * TextSection component. This component is responsible for displaying a given a selected menu item.
+ *
+ * @author Alexander Andreev
+ */
 class TextSection extends React.Component<TextSectionProps> {
     private myRef: React.RefObject<HTMLDivElement>;
     private readonly DEFAULT_FONT_SIZE = 1.5;
@@ -58,6 +58,11 @@ class TextSection extends React.Component<TextSectionProps> {
         }
     }
 
+
+    /**
+     * Updates the dimensions of the text section, until the text fits the screen. Applies only for landscape mode.
+     * @param isResized - whether the text has its original size or not.
+     */
     private updateDimensions = (isResized?: boolean) => {
         const currElement = this.myRef.current;
         if (Utils.isNotNull(currElement?.style)) {
@@ -101,6 +106,10 @@ class TextSection extends React.Component<TextSectionProps> {
         }
     }
 
+    /**
+     * Renders a custom content (instead of text), if the content type is custom.
+     * @param data - the custom data.
+     */
     private getContentDescription = (data: ContentData) => {
         if (Utils.isNotNull(data.customContent)) {
             if (data.customContent === CustomContentTypes.TECHNOLOGY_LIST) {
