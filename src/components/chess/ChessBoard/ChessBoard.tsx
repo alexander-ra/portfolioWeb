@@ -38,6 +38,8 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     private possibleMoves: ChessSquare[] = [];
     private promotionMove: ChessSquare;
     private enPassantSquare: ChessSquare;
+    private gameInitialized: boolean = false;
+    private processingMoves: boolean = false;
 
     constructor(props: ChessBoardProps) {
         super(props);
@@ -48,10 +50,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     }
 
     componentDidMount() {
-        if (this.isGameFinished()) {
-            console.log("finished");
-            ApiLichessUtils.resignGame();
-        } else if (Utils.isNull(this.props.chessGameId)) {
+        if (Utils.isNull(this.props.chessGameId)) {
             const savedGameId = AppStorage.getStorage(StorageKey.CHESS_GAME_ID);
             console.log("save", savedGameId);
             if (Utils.isNotNull(savedGameId)) {
@@ -83,6 +82,18 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
         if (prevProps.chessGameId !== this.props.chessGameId) {
             console.warn('Game id changed', this.props.chessGameId);
             this.setState({gameInProgress: Utils.isNotNull(this.props.chessGameId)});
+        }
+
+        if (!this.gameInitialized && Utils.isArrayNotEmpty(this.props.chessMoves)) {
+            this.gameInitialized = true;
+            this.setInitialState();
+        }
+    }
+
+    setInitialState(): void {
+        if (this.isGameFinished()) {
+            console.log("finished");
+            ApiLichessUtils.resignGame();
         }
     }
 

@@ -45,6 +45,8 @@ export class ApiLichessUtils {
 
     public static resignGame(): void {
         const gameId = store.getState().chessReducer.gameId;
+        store.dispatch(resetGame());
+        store.dispatch(resetBoardState());
         fetch(`${this.LICHESS_API_PREFIX}/bot/game/${gameId}/resign`, {
             method: 'POST',
             headers: this.getRequestHeaders()
@@ -53,7 +55,6 @@ export class ApiLichessUtils {
 
         })
         .finally(() => {
-            store.dispatch(resetGame());
         })// TODO: handle resign
     }
 

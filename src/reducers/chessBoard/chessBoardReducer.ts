@@ -40,7 +40,6 @@ export default function chessBoardReducer(state = initialState, action: any): Ch
         }
         case RESET_BOARD_STATE: {
             return {
-                ...state,
                 ...initialState,
             }
         }
