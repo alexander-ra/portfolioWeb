@@ -20,7 +20,7 @@ import { ChessPieceType } from "../models/chess/ChessPieceType";
 import { ChessGameStatus } from "../models/chess/ChessGameStatus";
 
 export class ApiLichessUtils {
-    private static readonly AUTH_KEY = "Bearer lip_ySt9nnwhXfyDdaO5InlE";
+    private static readonly AUTH_KEY = "Bearer lip_8BwgZnwb2x18VhXACBIx"; //"Bearer lip_ySt9nnwhXfyDdaO5InlE";
     private static readonly AI_LEVEL_EASY = 1;
     private static readonly AI_LEVEL_MEDIUM = 4;
     private static readonly AI_LEVEL_HARD = 8;
@@ -149,7 +149,7 @@ export class ApiLichessUtils {
                         let gameStatus: ChessGameStatus;
                         if (Utils.isNotNull(state.winner)) {
                             gameStatus = state.winner === store.getState().chessReducer.playerSide.toLowerCase() ?
-                                ChessGameStatus.WIN : ChessGameStatus.LOSS;
+                                ChessGameStatus.WIN : ChessGameStatus.LOSE;
                         } else if (state.status === "started") {
                             gameStatus = ChessGameStatus.IN_PROGRESS;
                         } else {

@@ -10,6 +10,7 @@ import Icon from "../../common/Icon/Icon";
 import {IconType} from "../../../models/common/IconType";
 import {ProvisionUtils} from "../../../utils/ProvisionUtils";
 import BrowserUtils from "../../../utils/BrowserUtils";
+import {CommonLabels} from "../../../provision/CommonLabels";
 
 interface NavigationProps {
     theme: ThemeType;
@@ -75,7 +76,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                             }}
                         >
                             <Icon className={"navigation-Icon"} icon={IconType.faCompass} />
-                            <span className={"navigation-label"}>Menus</span>
+                            <span className={"navigation-label"}>{CommonLabels.MENUS}</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
                             {this.state.activeMenu === DropdownMenu.NAVIGATION && <NavigationSubMenu />}
                         </div>
@@ -88,13 +89,13 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                             }}
                         >
                             <Icon className={"navigation-Icon"} icon={IconType.faAddressCard} />
-                            <span className={"navigation-label"}>Contact Me</span>
+                            <span className={"navigation-label"}>{CommonLabels.CONTACT_ME}</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
                             {this.state.activeMenu === DropdownMenu.CONTACTS && <ContactsSubMenu />}
                         </div>
                         <div className={`navigation-item`} onClick={this.toggleNavigationMenu.bind(this, DropdownMenu.NONE)}>
                             <Icon className={"navigation-Icon"} icon={IconType.faGithubAlt} />
-                            <span className={"navigation-label"}>GitHub</span>
+                            <span className={"navigation-label"}>{CommonLabels.GIT_HUB}</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faLink} />
                         </div>
                         <div className={`navigation-item`} onClick={() => {
@@ -102,7 +103,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                             this.toggleNavigationMenu(DropdownMenu.NONE);
                         }}>
                             <Icon className={"navigation-Icon"} icon={IconType.faPalette} />
-                            <span className={"navigation-label"}>Theme</span>
+                            <span className={"navigation-label"}>{CommonLabels.THEME}</span>
                             {this.props.theme === ThemeType.DARK &&
                                 <Icon className={"navigation-sub-icon"} icon={IconType.faMoon} />}
                             {this.props.theme === ThemeType.LIGHT &&

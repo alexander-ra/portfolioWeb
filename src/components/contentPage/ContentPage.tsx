@@ -6,7 +6,6 @@ import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
 import {CircleRotationUtils} from "../../utils/CircleRotationUtils";
 import Utils from "../../utils/Utils";
 import TextSection, {TextSectionPosition} from "./TextSection/TextSection";
-import {ContentData, MenuContent} from '../../labels/ContentLabels';
 import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
 import StorageUtil, {StorageArrayKey} from "../../utils/StorageUtil";
@@ -14,6 +13,9 @@ import Icon from '../common/Icon/Icon';
 import {ProvisionUtils} from "../../utils/ProvisionUtils";
 import BrowserUtils from "../../utils/BrowserUtils";
 import {UIOrientation} from '../../models/common/UIOrientation';
+import { MenuContent } from '../../models/content/MenuContent';
+import {ContentProvisioner} from "../../provision/ContentData";
+import { CommonLabels } from '../../provision/CommonLabels';
 
 interface ContentPageProps {
     sections: Section[];
@@ -65,7 +67,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             initialCircleOffsetDegrees: 0,
             selectedMenuIndex: 0,
             dragInitiated: false,
-            menuContent: ContentData.getMenuContent(this.props.sections[0].menu),
+            menuContent: ContentProvisioner.getMenuContent(this.props.sections[0].menu),
             isSlowRotation: false
         };
         this.dragStartingPos = {
@@ -104,7 +106,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             }
 
             this.setState({
-                menuContent: ContentData.getMenuContent(this.props.sections[this.state.selectedMenuIndex].menu)
+                menuContent: ContentProvisioner.getMenuContent(this.props.sections[this.state.selectedMenuIndex].menu)
             });
         }
     }
@@ -275,7 +277,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                 initialCircleOffsetDegrees: 0,
                 selectedMenuIndex: 0,
                 dragInitiated: false,
-                menuContent: ContentData.getMenuContent(this.props.sections[0].menu),
+                menuContent: ContentProvisioner.getMenuContent(this.props.sections[0].menu),
                 isSlowRotation: false
             });
         }
@@ -365,7 +367,9 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                     }} key={section.menu.toString()}>
                    <div className={`menu-icon-wrapper circle-rot${this.sectionIconDegrees[index]}deg`}>
                        <Icon className={"menu-icon"}  icon={section.icon}></Icon>
-                       {!isVisited && this.props.uiOrientation === UIOrientation.LANDSCAPE && <div className={"icon-new"}>New*</div>}
+                       {!isVisited && this.props.uiOrientation === UIOrientation.LANDSCAPE && <div className={"icon-new"}>
+                           {CommonLabels.NEW}
+                       </div>}
                    </div>
                </div>
            )
@@ -429,7 +433,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             <div className={`box ${this.props.currentPage.toLowerCase()}`}>
                 <div className="box-overlay"></div>
                 <div className={"section-title"}>
-                    <div className={"section-title-top"}>{this.props.currentPage === Page.CLIENT_APPROACH ? "Client approach" : "Experience"}</div>
+                    <div className={"section-title-top"}>{this.props.currentPage === Page.CLIENT_APPROACH ? CommonLabels.CLIENT_APPROACH : CommonLabels.EXPERIENCE}</div>
                     <div className={"section-title-bottom"}>{this.state.menuContent.title}</div>
                 </div>
             </div>

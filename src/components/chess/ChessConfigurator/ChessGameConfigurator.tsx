@@ -7,6 +7,7 @@ import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
 import { ChessAiDifficulty } from '../../../models/chess/ChessAiDifficulty';
 import { ChessStartingSide } from '../../../models/chess/ChessStartingSide';
 import { ChessSide } from '../../../models/chess/ChessSide';
+import {CommonLabels} from "../../../provision/CommonLabels";
 
 interface ChessGameConfiguratorProps {
 }
@@ -49,18 +50,18 @@ class ChessGameConfigurator extends React.Component<ChessGameConfiguratorProps, 
 
     render(){
         return <div className={"chess-configurator-wrapper"}>
-            <div className={"setting-title"}>Pick Opponent</div>
+            <div className={"setting-title"}>{CommonLabels.PICK_OPPONENT}</div>
             <ConfigurationSection selectedIndex={this.state.selectedOpponentIndex}
                                   onSelectChange={(index: number) => {this.setState({selectedOpponentIndex: index})}}
                                   items={this.enumToArray(ChessAiDifficulty)} />
-            <div className={"setting-title"}>Pick a Side</div>
+            <div className={"setting-title"}>{CommonLabels.PICK_A_SIDE}</div>
             <ConfigurationSection selectedIndex={this.state.startingPositionIndex}
                                   onSelectChange={(index: number) => {this.setState({startingPositionIndex: index})}}
                                   items={this.enumToArray(ChessStartingSide)} />
             <button disabled={this.startButtonDisabled()}
                     className={"play-button"}
                     onClick={this.playChess.bind(this)}>
-                Play chess
+                {CommonLabels.PLAY_CHESS}
             </button>
 
         </div>;

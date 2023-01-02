@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { ChessAiDifficulty } from '../../../../models/chess/ChessAiDifficulty';
-import { ChessSide } from '../../../../models/chess/ChessSide';
-import { ChessStartingSide } from '../../../../models/chess/ChessStartingSide';
+import {ChessAiDifficulty} from '../../../../models/chess/ChessAiDifficulty';
+import {ChessSide} from '../../../../models/chess/ChessSide';
+import {ChessStartingSide} from '../../../../models/chess/ChessStartingSide';
 import './ChessBoardPlayers.scss';
+import {CommonLabels} from "../../../../provision/CommonLabels";
 
 interface ChessPlayersProps {
     playerSide: ChessSide;
@@ -13,7 +14,7 @@ interface ChessPlayersProps {
 }
 
 class ChessBoardPlayers extends React.Component<ChessPlayersProps> {
-    private readonly PLAYER_NAMES: string[] = ["Player", "Opponent"];
+    private readonly PLAYER_NAMES: string[] = [CommonLabels.PLAYER, CommonLabels.COMPUTER];
 
     rednderBoardLetters(): JSX.Element[] {
         const playerWindows: JSX.Element[] = [];
@@ -23,7 +24,9 @@ class ChessBoardPlayers extends React.Component<ChessPlayersProps> {
            playerWindows.push(
                <div className={`player-window-wrapper ${this.PLAYER_NAMES[index].toLowerCase()} ${isInTurn ? "active" : ""}`} key={name}>
                    <div className={`avatar avatar-${avatarType}`}>
-                       <div className={`avatar-label`}>{`${this.PLAYER_NAMES[index]}${isInTurn ? "'s turn" : " waiting"}`}</div>
+                       <div className={`avatar-label`}>
+                           {`${this.PLAYER_NAMES[index]}${isInTurn ? CommonLabels.S_TURN : CommonLabels.WAITING}`}
+                       </div>
                    </div>
                </div>
            )

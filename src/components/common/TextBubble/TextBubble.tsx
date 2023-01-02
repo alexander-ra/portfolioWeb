@@ -1,10 +1,11 @@
 import React from 'react';
 import './CommonBubble.scss';
-import {LandingDescriptions} from '../../../labels/LandingLabels';
+import {LandingDescriptions} from '../../../provision/LandingLabels';
 import Typewriter from '../Typewriter/Typewriter';
 import {CubeMenuStates} from "../../../models/landing/CubeMenuStates";
 import {connect} from "react-redux";
 import {completeDevIntro} from "../../../reducers/stages/stagesAction";
+import {CommonLabels} from "../../../provision/CommonLabels";
 
 interface TextBubbleProps {
     visible: boolean;
@@ -39,14 +40,14 @@ class TextBubble extends React.Component<TextBubbleProps, TextBubbleState> {
                             textToType={this.props.textToType}
                             onCompleted={() => {this.props.completeDevIntro();}}
                             skipTyping={this.props.skipTyping}
-                            boldLettersStart={this.props.textToType.indexOf("Give the Cube")}
+                            boldLettersStart={this.props.textToType.indexOf("Give the cube")}
                             boldLettersEnd={this.props.textToType.indexOf(", or click")}/>
                     }
                 </div>
                 <div className={"avatar-wrapper"}>
                     <div className={"avatar-icon"}></div>
                     <div className={"avatar-name"}>
-                        Alex
+                        {CommonLabels.ALEX}
                     </div>
                 </div>
             </div>

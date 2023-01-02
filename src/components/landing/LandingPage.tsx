@@ -2,7 +2,7 @@ import React from 'react';
 import './LandingPage.scss';
 import LandingCube from "./Cube/Cube";
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
-import {LandingDescriptions} from "../../labels/LandingLabels";
+import {LandingDescriptions} from "../../provision/LandingLabels";
 import {connect} from 'react-redux';
 import TextBubble from "../common/TextBubble/TextBubble";
 import MenuBubble from "../common/TextBubble/MenuBubble";

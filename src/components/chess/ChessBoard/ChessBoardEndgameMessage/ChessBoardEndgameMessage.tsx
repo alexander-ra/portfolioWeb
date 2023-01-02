@@ -4,6 +4,7 @@ import {ApiLichessUtils} from "../../../../utils/ApiLichessUtils";
 import { ChessGameStatus } from '../../../../models/chess/ChessGameStatus';
 import Icon from '../../../common/Icon/Icon';
 import { IconType } from '../../../../models/common/IconType';
+import {CommonLabels} from "../../../../provision/CommonLabels";
 
 interface ChessBoardEndgameMessageProps {
     gameStatus: ChessGameStatus;
@@ -15,13 +16,13 @@ class ChessBoardEndgameMessage extends React.Component<ChessBoardEndgameMessageP
     getChessMessage(): string {
         switch (this.props.gameStatus) {
             case ChessGameStatus.WIN:
-                return "You won! Congratulations!";
-            case ChessGameStatus.LOSS:
-                return "You lost! Better luck next time!";
+                return CommonLabels.CHESS_WIN;
+            case ChessGameStatus.LOSE:
+                return CommonLabels.CHESS_LOSE;
             case ChessGameStatus.DRAW:
-                return "It's a draw! Better luck next time!";
+                return CommonLabels.CHESS_DRAW;
             default:
-                return "This game cannot continue!";
+                return CommonLabels.CHESS_INTERRUPTED;
         }
     }
 
@@ -36,7 +37,7 @@ class ChessBoardEndgameMessage extends React.Component<ChessBoardEndgameMessageP
                     </div>
                     <Icon className={"chess-message-icon"} icon={IconType.faTrophy} />
                 </>
-            case ChessGameStatus.LOSS:
+            case ChessGameStatus.LOSE:
                 return <Icon className={"chess-message-icon"} icon={IconType.faFaceSadCry} />
             case ChessGameStatus.DRAW:
                 return <Icon className={"chess-message-icon"} icon={IconType.faHandshakeAngle} />
@@ -56,7 +57,7 @@ class ChessBoardEndgameMessage extends React.Component<ChessBoardEndgameMessageP
                         {this.getChessMessage()}
                     </div>
                     <div className={"play-again-button"}>
-                        <button onClick={() => {ApiLichessUtils.resignGame()}}>Play again</button>
+                        <button onClick={() => {ApiLichessUtils.resignGame()}}>{CommonLabels.PLAY_AGAIN}</button>
                     </div>
                 </div>
             </div>)

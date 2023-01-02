@@ -8,7 +8,6 @@ import {Page} from "../models/common/Page";
 
 export class WindowUtils {
     static setLayoutType(layoutType: LayoutType) {
-        //TODO everything like this must be in separate util class
         if (layoutType === LayoutType.NATIVE) {
             this.addToClassList('layout-native');
             this.removeFromClassList('layout-mobile-portrait');

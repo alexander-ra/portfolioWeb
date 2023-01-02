@@ -1,11 +1,12 @@
 import './TextSection.scss';
 import React from "react";
-import {ContentData, CustomContentTypes} from "../../../labels/ContentLabels";
 import Utils from "../../../utils/Utils";
 import {connect} from "react-redux";
 import {WindowSize} from "../../../reducers/window/windowReducer";
 import {UIOrientation} from "../../../models/common/UIOrientation";
 import {LayoutType} from "../../../models/common/LayoutType";
+import { ContentData } from '../../../models/content/ContentData';
+import { CustomContentTypes } from '../../../models/content/CustomContentTypes';
 
 export enum TextSectionPosition {
     LEFT = "LEFT",

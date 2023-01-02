@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import './CommonBubble.scss';
-import {LandingDescriptions} from '../../../labels/LandingLabels';
+import {LandingDescriptions} from '../../../provision/LandingLabels';
 import Typewriter from '../Typewriter/Typewriter';
 import {CubeMenuStates} from "../../../models/landing/CubeMenuStates";
 import {connect} from "react-redux";
@@ -9,6 +9,7 @@ import { Page } from '../../../models/common/Page';
 import { IconType } from '../../../models/common/IconType';
 import Icon from '../Icon/Icon';
 import ContactsSubMenu from "../../layout/Navigation/ContactsSubMenu";
+import { CommonLabels } from '../../../provision/CommonLabels';
 
 interface MenuBubbleProps {
     textBubbleType: CubeMenuStates;
@@ -162,9 +163,9 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
                         <Icon className={"avatar-icon"} icon={this.getIcon()}/>
                     </div>
                     <div className={"avatar-name"}>
-                        {this.props.textBubbleType === CubeMenuStates.TOP_LEFT && <span>Client Approach</span>}
-                        {this.props.textBubbleType === CubeMenuStates.TOP_RIGHT && <span>Past Experience</span>}
-                        {this.props.textBubbleType === CubeMenuStates.BOTTOM && <span>Chess Demo</span>}
+                        {this.props.textBubbleType === CubeMenuStates.TOP_LEFT && <span>{CommonLabels.CLIENT_APPROACH}</span>}
+                        {this.props.textBubbleType === CubeMenuStates.TOP_RIGHT && <span>{CommonLabels.PAST_EXPERIENCE}</span>}
+                        {this.props.textBubbleType === CubeMenuStates.BOTTOM && <span>{CommonLabels.CHESS_DEMO}</span>}
                     </div>
                 </div>
                 <div className={"menu-bubble bubble"}>
@@ -173,7 +174,7 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
                     }>
                     </div>
                 </div>
-                <button className={"go-page"} onClick={this.changePage.bind(this)}>Launch Page</button>
+                <button className={"go-page"} onClick={this.changePage.bind(this)}>{CommonLabels.LAUNCH_PAGE}</button>
                 <ContactsSubMenu isCard={true} additionalStyle={this.state.contactCardStyle}/>
             </div>
         )
