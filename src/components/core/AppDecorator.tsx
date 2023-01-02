@@ -9,6 +9,12 @@ export interface AppDecoratorProps {
     cubeOpened: boolean;
 }
 
+/**
+ * AppDecorator component. This component is responsible for displaying the background of the application, as well as
+ * the frames for the simulated devices.
+ *
+ * @author Alexander Andreev
+ */
 class AppDecorator extends React.Component<AppDecoratorProps> {
 
     render() {

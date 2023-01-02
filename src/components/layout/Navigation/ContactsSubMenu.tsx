@@ -10,10 +10,12 @@ interface ExpandedMenuProps {
     additionalStyle?: CSSProperties;
 }
 
-interface ExpandedMenuState {
-}
-
-class NavigationSubMenu extends React.Component<ExpandedMenuProps, ExpandedMenuState> {
+/**
+ * NavigationSubMenu component. This component is responsible for displaying the contact card.
+ *
+ * @author Alexander Andreev
+ */
+class NavigationSubMenu extends React.Component<ExpandedMenuProps> {
 
     render(){
         return (

@@ -11,10 +11,12 @@ interface DeviceRotatorProps {
     layoutType: LayoutType;
 }
 
-interface DeviceRotatorState {
-}
-
-class DeviceRotator extends React.Component<DeviceRotatorProps, DeviceRotatorState> {
+/**
+ * DeviceRotator component. This component is responsible for rotating the simulated device.
+ *
+ * @author Alexander Andreev
+ */
+class DeviceRotator extends React.Component<DeviceRotatorProps> {
 
     setStateOfSimulation(): void {
         switch (this.props.layoutType) {

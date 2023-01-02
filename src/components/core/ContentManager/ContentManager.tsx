@@ -22,6 +22,9 @@ interface ContentManagerProps {
     windowSize: {width: number, height: number};
 }
 
+/**
+ * ContentManager component. This component is responsible for displaying a given a selected menu item.
+ */
 class ContentManager extends React.Component<ContentManagerProps> {
     private readonly resizeListener = (event) => {
         WindowUtils.updateWindowClasses(event.target);

@@ -29,7 +29,11 @@ interface LandingCubeState {
     isLoading: boolean;
 }
 
-
+/**
+ * LandingPage component. This component is responsible for displaying the landing page of the application.
+ *
+ * @author Alexander Andreev
+ */
 class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
 
     constructor(props: LandingCubeProps) {

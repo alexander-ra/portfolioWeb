@@ -21,12 +21,21 @@ interface NavigationState {
     activeMenu: DropdownMenu;
 }
 
+/**
+ * Enum to keep track if a sub-menu is active.
+ */
 enum DropdownMenu {
     NONE,
     NAVIGATION,
     CONTACTS
 }
 
+
+/**
+ * Navigation component. This component is responsible for displaying the navigation of the application.
+ *
+ * @author Alexander Andreev
+ */
 class Navigation extends React.Component<NavigationProps, NavigationState> {
     constructor(props: NavigationProps) {
         super(props);

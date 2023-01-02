@@ -16,6 +16,12 @@ interface DeviceSimulatorState {
     isLoading: boolean;
 }
 
+/**
+ * DeviceSimulator component. This component is responsible for simulating a device. Is used for easier previewing of
+ * the application.
+ *
+ * @author Alexander Andreev
+ */
 class DeviceSimulator extends React.Component<DeviceSimulatorProps, DeviceSimulatorState> {
 
     constructor(props: DeviceSimulatorProps) {

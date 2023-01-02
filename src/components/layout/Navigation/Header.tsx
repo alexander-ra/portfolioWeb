@@ -24,6 +24,12 @@ interface HeaderProps {
     uiOrientation: UIOrientation;
 }
 
+
+/**
+ * Header component. This component is responsible for displaying the header of the application.
+ *
+ * @author Alexander Andreev
+ */
 class Header extends React.Component<HeaderProps> {
 
     private changeTheme = () => {

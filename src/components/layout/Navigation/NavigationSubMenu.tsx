@@ -16,6 +16,13 @@ interface ExpandedMenuState {
     shouldDisplayMenu: boolean;
 }
 
+
+/**
+ * NavigationSubMenu component. This component is responsible for displaying the navigation sub menu and handling the
+ * navigation.
+ *
+ * @author Alexander Andreev
+ */
 class NavigationSubMenu extends React.Component<ExpandedMenuProps, ExpandedMenuState> {
     constructor(props: ExpandedMenuProps) {
         super(props);

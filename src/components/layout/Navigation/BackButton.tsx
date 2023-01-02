@@ -12,12 +12,10 @@ interface BackButtonProps {
     uiOrientation: UIOrientation
 }
 
-interface BackButtonState {
-}
-
-class BackButton extends React.Component<BackButtonProps, BackButtonState> {
-
-
+/**
+ * BackButton component. This component is responsible for navigating back to the landing page.
+ */
+class BackButton extends React.Component<BackButtonProps> {
     render(){
         return <div className={"back-button"} onClick={() => {this.props.changePage(Page.LANDING)}}>
             <Icon className={"back-icon"} icon={IconType.faChevronLeft} />

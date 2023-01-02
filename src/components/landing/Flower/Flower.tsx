@@ -5,8 +5,12 @@ interface FlowerProps {
     flowerVisible?: any;
 }
 
+/**
+ * Flower component. This component is responsible for displaying the flower behind the cube.
+ *
+ * @author Alexander Andreev
+ */
 class Flower extends React.Component<FlowerProps> {
-
 
     render(){
         return (

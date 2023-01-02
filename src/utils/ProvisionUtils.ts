@@ -1,5 +1,5 @@
 import {IconType} from "../models/common/IconType";
-import { Section } from "../components/contentPage/ContentPage";
+import { Section } from "../models/content/Section";
 import {CircleMenuStates} from "../models/landing/CircleMenuStates";
 
 export class ProvisionUtils {
