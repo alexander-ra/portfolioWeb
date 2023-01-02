@@ -4,11 +4,11 @@ import './ChessBoard.scss';
 import Utils from '../../../utils/Utils';
 import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
 import StorageUtil, {StorageKey} from "../../../utils/StorageUtil";
-import ChessGameConfigurator from "./ChessConfigurator/ChessGameConfigurator";
-import ChessBoardLetters from "./ChessBoardLetters";
-import ChessPromotionPopup from "./ChessPromotionPopup";
-import ChessPlayers from "./ChessBoardPlayers";
-import ChessBoardSquare from "./ChessBoardSquare";
+import ChessGameConfigurator from "../ChessConfigurator/ChessGameConfigurator";
+import ChessBoardLetters from "./ChessBoardLetters/ChessBoardLetters";
+import ChessPromotionPopup from "./ChessPromotionPopup/ChessPromotionPopup";
+import ChessPlayers from "./ChessBoardPlayers/ChessBoardPlayers";
+import ChessBoardSquare from "./ChessBoardSquare/ChessBoardSquare";
 import { ChessSide } from '../../../models/chess/ChessSide';
 import { ChessMove } from '../../../models/chess/ChessMove';
 import { ChessPiece } from '../../../models/chess/ChessPiece';
@@ -17,7 +17,7 @@ import { ChessSquare } from '../../../models/chess/ChessSquare';
 import { ChessUtils } from '../../../utils/ChessUtils';
 import { ChessPieceType } from '../../../models/chess/ChessPieceType';
 import {ChessGameStatus} from "../../../models/chess/ChessGameStatus";
-import ChessBoardEndgameMessage from './ChessBoardEndgameMessage';
+import ChessBoardEndgameMessage from './ChessBoardEndgameMessage/ChessBoardEndgameMessage';
 
 interface ChessBoardProps {
     chessGameId: number;

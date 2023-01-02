@@ -1,0 +1,73 @@
+@import "../../../core/App";
+
+.chess-square {
+  height: 4em;
+  width: 4em;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .possible-move {
+    position: absolute;
+    width: 1.5em;
+    height: 1.5em;
+    background-color: rgba($main-secondary, .75);
+    border-radius: 50%;
+  }
+
+
+  .possible-move-with-piece {
+    position: absolute;
+    width: 3.75em;
+    height: 3.75em;
+    border-radius: 50%;
+    box-shadow: inset 0 0 .5em .5em rgba($main-secondary, .75);
+  }
+
+  .king-piece-thread {
+    position: absolute;
+    width: 3.75em;
+    height: 3.75em;
+    border-radius: 50%;
+    box-shadow: inset 0 0 .5em .5em rgba($main-primary, .75);
+  }
+
+  &.clicked-square {
+    border: 0.25em solid rgba($main-secondary, .75);
+  }
+
+  &.chess-square-black {
+    background-color: rgb($chess-square-black-bg);
+
+    &.last-move-from, &.last-move-to {
+      box-shadow: inset 0 0 .3em .1em rgba($shadow, .75);
+    }
+  }
+
+  &.chess-square-white {
+    background-color: rgb($chess-square-white-bg);
+
+    &.last-move-from, &.last-move-to {
+      box-shadow: inset 0 0 .3em .1em rgba($shadow, .75);
+    }
+  }
+
+  .chess-piece {
+    font-size: 2.5em;
+    text-align: center;
+    z-index: 2;
+    &.chess-piece-white {
+      filter: drop-shadow(0 0 1px rgb($shadow));
+      .icon {
+        background-color: rgb($chess-piece-white);
+      }
+    }
+
+    &.chess-piece-black {
+      .icon {
+        background-color: rgb($chess-piece-black);
+      }
+    }
+  }
+}

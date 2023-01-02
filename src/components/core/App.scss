@@ -1,4 +1,4 @@
-@import "Constants";
+@import "Styles/Constants";
 
 @function img($key) {
   @return $img-root + $key;

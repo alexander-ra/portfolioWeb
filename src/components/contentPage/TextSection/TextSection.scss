@@ -1,0 +1,392 @@
+@import "../../core/App";
+
+$circle-text-padding: 2em;
+$outer-radius: 32em;
+$outer-offset: $outer-radius / 2;
+$inner-radius: 26em;
+$border: calc($outer-radius - $inner-radius) / 2;
+$menu-radius: 6em;
+
+
+.text-section {
+  position: relative;
+  display: flex;
+  flex: 1 1 50%;
+  background-size: cover;
+  background-color: $section-content-color;
+  user-select: none;
+
+  .vw-landscape & {
+    max-width: 44em;
+    height: 22em;
+  }
+
+  .vw-portrait & {
+    height: calc(50% - 6em);
+    max-height: 45em;
+    width: 28em;
+    border-radius: 1em;
+    overflow: hidden;
+  }
+
+
+  &.text-section-left {
+    margin: 0 3em 0 0.5em;
+
+    .vw-landscape & {
+      clip-path: polygon(6em 0%, 100% 0%, 100% 100%, 6em 100%, 0% 50%);
+      animation: leftSectionAppearLandscape 1s forwards;
+    }
+
+    .vw-portrait & {
+      border-radius: 1em 1em 7.5em 7.5em;
+      margin: 1em 0 3em 0;
+      animation: leftSectionAppearPortrait 1s forwards;
+    }
+
+    .content {
+      text-align: right;
+
+      .content-text-wrapper {
+        .vw-portrait & {
+          margin-top: 1.6em;
+
+          .content-text {
+            padding: 1em .5em 6em .5em;
+          }
+        }
+      }
+
+      .content-title {
+        .vw-landscape & {
+          text-align: right;
+          right: 7em;
+        }
+      }
+
+      .outer-text-border {
+        float: left;
+        shape-outside: polygon(100% 0, 0 0, 0 100%, 100% 100%, 50% 50%);
+        clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%, 50% 50%);
+        background-position: 47.25em center;
+        transform: translateX(-1em);
+
+        .vw-portrait & {
+          clip-path: polygon(100% 100%, 50% 33%, 0 100%, 0 0, 100% 0);
+          shape-outside: polygon(100% 100%, 50% 33%, 0 100%, 0 0, 100% 0);
+        }
+      }
+
+      .inner-text-border {
+        .vw-landscape & {
+          float: right;
+          background-position: 33% center;
+          shape-outside: circle(67% at 100% 50%);
+          clip-path: circle(100% at 170% 50%);
+        }
+        .vw-portrait & {
+          background-position: center -7.5em;
+          bottom: 0;
+          clip-path: circle(100% at 50% 200%);
+        }
+      }
+    }
+  }
+  &.text-section-right {
+    margin: 0 .5em 0 3em;
+
+    .vw-landscape & {
+      clip-path: polygon(0% 0%, calc(100% - 6em) 0%, 100% 50%, calc(100% - 6em) 100%, 0% 100%);
+      animation: rightSectionAppearLandscape 1s forwards;
+    }
+
+    .vw-portrait & {
+      border-radius: 7.5em 7.5em 1em 1em;
+      margin: 3em 0 1em 0;
+      animation: rightSectionAppearPortrait 1s forwards;
+    }
+
+    .outer-text-border {
+      float: right;
+      shape-outside: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%);
+      background-position: -40.25em center;
+      transform: translateX(1em);
+    }
+
+    .inner-text-border {
+      .vw-landscape & {
+        float: left;
+        background-position: 67% center;
+        shape-outside: circle(67% at 0 50%);
+        clip-path: circle(100% at -70% 50%);
+      }
+
+      .vw-portrait & {
+        background-position: center -32em;
+        clip-path: circle(100% at 50% -100%)
+      }
+    }
+
+    .content {
+      .content-title {
+
+        .vw-portrait & {
+          bottom: 0;
+        }
+
+        .vw-landscape & {
+          text-align: left;
+          left: 7em;
+        }
+      }
+
+      .content-text-wrapper {
+        .vw-portrait & {
+          margin-top: 4.2em;
+
+          .content-text {
+            padding: 4em .5em 3em .5em;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    height: 100%;
+    color: rgb($main-primary);
+    box-shadow: inset 0 0 3em -2em rgb($shadow);
+
+    .vw-landscape & {
+      width: auto;
+      max-width: 45em;
+      min-width: 27em;
+    }
+
+    .vw-portrait & {
+      width: 100%;
+    }
+
+    .content-text-wrapper {
+      text-align: justify;
+      box-sizing: border-box;
+
+      .items-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-end;
+        border-radius: 2em;
+
+        &.with-background {
+          background-color: rgba(black, 0.25);
+
+          .dark-theme & {
+            background-color: rgba(white, 0.25);
+          }
+        }
+
+        .technology-item {
+          font-weight: bold;
+          background: rgba($main-primary, .75);
+          color: rgb($contrast-secondary);
+          border-radius: .5em;
+          text-align: center;
+          height: 2em;
+          margin: .2em;
+          padding: .5em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .logo-item {
+          width: 8em;
+          height: 4em;
+          margin: 0.2em .5em;
+          background-size: 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+
+          &.betclic {
+            background-image: url("../../../../public/resources/categoryImages/client/companies/betclic.png");
+          }
+
+          &.bet365 {
+            background-image: url("../../../../public/resources/categoryImages/client/companies/bet365.png");
+          }
+
+          &.deloitte {
+            background-image: url("../../../../public/resources/categoryImages/client/companies/deloitte.png");
+          }
+
+          &.kbc {
+            background-image: url("../../../../public/resources/categoryImages/client/companies/kbc.png");
+          }
+
+          &.metro {
+            background-image: url("../../../../public/resources/categoryImages/client/companies/metro.png");
+          }
+
+          &.playtech {
+            background-image: url("../../../../public/resources/categoryImages/client/companies/playtech.png");
+          }
+
+          &.raiffeisen {
+            background-image: url("../../../../public/resources/categoryImages/client/companies/raiffeisen.png");
+          }
+
+          &.williamhill {
+            background-image: url("../../../../public/resources/categoryImages/client/companies/williamhill.png");
+          }
+
+        }
+      }
+
+      .vw-landscape & {
+        font-size: 1.5rem;
+        padding-top: 1rem;
+      }
+
+      .vw-portrait & {
+        font-size: 1.25em;
+        overflow: scroll;
+        height: calc(100% - 4.5em);
+        padding: 0 0.5em;
+      }
+    }
+
+
+    .outer-text-border {
+      //background-color: rgba($main-primary, .25);
+      background-image: url("../../../../public/resources/svgAssets/light-theme/crystal.svg");
+      transition: background-image 0.1s;
+      background-size: 500%;
+      cursor: pointer;
+
+
+      .dark-theme & {
+        background-image: url("../../../../public/resources/svgAssets/crystalSelected.svg");
+      }
+
+      &:hover {
+        background-image: url("../../../../public/resources/svgAssets/crystalSelected.svg");
+
+        .dark-theme & {
+          background-image: url("../../../../public/resources/svgAssets/dark-theme/crystal.svg");
+        }
+      }
+
+      .vw-landscape & {
+        width: 7em;
+        height: 100%;
+      }
+
+      .vw-portrait & {
+        width: 100%;
+        height: 10em;
+        display: none; // TODO: remove from controller
+      }
+    }
+
+    .inner-text-border {
+      background-image: url("../../../../public/resources/svgAssets/light-theme/crystal.svg");
+      background-repeat: no-repeat;
+
+      .dark-theme & {
+        background-image: url("../../../../public/resources/svgAssets/crystalSelected.svg");
+      }
+
+      .vw-landscape & {
+        background-size: 500%;
+        width: 12em;
+        height: 100%;
+      }
+
+      .vw-portrait & {
+        background-size: 250%;
+        position: absolute;
+        width: 100%;
+        height: 13em;
+        background-color: rgb($contrast-primary);
+      }
+    }
+
+    .content-body {
+      overflow-y: auto;
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      font-size: .8em;
+    }
+
+    .content-title {
+      position: absolute;
+      font-size: 1em;
+      font-weight: bold;
+      color: rgb($main-primary);
+
+      .vw-landscape & {
+        font-size: 1.25em;
+        top: 1em;
+      }
+
+      .vw-portrait & {
+        background-image: url("../../../../public/resources/svgAssets/crystalSelected.svg");
+        background-size: cover;
+        background-color: rgb($contrast-primary);
+        color: rgb($button-text-color);
+        text-align: center;
+        width: 100%;
+        font-size: 1.5em;
+        line-height: 1.75em;
+      }
+    }
+  }
+}
+
+@keyframes leftSectionAppearLandscape {
+    0% {
+        transform: translateX(9em);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rightSectionAppearLandscape {
+    0% {
+        transform: translateX(-9em);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes leftSectionAppearPortrait {
+  0% {
+    transform: translateY(9em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rightSectionAppearPortrait {
+  0% {
+    transform: translateY(-9em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

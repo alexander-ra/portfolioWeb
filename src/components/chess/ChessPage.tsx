@@ -4,19 +4,19 @@ import './ChessPage.scss';
 import Utils from '../../utils/Utils';
 import {ApiLichessUtils} from "../../utils/ApiLichessUtils";
 import StorageUtil, {StorageKey} from "../../utils/StorageUtil";
-import ChessGameConfigurator from "./ChessBoard/ChessConfigurator/ChessGameConfigurator";
+import ChessGameConfigurator from "./ChessConfigurator/ChessGameConfigurator";
 import {ChessBoardModel} from "../../reducers/chessBoard/chessBoardReducer";
-import ChessBoardLetters from "./ChessBoard/ChessBoardLetters";
-import ChessPromotionPopup from "./ChessBoard/ChessPromotionPopup";
-import ChessPlayers from "./ChessBoard/ChessBoardPlayers";
+import ChessBoardLetters from "./ChessBoard/ChessBoardLetters/ChessBoardLetters";
+import ChessPromotionPopup from "./ChessBoard/ChessPromotionPopup/ChessPromotionPopup";
+import ChessPlayers from "./ChessBoard/ChessBoardPlayers/ChessBoardPlayers";
 import ChessBoard from "./ChessBoard/ChessBoard";
 import {ChessGameStatus} from "../../models/chess/ChessGameStatus";
 import { ChessSide } from '../../models/chess/ChessSide';
 import { ChessMove } from '../../models/chess/ChessMove';
 import { ChessPiece } from '../../models/chess/ChessPiece';
 import { ChessCastleInfo } from '../../models/chess/ChessCastleInfo';
-import {IconType} from "../common/icon/IconType";
-import Icon from '../common/icon/Icon';
+import {IconType} from "../../models/common/IconType";
+import Icon from '../common/Icon/Icon';
 
 interface ChessPageProps {
     chessGameId: number;

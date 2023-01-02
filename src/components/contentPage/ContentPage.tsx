@@ -5,15 +5,15 @@ import {Position} from "../../models/common/Position";
 import {CircleMenuStates} from "../../models/landing/CircleMenuStates";
 import {CircleRotationUtils} from "../../utils/CircleRotationUtils";
 import Utils from "../../utils/Utils";
-import TextSection, {TextSectionPosition} from "./TextSection";
+import TextSection, {TextSectionPosition} from "./TextSection/TextSection";
 import {ContentData, MenuContent} from '../../labels/ContentLabels';
 import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
 import StorageUtil, {StorageArrayKey} from "../../utils/StorageUtil";
-import Icon from '../common/icon/Icon';
+import Icon from '../common/Icon/Icon';
 import {ProvisionUtils} from "../../utils/ProvisionUtils";
 import BrowserUtils from "../../utils/BrowserUtils";
-import {UIOrientation} from '../core/UIOrientation';
+import {UIOrientation} from '../../models/common/UIOrientation';
 
 interface ContentPageProps {
     sections: Section[];

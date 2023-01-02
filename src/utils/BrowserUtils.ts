@@ -1,5 +1,5 @@
 import Utils from "./Utils";
-import {UIOrientation} from "../components/core/UIOrientation";
+import {UIOrientation} from "../models/common/UIOrientation";
 import {Page} from "../models/common/Page";
 import {CircleMenuStates} from "../models/landing/CircleMenuStates";
 

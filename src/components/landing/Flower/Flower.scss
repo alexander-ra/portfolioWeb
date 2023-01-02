@@ -1,0 +1,79 @@
+@import "../../core/App";
+
+.flower-wrapper {
+  pointer-events: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  animation: rotate 90s linear infinite;
+
+  .flower {
+    display: block;
+    height: 10%;
+    width: 10%;
+    background: url("../../../../public/resources/svgAssets/light-theme/flowerFin.svg") no-repeat center;
+    background-size: cover;
+
+    .dark-theme & {
+      background: url("../../../../public/resources/svgAssets/dark-theme/flowerFin.svg") no-repeat center;
+      background-size: cover;
+    }
+  }
+
+
+  .flower-center{
+    transition-property: box-shadow, background-color;
+    transition-delay: .25s;
+    transition-duration: 1.5s;
+    position: absolute;
+    left: calc(50% - 7em);
+    top: calc(50% - 7em);
+    width: 14em;
+    height: 14em;
+    border-radius: 50%;
+    box-shadow: 0 0 .2em 2em rgb($contrast-secondary);
+    background-color: rgb($contrast-secondary);
+    z-index: 1;
+  }
+
+  &.opened {
+
+    .flower {
+      opacity: 0;
+      animation-name: flowerAppear;
+      animation-delay: .1s;
+      animation-duration: 3s;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
+      visibility: visible;
+    }
+
+
+    .flower-center{
+      box-shadow: 0 0 2em 1.5em rgb($flower-shadow);
+      background-color: rgb($flower-shadow);
+    }
+  }
+}
+
+@keyframes flowerAppear {
+  0% {height: 15em; width: 15em; opacity: 0}
+  60% {height: 65em; width: 65em; opacity: .8}
+  100% {height: 50em; width: 50em; opacity: 1}
+}
+
+@keyframes flowerHide {
+  0% {height: 50em; width: 50em; opacity: 1}
+  100% {height: 15em; width: 15em; opacity: 0}
+}
+
+@keyframes rotate {
+  0% {transform: rotate(360deg)}
+  100% {transform: rotate(0deg)}
+}

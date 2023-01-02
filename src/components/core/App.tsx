@@ -1,6 +1,6 @@
 import React, {CSSProperties, Suspense} from 'react';
 import './App.scss';
-import store from "../../store/store";
+import store from "../../reducers/store";
 import { Provider } from 'react-redux';
 import AppEntry from "./AppEntry";
 

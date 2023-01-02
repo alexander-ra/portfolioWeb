@@ -1,7 +1,7 @@
 import React, {Suspense} from 'react';
-import DeviceRotator from "../layout/DeviceRotator";
+import DeviceRotator from "../layout/DeviceSimulator/DeviceRotator";
 import "./AppDecorator.scss";
-import DeviceSimulator from "../layout/DeviceSimulator";
+import DeviceSimulator from "../layout/DeviceSimulator/DeviceSimulator";
 import {connect} from "react-redux";
 import BrowserUtils from '../../utils/BrowserUtils';
 

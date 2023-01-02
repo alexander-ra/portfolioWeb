@@ -1,0 +1,71 @@
+@import "../../core/App";
+
+.device-simulator-wrapper {
+    height: 4em;
+    background-color: rgba($contrast-primary, .5);
+    position: fixed;
+    bottom: -6em;
+    left: calc(50% - 7.5em);
+    display: flex;
+    padding: 1em;
+    border-radius: 1em;
+    z-index: 3;
+    animation: deviceSimulatorAppear 1s ease-in-out forwards;
+
+    .layout-native.vw-portrait & {
+        display: none;
+    }
+
+    .device {
+        width: 4em;
+        height: 4em;
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        margin: 0 .2em;
+
+        &.desktop-device {
+            background-image: url("../../../../public/resources/svgAssets/deviceSimulatorIcons/desktop.svg");
+
+            &.selected {
+                background-image: url("../../../../public/resources/svgAssets/deviceSimulatorIcons/desktopSelected.svg");
+            }
+        }
+
+        &.mobile-device {
+            background-image: url("../../../../public/resources/svgAssets/deviceSimulatorIcons/phone.svg");
+
+            &.selected {
+                background-image: url("../../../../public/resources/svgAssets/deviceSimulatorIcons/phoneSelected.svg");
+            }
+        }
+
+        &.tablet-device {
+            background-image: url("../../../../public/resources/svgAssets/deviceSimulatorIcons/tablet.svg");
+
+            &.selected {
+                background-image: url("../../../../public/resources/svgAssets/deviceSimulatorIcons/tabletSelected.svg");
+            }
+        }
+    }
+}
+@media (orientation: landscape) {
+    .device-simulator-wrapper {
+        font-size: 1vmin;
+    }
+}
+
+@media (orientation: portrait) {
+    .device-simulator-wrapper {
+        font-size: 1vmax;
+    }
+}
+
+@keyframes deviceSimulatorAppear {
+    0% {
+        bottom: -6em;
+    }
+    100% {
+        bottom: .5em;
+    }
+}

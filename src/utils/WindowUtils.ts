@@ -1,9 +1,9 @@
-import {ThemeType} from "../components/core/ThemeType";
-import store from "../store/store";
+import {ThemeType} from "../models/common/ThemeType";
+import store from "../reducers/store";
 import {setUiOrientation, setWindowSize} from "../reducers/window/windowAction";
 import BrowserUtils from "./BrowserUtils";
-import {LayoutType} from "../components/core/LayoutType";
-import {UIOrientation} from "../components/core/UIOrientation";
+import {LayoutType} from "../models/common/LayoutType";
+import {UIOrientation} from "../models/common/UIOrientation";
 import {Page} from "../models/common/Page";
 
 export class WindowUtils {

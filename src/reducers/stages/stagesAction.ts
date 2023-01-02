@@ -1,8 +1,8 @@
 import {ADD_CIRCLE_MENU_STATE, CHANGE_PAGE, COMPLETE_DEV_INTRO} from "../ActionTypes";
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 import {Page} from "../../models/common/Page";
-import {UIOrientation} from "../../components/core/UIOrientation";
-import { LayoutType } from "../../components/core/LayoutType";
+import {UIOrientation} from "../../models/common/UIOrientation";
+import { LayoutType } from "../../models/common/LayoutType";
 
 const completeDevIntro = () => ({
     type: COMPLETE_DEV_INTRO,

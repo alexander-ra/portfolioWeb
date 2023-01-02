@@ -1,8 +1,8 @@
 import React, {CSSProperties, Suspense} from 'react';
 import BrowserUtils from '../../utils/BrowserUtils';
 const AppDecorator = React.lazy(() => import('./../../components/core/AppDecorator')); // Lazy-loaded
-const ContentManager = React.lazy(() => import('./../../components/core/ContentManager')); // Lazy-loaded
-const Header = React.lazy(() => import('./../../components/layout/Header')); // Lazy-loaded
+const ContentManager = React.lazy(() => import('./ContentManager/ContentManager')); // Lazy-loaded
+const Header = React.lazy(() => import('../layout/Navigation/Header')); // Lazy-loaded
 
 export interface AppEntryProps {
 }

@@ -1,0 +1,89 @@
+@import "../../core/App";
+
+.header-wrapper {
+    background-color: rgb($header-color);
+    height: $header-height;
+    color: rgb($main-primary);
+    z-index: 4;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    transform: translateY(-150%);
+    animation: headerAppear 1s ease-in-out forwards;
+
+    .vw-portrait & {
+        height: $header-height * 2.5;
+    }
+
+    .navigation-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+
+        .navigation-item {
+            height: 100%;
+            position: relative;
+            padding: 0 3em;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .navigation-label {
+                margin: 0.25em 0.25em 0 0.25em;
+
+                .vw-portrait & {
+                    display: none;
+                    margin: 0.25em 0.5em 0 0.5em;
+                }
+            }
+
+            .navigation-sub-icon {
+                width: 1.5em;
+                font-size: .66em;
+
+                .vw-portrait & {
+                    font-size: .5em;
+                }
+            }
+
+            .vw-portrait & {
+                font-size: 2.5em;
+                margin: 0;
+                padding: 0;
+                flex: 0 0 25%;
+            }
+
+            &:hover {
+                color: rgb($accent-secondary);
+            }
+
+            .expanded-menu {
+                display: flex;
+            }
+        }
+
+        .navigation-item + .navigation-item:before {
+            position: absolute;
+            left: 0;
+            display: block;
+            height: 1em;
+            content: "";
+            border-left: rgba($main-primary, 0.25) solid 1px;
+        }
+    }
+
+}
+
+@keyframes headerAppear {
+    0% {
+        transform: translateY(-150%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

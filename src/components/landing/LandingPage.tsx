@@ -1,12 +1,12 @@
 import React from 'react';
 import './LandingPage.scss';
-import LandingCube from "./cube/Cube";
+import LandingCube from "./Cube/Cube";
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 import {LandingDescriptions} from "../../labels/LandingLabels";
 import {connect} from 'react-redux';
-import TextBubble from "../common/text-bubble/TextBubble";
-import MenuBubble from "../common/text-bubble/MenuBubble";
-import { IconType } from '../common/icon/IconType';
+import TextBubble from "../common/TextBubble/TextBubble";
+import MenuBubble from "../common/TextBubble/MenuBubble";
+import { IconType } from '../../models/common/IconType';
 import BrowserUtils from '../../utils/BrowserUtils';
 import { ProvisionUtils } from '../../utils/ProvisionUtils';
 import img1 from "../../../public/resources/categoryImages/chess/home.jpg";
@@ -14,7 +14,7 @@ import img2 from "../../../public/resources/categoryImages/client/home.jpg";
 import img3 from "../../../public/resources/categoryImages/experience/home.jpg";
 import {Page} from "../../models/common/Page";
 import {WindowUtils} from "../../utils/WindowUtils";
-import store from "../../store/store";
+import store from "../../reducers/store";
 import {changePage} from "../../reducers/stages/stagesAction";
 import {openCube, selectMenu} from "../../reducers/cube/cubeAction";
 

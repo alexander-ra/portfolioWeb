@@ -1,8 +1,8 @@
 import {SET_LAYOUT_TYPE, SET_THEME, SET_UI_ORIENTATION, SET_WINDOW_SIZE} from "../ActionTypes"
-import {UIOrientation} from "../../components/core/UIOrientation";
-import { LayoutType } from "../../components/core/LayoutType";
+import {UIOrientation} from "../../models/common/UIOrientation";
+import { LayoutType } from "../../models/common/LayoutType";
 import BrowserUtils from "../../utils/BrowserUtils";
-import { ThemeType } from "../../components/core/ThemeType";
+import { ThemeType } from "../../models/common/ThemeType";
 
 export interface WindowSize {
     height: number;

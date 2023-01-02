@@ -1,6 +1,6 @@
 import Utils from "./Utils";
 import {ChessUtils} from "./ChessUtils";
-import store from "../store/store";
+import store from "../reducers/store";
 import {
     endGame,
     makeMove, resetGame,

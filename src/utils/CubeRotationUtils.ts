@@ -1,6 +1,6 @@
 import {CubeMenuStates} from "../models/landing/CubeMenuStates";
 import {Position} from "../models/common/Position";
-import Cube, {CubeRotationState} from "../components/landing/cube/Cube";
+import Cube, {CubeRotationState} from "../components/landing/Cube/Cube";
 import BrowserUtils from "./BrowserUtils";
 
 export class CubeRotationUtils {
@@ -8,7 +8,7 @@ export class CubeRotationUtils {
     private static readonly SECTION_INITIAL_DIFFERENCE_DEG = 35;
     private static readonly SECTION_FREE_RANGE_DEG = 20;
     private static readonly SECTION_VERTICAL_OFFSET_DEG= 8;
-    // How fast the cube is rotated by dragging. Value less than 1 is not commented.
+    // How fast the Cube is rotated by dragging. Value less than 1 is not commented.
     private static readonly ROTATION_SENSITIVITY_DESKTOP = 2;
     private static readonly ROTATION_SENSITIVITY_MOBILE = 3;
 

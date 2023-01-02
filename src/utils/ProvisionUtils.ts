@@ -1,4 +1,4 @@
-import {IconType} from "../components/common/icon/IconType";
+import {IconType} from "../models/common/IconType";
 import { Section } from "../components/contentPage/ContentPage";
 import {CircleMenuStates} from "../models/landing/CircleMenuStates";
 

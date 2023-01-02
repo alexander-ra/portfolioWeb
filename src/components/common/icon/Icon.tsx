@@ -1,7 +1,7 @@
 import React from 'react';
 import Utils from '../../../utils/Utils';
 import "./Icon.scss"
-import {IconType} from "./IconType";
+import {IconType} from "../../../models/common/IconType";
 
 interface IconProps {
     icon: IconType;

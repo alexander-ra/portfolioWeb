@@ -1,6 +1,6 @@
 import {inspect} from "util";
 import Utils from "./Utils";
-import store from "../store/store";
+import store from "../reducers/store";
 import {SET_CHESS_BOARD_PIECES} from "../reducers/chessBoard/ChessBoardActionTypes";
 import {
     setCastleInfo,
@@ -13,7 +13,7 @@ import { ChessPieceType } from "../models/chess/ChessPieceType";
 import { ChessMove } from "../models/chess/ChessMove";
 import { ChessCastleInfo } from "../models/chess/ChessCastleInfo";
 import { ChessLetters } from "../models/chess/ChessLetters";
-import { IconType } from "../components/common/icon/IconType";
+import { IconType } from "../models/common/IconType";
 
 export class ChessUtils {
 

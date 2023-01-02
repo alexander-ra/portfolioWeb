@@ -6,10 +6,10 @@ import {CubeMenuStates} from "../../../models/landing/CubeMenuStates";
 import {connect} from 'react-redux';
 import {openCube, selectMenu} from "../../../reducers/cube/cubeAction";
 import {CubeRotationUtils} from "../../../utils/CubeRotationUtils";
-import Flower from "./Flower/Flower";
-import CubeCover from "./CubeCover";
-import CubeWall from "./CubeWall";
-import { IconType } from '../../common/icon/IconType';
+import Flower from "../Flower/Flower";
+import CubeCover from "./CubeCover/CubeCover";
+import CubeWall from "./CubeWall/CubeWall";
+import { IconType } from '../../../models/common/IconType';
 import Utils from '../../../utils/Utils';
 
 interface CubeProps {
@@ -69,7 +69,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     componentWillUnmount() {
-        console.log("cube unmount");
+        console.log("Cube unmount");
         clearInterval(this.autoRotationInterval);
         this.removeCubeRotationListeners();
     }
@@ -103,7 +103,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
 
 
     dragStart = (event: any) => {
-        console.log("cube drag start");
+        console.log("Cube drag start");
         this.dragStartingPos = CubeRotationUtils.initializeDragCursor(event);
         event.preventDefault();
         window.onmousemove = (event) => {
@@ -115,7 +115,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
             }
 
             window.onmouseup = () => {
-                console.log("cube drag end");
+                console.log("Cube drag end");
                 event.preventDefault();
                 window.onmousemove = null;
                 window.onmouseup = null;
@@ -131,7 +131,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     dragStartTouch = (event: any) => {
-        console.log("cube drag start touch");
+        console.log("Cube drag start touch");
         this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
         event.preventDefault();
         document.ontouchmove = (event) => {
@@ -143,7 +143,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
             }
 
             document.ontouchend = () => {
-                console.log("cube drag end touch");
+                console.log("Cube drag end touch");
                 event.preventDefault();
                 document.onmousemove = null;
                 document.onmouseup = null;
