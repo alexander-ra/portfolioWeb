@@ -1,6 +1,6 @@
 import Utils from "./Utils";
 
-export default class AppStorage {
+export default class StorageUtil {
 
     public static setStorage(key: StorageKey, value: any): void {
         window.localStorage.setItem(key, value);
@@ -32,12 +32,12 @@ export default class AppStorage {
     }
 
     public static addItemToArrayInLocalStorage(key: StorageArrayKey, item: any) {
-        let array = AppStorage.getArrayFromLocalStorage(key);
+        let array = StorageUtil.getArrayFromLocalStorage(key);
         if (Utils.isArrayEmpty(array)) {
             array = [];
         }
         array.push(item);
-        AppStorage.saveArrayToLocalStorage(key, array);
+        StorageUtil.saveArrayToLocalStorage(key, array);
     }
 
 }
@@ -52,4 +52,4 @@ export enum StorageArrayKey {
     VISITED_SECTIONS = "VISITED_SECTIONS",
 }
 
-export { AppStorage };
+export { StorageUtil };

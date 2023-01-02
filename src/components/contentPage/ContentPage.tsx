@@ -9,7 +9,7 @@ import TextSection, {TextSectionPosition} from "./TextSection";
 import {ContentData, MenuContent} from '../../labels/ContentLabels';
 import {Page} from "../../models/common/Page";
 import {changePage} from "../../reducers/stages/stagesAction";
-import AppStorage, {StorageArrayKey} from "../../utils/AppStorage";
+import StorageUtil, {StorageArrayKey} from "../../utils/StorageUtil";
 import Icon from '../common/icon/Icon';
 import {ProvisionUtils} from "../../utils/ProvisionUtils";
 import BrowserUtils from "../../utils/BrowserUtils";
@@ -93,12 +93,12 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         }
         if (prevState.selectedMenuIndex !== this.state.selectedMenuIndex) {
             clearTimeout(this.visitedTimeout);
-            const visitedSections: CircleMenuStates[] = AppStorage.getArrayFromLocalStorage(StorageArrayKey.VISITED_SECTIONS) || []
+            const visitedSections: CircleMenuStates[] = StorageUtil.getArrayFromLocalStorage(StorageArrayKey.VISITED_SECTIONS) || []
             const isVisited = visitedSections.includes(this.props.sections[this.state.selectedMenuIndex].menu);
 
             if (!isVisited) {
                 this.visitedTimeout = setTimeout(() => {
-                    AppStorage.addItemToArrayInLocalStorage(StorageArrayKey.VISITED_SECTIONS, this.props.sections[this.state.selectedMenuIndex].menu);
+                    StorageUtil.addItemToArrayInLocalStorage(StorageArrayKey.VISITED_SECTIONS, this.props.sections[this.state.selectedMenuIndex].menu);
                     this.setState({});
                     }, this.MIN_TIME_VISITED);
             }
@@ -353,7 +353,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
 
     renderSections(): JSX.Element[] {
         const sections: JSX.Element[] = [];
-        const visitedSections: CircleMenuStates[] = AppStorage.getArrayFromLocalStorage(StorageArrayKey.VISITED_SECTIONS) || [];
+        const visitedSections: CircleMenuStates[] = StorageUtil.getArrayFromLocalStorage(StorageArrayKey.VISITED_SECTIONS) || [];
         this.props.sections.forEach((section: Section, index) => {
            const isVisited = visitedSections.includes(section.menu);
            sections.push(

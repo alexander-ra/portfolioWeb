@@ -7,7 +7,7 @@ import {
     SET_PLAYER_SIDE,
     SYNC_MOVES
 } from "./ChessActionTypes";
-import AppStorage, {StorageKey} from "../../utils/AppStorage";
+import StorageUtil, {StorageKey} from "../../utils/StorageUtil";
 import {ChessGameStatus} from "../../models/chess/ChessGameStatus";
 import { ChessAiDifficulty } from "../../models/chess/ChessAiDifficulty";
 import { ChessSide } from "../../models/chess/ChessSide";
@@ -22,10 +22,10 @@ export interface ChessReduceModel {
     chessMoves: ChessMove[];
     gameStatus: ChessGameStatus;
 }
-const initialAvatar = AppStorage.getStorage(StorageKey.PLAYER_AVATAR);
+const initialAvatar = StorageUtil.getStorage(StorageKey.PLAYER_AVATAR);
 
 const initialState: ChessReduceModel = {
-    gameId: AppStorage.getStorage(StorageKey.CHESS_GAME_ID),
+    gameId: StorageUtil.getStorage(StorageKey.CHESS_GAME_ID),
     opponentLevel: undefined,
     playerSide: ChessSide.WHITE,
     playerAvatar: initialAvatar,
@@ -36,8 +36,8 @@ const initialState: ChessReduceModel = {
 export default function chessReducer(state = initialState, action: any): ChessReduceModel {
     switch (action.type) {
         case SET_CHESS_GAME: {
-            AppStorage.setStorage(StorageKey.CHESS_GAME_ID, action.payload.gameId);
-            AppStorage.setStorage(StorageKey.PLAYER_AVATAR, action.payload.playerAvatar);
+            StorageUtil.setStorage(StorageKey.CHESS_GAME_ID, action.payload.gameId);
+            StorageUtil.setStorage(StorageKey.PLAYER_AVATAR, action.payload.playerAvatar);
             return {
                 ...state,
                 gameId: action.payload.gameId,
@@ -80,7 +80,7 @@ export default function chessReducer(state = initialState, action: any): ChessRe
             }
         }
         case RESET_GAME: {
-            AppStorage.deleteStorage(StorageKey.CHESS_GAME_ID);
+            StorageUtil.deleteStorage(StorageKey.CHESS_GAME_ID);
             return {
                 ...initialState,
                 gameId: null

@@ -4,7 +4,7 @@ import './ChessBoardSquare.scss';
 import Utils from '../../../utils/Utils';
 import {ChessUtils} from "../../../utils/ChessUtils";
 import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
-import AppStorage, {StorageKey} from "../../../utils/AppStorage";
+import StorageUtil, {StorageKey} from "../../../utils/StorageUtil";
 import ChessGameConfigurator from "./ChessConfigurator/ChessGameConfigurator";
 import {ChessBoardModel} from "../../../reducers/chessBoard/chessBoardReducer";
 import ChessBoardLetters from "./ChessBoardLetters";

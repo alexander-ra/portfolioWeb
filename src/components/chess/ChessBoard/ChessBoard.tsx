@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import './ChessBoard.scss';
 import Utils from '../../../utils/Utils';
 import {ApiLichessUtils} from "../../../utils/ApiLichessUtils";
-import AppStorage, {StorageKey} from "../../../utils/AppStorage";
+import StorageUtil, {StorageKey} from "../../../utils/StorageUtil";
 import ChessGameConfigurator from "./ChessConfigurator/ChessGameConfigurator";
 import ChessBoardLetters from "./ChessBoardLetters";
 import ChessPromotionPopup from "./ChessPromotionPopup";
@@ -51,7 +51,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
 
     componentDidMount() {
         if (Utils.isNull(this.props.chessGameId)) {
-            const savedGameId = AppStorage.getStorage(StorageKey.CHESS_GAME_ID);
+            const savedGameId = StorageUtil.getStorage(StorageKey.CHESS_GAME_ID);
             console.log("save", savedGameId);
             if (Utils.isNotNull(savedGameId)) {
                 ApiLichessUtils.getUpdatesForGame(savedGameId);

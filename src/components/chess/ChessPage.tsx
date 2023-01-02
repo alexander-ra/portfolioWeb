@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import './ChessPage.scss';
 import Utils from '../../utils/Utils';
 import {ApiLichessUtils} from "../../utils/ApiLichessUtils";
-import AppStorage, {StorageKey} from "../../utils/AppStorage";
+import StorageUtil, {StorageKey} from "../../utils/StorageUtil";
 import ChessGameConfigurator from "./ChessBoard/ChessConfigurator/ChessGameConfigurator";
 import {ChessBoardModel} from "../../reducers/chessBoard/chessBoardReducer";
 import ChessBoardLetters from "./ChessBoard/ChessBoardLetters";
