@@ -61,4 +61,5 @@ export enum CommonLabels {
     CHESS_LOSE = "You lost! Better luck next time!",
     CHESS_INTERRUPTED = "Game interrupted!",
     PLAY_AGAIN = "Play Again",
+    END_GAME = "End Game",
 }

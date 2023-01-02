@@ -11,6 +11,7 @@ import CubeCover from "./CubeCover/CubeCover";
 import CubeWall from "./CubeWall/CubeWall";
 import { IconType } from '../../../models/common/IconType';
 import Utils from '../../../utils/Utils';
+import { CommonLabels } from '../../../provision/CommonLabels';
 
 interface CubeProps {
     openCube?: any;
@@ -264,8 +265,12 @@ class Cube extends React.Component<CubeProps, CubeState> {
                 </div>
                 { !this.state.cubeOpened &&
                     <>
-                        {this.props.isLoading && <div className={"starting-text loading-text"}>Loading...</div>}
-                        {!this.props.isLoading && <div className={"starting-text ready-text"}>Ready!</div>}
+                        {this.props.isLoading && <div className={"starting-text loading-text"}>
+                            {CommonLabels.LOADING}
+                        </div>}
+                        {!this.props.isLoading && <div className={"starting-text ready-text"}>
+                            {CommonLabels.READY}
+                        </div>}
                     </>
                 }
             </div>

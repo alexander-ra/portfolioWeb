@@ -27,9 +27,17 @@ interface ChessBoardSquareProps {
     onClick: (square: ChessSquare) => any;
 }
 
-
+/**
+ * ChessBoardSquare component. Represents a single square on the chess board.
+ *
+ * @author Alexander Andreev
+ */
 class ChessBoardSquare extends React.Component<ChessBoardSquareProps> {
 
+    /**
+     * Adds additional classes to the square, depending on the square's position and different conditions
+     * @param square - the square to add classes to
+     */
     getSquareAdditionalClasses(square: ChessSquare): string {
         let additionalClasses = `chess-square-${(square.row + square.col) % 2 === 0 ? "black" : "white"}`;
 
@@ -48,32 +56,51 @@ class ChessBoardSquare extends React.Component<ChessBoardSquareProps> {
         return additionalClasses;
     }
 
+    /**
+     *  Adds additional classes to the piece
+     * @param square - the square where the piece is located
+     * @param pieceIndex - the index of the piece in the chessPieces array
+     */
     decorateSquare(square: ChessSquare, pieceIndex: number): JSX.Element {
         return <>
             {
                 this.isPossibleMove(square) && <div className={`${pieceIndex !== -1 ? "possible-move-with-piece" : "possible-move"}`}></div>
             }
             {
-                this.pieceInThread(pieceIndex) && <div className={"king-piece-thread"}></div>
+                this.pieceInCheck(pieceIndex) && <div className={"king-piece-thread"}></div>
             }
         </>
     }
 
-    pieceInThread(pieceIndex: number): boolean {
+    /**
+     * Checks if the piece is in check. Only kings can be in check.
+     * @param pieceIndex - the index of the piece in the chessPieces array
+     */
+    pieceInCheck(pieceIndex: number): boolean {
         let inThread = false;
         if (Utils.isNotNull(this.props.sideInCheck) && pieceIndex !== -1 && this.props.chessPieces[pieceIndex].type === ChessPieceType.KING &&
             this.props.chessPieces[pieceIndex].side === this.props.sideInCheck) {
             inThread = true
+        } else {
+            console.error("Piece in thread does not exist or is not a king");
         }
         return inThread;
     }
 
+    /**
+     * Checks if the square is a possible move for the selected piece
+     * @param square - the square to check
+     */
     isPossibleMove(square): boolean {
         return this.props.possibleMoves.findIndex((possibleMove: ChessSquare) => {
             return ChessUtils.chessSquaresEqual(square, possibleMove);
         }) !== -1;
     }
 
+    /**
+     * Checks if the square has a piece on it. If it does, it returns an icon representing the piece.
+     * @param pieceIndex - the index of the piece in the chessPieces array
+     */
     renderChessPiece(pieceIndex: number): JSX.Element {
         return <>
             { pieceIndex !== -1 && <div className={`chess-piece chess-piece-${this.props.chessPieces[pieceIndex].side.toLowerCase()}`}>

@@ -34,6 +34,9 @@ interface ChessBoardState {
     gameInProgress: boolean;
 }
 
+/**
+ * ChessBoard component. Represents the chess board.
+ */
 class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     private possibleMoves: ChessSquare[] = [];
     private promotionMove: ChessSquare;

@@ -17,6 +17,7 @@ import { ChessPiece } from '../../models/chess/ChessPiece';
 import { ChessCastleInfo } from '../../models/chess/ChessCastleInfo';
 import {IconType} from "../../models/common/IconType";
 import Icon from '../common/Icon/Icon';
+import ChessEndButton from "./ChessEndButton/ChessEndButton";
 
 interface ChessPageProps {
     chessGameId: number;
@@ -28,6 +29,11 @@ interface ChessPageProps {
     sideInCheck: ChessSide;
 }
 
+/**
+ * ChessPage component. This component is responsible for displaying all chess related content.
+ *
+ * @author Alexander Andreev
+ */
 class ChessPage extends React.Component<ChessPageProps> {
 
     render(){
@@ -35,10 +41,8 @@ class ChessPage extends React.Component<ChessPageProps> {
         <div className={`chess-page-wrapper`}>
             <ChessBoard />
             {this.props.gameStatus === ChessGameStatus.IN_PROGRESS &&
-                <button className={`game-end`} onClick={() => {ApiLichessUtils.resignGame()}}>
-                    <span>End game </span>
-                    <Icon  icon={IconType.faXmark} />
-                </button>}
+                <ChessEndButton />
+            }
         </div>)
     }
 }

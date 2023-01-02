@@ -8,6 +8,12 @@ interface ConfigurationSectionProps {
     items: string[];
     selectedIndex: number;
 }
+
+/**
+ * ConfigurationSection component. This component is responsible for displaying a section in the chess game configuration.
+ *
+ * @author Alexander Andreev
+ */
 class ConfigurationSection extends React.Component<ConfigurationSectionProps> {
 
     constructor(props: ConfigurationSectionProps) {
@@ -19,7 +25,9 @@ class ConfigurationSection extends React.Component<ConfigurationSectionProps> {
         this.props.items.forEach((item, index) => {
             items.push(<div className={`setting-${item.toLowerCase()} setting ${this.props.selectedIndex === index ? "selected": ""}`}
                             onClick={() => this.props.onSelectChange(index)} key={item}>
-                <div className={"setting-label"}>{item.charAt(0).toUpperCase() + item.toLowerCase().slice(1)}</div>
+                <div className={"setting-label"}>
+                    {item.charAt(0).toUpperCase() + item.toLowerCase().slice(1)}
+                </div>
             </div>)
         })
         return items;

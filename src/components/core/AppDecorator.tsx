@@ -13,7 +13,7 @@ class AppDecorator extends React.Component<AppDecoratorProps> {
 
     render() {
         return <div className={"app-decorator"}>
-            <Suspense fallback={<h1>Loading</h1>}>
+            <Suspense>
                 {this.props.cubeOpened && !BrowserUtils.isMobile() && <>
                     <DeviceSimulator />
                 </>}

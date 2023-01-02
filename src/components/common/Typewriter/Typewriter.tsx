@@ -77,19 +77,6 @@ class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
         }
     }
 
-    speedUp(letter: string) {
-        switch(letter) {
-            case " ":
-                return this.wordDistance;
-            case ".":
-            case "?":
-            case "!":
-                return this.sentenceDistance;
-            default:
-                return this.letterDistance;
-        }
-    }
-
     render(){
         return (
             <div className={`typewriter-wrapper ${this.isSpedUp ? "sped-up" : ""}`} onClick={() => {this.isSpedUp = true;}}>

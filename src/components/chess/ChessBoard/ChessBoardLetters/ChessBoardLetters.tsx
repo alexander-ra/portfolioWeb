@@ -2,10 +2,15 @@ import React from 'react';
 import { ChessLetters } from '../../../../models/chess/ChessLetters';
 import './ChessBoardLetters.scss';
 
+/**
+ * ChessBoardLetters component. Represents the letters/numbers at the edge of the chess board.
+ *
+ * @author Alexander Andreev
+ */
 class ChessBoardLetters extends React.Component {
     private readonly CHESS_BOARD_SIDES: string[] = ["top", "right", "bottom", "left"];
 
-    rednderBoardLetters(): JSX.Element[] {
+    renderBoardLetters(): JSX.Element[] {
         const boardLetters: JSX.Element[][] = [];
         this.CHESS_BOARD_SIDES.forEach((side, index) => {
             boardLetters[index] = [];
@@ -25,7 +30,7 @@ class ChessBoardLetters extends React.Component {
     }
 
     render(){
-        return (<>{this.rednderBoardLetters()}</>)
+        return (<>{this.renderBoardLetters()}</>)
     }
 }
 

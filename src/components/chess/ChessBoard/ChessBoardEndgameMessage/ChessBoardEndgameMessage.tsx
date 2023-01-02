@@ -10,6 +10,11 @@ interface ChessBoardEndgameMessageProps {
     gameStatus: ChessGameStatus;
 }
 
+/**
+ * ChessBoardEndgameMessage component. Represents the endgame message.
+ *
+ * @author Alexander Andreev
+ */
 class ChessBoardEndgameMessage extends React.Component<ChessBoardEndgameMessageProps> {
     private readonly CHESS_BOARD_SIDES: string[] = ["top", "right", "bottom", "left"];
 

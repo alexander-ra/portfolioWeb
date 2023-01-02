@@ -13,10 +13,15 @@ interface ChessPlayersProps {
     playerAvatar: ChessStartingSide;
 }
 
+/**
+ * ChessBoardPlayers component. Represents the player/opponent elements next to the chess board.
+ *
+ * @author Alexander Andreev
+ */
 class ChessBoardPlayers extends React.Component<ChessPlayersProps> {
     private readonly PLAYER_NAMES: string[] = [CommonLabels.PLAYER, CommonLabels.COMPUTER];
 
-    rednderBoardLetters(): JSX.Element[] {
+    renderBoardPlayers(): JSX.Element[] {
         const playerWindows: JSX.Element[] = [];
         this.PLAYER_NAMES.forEach((name, index) => {
            const isInTurn = index === 0 ? this.props.playerSide === this.props.sideInTurn : this.props.playerSide !== this.props.sideInTurn;
@@ -35,7 +40,7 @@ class ChessBoardPlayers extends React.Component<ChessPlayersProps> {
     }
 
     render(){
-        return (<>{this.rednderBoardLetters()}</>)
+        return (<>{this.renderBoardPlayers()}</>)
     }
 }
 
