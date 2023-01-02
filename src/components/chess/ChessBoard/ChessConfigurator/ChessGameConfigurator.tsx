@@ -18,7 +18,7 @@ interface ChessGameConfiguratorState {
 }
 
 class ChessGameConfigurator extends React.Component<ChessGameConfiguratorProps, ChessGameConfiguratorState> {
-    private readonly PLAY_CHESS_TIMEOUT_TIME = 1000;
+    private readonly PLAY_CHESS_TIMEOUT_TIME = 3000;
     private playChessTimeout: any;
 
     constructor(props: ChessGameConfiguratorProps) {
@@ -31,7 +31,7 @@ class ChessGameConfigurator extends React.Component<ChessGameConfiguratorProps, 
     }
 
     private startButtonDisabled = (): boolean => {
-        return Utils.isNull(this.state.selectedOpponentIndex) || Utils.isNull(this.state.startingPositionIndex);
+        return Utils.isNull(this.state.selectedOpponentIndex) || Utils.isNull(this.state.startingPositionIndex) || !this.state.playButtonAvailable;
     }
 
     private enumToArray(enumeration: any): string[] {
@@ -42,6 +42,9 @@ class ChessGameConfigurator extends React.Component<ChessGameConfiguratorProps, 
     private playChess() {
         this.setState({playButtonAvailable: false});
         ApiLichessUtils.createNewGame(Object.values(ChessAiDifficulty)[this.state.selectedOpponentIndex], Object.values(ChessStartingSide)[this.state.startingPositionIndex]);
+        setTimeout(() => {
+            this.setState({playButtonAvailable: true});
+        }, this.PLAY_CHESS_TIMEOUT_TIME);
     }
 
     render(){

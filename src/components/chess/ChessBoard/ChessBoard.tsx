@@ -146,7 +146,6 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     }
 
     render(){
-        console.log("gameinprogres", this.state.gameInProgress);
         return (
             <div className={`chess-board-wrapper ${this.props.playerSide.toLowerCase()}-player-view`}>
                 <div className={"bg"}></div>

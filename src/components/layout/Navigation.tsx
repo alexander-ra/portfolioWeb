@@ -52,7 +52,6 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
     }
 
     private toggleNavigationMenu = (menu: DropdownMenu) => {
-        console.log('toggleNavigationMenu', menu);
         if (this.state.activeMenu === menu) {
             this.setState({activeMenu: DropdownMenu.NONE});
         } else {

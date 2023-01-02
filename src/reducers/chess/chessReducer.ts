@@ -37,7 +37,7 @@ export default function chessReducer(state = initialState, action: any): ChessRe
     switch (action.type) {
         case SET_CHESS_GAME: {
             AppStorage.setStorage(StorageKey.CHESS_GAME_ID, action.payload.gameId);
-            AppStorage.setStorage(StorageKey.PLAYER_AVATAR, action.payload.playerSide);
+            AppStorage.setStorage(StorageKey.PLAYER_AVATAR, action.payload.playerAvatar);
             return {
                 ...state,
                 gameId: action.payload.gameId,

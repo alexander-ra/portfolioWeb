@@ -61,6 +61,7 @@ export class ApiLichessUtils {
         store.dispatch(resetBoardState());
         let level: number;
         let color = playerSide.toLowerCase();
+        console.log("new game", color);
         switch (aiLevel) {
             case ChessAiDifficulty.EASY:
                 level = this.AI_LEVEL_EASY;
@@ -87,7 +88,7 @@ export class ApiLichessUtils {
         }).then((response) => response.json())
         .then((response) => this.lichessResponseToModel(response, aiLevel, playerSide))
         .then((response) => {
-            console.log(response);
+            console.log("chess response", response);
             store.dispatch(setChessGame(response));
             this.getUpdatesForGame(response.gameId);
         })

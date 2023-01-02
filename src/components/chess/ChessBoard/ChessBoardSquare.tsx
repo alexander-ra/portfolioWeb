@@ -31,18 +31,18 @@ interface ChessBoardSquareProps {
 class ChessBoardSquare extends React.Component<ChessBoardSquareProps> {
 
     getSquareAdditionalClasses(square: ChessSquare): string {
-        const additionalClasses = `chess-square-${(square.row + square.col) % 2 === 0 ? "black" : "white"}`;
+        let additionalClasses = `chess-square-${(square.row + square.col) % 2 === 0 ? "black" : "white"}`;
 
         if (ChessUtils.chessSquaresEqual(this.props.selectedSquare, square)) {
-            additionalClasses.concat(" clicked-square");
+            additionalClasses = additionalClasses.concat(" clicked-square");
         }
 
         const lastMove = this.props.chessMoves[this.props.chessMoves.length - 1];
         if (Utils.isNotNull(lastMove)) {
             if (ChessUtils.chessSquaresEqual(square, lastMove.from)) {
-                additionalClasses.concat(" last-move-from")
+                additionalClasses = additionalClasses.concat(" last-move-from")
             } else if (ChessUtils.chessSquaresEqual(square, lastMove.to)) {
-                additionalClasses.concat(" last-move-to")
+                additionalClasses = additionalClasses.concat(" last-move-to")
             }
         }
         return additionalClasses;
