@@ -14,6 +14,8 @@
   padding: 1em;
   border-radius: .5em;
 
+
+
   .bg {
     z-index: -1;
     width: 100%;
@@ -31,11 +33,28 @@
 
     .chess-row {
       flex-direction: row-reverse;
+
+      &#chess-row-1 {
+        border-radius: 0.5em 0.5em 0 0;
+      }
+
+      &#chess-row-8 {
+          border-radius: 0 0 0.5em 0.5em;
+      }
     }
   }
 
   .chess-row {
     display: flex;
     flex-direction: row;
+    overflow: hidden;
+
+    &#chess-row-1 {
+      border-radius: 0 0 0.5em 0.5em;
+    }
+
+    &#chess-row-8 {
+      border-radius: 0.5em 0.5em 0 0;
+    }
   }
 }

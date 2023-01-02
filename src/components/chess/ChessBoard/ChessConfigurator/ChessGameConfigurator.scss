@@ -29,8 +29,8 @@
 
   &:not(:disabled) {
     &:hover {
-      background-color: rgb($main-secondary);
-      box-shadow: 0 0 1em rgb($main-secondary);
+      background-color: rgb($accent-secondary);
+      box-shadow: 0 0 1em rgb($accent-secondary);
       cursor: pointer;
     }
   }
@@ -46,6 +46,7 @@
   text-align: center;
   font-size: 1.25em;
   color: rgb($main-primary);
+  font-weight: bold;
 }
 
 @keyframes configAppear {

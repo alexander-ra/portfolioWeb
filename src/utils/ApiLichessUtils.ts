@@ -45,13 +45,15 @@ export class ApiLichessUtils {
 
     public static resignGame(): void {
         const gameId = store.getState().chessReducer.gameId;
-        store.dispatch(resetGame());
         fetch(`${this.LICHESS_API_PREFIX}/bot/game/${gameId}/resign`, {
             method: 'POST',
             headers: this.getRequestHeaders()
         })
         .catch(() => {
 
+        })
+        .finally(() => {
+            store.dispatch(resetGame());
         })// TODO: handle resign
     }
 
@@ -85,6 +87,7 @@ export class ApiLichessUtils {
         }).then((response) => response.json())
         .then((response) => this.lichessResponseToModel(response, aiLevel, playerSide))
         .then((response) => {
+            console.log(response);
             store.dispatch(setChessGame(response));
             this.getUpdatesForGame(response.gameId);
         })
@@ -140,11 +143,13 @@ export class ApiLichessUtils {
                         store.dispatch(syncMoves(this.getChessMovesFromString(state.moves)));
                     }
 
-                    if (Utils.isNotNull(state.status) && state.status !== "started") {
+                    if (Utils.isNotNull(state.status)) {
                         let gameStatus: ChessGameStatus;
                         if (Utils.isNotNull(state.winner)) {
                             gameStatus = state.winner === store.getState().chessReducer.playerSide.toLowerCase() ?
                                 ChessGameStatus.WIN : ChessGameStatus.LOSS;
+                        } else if (state.status === "started") {
+                            gameStatus = ChessGameStatus.IN_PROGRESS;
                         } else {
                             gameStatus = ChessGameStatus.DRAW;
                         }

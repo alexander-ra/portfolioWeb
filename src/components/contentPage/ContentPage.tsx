@@ -110,7 +110,6 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     dragStart = (event: any) => {
-        console.log('dragStart', event.target);
         if (BrowserUtils.isMobile()) {
             this.dragStartingPos = CircleRotationUtils.initializeDragTouch(event);
             this.mobileClickSimEnabled = true;
@@ -125,7 +124,6 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     dragMove = (event: any) => {
-        console.log("move");
         let newState =  null;
         if (BrowserUtils.isMobile() && this.state.dragInitiated) {
             this.mobileClickSimEnabled = false;
@@ -142,7 +140,6 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     dragEnd = (event: any) => {
-        console.log('dragEnd');
         if (this.state.initialCircleOffsetDegrees === this.state.actualCircleOffsetDegrees) {
             if (BrowserUtils.isMobile() && this.mobileClickSimEnabled) {
                 const iconName = event.target.className.split(" ").find(className => className.startsWith("fa"));

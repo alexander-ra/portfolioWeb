@@ -45,6 +45,8 @@
 
     &.chess-letters-top, &.chess-letters-bottom {
       flex-direction: row;
+      width: 32em;
+      justify-content: space-between;
 
       .chess-letter {
         width: 6em;
@@ -56,6 +58,8 @@
 
     &.chess-letters-right, &.chess-letters-left {
       flex-direction: column-reverse;
+      height: 32em;
+      justify-content: space-between;
 
       .chess-letter {
         width: 1.5em;

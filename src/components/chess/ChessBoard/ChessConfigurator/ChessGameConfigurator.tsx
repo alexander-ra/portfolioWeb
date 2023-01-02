@@ -14,15 +14,19 @@ interface ChessGameConfiguratorProps {
 interface ChessGameConfiguratorState {
     selectedOpponentIndex: number;
     startingPositionIndex: number
+    playButtonAvailable: boolean;
 }
 
 class ChessGameConfigurator extends React.Component<ChessGameConfiguratorProps, ChessGameConfiguratorState> {
+    private readonly PLAY_CHESS_TIMEOUT_TIME = 1000;
+    private playChessTimeout: any;
 
     constructor(props: ChessGameConfiguratorProps) {
         super(props);
         this.state = {
             selectedOpponentIndex: null,
-            startingPositionIndex: null
+            startingPositionIndex: null,
+            playButtonAvailable: true
         };
     }
 
@@ -33,6 +37,11 @@ class ChessGameConfigurator extends React.Component<ChessGameConfiguratorProps, 
     private enumToArray(enumeration: any): string[] {
 
         return Object.keys(enumeration).map(key => (enumeration[key]))
+    }
+
+    private playChess() {
+        this.setState({playButtonAvailable: false});
+        ApiLichessUtils.createNewGame(Object.values(ChessAiDifficulty)[this.state.selectedOpponentIndex], Object.values(ChessStartingSide)[this.state.startingPositionIndex]);
     }
 
     render(){
@@ -47,9 +56,7 @@ class ChessGameConfigurator extends React.Component<ChessGameConfiguratorProps, 
                                   items={this.enumToArray(ChessStartingSide)} />
             <button disabled={this.startButtonDisabled()}
                     className={"play-button"}
-                    onClick={() => {
-                        ApiLichessUtils.createNewGame(Object.values(ChessAiDifficulty)[this.state.selectedOpponentIndex], Object.values(ChessStartingSide)[this.state.startingPositionIndex]);
-                    }}>
+                    onClick={this.playChess.bind(this)}>
                 Play chess
             </button>
 

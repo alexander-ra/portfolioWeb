@@ -31,11 +31,10 @@ interface ChessPageProps {
 class ChessPage extends React.Component<ChessPageProps> {
 
     render(){
-        console.log("gamestatus", this.props.gameStatus);
         return (
         <div className={`chess-page-wrapper`}>
             <ChessBoard />
-            {this.props.gameStatus !== ChessGameStatus.NOT_STARTED &&
+            {this.props.gameStatus === ChessGameStatus.IN_PROGRESS &&
                 <button className={`game-end`} onClick={() => {ApiLichessUtils.resignGame()}}>
                     <span>End game </span>
                     <Icon  icon={IconType.faXmark} />

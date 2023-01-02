@@ -22,12 +22,10 @@ export interface ChessReduceModel {
     chessMoves: ChessMove[];
     gameStatus: ChessGameStatus;
 }
-
-const initialId = AppStorage.getStorage(StorageKey.CHESS_GAME_ID);
 const initialAvatar = AppStorage.getStorage(StorageKey.PLAYER_AVATAR);
 
 const initialState: ChessReduceModel = {
-    gameId: initialId,
+    gameId: AppStorage.getStorage(StorageKey.CHESS_GAME_ID),
     opponentLevel: undefined,
     playerSide: ChessSide.WHITE,
     playerAvatar: initialAvatar,
@@ -84,8 +82,8 @@ export default function chessReducer(state = initialState, action: any): ChessRe
         case RESET_GAME: {
             AppStorage.deleteStorage(StorageKey.CHESS_GAME_ID);
             return {
-                ...state,
-                ...initialState
+                ...initialState,
+                gameId: null
             }
         }
         default:

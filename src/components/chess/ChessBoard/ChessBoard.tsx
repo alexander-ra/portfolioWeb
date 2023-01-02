@@ -31,6 +31,7 @@ interface ChessBoardProps {
 
 interface ChessBoardState {
     selectedSquare: ChessSquare;
+    gameInProgress: boolean;
 }
 
 class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
@@ -42,17 +43,25 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
         super(props);
         this.state = {
             selectedSquare: null,
+            gameInProgress: false
         };
+    }
 
-        if (Utils.isNull(this.props.chessGameId)) {
+    componentDidMount() {
+        if (this.isGameFinished()) {
+            console.log("finished");
+            ApiLichessUtils.resignGame();
+        } else if (Utils.isNull(this.props.chessGameId)) {
             const savedGameId = AppStorage.getStorage(StorageKey.CHESS_GAME_ID);
+            console.log("save", savedGameId);
             if (Utils.isNotNull(savedGameId)) {
                 ApiLichessUtils.getUpdatesForGame(savedGameId);
+                this.setState({gameInProgress: true});
             }
-        }
-
-        if (Utils.isNotNull(this.props.chessGameId)) {
+        } else {
+            console.log("save", this.props.chessGameId);
             ApiLichessUtils.getUpdatesForGame(this.props.chessGameId);
+            this.setState({gameInProgress: true});
         }
     }
 
@@ -70,6 +79,10 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
                 this.possibleMoves = [];
             }
             this.setState({});
+        }
+        if (prevProps.chessGameId !== this.props.chessGameId) {
+            console.warn('Game id changed', this.props.chessGameId);
+            this.setState({gameInProgress: Utils.isNotNull(this.props.chessGameId)});
         }
     }
 
@@ -100,7 +113,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
             }
         } else {
             this.setState({selectedSquare: null});
-            console.log('Not your turn');
+            console.log('Not your turn', this.props.gameStatus);
         }
     }
 
@@ -123,7 +136,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
                                             possibleMoves={this.possibleMoves}
                                             key={`${row}${col}`}/>);
         }
-        return <div className={`chess-row`} key={row}>
+        return <div className={`chess-row`} key={row} id={`chess-row-${row}`}>
             {chessRow}
         </div>
     }
@@ -133,6 +146,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     }
 
     render(){
+        console.log("gameinprogres", this.state.gameInProgress);
         return (
             <div className={`chess-board-wrapper ${this.props.playerSide.toLowerCase()}-player-view`}>
                 <div className={"bg"}></div>
@@ -144,10 +158,9 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
                                              this.setState({selectedSquare: null});
                                          }} />
                 }
-                {Utils.isNull(this.props.chessGameId) &&
-                    <ChessGameConfigurator />}
+                {!this.state.gameInProgress && <ChessGameConfigurator />}
 
-                {Utils.isNotNull(this.props.chessGameId) && <>
+                {this.state.gameInProgress && <>
                     <ChessPlayers />
                     {this.rednderChessBoard()}
                     <ChessBoardLetters />

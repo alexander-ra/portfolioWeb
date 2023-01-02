@@ -49,6 +49,8 @@
       position: absolute;
       line-height: 1.5em;
       bottom: -1.5em;
+      border-radius: 2em;
+      transition: background-color .2s;
     }
 
     &.setting-easy {
