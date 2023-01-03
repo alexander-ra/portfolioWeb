@@ -1,6 +1,11 @@
 import React from 'react';
 import './CubeCover.scss';
 
+/**
+ * CubeCover component. This component is responsible for displaying the cover of the cube on site load.
+ *
+ * @author Alexander Andreev
+ */
 class CubeCover extends React.Component {
     render(){
         return (

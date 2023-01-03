@@ -12,6 +12,7 @@ import CubeWall from "./CubeWall/CubeWall";
 import { IconType } from '../../../models/common/IconType';
 import Utils from '../../../utils/Utils';
 import { CommonLabels } from '../../../provision/CommonLabels';
+import { CubeRotationState } from '../../../models/landing/CubeRotationState';
 
 interface CubeProps {
     openCube?: any;
@@ -21,12 +22,6 @@ interface CubeProps {
     isLoading: boolean;
 }
 
-export interface CubeRotationState {
-    dragX?: number;
-    dragY: number;
-    selectedMenuState: CubeMenuStates;
-}
-
 interface CubeState extends CubeRotationState{
     cubeCoverVisible?: boolean;
     cubeOpened?: boolean;
@@ -34,6 +29,11 @@ interface CubeState extends CubeRotationState{
     rotationInitialState: CubeMenuStates;
 }
 
+/**
+ * Cube component. This component is responsible for displaying the cube and keep track of the selected menu.
+ *
+ * @author Alexander Andreev
+ */
 class Cube extends React.Component<CubeProps, CubeState> {
     private readonly CUBE_OPEN_TIME_MS = 2000;
     private readonly CLOSED_CUBE_AUTO_ROTATION_TIME_MS = 3000;
@@ -70,14 +70,12 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     componentWillUnmount() {
-        console.log("Cube unmount");
         clearInterval(this.autoRotationInterval);
         this.removeCubeRotationListeners();
     }
 
     componentDidUpdate(prevProps: Readonly<CubeProps>, prevState: Readonly<CubeState>, snapshot?: any) {
         if (prevState.selectedMenuState !== this.state.selectedMenuState) {
-            console.log("componentDidUpdate", this.state.selectedMenuState);
             this.props.selectMenu(this.state.selectedMenuState);
         }
     }
@@ -104,7 +102,6 @@ class Cube extends React.Component<CubeProps, CubeState> {
 
 
     dragStart = (event: any) => {
-        console.log("Cube drag start");
         this.dragStartingPos = CubeRotationUtils.initializeDragCursor(event);
         event.preventDefault();
         window.onmousemove = (event) => {
@@ -116,7 +113,6 @@ class Cube extends React.Component<CubeProps, CubeState> {
             }
 
             window.onmouseup = () => {
-                console.log("Cube drag end");
                 event.preventDefault();
                 window.onmousemove = null;
                 window.onmouseup = null;
@@ -132,7 +128,6 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     dragStartTouch = (event: any) => {
-        console.log("Cube drag start touch");
         this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
         event.preventDefault();
         document.ontouchmove = (event) => {
@@ -144,7 +139,6 @@ class Cube extends React.Component<CubeProps, CubeState> {
             }
 
             document.ontouchend = () => {
-                console.log("Cube drag end touch");
                 event.preventDefault();
                 document.onmousemove = null;
                 document.onmouseup = null;

@@ -1,7 +1,8 @@
 import {CubeMenuStates} from "../models/landing/CubeMenuStates";
 import {Position} from "../models/common/Position";
-import Cube, {CubeRotationState} from "../components/landing/Cube/Cube";
+import Cube from "../components/landing/Cube/Cube";
 import BrowserUtils from "./BrowserUtils";
+import { CubeRotationState } from "../models/landing/CubeRotationState";
 
 export class CubeRotationUtils {
     private static readonly CUBE_SIDE_ROTATION_DEG = 50;

@@ -15,8 +15,12 @@ export interface CubeWallState {
     selectedMenuState: CubeMenuStates;
 }
 
+/**
+ * CubeWall component. This component is responsible for displaying a wall of the cube.
+ *
+ * @author Alexander Andreev
+ */
 class CubeWall extends React.Component<CubeWallProps, CubeWallState> {
-
 
     render(){
         return (
