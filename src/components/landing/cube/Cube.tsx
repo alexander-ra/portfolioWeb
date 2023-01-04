@@ -13,6 +13,7 @@ import { IconType } from '../../../models/common/IconType';
 import Utils from '../../../utils/Utils';
 import { CommonLabels } from '../../../provision/CommonLabels';
 import { CubeRotationState } from '../../../models/landing/CubeRotationState';
+import BrowserUtils from "../../../utils/BrowserUtils";
 
 interface CubeProps {
     openCube?: any;
@@ -129,11 +130,19 @@ class Cube extends React.Component<CubeProps, CubeState> {
         }
     }
 
+    clickTouch = (event: any) => {
+        console.log('click touch');
+        document.ontouchmove = null;
+        document.ontouchend = null;
+    }
+
     dragStartTouch = (event: TouchEvent) => {
+        this.lastDrag = Date.now();
+        console.log(event.target);
         this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
         event.preventDefault();
 
-        document.ontouchmove = (event) => {
+        this.cubeRef.current.ontouchmove = (event) => {
             this.dragInitiated = true;
             this.showRotatingIndicator = false;
             const newState = CubeRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.rotationInitialState);
@@ -141,34 +150,40 @@ class Cube extends React.Component<CubeProps, CubeState> {
                 this.setState(newState);
             }
 
-            document.ontouchend = () => {
+            this.cubeRef.current.ontouchend = () => {
                 event.preventDefault();
-                document.onmousemove = null;
-                document.onmouseup = null;
+                this.cubeRef.current.ontouchmove = null;
+                this.cubeRef.current.ontouchend = null;
                 this.dragInitiated = false;
-                this.lastDrag = Date.now();
+                if (this.lastDrag + 250 > Date.now()) {
+                    this.lastDrag = 0;
+                } else {
+                    this.lastDrag = Date.now();
+                }
                 this.setState({
                     dragX: 0,
                     dragY: 0,
                     rotationInitialState: this.state.selectedMenuState
                 })
-                setTimeout(() => {
-                    this.dragInitiated = false;
-                }, 100);
+                this.dragInitiated = false;
             }
         }
     }
 
     addCubeRotationListeners() {
-        this.cubeRef.current.addEventListener("dragstart", this.dragStart);
-        this.cubeRef.current.addEventListener("touchstart", this.dragStartTouch);
+        if (BrowserUtils.isMobile()) {
+            this.cubeRef.current.addEventListener("touchstart", this.dragStartTouch);
+            this.cubeRef.current.addEventListener("click", this.clickTouch);
+        } else {
+            this.cubeRef.current.addEventListener("dragstart", this.dragStart);
+        }
     }
 
     removeCubeRotationListeners() {
         this.cubeRef.current.removeEventListener("dragstart", this.dragStart);
         this.cubeRef.current.removeEventListener("touchstart", this.dragStartTouch);
-        document.ontouchmove = null;
-        document.ontouchend = null;
+        this.cubeRef.current.ontouchmove = null;
+        this.cubeRef.current.ontouchend = null;
         window.onmousemove = null;
         window.onmouseup = null;
     }
@@ -191,7 +206,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     selectMenu(menu: CubeMenuStates): void {
-        if (this.state.cubeOpened && !this.dragInitiated && Date.now() - this.lastDrag > 500) {
+        if (this.state.cubeOpened && !this.state.cubeCoverVisible && Date.now() - this.lastDrag > 100) {
             this.props.selectMenu(menu);
             this.setState({rotationInitialState: menu, selectedMenuState: menu});
         }

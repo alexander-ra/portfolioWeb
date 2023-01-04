@@ -152,7 +152,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
                     dragInitiated: true,
                     isAutoRotating: false
                 });
-            }, 250);
+            }, 100);
         } else {
             this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
             this.setState({
@@ -408,7 +408,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     renderSectionEdges(): JSX.Element[] {
         const sections: JSX.Element[] = [];
         this.props.sections.forEach((section: Section, index) => {
-            sections.push(<div className={`section-edge circle-rot${this.sectionDegrees[index]}deg`} key={section.menu.toString()}/>
+            sections.push(<div draggable={false} className={`section-edge circle-rot${this.sectionDegrees[index]}deg`} key={section.menu.toString()}/>
             )
         });
         return sections;
@@ -455,9 +455,11 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             <div draggable={!this.state.isAutoRotating} className={`content-outer-circle circle-rot${this.state.actualCircleOffsetDegrees}deg`} ref={this.wheelRef}>
                 {this.renderSections()}
             </div>
-            <div className={`content-outer-circle-sections circle-rot${this.calculateSectionEdgeDegrees(this.state.actualCircleOffsetDegrees)}deg`}>
-                {this.renderSectionEdges()}
-            </div>
+            {!BrowserUtils.isMobile() &&
+                <div className={`content-outer-circle-sections circle-rot${this.calculateSectionEdgeDegrees(this.state.actualCircleOffsetDegrees)}deg`}>
+                    {this.renderSectionEdges()}
+                </div>
+            }
             <div className={`box ${this.props.currentPage.toLowerCase()}`}>
                 <div className="box-overlay"></div>
                 <div className={"section-title"}>

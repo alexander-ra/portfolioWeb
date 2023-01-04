@@ -8,6 +8,6 @@
   font-size: 1em;
 
   .vw-portrait & {
-    font-size: css-min(1.285em, calc(1.57 * var(--calc-vmax)));
+    font-size: css-min(1.285em, calc(1.45 * var(--calc-vmax)));
   }
 }

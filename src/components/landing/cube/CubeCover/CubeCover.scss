@@ -58,7 +58,6 @@ $peelOffDuration: 2s;
     .wall-initial {
         transition-property: border, transform, opacity;
         transition-duration: 1s, 1s, 1s, 2.5s;
-        transform: rotateX(-90deg) translateZ(6.9em) scaleX(-1);
         clip-path: polygon(0 0, 300% 0, 300% 300%, 0 300%, 0 0, 0 0);
         display: flex;
         align-items: center;

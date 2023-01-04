@@ -290,6 +290,7 @@ $menu-radius: 6em;
     }
 
     .inner-text-border {
+      pointer-events: none;
       background-image: url("../../../../public/resources/svgAssets/light-theme/crystal.svg");
       background-repeat: no-repeat;
 

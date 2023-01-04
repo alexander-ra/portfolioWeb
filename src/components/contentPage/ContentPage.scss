@@ -144,6 +144,7 @@ $menu-radius: 6em;
       position: absolute;
       top: 0;
       left: 12em;
+      pointer-events: none;
     }
   }
 
@@ -261,6 +262,7 @@ $menu-radius: 6em;
       opacity: .5;
       background-size: cover;
       border-radius: 50%;
+      pointer-events: none;
     }
 
     .section-title {
@@ -274,6 +276,7 @@ $menu-radius: 6em;
       width: 100%;
       text-align: center;
       z-index: 3;
+      pointer-events: none;
 
       .section-title-bottom {
         font-weight: bold;

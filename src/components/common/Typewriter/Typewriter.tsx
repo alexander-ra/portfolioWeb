@@ -20,7 +20,7 @@ interface TypewriterState {
  * @author Alexander Andreev
  */
 class Typewriter extends React.Component<TypewriterProps, TypewriterState> {
-    private initialDelay = 3000;
+    private initialDelay = 1500;
     private textDoneDelay = 1000;
     private letterDistance = 25;
     private wordDistance = 25;
