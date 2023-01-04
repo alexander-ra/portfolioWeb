@@ -81,8 +81,6 @@ class ChessBoardSquare extends React.Component<ChessBoardSquareProps> {
         if (Utils.isNotNull(this.props.sideInCheck) && pieceIndex !== -1 && this.props.chessPieces[pieceIndex].type === ChessPieceType.KING &&
             this.props.chessPieces[pieceIndex].side === this.props.sideInCheck) {
             inThread = true
-        } else {
-            console.error("Piece in thread does not exist or is not a king");
         }
         return inThread;
     }

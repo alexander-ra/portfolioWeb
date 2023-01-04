@@ -3,7 +3,9 @@
 .game-end {
   position: absolute;
   font-size: 1em;
-  width: 8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: calc(50% + 17.5em);
   height: 2em;
   left: calc(50% - 4em);

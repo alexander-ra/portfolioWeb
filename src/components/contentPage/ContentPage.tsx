@@ -55,6 +55,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     private lastOffsetDegrees = null;
     private wheelRef: React.RefObject<HTMLDivElement>;
     private mobileClickSimEnabled: boolean = false;
+    private mobileDragStartTimeout: any;
 
     private readonly MIN_TIME_VISITED = 5000;
     private visitedTimeout: NodeJS.Timeout = null;
@@ -145,14 +146,21 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
         if (BrowserUtils.isMobile()) {
             this.dragStartingPos = CircleRotationUtils.initializeDragTouch(event);
             this.mobileClickSimEnabled = true;
+            this.mobileDragStartTimeout = setTimeout(() => {
+                this.setState({
+                    initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees,
+                    dragInitiated: true,
+                    isAutoRotating: false
+                });
+            }, 250);
         } else {
             this.dragStartingPos = CircleRotationUtils.initializeDragCursor(event);
+            this.setState({
+                initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees,
+                dragInitiated: true,
+                isAutoRotating: false
+            });
         }
-        this.setState({
-            initialCircleOffsetDegrees: this.state.actualCircleOffsetDegrees,
-            dragInitiated: true,
-            isAutoRotating: false
-        });
     }
 
     /**
@@ -160,18 +168,20 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
      * @param event - the mouse move event
      */
     dragMove = (event: any) => {
-        let newState =  null;
-        if (BrowserUtils.isMobile() && this.state.dragInitiated) {
-            this.mobileClickSimEnabled = false;
-            newState = CircleRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
-        } else {
-            newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
-        }
-        if (Utils.isNotNull(newState) && newState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
-            this.setState({
-                ...newState,
-                selectedMenuIndex: this.getSelectedSection(newState.actualCircleOffsetDegrees)
-            });
+        if (this.state.dragInitiated) {
+            let newState =  null;
+            if (BrowserUtils.isMobile()) {
+                this.mobileClickSimEnabled = false;
+                newState = CircleRotationUtils.dragRotateTouch(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
+            } else {
+                newState = CircleRotationUtils.dragRotateCursor(event, this.dragStartingPos, this.state.initialCircleOffsetDegrees);
+            }
+            if (Utils.isNotNull(newState) && newState.actualCircleOffsetDegrees !== this.state.actualCircleOffsetDegrees) {
+                this.setState({
+                    ...newState,
+                    selectedMenuIndex: this.getSelectedSection(newState.actualCircleOffsetDegrees)
+                });
+            }
         }
     }
 
@@ -180,6 +190,9 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
      * @param event - the mouse up event
      */
     dragEnd = (event: any) => {
+       if (Utils.isNotNull(this.mobileDragStartTimeout)) {
+           clearTimeout(this.mobileDragStartTimeout);
+       }
         if (this.state.initialCircleOffsetDegrees === this.state.actualCircleOffsetDegrees) {
             if (BrowserUtils.isMobile() && this.mobileClickSimEnabled) {
                 const iconName = event.target.className.split(" ").find(className => className.startsWith("fa"));
@@ -320,6 +333,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     selectSection(index: number) {
+        console.log("selectSection", index);
         if (!this.state.isAutoRotating || this.mobileClickSimEnabled) {
             this.mobileClickSimEnabled = false;
             const rotatingDirection = this.getRotatingDirectionFromIndex(this.state.selectedMenuIndex, index);
@@ -377,9 +391,7 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
            sections.push(
                <div className={`menu-section circle-rot${this.sectionDegrees[index]}deg ${this.state.selectedMenuIndex === index ? "selected": ""}`}
                     onClick={() => {
-                        if (!BrowserUtils.isMobile()) {
-                            this.selectSection(index);
-                        }
+                        this.selectSection(index);
                     }} key={section.menu.toString()}>
                    <div className={`menu-icon-wrapper circle-rot${this.sectionIconDegrees[index]}deg`}>
                        <Icon className={"menu-icon"}  icon={section.icon}></Icon>

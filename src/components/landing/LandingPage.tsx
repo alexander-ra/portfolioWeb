@@ -72,12 +72,14 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
 
     render(){
         return (<div className={`landing-page-wrapper`}>
-            <TextBubble visible={this.props.cubeOpened}
-                        textToType={LandingDescriptions.DEVELOPER_INTRODUCTION}
-                        skipTyping={this.props.landingPageLeft}/>
+            {this.props.cubeOpened && <TextBubble visible={this.props.cubeOpened}
+                                                  textToType={LandingDescriptions.DEVELOPER_INTRODUCTION}
+                                                  skipTyping={this.props.landingPageLeft}/>
+            }
             <LandingCube isLoading={this.state.isLoading}/>
-            <MenuBubble textBubbleType={this.props.selectedMenu}
-                        visible={this.props.selectedMenu !== CubeMenuStates.NONE}/>
+            {this.props.cubeOpened && <MenuBubble textBubbleType={this.props.selectedMenu}
+                                                  visible={this.props.selectedMenu !== CubeMenuStates.NONE}/>
+            }
         </div>)
     }
 }
