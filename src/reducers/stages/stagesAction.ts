@@ -1,8 +1,9 @@
-import {ADD_CIRCLE_MENU_STATE, CHANGE_PAGE, COMPLETE_DEV_INTRO} from "../ActionTypes";
+import {ADD_CIRCLE_MENU_STATE, ADD_LOADED_RESOURCE_PACK, CHANGE_PAGE, COMPLETE_DEV_INTRO} from "../ActionTypes";
 import {CubeMenuStates} from "../../models/landing/CubeMenuStates";
 import {Page} from "../../models/common/Page";
 import {UIOrientation} from "../../models/common/UIOrientation";
 import { LayoutType } from "../../models/common/LayoutType";
+import {ResourcePack} from "../../models/common/ResourcePack";
 
 const completeDevIntro = () => ({
     type: COMPLETE_DEV_INTRO,
@@ -25,4 +26,11 @@ const addCircleMenuState = (state: CubeMenuStates) => ({
     }
 });
 
-export { completeDevIntro, changePage, addCircleMenuState };
+const addLoadedResourcePack = (pack: ResourcePack) => ({
+    type: ADD_LOADED_RESOURCE_PACK,
+    payload: {
+        pack: pack,
+    }
+});
+
+export { completeDevIntro, changePage, addCircleMenuState, addLoadedResourcePack };

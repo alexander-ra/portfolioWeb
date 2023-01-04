@@ -51,6 +51,7 @@ class ContentManager extends React.Component<ContentManagerProps> {
 
     componentDidMount() {
         WindowUtils.updateWindowClasses(window);
+        WindowUtils.setTheme(this.props.theme);
         window.addEventListener('resize', this.resizeListener);
 
         window.addEventListener('hashchange', function () {

@@ -11,9 +11,14 @@ import {IconType} from "../../../models/common/IconType";
 import {ProvisionUtils} from "../../../utils/ProvisionUtils";
 import BrowserUtils from "../../../utils/BrowserUtils";
 import {CommonLabels} from "../../../provision/CommonLabels";
+import {addLoadedResourcePack} from "../../../reducers/stages/stagesAction";
+import {ResourcePack} from "../../../models/common/ResourcePack";
+import {Links} from "../../../provision/Links";
 
 interface NavigationProps {
     theme: ThemeType;
+    hasLoaded: boolean;
+    addLoadedResourcePack: (resourcePack: ResourcePack) => void;
 }
 
 interface NavigationState {
@@ -40,19 +45,22 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
     constructor(props: NavigationProps) {
         super(props);
         this.state = {
-            isLoading: true,
+            isLoading: this.props.hasLoaded,
             activeMenu: DropdownMenu.NONE
         }
     }
 
     componentDidMount() {
-        BrowserUtils.loadResources(ProvisionUtils.headerIconResources())
-            .then(() => {
-                this.setState({isLoading: false});
-            })
-            .catch(() => {
-                console.error('Error loading resources');
-            });
+        if (!this.props.hasLoaded) {
+            BrowserUtils.loadResources(ProvisionUtils.headerIconResources())
+                .then(() => {
+                    this.setState({isLoading: false});
+                    this.props.addLoadedResourcePack(ResourcePack.HEADER);
+                })
+                .catch(() => {
+                    console.error('Error loading resources');
+                });
+        }
     }
 
     private changeTheme = () => {
@@ -102,7 +110,10 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                             <Icon className={"navigation-sub-icon"} icon={IconType.faAngleDown} />
                             {this.state.activeMenu === DropdownMenu.CONTACTS && <ContactsSubMenu />}
                         </div>
-                        <div className={`navigation-item`} onClick={this.toggleNavigationMenu.bind(this, DropdownMenu.NONE)}>
+                        <div className={`navigation-item`} onClick={() => {
+                            window.open(Links.GITHUB_PAGE, '_blank').focus();
+                            this.toggleNavigationMenu.bind(this, DropdownMenu.NONE);
+                        }}>
                             <Icon className={"navigation-Icon"} icon={IconType.faGithubAlt} />
                             <span className={"navigation-label"}>{CommonLabels.GIT_HUB}</span>
                             <Icon className={"navigation-sub-icon"} icon={IconType.faLink} />
@@ -128,7 +139,9 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
 export default connect(
     (state: any, ownProps) => {
         const { theme } = state.windowReducer;
+        const { resourcesLoaded } = state.stagesReducer;
         return {
             theme,
+            hasLoaded: resourcesLoaded.indexOf(ResourcePack.HEADER) !== -1
         }
-    })(Navigation);
+    }, { addLoadedResourcePack })(Navigation);

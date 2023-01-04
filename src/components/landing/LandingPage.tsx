@@ -15,14 +15,17 @@ import img3 from "../../../public/resources/categoryImages/experience/home.jpg";
 import {Page} from "../../models/common/Page";
 import {WindowUtils} from "../../utils/WindowUtils";
 import store from "../../reducers/store";
-import {changePage} from "../../reducers/stages/stagesAction";
+import {addLoadedResourcePack, changePage} from "../../reducers/stages/stagesAction";
 import {openCube, selectMenu} from "../../reducers/cube/cubeAction";
+import { ResourcePack } from '../../models/common/ResourcePack';
 
 interface LandingCubeProps {
     cubeOpened: boolean;
     selectedMenu: CubeMenuStates;
     landingPageLeft: boolean;
     selectMenu?: (menu: CubeMenuStates) => void;
+    addLoadedResourcePack?: (resourcePack: ResourcePack) => void;
+    hasLoaded: boolean;
 }
 
 interface LandingCubeState {
@@ -40,29 +43,31 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
         super(props);
 
         this.state = {
-            isLoading: true,
+            isLoading: this.props.hasLoaded,
         };
 
         this.props.selectMenu(CubeMenuStates.NONE);
     }
 
     componentDidMount() {
-        BrowserUtils.loadResources(ProvisionUtils.landingResources())
-            .then(() => {
-                this.setState({isLoading: false});
+        if (!this.props.hasLoaded) {
+            BrowserUtils.loadResources(ProvisionUtils.landingResources())
+                .then(() => {
+                    this.setState({isLoading: false});
+                    this.props.addLoadedResourcePack(ResourcePack.LANDING);
+                    const page: Page = WindowUtils.getPageFromURL();
+                    if (page !== Page.LANDING) {
+                        store.dispatch(changePage(page));
 
-                const page: Page = WindowUtils.getPageFromURL();
-                if (page !== Page.LANDING) {
-                    store.dispatch(changePage(page));
-
-                    if (!store.getState().cubesReducer.cubeOpened) {
-                        store.dispatch(openCube());
+                        if (!store.getState().cubesReducer.cubeOpened) {
+                            store.dispatch(openCube());
+                        }
                     }
-                }
-            })
-            .catch(() => {
-                console.error('Error loading resources');
-            });
+                })
+                .catch(() => {
+                    console.error('Error loading resources');
+                });
+        }
     }
 
     render(){
@@ -80,13 +85,14 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
 export default connect(
     (state: any, ownProps) => {
         const { cubeOpened, selectedMenu } = state.cubesReducer;
-        const { landingPageLeft } = state.stagesReducer;
+        const { landingPageLeft, resourcesLoaded } = state.stagesReducer;
         return {
             ...ownProps,
             selectedMenu,
             cubeOpened,
-            landingPageLeft
+            landingPageLeft,
+            hasLoaded: resourcesLoaded.includes(ResourcePack.LANDING),
         }
-    }, { selectMenu }
+    }, { selectMenu, addLoadedResourcePack }
 )(LandingPage);
 

@@ -1,11 +1,13 @@
 import {Page} from "../../models/common/Page"
 import {ADD_CIRCLE_MENU_STATE, CHANGE_PAGE, COMPLETE_DEV_INTRO} from "../ActionTypes"
+import {ResourcePack} from "../../models/common/ResourcePack";
 
 export interface StagesReduceModel {
     devIntroCompleted: boolean;
     landingPageLeft: boolean;
     currentPage: Page;
     visitedStates: string[];
+    resourcesLoaded: ResourcePack[];
 }
 
 export const initialState: StagesReduceModel = {
@@ -13,6 +15,7 @@ export const initialState: StagesReduceModel = {
     landingPageLeft: false,
     currentPage: Page.LANDING,
     visitedStates: [],
+    resourcesLoaded: [],
 }
 
 export default function stagesReducer(state = initialState, action: any): StagesReduceModel {
@@ -39,6 +42,7 @@ export default function stagesReducer(state = initialState, action: any): Stages
                 visitedStates: newVisitedStates
             }
         }
+
         default:
             return state
     }

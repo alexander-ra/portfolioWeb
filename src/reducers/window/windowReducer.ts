@@ -1,8 +1,9 @@
 import {SET_LAYOUT_TYPE, SET_THEME, SET_UI_ORIENTATION, SET_WINDOW_SIZE} from "../ActionTypes"
 import {UIOrientation} from "../../models/common/UIOrientation";
-import { LayoutType } from "../../models/common/LayoutType";
+import {LayoutType} from "../../models/common/LayoutType";
 import BrowserUtils from "../../utils/BrowserUtils";
-import { ThemeType } from "../../models/common/ThemeType";
+import {ThemeType} from "../../models/common/ThemeType";
+import StorageUtil, {StorageKey} from "../../utils/StorageUtil";
 
 export interface WindowSize {
     height: number;
@@ -23,7 +24,7 @@ export const initialState: WindowReduceModel = {
         height: 0,
         width: 0,
     },
-    theme: ThemeType.LIGHT,
+    theme: StorageUtil.getStorage(StorageKey.THEME) === "DARK" ? ThemeType.DARK : ThemeType.LIGHT,
 }
 
 export default function windowReducer(state = initialState, action: any): WindowReduceModel {
@@ -51,6 +52,7 @@ export default function windowReducer(state = initialState, action: any): Window
             }
         }
         case SET_THEME: {
+            StorageUtil.setStorage(StorageKey.THEME, action.payload.theme);
             return {
                 ...state,
                 theme: action.payload.theme

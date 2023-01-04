@@ -44,7 +44,7 @@ class AppEntry extends React.Component<AppEntryProps, AppEntryState> {
                 <div className={"device-frame"}></div>
                 <div className={"parent-wrapper"} style={this.state.parentWrapperStyle}>
                     <AppDecorator />
-                    <div className={"app-wrapper"}>
+                    <div className={"app-wrapper"} id="app">
                         <Suspense>
                             <Header />
                         </Suspense>

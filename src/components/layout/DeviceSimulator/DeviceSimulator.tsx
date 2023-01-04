@@ -7,9 +7,13 @@ import {connect} from "react-redux";
 import DeviceRotator from "./DeviceRotator";
 import BrowserUtils from "../../../utils/BrowserUtils";
 import {ProvisionUtils} from "../../../utils/ProvisionUtils";
+import {ResourcePack} from "../../../models/common/ResourcePack";
+import {addLoadedResourcePack} from "../../../reducers/stages/stagesAction";
 
 interface DeviceSimulatorProps {
     layoutType: LayoutType;
+    hasLoaded: boolean;
+    addLoadedResourcePack: (resourcePack: ResourcePack) => void;
 }
 
 interface DeviceSimulatorState {
@@ -28,18 +32,21 @@ class DeviceSimulator extends React.Component<DeviceSimulatorProps, DeviceSimula
         super(props);
 
         this.state = {
-            isLoading: true
+            isLoading: !this.props.hasLoaded
         }
     }
 
     componentDidMount() {
-        BrowserUtils.loadResources(ProvisionUtils.deviceSimulatorResources())
-            .then(() => {
-                this.setState({isLoading: false});
-            })
-            .catch(() => {
-                console.error('Error loading resources');
-            });
+        if (!this.props.hasLoaded) {
+            BrowserUtils.loadResources(ProvisionUtils.deviceSimulatorResources())
+                .then(() => {
+                    this.setState({isLoading: false});
+                    this.props.addLoadedResourcePack(ResourcePack.DEVICE_SIM);
+                })
+                .catch(() => {
+                    console.error('Error loading resources');
+                });
+        }
     }
 
     setStateOfSimulation(layoutType: LayoutType): void {
@@ -69,8 +76,10 @@ class DeviceSimulator extends React.Component<DeviceSimulatorProps, DeviceSimula
 export default connect(
     (state: any, ownProps) => {
         const { layoutType } = state.windowReducer;
+        const { resourcesLoaded } = state.stagesReducer;
         return {
-            layoutType
+            layoutType,
+            hasLoaded: resourcesLoaded.indexOf(ResourcePack.DEVICE_SIM) !== -1
         }
-    }
+    }, { addLoadedResourcePack }
 )(DeviceSimulator);

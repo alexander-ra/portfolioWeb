@@ -77,11 +77,12 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
                     // Show contact card and set its position relative to the cursor
                     const top = event.target.getBoundingClientRect().bottom - el.getBoundingClientRect().height - 10;
                     let left = event.clientX - el.getBoundingClientRect().width / 2;
+                    const appEl = document.getElementById("app");
 
-                    if (left + el.getBoundingClientRect().width > window.innerWidth) {
-                        left = window.innerWidth - el.getBoundingClientRect().width;
-                    } else if (left < 0) {
-                        left = 0;
+                    if (left + el.getBoundingClientRect().width > appEl.getBoundingClientRect().left + appEl.getBoundingClientRect().width) {
+                        left = appEl.getBoundingClientRect().width - el.getBoundingClientRect().width + appEl.getBoundingClientRect().left;
+                    } else if (left < appEl.getBoundingClientRect().left) {
+                        left = appEl.getBoundingClientRect().left;
                     }
 
                     this.setState({

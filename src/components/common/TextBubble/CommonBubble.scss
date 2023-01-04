@@ -103,6 +103,10 @@
       z-index: 1;
       font-family: MusticaPro;
 
+      span {
+        font-size: 0.9em;
+      }
+
       .dark-theme & {
         background-image: url("../../../../public/resources/svgAssets/crystalSelected.svg");
       }

@@ -332,6 +332,7 @@ $menu-radius: 6em;
       }
 
       .vw-portrait & {
+        font-family: MusticaPro;
         background-image: url("../../../../public/resources/svgAssets/crystalSelected.svg");
         background-size: cover;
         background-color: rgb($contrast-primary);
