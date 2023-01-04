@@ -2,6 +2,7 @@ import Utils from "./Utils";
 import {UIOrientation} from "../models/common/UIOrientation";
 import {Page} from "../models/common/Page";
 import {CircleMenuStates} from "../models/landing/CircleMenuStates";
+import ResourceInfo from "../asset-manifest.json";
 
 export default class BrowserUtils {
 
@@ -33,8 +34,10 @@ export default class BrowserUtils {
         };
     }
 
-    public static async loadResources(resourcePaths: string[]): Promise<void> {
-        const requests = resourcePaths.map(path => {
+    public static async loadResources(resourceNames: string[]): Promise<void> {
+        console.log(ResourceInfo);
+        const requests = resourceNames.map(image => {
+            const path = ResourceInfo["files"][`static/media/${image}`];
             return new Promise<void>((resolve, reject) => {
                 const request = new XMLHttpRequest();
                 request.open("GET", path, true);

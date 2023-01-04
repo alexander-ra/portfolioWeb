@@ -51,15 +51,10 @@ export class ProvisionUtils {
     }
 
     public static landingResources(): string[] {
-        return [ "./public/resources/categoryImages/chess/home.jpg",
-            "./public/resources/categoryImages/client/home.jpg",
-            "./public/resources/categoryImages/experience/home.jpg",
-            "./public/resources/images/avatar-jpeg.jpg",
-            "./public/resources/fonts/MusticaPro-font/MusticaPro.ttf",
-            "./public/resources/fonts/MusticaPro-font/MusticaProBold.tff",
-            "./public/resources/fonts/comfortaa/Comfortaa-Bold.ttf",
-            "./public/resources/fonts/comfortaa/Comfortaa-Light.ttf",
-            "./public/resources/fonts/comfortaa/Comfortaa-Regular.ttf",
+        return [ "chessImage.jpg",
+            "experienceImage.jpg",
+            "clientImage.jpg",
+            "avatar-jpeg.jpg",
             ProvisionUtils.getIconResourcePath(IconType.faHandshake),
             ProvisionUtils.getIconResourcePath(IconType.faSuitcase),
             ProvisionUtils.getIconResourcePath(IconType.faChess),
@@ -67,18 +62,18 @@ export class ProvisionUtils {
     }
 
     public static deviceSimulatorResources(): string[] {
-        return [ "./public/resources/svgAssets/deviceSimulatorIcons/desktop.svg",
-            "./public/resources/svgAssets/deviceSimulatorIcons/phone.svg",
-            "./public/resources/svgAssets/deviceSimulatorIcons/tablet.svg",
-            "./public/resources/svgAssets/deviceSimulatorIcons/desktopSelected.svg",
-            "./public/resources/svgAssets/deviceSimulatorIcons/phoneSelected.svg",
-            "./public/resources/svgAssets/deviceSimulatorIcons/tabletSelected.svg",
-            "./public/resources/svgAssets/gradient-cubes.svg",
+        return [ "desktop.svg",
+            "phone.svg",
+            "tablet.svg",
+            "desktopSelected.svg",
+            "phoneSelected.svg",
+            "tabletSelected.svg",
+            "gradient-cubes.svg",
         ];
     }
 
     public static getIconResourcePath(icon: IconType): string {
-        return `./public/resources/icons/${icon.toString()}`;
+        return `${icon.toString()}.svg`;
     }
 
     public static headerIconResources(): string[] {

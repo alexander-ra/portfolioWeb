@@ -232,7 +232,7 @@ $menu-radius: 6em;
     top: calc(50% - $inner-radius-landscape / 2);
     left: calc(50% - $inner-radius-landscape / 2);
     border-radius: 50%;
-    background-image: url("../../../public/resources/categoryImages/experience/home.jpg");
+    background-image: url("../../../public/resources/categoryImages/experience/experienceImage.jpg");
     background-size: cover;
     border: 0.2em solid rgb($wheel-border-color);
     text-align: center;
@@ -241,7 +241,7 @@ $menu-radius: 6em;
     pointer-events: none;
 
     &.client_approach {
-      background-image: url("../../../public/resources/categoryImages/client/home.jpg");
+      background-image: url("../../../public/resources/categoryImages/client/clientImage.jpg");
     }
 
     .vw-portrait & {

@@ -13,7 +13,7 @@ export enum CommonLabels {
     PAST_EXPERIENCE = "Past Experience",
     CHESS_DEMO = "Chess Demo",
     CONTACT_PHONE = "(+359) 885 654 188",
-    CONTACT_EMAIL = "info@alexdev.pro",
+    CONTACT_EMAIL = "info@alexander-andreev.com",
     CONTACT_LINKED_IN =  "/in/alexandar-andreev",
     CONTACT_GIT_HUB = "alexander-ra/portfolioWeb",
     CONTACT_RESUME = "Download Resume.pdf",
