@@ -184,7 +184,6 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
             if (BrowserUtils.isMobile() && this.mobileClickSimEnabled) {
                 const iconName = event.target.className.split(" ").find(className => className.startsWith("fa"));
                 const sectionToGoTo = this.props.sections.findIndex(section => section.icon === iconName);
-                console.log(sectionToGoTo);
                 if (sectionToGoTo !== -1) {
                     this.selectSection(sectionToGoTo);
                 }

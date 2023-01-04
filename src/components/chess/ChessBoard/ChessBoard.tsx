@@ -95,7 +95,6 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
 
     setInitialState(): void {
         if (this.isGameFinished()) {
-            console.log("finished");
             ApiLichessUtils.resignGame();
         }
     }

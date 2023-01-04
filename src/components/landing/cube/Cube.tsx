@@ -44,9 +44,11 @@ class Cube extends React.Component<CubeProps, CubeState> {
     private dragInitiated: boolean = false;
     private lastDrag = 0;
     private showRotatingIndicator: boolean = true;
+    private cubeRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: CubeProps) {
         super(props);
+        this.cubeRef = React.createRef();
 
         this.dragStartingPos = {
             x: 0,
@@ -81,7 +83,7 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     setInitialValues() {
-        if (!this.props.firstTimeLanding) {
+        if (!this.props.firstTimeLanding || !this.state.cubeOpened) {
             setTimeout(() => {
                 this.setState({cubeRotationClass: CubeRotationStates.LEFT_ZOOM});
                 this.autoRotationInterval = setInterval(() => {
@@ -127,9 +129,10 @@ class Cube extends React.Component<CubeProps, CubeState> {
         }
     }
 
-    dragStartTouch = (event: any) => {
+    dragStartTouch = (event: TouchEvent) => {
         this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
         event.preventDefault();
+
         document.ontouchmove = (event) => {
             this.dragInitiated = true;
             this.showRotatingIndicator = false;
@@ -157,13 +160,13 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     addCubeRotationListeners() {
-        window.addEventListener("dragstart", this.dragStart);
-        window.addEventListener("touchstart", this.dragStartTouch);
+        this.cubeRef.current.addEventListener("dragstart", this.dragStart);
+        this.cubeRef.current.addEventListener("touchstart", this.dragStartTouch);
     }
 
     removeCubeRotationListeners() {
-        window.removeEventListener("dragstart", this.dragStart);
-        window.removeEventListener("touchstart", this.dragStartTouch);
+        this.cubeRef.current.removeEventListener("dragstart", this.dragStart);
+        this.cubeRef.current.removeEventListener("touchstart", this.dragStartTouch);
         document.ontouchmove = null;
         document.ontouchend = null;
         window.onmousemove = null;
@@ -171,18 +174,20 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     openCube(): void {
-        if (Utils.isNotNull(this.autoRotationInterval)) {
-            clearInterval(this.autoRotationInterval);
-        }
-        this.props.openCube();
-        this.setState({
-            cubeOpened: true
-        })
-        setTimeout(() =>
+        if (!this.props.isLoading) {
+            if (Utils.isNotNull(this.autoRotationInterval)) {
+                clearInterval(this.autoRotationInterval);
+            }
+            this.props.openCube();
             this.setState({
-                cubeCoverVisible: false
+                cubeOpened: true
             })
-            , this.CUBE_OPEN_TIME_MS);
+            setTimeout(() =>
+                    this.setState({
+                        cubeCoverVisible: false
+                    })
+                , this.CUBE_OPEN_TIME_MS);
+        }
     }
 
     selectMenu(menu: CubeMenuStates): void {
@@ -240,7 +245,9 @@ class Cube extends React.Component<CubeProps, CubeState> {
                 <div draggable={this.state.cubeOpened}
                      style={this.getCubeStyle()}
                      className={`cube-wrapper ${this.getCubeAdditionalClasses()}`}
-                     onClick={this.openCube.bind(this)}>
+                     onClick={this.openCube.bind(this)}
+                     onTouchStart={this.openCube.bind(this)}
+                     ref={this.cubeRef}>
                     {this.state.cubeCoverVisible && <CubeCover />}
                     <>
                         <CubeWall menu={CubeMenuStates.BOTTOM}

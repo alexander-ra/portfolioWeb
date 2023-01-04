@@ -35,7 +35,6 @@ export default class BrowserUtils {
     }
 
     public static async loadResources(resourceNames: string[]): Promise<void> {
-        console.log(ResourceInfo);
         const requests = resourceNames.map(image => {
             const path = ResourceInfo["files"][`static/media/${image}`];
             return new Promise<void>((resolve, reject) => {

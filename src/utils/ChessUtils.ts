@@ -212,7 +212,6 @@ export class ChessUtils {
     }
 
     public static processMoves(moves: ChessMove[]): void {
-        console.log("processingmoves");
         const chessBoardReducer = store.getState().chessBoardReducer;
         let processedPieces = this.returnCopyOfBoard(chessBoardReducer.chessPieces);
         let oldSideInTurn = chessBoardReducer.sideInTurn;
