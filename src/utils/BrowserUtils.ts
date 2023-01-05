@@ -34,27 +34,25 @@ export default class BrowserUtils {
         };
     }
 
-    public static async loadResources(resourceNames: string[]): Promise<void> {
+    public static loadResources(resourceNames: string[]): Promise<void[]> {
+        console.log("loadResources", resourceNames);
         const requests = resourceNames.map(image => {
             const path = ResourceInfo["files"][`static/media/${image}`];
             return new Promise<void>((resolve, reject) => {
-                const request = new XMLHttpRequest();
-                request.open("GET", path, true);
-                request.onload = () => {
-                    if (request.status === 200) {
-                        resolve();
-                    } else {
-                        reject(new Error(`Failed to load resource: ${request.statusText}`));
-                    }
+                var img = new Image();
+                img.src = path;
+                img.onload = () => {
+                    console.log("loaded", image);
+                    resolve();
+                };
+                img.onerror = () => {
+                    console.log("error", image);
+                    reject();
                 }
-                request.onerror = () => {
-                    reject(new Error("An error occurred while loading the resource"));
-                }
-                request.send();
             });
         });
 
-        await Promise.all(requests);
+        return Promise.all(requests);
     }
 
 }

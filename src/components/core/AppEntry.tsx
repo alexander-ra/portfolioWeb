@@ -16,8 +16,12 @@ class AppEntry extends React.Component<AppEntryProps, AppEntryState> {
     constructor(props: AppEntryProps) {
         super(props);
 
+        this.state = {parentWrapperStyle: null};
+    }
+
+    componentDidMount() {
         if (BrowserUtils.isMobile()) {
-            this.state = {parentWrapperStyle: this.parentWrapperStyle()};
+            this.setState({parentWrapperStyle: this.parentWrapperStyle()});
 
             window.addEventListener('resize', () => {
                 this.setState({

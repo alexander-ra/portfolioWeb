@@ -55,6 +55,7 @@ export class ProvisionUtils {
             "experienceImage.jpg",
             "clientImage.jpg",
             "avatar-jpeg.jpg",
+            "crystal.svg",
             ProvisionUtils.getIconResourcePath(IconType.faHandshake),
             ProvisionUtils.getIconResourcePath(IconType.faSuitcase),
             ProvisionUtils.getIconResourcePath(IconType.faChess),

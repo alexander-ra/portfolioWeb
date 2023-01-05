@@ -43,7 +43,7 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
         super(props);
 
         this.state = {
-            isLoading: this.props.hasLoaded,
+            isLoading: true,
         };
 
         this.props.selectMenu(CubeMenuStates.NONE);
