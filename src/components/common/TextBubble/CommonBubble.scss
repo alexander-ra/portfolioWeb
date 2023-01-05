@@ -164,6 +164,8 @@
         border-radius: 50%;
         background-repeat: no-repeat;
         background-size: contain;
+        border: 0.2em solid rgb($accent-secondary);
+        box-sizing: border-box;
       }
 
       .avatar-name {

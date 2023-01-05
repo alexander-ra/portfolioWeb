@@ -5,13 +5,18 @@
   font-size: 1em;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   top: calc(50% + 17.5em);
   height: 2em;
-  left: calc(50% - 4em);
+  left: calc(50% - 3em);
   border: none;
   color: rgb($main-primary);
   background-color: rgba($contrast-primary, .5);
   border-radius: 0.5em;
   cursor: pointer;
+  width: 6em;
+
+  span {
+    font-size: .8em;
+  }
 }

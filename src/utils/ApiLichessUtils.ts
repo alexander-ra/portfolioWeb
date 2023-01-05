@@ -108,6 +108,7 @@ export class ApiLichessUtils {
                 const {value, done} = await reader.read();
                 if (done) break;
                 const jsonString = Buffer.from(value).toString('utf8');
+                let opponentGone = false;
 
                 if (jsonString.trim().length > 0) {
                     let parsedData = JSON.parse(jsonString);
@@ -139,23 +140,31 @@ export class ApiLichessUtils {
                         }
                     } else if (parsedData?.type === "gameState") {
                         state = parsedData;
+                    } else if (parsedData?.type === "opponentGone") {
+                        opponentGone = parsedData?.gone;
+                    } else {
+                        console.log("json string", jsonString)
                     }
 
-                    if (state.moves) {
-                        store.dispatch(syncMoves(this.getChessMovesFromString(state.moves)));
-                    }
-
-                    if (Utils.isNotNull(state.status)) {
-                        let gameStatus: ChessGameStatus;
-                        if (Utils.isNotNull(state.winner)) {
-                            gameStatus = state.winner === store.getState().chessReducer.playerSide.toLowerCase() ?
-                                ChessGameStatus.WIN : ChessGameStatus.LOSE;
-                        } else if (state.status === "started") {
-                            gameStatus = ChessGameStatus.IN_PROGRESS;
-                        } else {
-                            gameStatus = ChessGameStatus.DRAW;
+                    if (opponentGone) {
+                        store.dispatch(endGame(ChessGameStatus.DRAW));
+                    } else {
+                        if (state.moves) {
+                            store.dispatch(syncMoves(this.getChessMovesFromString(state.moves)));
                         }
-                        store.dispatch(endGame(gameStatus));
+
+                        if (Utils.isNotNull(state.status)) {
+                            let gameStatus: ChessGameStatus;
+                            if (Utils.isNotNull(state.winner)) {
+                                gameStatus = state.winner === store.getState().chessReducer.playerSide.toLowerCase() ?
+                                    ChessGameStatus.WIN : ChessGameStatus.LOSE;
+                            } else if (state.status === "started") {
+                                gameStatus = ChessGameStatus.IN_PROGRESS;
+                            } else {
+                                gameStatus = ChessGameStatus.DRAW;
+                            }
+                            store.dispatch(endGame(gameStatus));
+                        }
                     }
                 }
             }

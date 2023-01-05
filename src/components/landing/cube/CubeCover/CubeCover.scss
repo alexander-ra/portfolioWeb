@@ -41,6 +41,9 @@ $peelOffDuration: 2s;
     &.loaded, &.opened {
 
         .wall-initial {
+            transition-property: border, transform, opacity;
+            transition-duration: 1s, 1s, 1s;
+
             &.wall-bottom-initial {
                 transform: rotateX(-90deg) translateZ(8.2em) scaleX(-1);
             }
@@ -57,7 +60,7 @@ $peelOffDuration: 2s;
 
     .wall-initial {
         transition-property: border, transform, opacity;
-        transition-duration: 1s, 1s, 1s, 2.5s;
+        transition-duration: 1s, 0s, 1s;
         clip-path: polygon(0 0, 300% 0, 300% 300%, 0 300%, 0 0, 0 0);
         display: flex;
         align-items: center;
@@ -77,6 +80,18 @@ $peelOffDuration: 2s;
         opacity: 1;
         z-index: 5;
         cursor: pointer;
+
+        &.wall-bottom-initial {
+            transform: rotateX(-90deg) translateZ(6.9em) scaleX(-1);
+        }
+
+        &.wall-left-initial {
+            transform: translateZ(6.9em) scaleX(-1) scaleY(-1);
+        }
+
+        &.wall-right-initial {
+            transform: rotateY(90deg) translateZ(6.9em) scaleY(-1);
+        }
 
         .dark-theme & {
             background: url("../../../../../public/resources/svgAssets/dark-theme/quantum-gradient.svg"), linear-gradient(135deg, rgb($main-secondary), rgb($accent-secondary) 66%);
@@ -131,14 +146,6 @@ $peelOffDuration: 2s;
                 }
             }
         }
-    }
-
-    .wall-left-initial {
-        transform: translateZ(6.9em) scaleX(-1) scaleY(-1);
-    }
-
-    .wall-right-initial {
-        transform: rotateY(90deg) translateZ(6.9em) scaleY(-1);
     }
 }
 
