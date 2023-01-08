@@ -64,6 +64,12 @@
             a:visited {
                 color: rgb($main-secondary);
             }
+
+            .expanded-menu-label {
+                .vw-portrait & {
+                    font-size: .8em;
+                }
+            }
         }
     }
 

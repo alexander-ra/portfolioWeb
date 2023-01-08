@@ -4,6 +4,7 @@ import store from "../../../reducers/store";
 import Icon from "../../common/Icon/Icon";
 import { IconType } from '../../../models/common/IconType';
 import { CommonLabels } from '../../../provision/CommonLabels';
+import { Links } from '../../../provision/Links';
 
 interface ExpandedMenuProps {
     isCard?: boolean;
@@ -39,7 +40,7 @@ class NavigationSubMenu extends React.Component<ExpandedMenuProps> {
                     <div className={"contact-line"}>
                         <Icon className={"contact-icon"} icon={IconType.faEnvelope} />
                         <div className={"expanded-menu-label"}>
-                            <a href="mailto:alexander.andreev37@gmail.com">
+                            <a href="mailto:info@alexander-andreev.com">
                                 {CommonLabels.CONTACT_EMAIL}
                             </a>
                         </div>
@@ -47,7 +48,7 @@ class NavigationSubMenu extends React.Component<ExpandedMenuProps> {
                     <div className={"contact-line"}>
                         <Icon className={"contact-icon"} icon={IconType.faLinkedin} />
                         <div className={"expanded-menu-label"}>
-                            <a href="src/components/layout/Navigation/ContactsSubMenu" target="_blank">
+                            <a href={Links.LINKEDIN_PAGE} target="_blank">
                                 {CommonLabels.CONTACT_LINKED_IN}
                             </a>
                         </div>
@@ -55,7 +56,7 @@ class NavigationSubMenu extends React.Component<ExpandedMenuProps> {
                     <div className={"contact-line"}>
                         <Icon className={"contact-icon"} icon={IconType.faGithubAlt} />
                         <div className={"expanded-menu-label"}>
-                            <a href="src/components/layout/Navigation/ContactsSubMenu" target="_blank">
+                            <a href={Links.GITHUB_PAGE} target="_blank">
                                 {CommonLabels.CONTACT_GIT_HUB}
                             </a>
                         </div>
@@ -63,8 +64,8 @@ class NavigationSubMenu extends React.Component<ExpandedMenuProps> {
                     <div className={"contact-line"}>
                         <Icon className={"contact-icon"} icon={IconType.faSave} />
                         <div className={"expanded-menu-label"}>
-                            <a href="http://192.168.8.30:3000/static/media/avatar-jpeg.fbeb0d852a7c4716f705.jpg"
-                               target="_blank" download="image.jpg">
+                            <a href={Links.PORTFOLIO_PAGE}
+                               target="_blank" download="alexander-andreeb-cv.pdf">
                                 {CommonLabels.CONTACT_RESUME}
                             </a>
                         </div>

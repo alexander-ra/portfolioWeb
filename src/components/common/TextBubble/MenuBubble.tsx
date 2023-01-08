@@ -11,6 +11,7 @@ import Icon from '../Icon/Icon';
 import ContactsSubMenu from "../../layout/Navigation/ContactsSubMenu";
 import { CommonLabels } from '../../../provision/CommonLabels';
 import { Links } from '../../../provision/Links';
+import pdfFile from "../../../../public/resources/cv-alexander-andreev.pdf";
 
 interface MenuBubbleProps {
     textBubbleType: CubeMenuStates;
@@ -60,7 +61,7 @@ class MenuBubble extends React.Component<MenuBubbleProps, MenuBubbleState> {
                             const a = document.createElement('a');
                             a.style.display = 'none';
                             a.href = url;
-                            a.download = 'image.jpg';
+                            a.download = 'alexander-andreev-cv.pdf';
                             document.body.appendChild(a);
                             a.click();
                             window.URL.revokeObjectURL(url);
