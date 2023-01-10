@@ -44,7 +44,7 @@ class DeviceSimulator extends React.Component<DeviceSimulatorProps, DeviceSimula
                     this.props.addLoadedResourcePack(ResourcePack.DEVICE_SIM);
                 })
                 .catch(() => {
-                    console.error('Error loading resources');
+                    console.warn('Error loading resources');
                 });
         }
     }

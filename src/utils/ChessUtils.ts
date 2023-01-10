@@ -211,6 +211,23 @@ export class ChessUtils {
         return boardPieces;
     }
 
+    public static processMovesInitial(moves: ChessMove[]): void {
+        const chessBoardReducer = store.getState().chessBoardReducer;
+        let processedPieces = ChessUtils.getInitialBoardPieces();
+        let oldSideInTurn = ChessSide.WHITE;
+        let processedMoves = 0;
+        if (Utils.isArrayNotEmpty(moves)) {
+            while (processedMoves < moves.length) {
+                processedPieces = this.getBoardAfterMove(processedPieces, moves[processedMoves]);
+                processedMoves++;
+            }
+        }
+        const newSideInTurn = (processedMoves - chessBoardReducer.processedMoves) % 2 === 0 ?
+            oldSideInTurn : ChessUtils.getOppositeSide(oldSideInTurn);
+        store.dispatch(updateProcessedBoard(processedPieces, processedMoves, newSideInTurn));
+        this.doCheckDetection(newSideInTurn);
+    }
+
     public static processMoves(moves: ChessMove[]): void {
         const chessBoardReducer = store.getState().chessBoardReducer;
         let processedPieces = this.returnCopyOfBoard(chessBoardReducer.chessPieces);
@@ -253,8 +270,6 @@ export class ChessUtils {
         }
         if (sideInCheck !== newSideInCheck) {
             store.dispatch(setSideInCheck(newSideInCheck));
-        } else {
-            console.log("realistic case", sideInCheck, newSideInCheck);
         }
     }
 
@@ -617,6 +632,7 @@ export class ChessUtils {
 
     private static getKingPossibleMoves(square: ChessSquare, chessBoard: ChessPiece[], playerSide: ChessSide, castleInfo?: ChessCastleInfo): ChessSquare[] {
         const uncheckedMoves: ChessSquare[] = [];
+        const kingInCheck = store.getState().chessBoardReducer.sideInCheck === playerSide;
         const colSteps = [-1, 0, 1];
         const rowSteps = [-1, 0, 1];
         colSteps.forEach((colStep) => {
@@ -630,7 +646,7 @@ export class ChessUtils {
                 }
             })
         })
-        if (Utils.isNotNull(castleInfo) && !castleInfo.castleHappened && !castleInfo.kingMoved) {
+        if (Utils.isNotNull(castleInfo) && !castleInfo.castleHappened && !castleInfo.kingMoved && !kingInCheck) {
             if (!castleInfo.leftRookMoved) {
                 const leftCastle: ChessSquare = {
                     row: square.row,

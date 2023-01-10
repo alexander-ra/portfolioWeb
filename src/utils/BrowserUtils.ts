@@ -35,18 +35,15 @@ export default class BrowserUtils {
     }
 
     public static loadResources(resourceNames: string[]): Promise<void[]> {
-        console.log("loadResources", resourceNames);
         const requests = resourceNames.map(image => {
             const path = ResourceInfo["files"][`static/media/${image}`];
             return new Promise<void>((resolve, reject) => {
                 var img = new Image();
                 img.src = path;
                 img.onload = () => {
-                    console.log("loaded", image);
                     resolve();
                 };
                 img.onerror = () => {
-                    console.log("error", image);
                     reject();
                 }
             });

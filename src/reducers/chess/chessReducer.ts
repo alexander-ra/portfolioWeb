@@ -1,5 +1,5 @@
 import {
-    END_GAME,
+    SET_STATUS,
     MAKE_MOVE,
     RESET_GAME,
     SET_CHESS_GAME,
@@ -24,7 +24,7 @@ export interface ChessReduceModel {
 }
 const initialAvatar = StorageUtil.getStorage(StorageKey.PLAYER_AVATAR);
 
-const initialState: ChessReduceModel = {
+export const initialState: ChessReduceModel = {
     gameId: StorageUtil.getStorage(StorageKey.CHESS_GAME_ID),
     opponentLevel: undefined,
     playerSide: ChessSide.WHITE,
@@ -68,12 +68,14 @@ export default function chessReducer(state = initialState, action: any): ChessRe
             }
         }
         case SYNC_MOVES: {
+            const newMoves = state.gameStatus === ChessGameStatus.IN_PROGRESS ? action.payload.moves : state.chessMoves;
+
             return {
                 ...state,
-                chessMoves: action.payload.moves
+                chessMoves: newMoves
             }
         }
-        case END_GAME: {
+        case SET_STATUS: {
             return {
                 ...state,
                 gameStatus: action.payload.gameStatus
@@ -82,8 +84,12 @@ export default function chessReducer(state = initialState, action: any): ChessRe
         case RESET_GAME: {
             StorageUtil.deleteStorage(StorageKey.CHESS_GAME_ID);
             return {
-                ...initialState,
-                gameId: null
+                gameId: null,
+                opponentLevel: undefined,
+                playerSide: ChessSide.WHITE,
+                playerAvatar: initialAvatar,
+                chessMoves: [],
+                gameStatus: ChessGameStatus.NOT_STARTED
             }
         }
         default:

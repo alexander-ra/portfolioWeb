@@ -333,7 +333,6 @@ class ContentPage extends React.Component<ContentPageProps, ContentPageState> {
     }
 
     selectSection(index: number) {
-        console.log("selectSection", index);
         if (!this.state.isAutoRotating || this.mobileClickSimEnabled) {
             this.mobileClickSimEnabled = false;
             const rotatingDirection = this.getRotatingDirectionFromIndex(this.state.selectedMenuIndex, index);

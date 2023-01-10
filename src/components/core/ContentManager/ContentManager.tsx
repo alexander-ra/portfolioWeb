@@ -36,7 +36,7 @@ class ContentManager extends React.Component<ContentManagerProps> {
         this.mainContentRef = React.createRef();
         const page: Page = WindowUtils.getPageFromURL();
         if (page === Page.LANDING) {
-            // window.history.pushState(null, null, "/landing");
+            window.history.pushState(null, null, "/landing");
         } else {
             store.dispatch(changePage(page));
 

@@ -44,7 +44,8 @@ class ChessPromotionPopup extends React.Component<ChessPromotionPopupProps> {
         this.PROMOTION_OPTIONS.forEach(option => {
             promotionOptions.push(
                 <div className={`chess-piece chess-piece-${this.props.playerSide.toLowerCase()}`}
-                     onClick={() =>this.clickPromotion(option)}>
+                     onClick={() =>this.clickPromotion(option)}
+                     key={option}>
                     <Icon icon={ChessUtils.getPieceIcon(option)} />
                 </div>
             );

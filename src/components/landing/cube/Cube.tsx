@@ -36,7 +36,7 @@ interface CubeState extends CubeRotationState{
  * @author Alexander Andreev
  */
 class Cube extends React.Component<CubeProps, CubeState> {
-    private readonly CUBE_OPEN_TIME_MS = 2000;
+    private readonly CUBE_OPEN_TIME_MS = 1500;
     private readonly CLOSED_CUBE_AUTO_ROTATION_TIME_MS = 3000;
     private readonly CUBE_INITIAL_AUTO_ROTATION_DELAY_MS = 1000;
     private autoRotationInterval: any;
@@ -131,13 +131,11 @@ class Cube extends React.Component<CubeProps, CubeState> {
     }
 
     clickTouch = (event: any) => {
-        console.log('click touch');
         document.ontouchmove = null;
         document.ontouchend = null;
     }
 
     dragStartTouch = (event: TouchEvent) => {
-        this.lastDrag = Date.now();
         console.log(event.target);
         this.dragStartingPos = CubeRotationUtils.initializeDragTouch(event);
         event.preventDefault();
@@ -155,17 +153,13 @@ class Cube extends React.Component<CubeProps, CubeState> {
                 this.cubeRef.current.ontouchmove = null;
                 this.cubeRef.current.ontouchend = null;
                 this.dragInitiated = false;
-                if (this.lastDrag + 250 > Date.now()) {
-                    this.lastDrag = 0;
-                } else {
-                    this.lastDrag = Date.now();
-                }
                 this.setState({
                     dragX: 0,
                     dragY: 0,
                     rotationInitialState: this.state.selectedMenuState
                 })
                 this.dragInitiated = false;
+                this.lastDrag = Date.now();
             }
         }
     }

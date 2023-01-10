@@ -58,7 +58,7 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
                     this.props.addLoadedResourcePack(ResourcePack.HEADER);
                 })
                 .catch(() => {
-                    console.error('Error loading resources');
+                    console.warn('Error loading resources');
                 });
         }
     }

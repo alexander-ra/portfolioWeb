@@ -101,8 +101,6 @@ class TextSection extends React.Component<TextSectionProps> {
                 currElement.style.margin = null;
                 currElement.style.fontSize = null;
             }
-        } else {
-            console.log("Unable to get element");
         }
     }
 

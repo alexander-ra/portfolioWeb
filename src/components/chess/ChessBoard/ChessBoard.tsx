@@ -55,16 +55,15 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
     componentDidMount() {
         if (Utils.isNull(this.props.chessGameId)) {
             const savedGameId = StorageUtil.getStorage(StorageKey.CHESS_GAME_ID);
-            console.log("save", savedGameId);
             if (Utils.isNotNull(savedGameId)) {
                 ApiLichessUtils.getUpdatesForGame(savedGameId);
                 this.setState({gameInProgress: true});
             }
         } else {
-            console.log("save", this.props.chessGameId);
             ApiLichessUtils.getUpdatesForGame(this.props.chessGameId);
             this.setState({gameInProgress: true});
         }
+        ChessUtils.processMovesInitial(this.props.chessMoves);
     }
 
     componentDidUpdate(prevProps: Readonly<ChessBoardProps>, prevState: Readonly<ChessBoardState>, snapshot?: any) {
@@ -83,7 +82,6 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
             this.setState({});
         }
         if (prevProps.chessGameId !== this.props.chessGameId) {
-            console.warn('Game id changed', this.props.chessGameId);
             this.setState({gameInProgress: Utils.isNotNull(this.props.chessGameId)});
         }
 
@@ -126,7 +124,6 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
             }
         } else {
             this.setState({selectedSquare: null});
-            console.log('Not your turn', this.props.gameStatus);
         }
     }
 

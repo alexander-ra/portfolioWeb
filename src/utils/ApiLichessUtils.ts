@@ -2,8 +2,9 @@ import Utils from "./Utils";
 import {ChessUtils} from "./ChessUtils";
 import store from "../reducers/store";
 import {
-    endGame,
-    makeMove, resetGame,
+    setGameStatus,
+    makeMove,
+    resetGame,
     setChessGame,
     setOpponentLevel,
     setPlayerSide,
@@ -11,19 +12,19 @@ import {
 } from "../reducers/chess/chessAction";
 import {Buffer} from "buffer";
 import {resetBoardState} from "../reducers/chessBoard/chessBoardAction";
-import { ChessMove } from "../models/chess/ChessMove";
-import { ChessAiDifficulty } from "../models/chess/ChessAiDifficulty";
-import { ChessStartingSide } from "../models/chess/ChessStartingSide";
-import { ChessSide } from "../models/chess/ChessSide";
-import { ChessSquare } from "../models/chess/ChessSquare";
-import { ChessPieceType } from "../models/chess/ChessPieceType";
-import { ChessGameStatus } from "../models/chess/ChessGameStatus";
+import {ChessMove} from "../models/chess/ChessMove";
+import {ChessAiDifficulty} from "../models/chess/ChessAiDifficulty";
+import {ChessStartingSide} from "../models/chess/ChessStartingSide";
+import {ChessSide} from "../models/chess/ChessSide";
+import {ChessSquare} from "../models/chess/ChessSquare";
+import {ChessPieceType} from "../models/chess/ChessPieceType";
+import {ChessGameStatus} from "../models/chess/ChessGameStatus";
 
 export class ApiLichessUtils {
     private static readonly AUTH_KEY = "Bearer lip_8BwgZnwb2x18VhXACBIx"; //"Bearer lip_ySt9nnwhXfyDdaO5InlE";
     private static readonly AI_LEVEL_EASY = 1;
-    private static readonly AI_LEVEL_MEDIUM = 4;
-    private static readonly AI_LEVEL_HARD = 8;
+    private static readonly AI_LEVEL_MEDIUM = 3;
+    private static readonly AI_LEVEL_HARD = 7;
     private static readonly LICHESS_API_PREFIX = "https://lichess.org/api";
 
     private static getRequestHeaders(): Headers {
@@ -62,7 +63,6 @@ export class ApiLichessUtils {
         store.dispatch(resetBoardState());
         let level: number;
         let color = playerSide.toLowerCase();
-        console.log("new game", color);
         switch (aiLevel) {
             case ChessAiDifficulty.EASY:
                 level = this.AI_LEVEL_EASY;
@@ -89,7 +89,6 @@ export class ApiLichessUtils {
         }).then((response) => response.json())
         .then((response) => this.lichessResponseToModel(response, aiLevel, playerSide))
         .then((response) => {
-            console.log("chess response", response);
             store.dispatch(setChessGame(response));
             this.getUpdatesForGame(response.gameId);
         })
@@ -103,8 +102,9 @@ export class ApiLichessUtils {
                 headers: this.getRequestHeaders()
             }) as any;
             const reader = response.body.getReader();
+            const gameStatus = store.getState().chessReducer.gameStatus;
 
-            while (true) {
+            while (gameStatus === ChessGameStatus.IN_PROGRESS || gameStatus === ChessGameStatus.NOT_STARTED) {
                 const {value, done} = await reader.read();
                 if (done) break;
                 const jsonString = Buffer.from(value).toString('utf8');
@@ -114,6 +114,7 @@ export class ApiLichessUtils {
                     let parsedData = JSON.parse(jsonString);
                     parsedData = JSON.parse(jsonString);
                     const moves = [];
+                    let forceOpponentGone = false;
                     let state: any = {};
                     if (parsedData?.type === "gameFull") {
                         state = parsedData?.state;
@@ -143,13 +144,14 @@ export class ApiLichessUtils {
                     } else if (parsedData?.type === "opponentGone") {
                         opponentGone = parsedData?.gone;
                     } else {
-                        console.log("json string", jsonString)
+                        console.warn("Unknown json string", jsonString);
+                        return;
                     }
 
                     if (opponentGone) {
-                        store.dispatch(endGame(ChessGameStatus.DRAW));
+                        store.dispatch(setGameStatus(ChessGameStatus.DRAW));
                     } else {
-                        if (state.moves) {
+                        if (state.moves && gameStatus == ChessGameStatus.IN_PROGRESS) {
                             store.dispatch(syncMoves(this.getChessMovesFromString(state.moves)));
                         }
 
@@ -158,12 +160,14 @@ export class ApiLichessUtils {
                             if (Utils.isNotNull(state.winner)) {
                                 gameStatus = state.winner === store.getState().chessReducer.playerSide.toLowerCase() ?
                                     ChessGameStatus.WIN : ChessGameStatus.LOSE;
+                                forceOpponentGone = true;
                             } else if (state.status === "started") {
                                 gameStatus = ChessGameStatus.IN_PROGRESS;
                             } else {
                                 gameStatus = ChessGameStatus.DRAW;
+                                forceOpponentGone = true;
                             }
-                            store.dispatch(endGame(gameStatus));
+                            store.dispatch(setGameStatus(gameStatus));
                         }
                     }
                 }

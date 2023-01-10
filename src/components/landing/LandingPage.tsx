@@ -65,7 +65,7 @@ class LandingPage extends React.Component<LandingCubeProps, LandingCubeState> {
                     }
                 })
                 .catch(() => {
-                    console.error('Error loading resources');
+                    console.warn('Error loading resources');
                 });
         }
     }
