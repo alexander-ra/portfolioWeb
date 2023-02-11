@@ -75,14 +75,3 @@ img{
 ::-webkit-scrollbar-corner {
   visibility: hidden;
 }
-
-.loadingbe {
-  position: fixed;
-  height: 10em;
-  width: 10em;
-  font-size: 2em;
-  background: red;
-  color: white;
-  top: calc(50% - 5em);
-  left: calc(50% - 5em);
-}

@@ -51,8 +51,8 @@ export class CubeRotationUtils {
     private static dragRotate(dragCurrentPos: Position, dragStartingPos: Position, rotationInitialState: CubeMenuStates): any {
 
         if (dragCurrentPos.x !== 0 && dragCurrentPos.y !==0) {
-            const offsectCorrectionFromSection: Position = this.getgetOffsectCorrectionFromSection(rotationInitialState);
-            const rotationOffset: Position = this.getActualRotationOffset(dragStartingPos, dragCurrentPos, offsectCorrectionFromSection);
+            const offsetCorrectionFromSection: Position = this.getOffsetCorrectionFromSection(rotationInitialState);
+            const rotationOffset: Position = this.getActualRotationOffset(dragStartingPos, dragCurrentPos, offsetCorrectionFromSection);
 
             return {
                 dragX: rotationOffset.x,
@@ -77,14 +77,14 @@ export class CubeRotationUtils {
         return stateToSet;
     }
 
-    static getActualRotationOffset(dragStartingPos: Position, dragCurrentPos: Position, offsectCorrectionFromSection: Position): Position {
+    static getActualRotationOffset(dragStartingPos: Position, dragCurrentPos: Position, offsetCorrectionFromSection: Position): Position {
         const smallerDimension = this.getSmallerDimension();
         const sesnsitivity = BrowserUtils.isMobile() ? this.ROTATION_SENSITIVITY_MOBILE : this.ROTATION_SENSITIVITY_DESKTOP;
         let horizontalDeg = this.validateMaxDegRotation(
-            Math.round((dragStartingPos.x - dragCurrentPos.x) / (smallerDimension / (2 * sesnsitivity)) * 50) + offsectCorrectionFromSection.x);
+            Math.round((dragStartingPos.x - dragCurrentPos.x) / (smallerDimension / (2 * sesnsitivity)) * 50) + offsetCorrectionFromSection.x);
 
         let verticalDeg = this.validateMaxDegRotation(
-            Math.round((dragCurrentPos.y - dragStartingPos.y) / (smallerDimension / (2 * sesnsitivity)) * 50) + offsectCorrectionFromSection.y);
+            Math.round((dragCurrentPos.y - dragStartingPos.y) / (smallerDimension / (2 * sesnsitivity)) * 50) + offsetCorrectionFromSection.y);
 
         horizontalDeg = horizontalDeg - horizontalDeg % 2;
         verticalDeg = verticalDeg - verticalDeg % 2;
@@ -103,7 +103,7 @@ export class CubeRotationUtils {
         return degree;
     }
 
-    private static getgetOffsectCorrectionFromSection(rotationInitialState: CubeMenuStates): Position {
+    private static getOffsetCorrectionFromSection(rotationInitialState: CubeMenuStates): Position {
         const offset: Position = {
             x: 0, y: 0
         };

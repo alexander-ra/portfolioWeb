@@ -127,7 +127,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
         }
     }
 
-    rednderChessBoard(): JSX.Element[] {
+    renderChessBoard(): JSX.Element[] {
         const chessRows: JSX.Element[] = [];
         if (Utils.isArrayNotEmpty(this.props.chessPieces)) {
             for (let row = 1; row <= 8; row++) {
@@ -171,7 +171,7 @@ class ChessBoard extends React.Component<ChessBoardProps, ChessBoardState> {
 
                 {this.state.gameInProgress && <>
                     <ChessPlayers />
-                    {this.rednderChessBoard()}
+                    {this.renderChessBoard()}
                     <ChessBoardLetters />
                     { this.isGameFinished() && <ChessBoardEndgameMessage gameStatus={this.props.gameStatus} />}
                 </>}
